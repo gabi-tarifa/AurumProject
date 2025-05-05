@@ -96,7 +96,7 @@
 
 \title{Documento de arquitetura de software de Aurum}
 
-\author{Francine Midori Nakasuga Oda\inst{1},Thomas Stephan Carmo\inst{1}, Arthur Silva Vieira\inst{1},\\ Gabriel Tarifa de Oliveira\inst{1}, Rafael Munhoz\inst{1} }
+\author{Francine Midori Nakasuga Oda\inst{1},Thomas Stephan Carmo\inst{1}, Arthur Silva Vieira\inst{1},\\ Gabriel Tarifa de Oliveira\inst{1}, Rafael Oliveira Muñoz\inst{1} }
 
 \address{Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - Câmpus São Paulo
 }
@@ -209,7 +209,8 @@
 % ----------------------------------------------------------
 \section{Introdução}
     %O projeto visa abranger os temas entretenimento e cultura, com seu foco em primeira instância os cinemas. https://wiki.sj.ifsc.edu.br/index.php/Dicas_de_LaTeX
-
+    
+    
 A educação financeira é um direito essencial do cidadão e desempenha um papel fundamental tanto no crescimento social quanto pessoal. Contudo, apesar de sua importância, grande parte da população brasileira ainda enfrenta barreiras significativas para acessar informações adequadas sobre finanças. Isso ocorre por fatores como a falta de recursos financeiros para investir em cursos especializados, a ausência de incentivo para se aprofundar no tema desde o ensino fundamental, e até mesmo a dificuldade em compreender conceitos financeiros devido à linguagem técnica e complexa.
 
 Segundo dados do Instituto Brasileiro de Geografia e Estatística (\citeonline{ibge2024}), embora a taxa de pobreza tenha diminuído significativamente, caindo de 67,7 milhões para 59 milhões de pessoas, ainda é preocupante o número de cidadãos que permanecem à margem da sociedade. Este cenário reforça a urgência de iniciativas que promovam a educação financeira como uma ferramenta de inclusão social e empoderamento.
@@ -222,7 +223,7 @@ Neste contexto, surge a necessidade de ferramentas educativas inovadoras e acess
 
 Por meio de módulos interativos e desafios diários, a plataforma busca capacitar os usuários para que tomem decisões financeiras mais conscientes, como controlar gastos, entender as nuances dos investimentos, negociar dívidas e planejar para o futuro. Além disso, a utilização de tecnologia de aprendizado adaptativo permite que o conteúdo seja personalizado, atendendo às necessidades específicas de cada usuário, desde os mais iniciantes até aqueles que já possuem algum conhecimento prévio.
 
-A missão deste projeto é democratizar o acesso à educação financeira, oferecendo uma ferramenta simples, envolvente e eficaz, capaz de transformar a realidade financeira de milhares de pessoas. Ao mesmo tempo, buscamos quebrar as barreiras do entendimento, utilizando uma linguagem acessível e evitando o jargão técnico que muitas vezes afasta o público geral. O objetivo final é empoderar os cidadãos, oferecendo-lhes as ferramentas necessárias para melhorar sua qualidade de vida, reduzir as desigualdades sociais e promover um crescimento econômico mais sustentável para todos.
+A missão deste projeto é expandir o acesso à educação financeira, oferecendo uma ferramenta simples, envolvente e eficaz, capaz de transformar a realidade financeira de milhares de pessoas. Ao mesmo tempo, buscamos quebrar as barreiras do entendimento, utilizando uma linguagem acessível e evitando o jargão técnico que muitas vezes afasta o público geral. O objetivo final é empoderar os cidadãos, oferecendo-lhes as ferramentas necessárias para melhorar sua qualidade de vida, reduzir as desigualdades sociais e promover um crescimento econômico mais sustentável para todos.
 
 \subsection{Objetivos}
     Levando em consideração a necessidade de detalhes da aplicação, os objetivos foram divididos em: geral e específico.
@@ -237,142 +238,30 @@ A missão deste projeto é democratizar o acesso à educação financeira, ofere
         \end{enumerate}
        
 \subsection{Justificativa}    
-   A educação financeira é um elemento essencial para a construção de uma sociedade mais equilibrada e justa. Entretanto, no Brasil, muitas pessoas ainda enfrentam dificuldades para lidar com o próprio dinheiro, seja por falta de conhecimento, seja por influências do consumo excessivo. De acordo com o Instituto Brasileiro de Geografia e Estatística (IBGE), mesmo com a redução do índice de pobreza nos últimos anos, milhões de brasileiros ainda vivem em situação de vulnerabilidade econômica, muitas vezes agravada pelo endividamento descontrolado.
+    A educação financeira é um elemento essencial para a construção de uma sociedade mais equilibrada e justa. Entretanto, no Brasil, muitas pessoas ainda enfrentam dificuldades para lidar com o próprio dinheiro, seja por falta de conhecimento, seja por influências do consumo excessivo. De acordo com o Instituto Brasileiro de Geografia e Estatística (IBGE), mesmo com a redução do índice de pobreza nos últimos anos, milhões de brasileiros ainda vivem em situação de vulnerabilidade econômica, muitas vezes agravada pelo endividamento descontrolado.
 
-     Foi realizada uma pesquisa com o objetivo de compreender melhor o perfil e as dificuldades enfrentadas pelo público em relação à educação financeira. Os resultados do questionário aplicado reforçam, com dados concretos, a importância da criação de uma plataforma acessível, interativa e \textit{gamificada} sobre finanças.
+    Foi realizada uma pesquisa com 217 participantes, com o objetivo de compreender melhor o perfil e as dificuldades enfrentadas pelo público em relação à educação financeira. Os resultados do questionário aplicado reforçam a importância da criação de uma plataforma acessível, interativa e \textit{gamificada} sobre finanças.
 
-    Um dos dados mais reveladores foi a resposta à pergunta "Como você descreveria seus conhecimentos em educação financeira?", em que a maioria dos participantes declarou possuir conhecimentos básicos ou limitados. Isso demonstra que, embora o tema esteja ganhando mais espaço nos debates sociais, ainda há uma lacuna significativa na formação financeira da população.
+    Um dos dados mais reveladores foi a resposta à pergunta "Como você descreveria seus conhecimentos em educação financeira?", em que 51,6\% dos participantes declarou possuir conhecimentos básicos e 12\% responderam que não possuem nenhum conhecimento. Isso demonstra que, embora o tema esteja ganhando mais espaço nos debates sociais, ainda há uma lacuna significativa na formação financeira da população.
 
-    A dificuldade mais citada na pesquisa foi "não entender como funcionam os investimentos", o que revela um ponto crítico: muitas pessoas desconhecem não apenas os riscos e oportunidades envolvidos, mas também os próprios conceitos básicos sobre investimentos. Isso limita o potencial de crescimento financeiro pessoal e mostra a urgência de métodos que desmistifiquem e tornem acessível esse tipo de conteúdo. A proposta desta plataforma contempla esse aspecto ao oferecer módulos específicos sobre investimentos, com explicações simples e interativas.
+    A dificuldade mais citada na pesquisa foi "tenho dificulade de controlar meus gastos", o que revela um ponto crítico: muitas pessoas desconhecem métodos de organização financeira e tomada de decisão, que é o básico. Isso limita o potencial de crescimento financeiro pessoal e mostra a urgência de métodos que desmistifiquem e tornem acessível esse tipo de conteúdo. A proposta desta plataforma contempla esse aspecto ao oferecer módulos específicos sobre controle de gastos, com explicações simples e interativas.
 
-    Em seguida, a segunda maior dificuldade relatada foi o controle de gastos, o que reforça a necessidade de ensinar estratégias práticas de organização financeira e tomada de decisão. Essa combinação entre desconhecimento técnico (como os investimentos) e dificuldade na gestão cotidiana evidencia o quanto a população precisa de uma solução completa, que ensine tanto o básico quanto o avançado.
+    Em seguida, as seguintes maiores dificuldades relatadas foram não conseguir economizar, que está diretamente ligado com a primeira maior dificuldade, e não compreender sobre como funcionam investimentos, o que reforça a necessidade de ensinar estratégias práticas de . Essa combinação entre desconhecimento técnico (com os investimentos), e dificuldade na gestão cotidiana evidencia o quanto a população precisa de uma solução completa, que ensine tanto o básico quanto o avançado.
 
-    Outro dado relevante foi a concentração da faixa etária entre jovens e adultos até 30 anos. Esse público está em uma fase decisiva da vida, assumindo responsabilidades financeiras e entrando no mercado de trabalho, mas muitas vezes sem ter recebido qualquer educação formal sobre finanças. Para esse grupo, uma plataforma online, moderna e compatível com os hábitos digitais representa uma alternativa prática e eficaz.
+    Outro dado relevante foi a concentração da faixa etária entre 35 e 54 anos. Esse público está em uma fase da vida onde já existe a preocupação com aposentadoria, mas muitas vezes sem ter recebido qualquer educação formal sobre finanças. Para esse grupo, uma plataforma online, moderna e compatível com os hábitos digitais representa uma alternativa prática e eficaz.
 
-    A pesquisa também revelou que a maioria das pessoas raramente ou nunca faz um planejamento financeiro, evidenciando uma falha estrutural no desenvolvimento de hábitos financeiros saudáveis. Por isso, a plataforma propõe desafios diários e objetivos de longo prazo, com o intuito de incentivar o planejamento constante e o acompanhamento do progresso do usuário.
+    A pesquisa também revelou que a maioria das pessoas raramente faz um planejamento financeiro, evidenciando uma falha estrutural no desenvolvimento de hábitos financeiros saudáveis. Por isso, a plataforma propõe desafios diários e objetivos de longo prazo, com o intuito de incentivar o planejamento constante e o acompanhamento do progresso do usuário.
 
-    Quando questionados sobre o formato de aprendizado mais interessante, o público demonstrou forte preferência por formas dinâmicas e interativas, como jogos, quizzes e conteúdo visual. Isso valida o uso da gamificação como uma metodologia principal do projeto, com o objetivo de tornar o aprendizado mais leve, envolvente e contínuo.
+    Quando questionados sobre o formato de aprendizado mais interessante, o público demonstrou forte preferência por formas dinâmicas e interativas, como simulações práticas e conteúdo visual. Isso valida o uso da gamificação como uma metodologia principal do projeto, com o objetivo de tornar o aprendizado mais leve, envolvente e contínuo.
 
-    Por fim, o dado que mais reforça a relevância do projeto: a grande maioria dos participantes declarou que se interessaria por uma plataforma interativa e gamificada para aprender sobre finanças. Isso confirma que a proposta não só responde a uma necessidade real, como também desperta o interesse do público, aumentando o engajamento e o potencial de transformação individual e social.
+    Por fim, o dado que mais reforça a relevância do projeto: a grande maioria dos participantes declarou que se interessaria por uma plataforma interativa e \textit{gamificada} para aprender sobre finanças. Isso confirma que a proposta não só responde a uma necessidade real, como também desperta o interesse do público, aumentando o engajamento e o potencial de transformação individual e social.
 
+    Embora existam jogos que ensinem sobre educação financeira, o Aurum, além de possuir módulos interativos e desafios diários, apresenta uma abordagem inovadora que combina interatividade, \textit{gamificação} e aprendizado adaptativo. E demonstra seu diferencial por personalizar o conteúdo de acordo com as necessidades específicas de cada usuário, desde iniciantes até aqueles com conhecimento prévio, os usuários são capacitados a tomar decisões financeiras mais conscientes, como controlar gastos, compreender investimentos, negociar dívidas e planejar o futuro.
+    
     Ao expandir o acesso à educação financeira, esse projeto tem o potencial de ajudar milhares de brasileiros a adquirirem mais autonomia sobre suas finanças, evitando armadilhas do consumo impulsivo e do crédito mal utilizado. Dessa maneira, além de beneficiar cada indivíduo, a iniciativa contribui para o desenvolvimento de uma sociedade mais consciente e preparada para enfrentar desafios econômicos.
 
     Portanto, a implementação dessa plataforma se mostra uma solução inovadora e necessária, pois busca preencher uma lacuna existente no ensino tradicional e promover um futuro financeiro mais seguro para todos.
-    
-\section{Revisão da Literatura}
 
-\begin{comment}
-
-Especial atenção ao que este capítulo deve conter:
-    \begin{citacao}
-    "Revisão bibliográfica, conforme já comentado, não produz conhecimento novo, mas apenas supre as
-    deficiências de conhecimento que o pesquisador tem em uma determinada área. Portanto, ela deve ser muito
-    bem planejada e conduzida.
-    (...)
-    Quando se faz uma pesquisa em que alguma técnica de computação é aplicada a alguma outra área do
-    conhecimento, é necessário que se faça a revisão bibliográfica sobre a técnica em si, sobre a área de aplicação e,
-    mais do que tudo, sobre as aplicações que já foram tentadas com essa técnica ou com técnicas semelhantes na
-    mesma área ou em áreas equivalentes. Exemplificando, um aluno pretende desenvolver um sistema
-    multiagentes para auxiliar controladores de voo. Esse aluno deve conhecer profundamente os sistemas
-    multiagentes e deverá conhecer também os problemas que os controladores de voo enfrentam para exercer sua
-    profissão. Porém, ele não deve pensar, como algumas vezes acontece, que essa é a primeira vez que alguém vai
-    tentar desenvolver um sistema multiagentes para esse tipo de aplicação."
-    \cite{PESQUISA:RAUL}.
-    \end{citacao}
-
-Toda a revisão da literatura deve ser basear primordialmente em livros e artigos científicos ranqueados Qualis CAPES. De forma geral, todo parágrafo deve conter AO MENOS uma citação bibliográfica.
-
-\end{comment}
-
-% ---
-\subsection{Origem do Cinema}
-
-O reconhecimento do cinema como arte, especificamente a sétima, depois da pintura, escultura, música, literatura, dança e arquitetura, levou tempo e precisou ultrapassar vários obstáculos, sendo reivindicada como tal pelo teórico e crítico de cinema, Ricciotto Canudo, a partir do “Manifesto das Sete Artes”, segundo \citeonline{ROGERIO}. O cinema foi considerado a sétima arte por conter todas as outras formas de arte, além de se distanciar da visão de ser um entretenimento de massas. Para que se tornasse o que se conhece atualmente, diversos dispositivos e ideias foram criados durante o período pré-cinema, que se enquadra entre 5.000 a.C. e 1878. A forma mais arcaica e distante das bases do cinema foi o teatro de sombras, e apenas em 1890, a primeira invenção que se assemelha ao cinema do século XXI foi produzida, o Cinetoscópio, que revolucionou a ideia de entretenimento com as pequenas câmaras que se olhava de cima, apreciando animações curtas. A invenção de Thomas Edison popularizou-se instantaneamente, recebendo propostas para ampliar a divulgação do cinetoscópio, porém Edison recusou, imaginando que não seria lucrativo dessa forma.
-
-O cinetoscópio foi exportado para a Europa, espalhando-se rapidamente, ainda para um público extremamente seleto, segundo \citeonline{BERNARDO}. Na França, os irmãos Auguste e Louis Lumière eram filhos de um fotógrafo, assim acabaram tendo contato com o aparelho, aprimorando-o para o Cinematógrafo, que permitia capturar imagens, revelar o filme e projetá-lo em uma grande tela. O aparelho realizou a primeira exibição em 1895, deixando os parisienses encantados com a nova forma de entretenimento. O cenário do cinema continuou evoluindo, os Lumière abandonaram as criações para a cinematografia, voltando-se para a fotografia, com objetivo de produzir imagens coloridas. O cinema para públicos maiores se popularizou, 
-
-Inicialmente, eram exibidos curtos filmes mudos que capturavam cenas cotidianas. Atualmente, a sétima arte abrange variados gêneros e estilos, incluindo \textit{blockbusters} de grande orçamento, documentários provocativos e filmes independentes inovadores, segundo \citeonline{MELO}. Com o avanço da tecnologia digital, o cinema expandiu-se ainda mais, permitindo efeitos visuais e a democratização da produção cinematográfica, tornando-se acessível a cineastas de todo o mundo.
- 
-O cinema, através de imagens e narrativas, além de arquitetura e música, serve como um meio de explorar e expressar a condição humana. Ele não só retrata realidades complexas, mas também oferece uma forma de conhecimento sobre a experiência vivida e os sentimentos humanos. A arte cinematográfica, ao capturar e dramatizar essas experiências, cria um espaço para a identificação e a reflexão, tornando visíveis as nuances da vida e do sofrimento humano que, muitas vezes, são mais reveladores do que os tratados científicos, segundo \citeonline{BUENO}.
- 
-Pode-se destacar que o cinema possui uma dualidade como expressão artística e produto mercadológico, analisando a visão de Ricciotto Canudo e Thomas Edison. Atualmente existem algumas produtoras, como Otto Desenhos, Panda Filmes e TGD, adotam uma abordagem mais voltada para o mercado, há uma tendência em outras partes da indústria de focar em produções mais artísticas e esteticamente cuidadosas, segundo \citeonline{SCHMITZ}. Compreender essas diferenças estruturais e ideológicas é essencial para o progresso do cinema, ainda fortemente dependente de políticas públicas de incentivo. As recentes mudanças governamentais começam a alinhar o apoio ao audiovisual com a visão dos realizadores, considerando esses fatores estruturais na distribuição de incentivos. Assim, entender como as produtoras se organizam e idealizam suas produções vai além de uma questão acadêmica, revelando também implicações econômicas e políticas significativas para o setor.
-
-\subsection{Desvalorização do Cinema}
-Estudos recentes de \citeonline{ACEVEDO} mostram a migração para plataformas de \textit{streaming} e a diminuição das audiências nas salas de cinema como fatores que contribuem para a desvalorização do cinema. Essa migração é impulsionada pelo vasto catálogo oferecido pelas plataformas de \textit{streaming}, com uma infinidade de títulos disponíveis a qualquer hora e lugar. A comodidade de assistir filmes e séries no conforto do lar, sem filas ou horários fixos, também é um atrativo irresistível. 
-
-Além disso, o encarecimento dos ingressos e da experiência completa no cinema, com a compra de alimentos e bebidas, tem afastado parte do público, que busca alternativas mais acessíveis. Essa mudança no comportamento do consumidor tem impactado diretamente a indústria cinematográfica, que precisa se reinventar para atrair o público de volta às salas escuras. Um estudo de \citeonline{BOTELHO} afirma que a mudança no comportamento dos consumidores tem causado uma diminuição na frequência das idas ao cinema. Essa modificação reflete uma mudança na forma como o público acessa conteúdo audiovisual. 
-
-
-O artigo afirma que a facilidade e o preço oferecidos pelos serviços de streaming estão ajudando a redefinir o valor cultural e financeiro do cinema tradicional. Além disso, a pandemia acentuou essa tendência, fechando muitos cinemas temporariamente ou permanentemente, acelerando a desvalorização já crescente do cinema como experiência coletiva ou pessoal.
-
-Essa transformação também tem implicações significativas para a produção e distribuição de filmes. Com o crescimento das plataformas de streaming, os estúdios cinematográficos e produtores têm sido forçados a ajustar suas estratégias para se adaptarem a um novo cenário de consumo. A competição acirrada por audiência online levou a um aumento na produção de conteúdo exclusivo para essas plataformas, o que pode desviar recursos e atenção das produções cinematográficas tradicionais. Isso resulta em uma dinâmica onde os filmes destinados ao cinema enfrentam uma concorrência crescente com o conteúdo de streaming, que frequentemente é produzido com orçamentos menores e tem uma flexibilidade maior na distribuição.
-
-Além disso, a relação entre a indústria do cinema e as plataformas de streaming pode levar a uma mudança nas preferências de gênero e estilo de produção. O sucesso das plataformas de streaming frequentemente depende de análises de dados e preferências dos usuários, o que pode influenciar o tipo de conteúdo que é produzido e promovido. Essa tendência pode conduzir a uma homogeneização dos produtos oferecidos, onde os filmes e séries são moldados para atender a um público amplo e variado, mas com menos risco criativo e inovação. Assim, o cinema tradicional pode enfrentar desafios adicionais para se manter relevante e distintivo em um ambiente dominado pela personalização e pelo algoritmo.
-
-\subsection{Abandono do Cinema Brasileiro como Espaço de Cultura e Lazer}
-
-O cinema só se mantém como espaço de lazer ou possui seu valor cultural se o mesmo é acessível para todos. Nos últimos anos, de acordo com pesquisas feitas por \citeonline{HETTWER}, notou-se um constante crescimento do preço do ingresso de cinemas, muito além do previsto pela inflação. Isso se deve principalmente pelo abandono do cinema para os fins propostos, em razão do crescimento das plataformas de \textit{streaming}, como explicado na sessão anterior.
-
-O encarecimento dos ingressos também é causado pela monopolização dos espaços destinados a filmes. Empresas estadunidenses hoje dominam o mercado brasileiro, que além de possuírem em catálogo os mesmos filmes em todas suas unidades, também priorizará filmes \textit{blockbusters} produzidos por estúdios estrangereiros de porte imcomparável aos brasileiros. Uma consequência das produções brasileiras serem deixadas de lado, é a desvalorização da cultura que esses filmes promovem, o que acarreta no desinteresse pelo cinema nacional, que leva novamente ao desinvestimento dos filmes nacionais \cite{BOTELHO}.
-
-É necessário ressaltar a participação dos filmes quando se fala em cultura, ainda mais que o cinema é uma das artes mais influentes no mundo, alcançando grande parte da população global, mais do que qualquer outro tipo de mídia, além de ser relevante em todos os países. Isto não é diferente no Brasil, mas muitas produções são limitadas pela falta de orçamento, o que interfere na qualidade dos filmes, que por si afeta o número da bilheteria dele. É um problema que é causado pela falta de investimento do governo, e a população é a que mais sofre com esse descaso. Uma produção que é feita no Brasil terá consequentemente elementos da cultura local, como a culinária ou a paisagem do lugar. Estes elementos influenciam o espectador a observar mais sua cidade, de valorizar o que vê, disseminar seus aprendizados, etc. o que gera uma identidade nacional. Este conceito é melhor descrito por \citeonline{HENN}:
-
-	\begin{citacao}
-		"Quando falamos em cinema brasileiro, os significados contruídos sobre ele logo se fazem presentes para as pessoas que compartilham a cultura em que ele circula. Com isso, não estou afirmando que esse cinema tem uma identidade fixa, mas dizendo que há algumas representações dessa filmografia que circulam com mais intensidade entre nós. Do mesmo mode, há filmes hollywoodianos que não seguem a estética considerada representatitva desse cinema, bem como filmes brasileiros, espanhóis, mexicanos, etc. que também se distanciam da cinematografia hollywoodiana que circula de forma mais intensa entre nós." 
-        \cite{HENN}
-	\end{citacao}
-
-Deve se considerar que este caso é em especial ao Brasil, já que outros países, observa \citeonline{HETTWER}, não possuem o mesmo nível de abandono do cinema, tanto como possuem leis e mecanismos para que se certifiquem que filmes produzidos no território possuem o mesmo nível de visibilidade do que os produzidos internacionalmente, como no caso da França e da Índia, esta que é famosa por seus filmes de Bollywood, que alcançam em média 2,8 bilhões de pessoas por ano. Isto se deve principalmente por conta dos altos valores de investimentos feitos pelo governo, que ultrapassam 100 milhões de rúpias por ano para os estúdios \cite{LUCIANA}. Isto demonstra que há sim interesse por produções cinematográficas em qualquer país do mundo, mas países como o Brasil deixam de lado esse importante meio de cultura.
-
-\section{Métodos de Pesquisa OU Materiais e métodos}
-
-Segundo \citeonline{PESQUISA:DEMO}, metodologia significa, “na origem do termo, estudo dos caminhos, dos instrumentos usados para se fazer ciência”.
-
-Completando a linha de raciocínio, o autor acrescenta:
-
-    \begin{citacao}
-    “Alguns entendem por pesquisa o trabalho de coletar dados, sistematizá-los e, a partir daí fazer uma descrição da real-dade. Outros, fixam-se no patamar teórico e entendem por pesquisa o estudo e a produção de quadros teóricos de referência que estaria na origem da explicação da realidade. Descrever restringe-se a constatar o que já existe. Explicar corresponde a desvendar por que existe. Outros mais acreditam que pesquisar inclui teoria e prática. Porque compreender a realidade e nela intervir formam um todo só, tornando-se vício oportunista ficar apenas na constatação descritiva ou apenas na especulação teórica.”
-    \lipsum[5] \cite{PESQUISA:DEMO}.
-    \end{citacao}
-
-
-
-As seções a seguir são sugestões do que pode estar na metodologia. Conversem com o(s) professor(es) em busca de ajuda para definir quais as seções mais adequadas para cada trabalho.
-
-\subsection{Tipo de Pesquisa}
-\lipsum[1]
-
-\subsection{Plano Amostral (se Pesquisa Quantitativa)}
-\lipsum[1]
-
-\subsection{Instrumento de Pesquisa e Escalas Utilizadas (Escalas se Pesquisa Quantitativa)}
-\lipsum[1]
-
-\subsection{Coleta de Dados}
-\lipsum[1]
-
-\subsection{Análise de Dados}
-\lipsum[1]
-
-\subsection{Materiais}
-Para desenvolver uma aplicação web, faz-se necessário o uso de diversos materiais, os quais vão desde uma linguagem de programação específica até um navegador qualquer, dessa forma, serão listadas a seguir todas as ferramentas que serão utilizadas na elaboração do projeto.
-	
- \subsection{Métodos}
-Os métodos, modo como aplicamos as ferramentas no desenvolvimento, deixa claro como será feito todo o processo de criação do sistema.
-
-\subsection{Embasamento Inicial}
-\lipsum[1]
-
-\subsection{Desenvolvimento do Software}
-\lipsum[1]
-
-\subsection{Metodologias de Desenvolvimento}
-\lipsum[1]
-
-\section{Desenvolvimento}
-
-\subsection{Equipe}
-\lipsum[1]
 
 \subsection{Requisitos Funcionais}
 
@@ -380,71 +269,59 @@ Os métodos, modo como aplicamos as ferramentas no desenvolvimento, deixa claro 
 \hline
 \textbf{Código} & \textbf{Requisito} & \textbf{Descrição} \\
 \hline
-RF01 & Gerenciar Sessões & Cinemas Ativos devem ser capazes de criar/editar/excluir sessões. \\
+RF01 & Cadastrar usuário & O usuário deve ser capaz de se cadastrar na plataforma.\\
 \hline
-RF02 & Cadastrar usuário & O usuário deve ser capaz de se cadastrar na plataforma. \\
+RF02 & Teste de nível & O usuário deve fazer testes para recomendar as tarefas de acordo com o nível.\\
 \hline
-RF03 & Consulta de filmes & Usuário deve poder consultar cinemas em sua região. \\
+RF03 & Disponibilização de tarefas & As tarefas devem ser disponibilizadas para o usuário de acordo com sua aptidão. \\
 \hline
-RF04 & Acesso ao mapa & O sistema deve fornecer o acesso a um mapa dos cinemas próximos. \\
+RF04 & Sistema de pontuação & O sistema deve contabilizar os pontos do usuário em cada tarefa realizada de acordo com o desempenho. \\
 \hline
-RF05 & Consulta de preço da alimentação & O Usuário deve ser capaz de consultar o preço da alimentação fornecida no cinema. \\
+RF05 & Coleta de informações & O sistema deve coletar informações financeiras através de um quetionário para selecionar o tipo de tarefa para o usuário. \\
 \hline
-RF06 & Consulta de preço do ingresso & O Usuário deve ser capaz de consultar o preço dos ingressos do cinema. \\
+RF06 & Premiações por mérito & O sistema deve distribuir premiações por dias de conclusão de tarefas consecutivos, tarefas feitas com perfeição, entre outros. \\
 \hline
-RF07 & Filtragem de pesquisa & O Usuário deve ser capaz de filtrar a pesquisa de cinemas por localização. O usuário deve ser capaz de filtrar a pesquisa da alimentação por preço e disponibilidade. O usuário deve ser capaz de filtrar a pesquisa de filmes por cinema. \\
-\hline
-RF08 & Login de Usuário & O Usuário deve ser capaz de realizar login no sistema com email e senha. \\
-\hline
-RF09 & Gerenciar Lista de Favoritos & O Usuário deve ser capaz de favoritar/desfavoritar cinemas ou filmes. \\
-\hline
-RF10 & Visualizar Lista de Favoritos & O Usuário deve ser capaz de visualizar as listas criadas. \\
-\hline
-RF11 & Exclusão de Cinemas Inativos & Cinemas Inativos devem ser excluídos das listas de Cinemas favoritos. \\
-\hline
-
-\hline
-\hline
-\end{tabular}
-
 \subsection{Requisitos Não Funcionais}
 
 \begin{tabular}{|c|l|p{8cm}|}
 \hline
 \textbf{Código} & \textbf{Requisito} & \textbf{Descrição} \\
 \hline
-RNF01 & Localização & A aplicação deve fornecer uma interface localizada para as línguas inglesa e portuguesa (Brasil). \\
+RNF01 & Disponibilidade & O servidor deve estar disponível 24 horas por dia, 7 dias por semana, com tolerância de 0,5\% de falhas. \\
 \hline
-RNF02 & Organizacional & A plataforma vai se integrar com sistemas existentes (obter os filmes, a alimentação e o calendário do site do cinema). \\
+RNF02 & Desempenho & O servidor deve responder em, no máximo, 0,5 segundos a todas as requisições recebidas. \\
 \hline
-RNF03 & Disponibilidade & O servidor deve estar disponível 24 horas por dia, 7 dias por semana, com tolerância de 0,5\% de falhas. \\
+RNF03 & Compatibilidade & Deve ser compatível com os principais sistemas operacionais (Windows, Linux). \\
 \hline
-RNF04 & Acessibilidade & O sistema deve ser acessível para Usuários que utilizam dispositivos adaptados (Alto Contraste, Redução de Movimento e Daltonismo). \\
+RNF04 & Otimização & O tempo de resposta para atualização da contagem de pontos da aplicação deve ser de no máximo 3 segundos. \\
 \hline
-RNF05 & Desempenho & O servidor deve responder em, no máximo, 0,5 segundos a todas as requisições recebidas. \\
+RNF05 & Acessibilidade & O sistema deve ser acessível para Usuários que utilizam dispositivos adaptados (Alto Contraste, Redução de Movimento e Daltonismo). \\
 \hline
-RNF06 & Compatibilidade & Deve ser compatível com os principais sistemas operacionais (Android e IOS). \\
-\hline
-RNF07 & Otimização & O tempo de resposta para atualização do mapa e dos cinemas da aplicação deve ser de no máximo 3 segundos. \\
-\hline
+\end{tabular}
 
+\hline
+\hline
 \end{tabular}
 
 \subsection{Regras de Negócio}
-
-\begin{tabular}{|c|p{11.275cm}|}
+\textbf{Código} & \textbf{Regra de Negócio} & \textbf{Descrição} \\
 \hline
-\textbf{Código} & \textbf{Descrição} \\
+RN01 & Cadastro e Acesso & O usuário deve informar nome, e-mail e senha para se cadastrar. A plataforma não permitirá cadastros com e-mails já utilizados. O login só será permitido mediante autenticação por e-mail e senha válidos. \\
 \hline
-RN01 & O Cinema deve estar associado ao CineMaps. \\
+RM02 & Perfil e Progresso & Cada usuário terá um perfil com seu nível de conhecimento (iniciante, intermediário, avançado). O progresso do usuário será salvo automaticamente ao concluir lições ou desafios. O sistema adaptará os conteúdos com base no desempenho e progresso do usuário. \\
 \hline
-RN02 & Caso a publicação do filme (ou das comidas) for editada, deve ser explicitado. \\
+RN03 & Módulos de Ensino & Os módulos são liberados de forma sequencial. Cada módulo inclui teoria simples, exemplos práticos e mini-testes. O usuário só avança de nível se obtiver um desempenho mínimo de 70\% nos testes. \\
 \hline
-RN03 & Somente após a finalização do cadastro do cinema, (o cinema) poderá realizar a integração. \\
+RN04 & Gamificação & A cada acerto, o usuário ganha pontos e medalhas virtuais. Os pontos acumulados desbloqueiam novos desafios ou conteúdos bônus. O ranking mostra os usuários com melhor desempenho, incentivando o aprendizado. \\
 \hline
-RN04 & O Cinema é descadastrado da aplicação após um mês de inatividade. \\
+RN05 & Notificações e Lembretes & O sistema envia lembretes diários para os usuários que ativarem essa opção. Notificações são usadas para informar novos conteúdos ou desafios disponíveis. \\
+\hline
+RN06 & Planejamento Financeiro & A plataforma oferece uma ferramenta básica de planejamento financeiro. O usuário pode registrar receitas, despesas e metas mensais. O sistema envia alertas se os gastos superarem o limite definido. \\
+\hline
+RN07 & Feedback e Suporte & O usuário poderá avaliar cada módulo após sua conclusão. Um canal de ajuda estará disponível para dúvidas ou problemas técnicos. \\
 \hline
 \end{tabular}
+
 
 \documentclass{.}
 
@@ -454,225 +331,6 @@ RN04 & O Cinema é descadastrado da aplicação após um mês de inatividade. \\
 
 \usepackage{.} % Este pacote é usado para criar tabelas com linhas mais suaves
 
-\begin{document}
-
-\subsection{Modelagem}
-\subsubsection{Filme}
-\begin{table}[h]
-    \centering
-    \caption{Estrutura da Tabela de Filmes}
-    \begin{tabular}{|l|l|l|l|l|l|}
-        \hline
-        \textbf{Nome} & \textbf{Tipos de Dados} & \textbf{Obrigatório} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição} \\ \hline
-        id\_filme     & int                     & Sim                  & -                & Primária       & Atributo identificador \\ \hline
-        titulo        & varchar                 & Sim                  & 255              & Não            & Título do filme   \\ \hline
-        descricao     & varchar                 & Sim                  & 255& Não            & Descrição do filme \\ \hline
-        duracao       & int                     & Sim                  & -                & Não            & Duração em minutos \\ \hline
-    \end{tabular}
-    \label{tab:tabela_filmes}
-\end{table}
-
-\captionsetup[table]{skip=5pt}
-
-\begin{document}
-
-\begin{multicols}{.}
-
-\subsubsection{Usuário}
-
-
-\begin{table}[]
-\centering
-\caption{1.2.3 Tabela de Usuário} % Subtítulo com a numeração
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline
-\textbf{Nome} & \textbf{Tipos de Dados} & \textbf{Obrigatŕoio} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição}                                                                            \\ \hline
-id\_filme     & int                     & Sim                  & -                & Primária       & Atributo identificador                                                                        \\ \hline
-emial         & varchar                 & Sim                  & 50               & Não            & email do usuário                                                                              \\ \hline
-nome\_usuario & varchar                 & Sim                  & 20               & Única          & \begin{tabular}[c]{@{}l@{}}Nome de usuário para \\ o perfil público\end{tabular}              \\ \hline
-apelido       & varchar                 & Não                  & 20               & Não            & \begin{tabular}[c]{@{}l@{}}Apelido dado pelo \\ usuário para o perfil \\ público\end{tabular} \\ \hline
-senha         & varchar                 & Sim                  & 20               & Não            & \begin{tabular}[c]{@{}l@{}}Senha para acessar \\ o perfil do usuário\end{tabular}             \\ \hline
-\end{tabular}
-\end{table}
-
-\begin{table}[]
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline
-\textbf{Nome} & \textbf{Tipos de Dados} & \textbf{Obrigatŕoio} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição}                                                                         \\ \hline
-id\_filme     & int                     & Sim                  & -                & Primária       & Atributo identificador                                                                     \\ \hline
-emial         & varchar                 & Sim                  & 50               & Não            & email do usuário                                                                           \\ \hline
-nome\_usuario & varchar                 & Sim                  & 20               & Única          & \begin{tabular}[c]{@{}l@{}}Nome de usuário para \\ o perfil público\end{tabular}           \\ \hline
-apelido       & varchar                 & Não                  & 20               & Não            & \begin{tabular}[c]{@{}l@{}}Apelido dado pelo usuário \\ para o perfil público\end{tabular} \\ \hline
-senha         & varchar                 & Sim                  & 20               & Não            & \begin{tabular}[c]{@{}l@{}}Senha para acessar o \\ perfil do usuário\end{tabular}          \\ \hline
-\end{tabular}
-\end{table}
-
-
-
-\subsubsection{Cinema} % Subtítulo de cinema
-\begin{table}[h]
-    \centering
-    \caption{Estrutura da Tabela de Cinema}
-    \begin{tabular}{|l|l|l|l|l|l|}
-        \hline
-        \textbf{Nome} & \textbf{Tipo de dados} & \textbf{Obrigatório} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição}                                  \\ \hline
-        id\_cinema    & int                    & Sim                  & -                & Primária       & Atributo identificador                              \\ \hline
-        nome          & varchar                & Sim                  & 50               & Único          & Nome do cinema                                      \\ \hline
-        foto          & varchar                & Sim                  & 20               & Único          & Foto que é usada para descrever o cinema            \\ \hline
-        descricao     & varchar                & Sim                  & 20               & Não            & Descrição que será usada para caracterizar o cinema \\ \hline
-    \end{tabular}
-    \label{tab:tabela_cinema}
-\end{table}
-
-
-\subsubsection{Local} % Sub-subtítulo para a tabela de local
-\begin{table}[h]
-    \centering
-    \caption{Estrutura da Tabela de Local}
-    \begin{tabular}{|l|l|l|l|l|l|}
-        \hline
-        \textbf{Nome} & \textbf{Tipo de dados} & \textbf{Obrigatório} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição}                             \\ \hline
-        id\_local     & int                    & Sim                  & -                & Primária       & Atributo identificador                         \\ \hline
-        coordenadas   & -                      & Sim                  & 255              & Único          & Localização exata do cinema                    \\ \hline
-        logradouro    & varchar                & Sim                  & 50               & Não            & Nome da rua/avenida que se encontra o cinema   \\ \hline
-        numero        & int                    & Sim                  & 3                & Não            & Número da rua/avenida que se encontra o cinema \\ \hline
-        referencia    & varchar                & Sim                  & 255              & Único          & Referência dada para melhor encontrar o cinema \\ \hline
-    \end{tabular}
-    \label{tab:tabela_local}
-\end{table}
-
-
-
-\subsubsection{Cidade} % Subtítulo de cidade
-
-\begin{table}[h]
-    \centering
-    \caption{Estrutura da Tabela de Cidade}
-    \begin{tabular}{|l|l|l|l|l|l|}
-        \hline
-        Nome         & Tipo de dados & Obrigatório & Tamanho & Chave   & Descrição                        \\ \hline
-        id\_cidade   & int           & Sim         & -       & Primária & Atributo identificador          \\ \hline
-        nome         & varchar       & Sim         & 50      & Não     & Nome da cidade                  \\ \hline
-    \end{tabular}
-    \label{tab:tabela_cidade}
-\end{table}
-
-
-Sessão
-\begin{table}[h]
-    \centering
-    \caption{Estrutura da Tabela de Sessão}
-    \begin{tabular}{|l|l|l|l|l|l|}
-        \hline
-        \textbf{Nome}          & \textbf{Tipo de Dados} & \textbf{Obrigatório} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição} \\ \hline
-        id\_sessao    & int           & Sim         & -       & Primária & Atributo identificador               \\ \hline
-        data\_horario & datetime      & Sim         & -       & Não      & Dia e hora da sessão                 \\ \hline
-        ativa         & boolean       & Sim         & -       & Não      & Define se a sessão está ativa ou não \\ \hline
-    \end{tabular}
-    \label{tab:tabela_sessao}
-\end{table}
-
-
-
-
-Gênero
-\begin{table}[h]
-    \centering
-    \caption{Estrutura da Tabela de Gênero}
-    \begin{tabular}{|l|l|l|l|l|l|}
-        \hline
-        \textbf{Nome} & \textbf{Tipos de Dados} & \textbf{Obrigatório} & \textbf{Tamanho} & \textbf{Chave} & \textbf{Descrição} \\ \hline
-        id\_genero    & int                     & Sim                  & -                & Primária       & Atributo identificador \\ \hline
-        nome          & varchar                 & Sim                  & 50               & Não            & Nome para o gênero de um filme \\ \hline
-    \end{tabular}
-    \label{tab:tabela_genero}
-\end{table}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\subsection{Prototipagem}
-\lipsum[1]
-
-\section{POC}
-
-A Prova de Conceito (\textit{Proof of Concept} (PoC)) que deve demonstrar a aderência das tecnologias escolhidas com a aplicação que deve ser desenvolvida. Essa prova de conceito deve demonstrar a comunicação desde o usuário até a base de dados e utilizar de forma simples as tecnologias escolhidas para demonstrar que
-elas funcionam para o objetivo desejado.
-
-\section{MVP}
-
-O termo MVP foi popularizado por  \citeonline{ries2011lean}, onde ele descreve o conceito como segue:
-
-"O MVP é o menor conjunto de recursos que permite que o empreendedor comece o processo de aprendizado com o mínimo de esforço e o máximo de aprendizado validado sobre os clientes."
-
-Outro autor importante na área, \citeonline{blank2013startup}, define o MVP como:
-
-"Uma ferramenta para testar hipóteses de negócios e iniciar o aprendizado, coletando o máximo de informações validadas sobre os clientes com o menor esforço possível."
-
-
-% ---
-% Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
-% ---
-\bookmarksetup{startatroot}% 
-% ---
-
-% ---
-% Conclusão
-% ---
-\section{Considerações finais}
-
-
-De acordo com \citeonline{severino2016metodologia}, na seção de considerações finais o autor tem a oportunidade de fazer uma síntese dos principais pontos abordados e apresentar suas considerações finais sobre o assunto. Embora não haja uma estrutura fixa, existem algumas diretrizes comuns para escrever essa seção.
-
-A seguir, algumas orientações gerais, para complementar a explicação:
-
-1. Recapitule os principais pontos: Na seção de considerações finais, você pode revisitar os principais pontos discutidos ao longo do trabalho e resumir os resultados obtidos. É uma oportunidade para destacar a relevância do estudo e como ele contribui para o conhecimento existente.
-
-2. Discuta as implicações dos resultados: Nessa seção, você pode discutir as implicações práticas e teóricas dos resultados do seu trabalho. 
-
-3. Faça uma reflexão crítica: Use a seção de considerações finais para fazer uma reflexão crítica sobre as limitações do estudo e possíveis viéses. Discuta as dificuldades encontradas, bem como eventuais lacunas de conhecimento que podem ser exploradas por estudos futuros.
-
-4. Encerre de forma concisa e impactante: Finalize a seção de considerações finais com uma frase ou parágrafo que resuma as principais conclusões e destaque a importância do estudo. É uma oportunidade para deixar uma impressão duradoura nos leitores.
-
-Além do exposto acima, colocamos aqui uma outra possibilidade de estrutura para o documento:
-
-\begin{enumerate}
-\item Introdução
-1.1. Objetivo
-\item Concepção Inicial
-\item Trabalhos Correlatos
-    \begin{enumerate}
-        \item Trabalho 1
-        \item Trabalho 2
-        \item Trabalho 3
-        \item Trabalho X
-    \end{enumerate}
-\item Referencial Teórico
-\item Materiais e métodos
-\item Modelagem do Sistema
-    \begin{enumerate}
-        \item Diagrama de Casos de Uso
-        \item Diagrama de Tabelas Relacionais
-        \item Diagrama Entidade-Relacionamento
-    \end{enumerate}
-\item Funcionalidades
-\item Considerações Finais
-\end{enumerate}
-
-
-% ----------------------------------------------------------
-% ELEMENTOS PÓS-TEXTUAIS
-% ----------------------------------------------------------
 \postextual
 
 % ----------------------------------------------------------
@@ -701,14 +359,19 @@ Além do exposto acima, colocamos aqui uma outra possibilidade de estrutura para
 \begin{apendicesenv}
 
 % ----------------------------------------------------------
-\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+\chapter{Pesquisa realizada}
 % ----------------------------------------------------------
-Apêndices e anexos são materiais complementares ao texto que só devem ser incluídos quando forem imprescindíveis à compreensão deste.
-
-Apêndices são textos elaborados pelo autor a fim de complementar sua argumentação.
-
-Os apêndices devem aparecer após as referências, e os anexos, após os apêndices.
+    A maioria das idades entre todos os participantes do formulário foi de 35 a 54 anos.\\ 
+    32,7\%  dos participantes possuem Ensino Superior completo e 30,4\% Pós Graduação. \\
+    53,9\%  Já tiveram contato com Educação Financeira. \\
+    28,6\%  Foi apresentado a educação financeira através da internet, 22,6\% nas escolas/Instituição, 13,8\% Pela família e 29\% Nunca tiveram contato. \\
+    51,6\%  sabe apenas o básico, 27,6\% tem conhecimento intermediário, 8,8\% Conhecimento  Avançado e 12\% Nenhum. \\
+    53,9\% Às vezes realizam um planejamento financeiro, 26,7\% Sempre, 19,4\% nunca. \\
+    37,8\% Diz poupar dinheiro todo mês, 29,5\% Não, 32,7\% Apenas quando sobra dinheiro. \\
+    37,8\% Não conseguem economizar, 39,46\% Não consegue controlar os gastos, 37,3\% Não sabe como funciona investimentos, 24,9\% Não sabe organizar o orçamento mensal,  19,4\% Diz se endividar com freqüência \\
+    87,1\% Querem Simulações práticas com exemplos reais e fáceis. \\
+    Exposição: 
+    Os dados revelam um público majoritariamente entre 35 e 54 anos, com bom nível de  escolaridade (63,1\% têm Ensino Superior completo ou Pós-graduação), mas que ainda apresenta lacunas importantes no domínio das finanças pessoais. Apesar da maioria já ter tido algum contato com educação financeira (53,9\%), mais da metade sabe apenas o básico ou nada. Isso se reflete em hábitos financeiros frágeis: apenas 26,7\% sempre fazem planejamento financeiro, e 29,5\% nunca poupam. 
 
 \end{apendicesenv}
 % ---
@@ -725,14 +388,81 @@ Os apêndices devem aparecer após as referências, e os anexos, após os apênd
 \begin{anexosenv}
 
 % ---
-\chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
-parturient montes nascetur ridiculus mus}
+\chapter{Amostra dos gráficos produzidos pela pesquisa}
 % ---
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico1.png} % Substitua pelo nome do arquivo da imagem
+\caption{gráfico etário}
+\label{fig:grafico}
+\end{figure}
 
-Anexos são os documentos não elaborados pelo autor, que servem de fundamentação, comprovação ou ilustração, como mapas, leis, estatutos etc.
 
-Os apêndices devem aparecer após as referências, e os anexos, após os apêndices.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico2.png}
+\caption{gráfico escolaridade}
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico3.png}
+\caption{gráfico contato}
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico4.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico5.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico6.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico7.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico8.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico9.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{graficos/grafico10.png}
+\caption{gráfico }
+\label{fig:grafico}
+\end{figure}
+
 
 \end{anexosenv}
 
 \end{document}
+    
