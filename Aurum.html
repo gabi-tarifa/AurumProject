@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aurum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background-color: #0f1e34;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      background-color: #152238;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      transition: all 0.5s ease-in-out;
+    }
+    .container.active { display: flex; }
+
+    .logo {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #f4d160;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 25px;
+      background-color: #273a64;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    input::placeholder {
+      color: #b0bed0;
+    }
+
+    .forgot {
+      align-self: flex-end;
+      font-size: rem;
+      color: #f4d160;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #273a64;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .btn:hover {
+      background-color: #3d528a;
+      transform: scale(1.02);
+    }
+
+    .divider {
+      width: 100%;
+      text-align: center;
+      margin: 10px 0;
+      color: #ccc;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      background: #ccc;
+      width: 40%;
+      position: absolute;
+      top: 50%;
+    }
+
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .social {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .social button {
+      flex: 1;
+      background-color: #273a64;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .social button img {
+      width: 18px;
+    }
+
+    .terms {
+      font-size: 0.75rem;
+      margin-top: 15px;
+      text-align: center;
+      color: #ccc;
+    }
+
+    /* Animação flutuante */
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Ajustes específicos para a tela inicial com a imagem */
+    #initial-screen {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .initial-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .mascot-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mascot-container img {
+      max-width: 600px;
+      transition: filter 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .mascot-container img:hover {
+      animation: pulse 1.5s ease-in-out infinite alternate, corDourada 1.5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 8px #f4d160);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.15); }
+    }
+
+    @keyframes corDourada {
+      0% { filter: drop-shadow(0 0 5px #f4d160); }
+      100% { filter: drop-shadow(0 0 15px #f4d160); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Tela Inicial -->
+<div class="container active" id="initial-screen" style="max-width: 900px; padding: 40px;">
+  <div class="initial-left">
+    <div class="logo">AURUM</div>
+    <p style="color: #f4d160; margin-bottom: 25px; font-size: 1.1rem; line-height: 1.4;">
+      Simples, divertido e eficaz. O jeito AURUM de aprender sobre dinheiro
+    </p>
+    <button class="btn" onclick="showSignup()">Criar Conta</button>
+    <button class="btn" onclick="showLogin()">Entrar</button>
+  </div>
+  <div class="mascot-container">
+    <img src="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" alt="Mascote Leão" class="floating" />
+  </div>
+</div>
+
+<!-- Tela de Login -->
+<div class="container" id="login-screen">
+  <h2 style="color:#f4d160; margin-bottom: 20px;">Entrar</h2>
+  <input type="text" placeholder="E-mail ou nome de usuário" />
+  <input type="password" placeholder="Senha" />
+  <div class="forgot">Não lembra a senha?</div>
+  <button class="btn">Entrar</button>
+  <div class="divider">OU</div>
+  <div class="social">
+    <button><img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="G" /> GOOGLE</button>
+    <button><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="F" /> FACEBOOK</button>
+  </div>
+  <div class="terms">
+    Ao entrar na Aurum, você concorda com os nossos <br> Termos e Política de Privacidade.
+  </div>
+  <button class="btn" onclick="goBack()">← Voltar ao início</button>
+</div>
+
+<!-- Tela de Cadastro -->
+<div class="container" id="signup-screen">
+  <h2 style="color:#f4d160; margin-bottom: 20px;">Criar conta</h2>
+  <input type="text" placeholder="Nome completo" />
+  <input type="email" placeholder="Email" />
+  <input type="password" placeholder="Senha" />
+  <button class="btn">Criar conta</button>
+  <div class="divider">OU</div>
+  <div class="social">
+    <button><img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="G" /> GOOGLE</button>
+    <button><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="F" /> FACEBOOK</button>
+  </div>
+  <div class="terms">
+    Ao se cadastrar, você concorda com os nossos <br> Termos e Política de Privacidade.
+  
+</div>
+  <button class="btn" onclick="goBack()">← Voltar ao início</button>
+</div>
+
+<script>
+  function showLogin() {
+    document.getElementById("initial-screen").classList.remove("active");
+    document.getElementById("signup-screen").classList.remove("active");
+    document.getElementById("login-screen").classList.add("active");
+  }
+
+  function showSignup() {
+    document.getElementById("initial-screen").classList.remove("active");
+    document.getElementById("login-screen").classList.remove("active");
+    document.getElementById("signup-screen").classList.add("active");
+  }
+
+  function goBack() {
+    document.getElementById("login-screen").classList.remove("active");
+    document.getElementById("signup-screen").classList.remove("active");
+    document.getElementById("initial-screen").classList.add("active");
+  }
+</script>
+
+</body>
+</html>
