@@ -61,7 +61,7 @@
 </div>
 
 <!--Tela Ranking--> 
-<div class="container">
+<div class="container" id="rank-screen">
     <aside class="sidebar">
       <div class="menu-item"><img src="icones/open-book.png" class="icon">Aprender</div>
       <div class="menu-item"><img src="icones/working-hours.png" class="icon"> Quiz</div>
@@ -97,7 +97,7 @@
         </div>
       </aside>
     </main>
-  </div>
+</div>
 
 
 <script>
@@ -105,18 +105,28 @@
     document.getElementById("initial-screen").classList.remove("active");
     document.getElementById("signup-screen").classList.remove("active");
     document.getElementById("login-screen").classList.add("active");
+    document.getElementById("rank-screen").classList.remove("active");
   }
 
   function showSignup() {
     document.getElementById("initial-screen").classList.remove("active");
     document.getElementById("login-screen").classList.remove("active");
     document.getElementById("signup-screen").classList.add("active");
+    document.getElementById("rank-screen").classList.remove("active");
   }
 
   function goBack() {
     document.getElementById("login-screen").classList.remove("active");
     document.getElementById("signup-screen").classList.remove("active");
     document.getElementById("initial-screen").classList.add("active");
+    document.getElementById("rank-screen").classList.remove("active");
+  }
+
+  function telaRanking() {
+    document.getElementById("initial-screen").classList.remove("active");
+    document.getElementById("signup-screen").classList.remove("active");
+    document.getElementById("login-screen").classList.remove("active");
+    document.getElementById("rank-screen").classList.add("active");
   }
 </script>
 
