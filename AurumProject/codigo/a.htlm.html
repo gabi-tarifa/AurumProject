@@ -3,46 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ranking Semanal</title>
-  <link rel="stylesheet" href="a.css" />
+  <title>Tela Inicial</title>
+  <link rel="stylesheet" href="css/aurum.css"/>
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="menu-item"><img src="icones/open-book.png" class="icon">Aprender</div>
-      <div class="menu-item"><img src="icones/working-hours.png" class="icon"> Quiz</div>
-      <div class="menu-item active"><img src="icones/trophy.png" class="icon"> Ranking</div>
-      <div class="menu-item"><img src="icones/profile.png" class="icon"> Perfil</div>
-      <div class="menu-item"><img src="icones/store.png" class="icon"> Loja</div>
-      <div class="menu-item"><img src="icones/info.png" class="icon"> Mais</div>
-    </aside>
+  <div class="containerTP">
+    <!-- MENU LATERAL -->
+    <nav class="sidebar">
+      <div class="menu-item">
+        <img src="icones/open-book.png" class="icon" alt="Aprender" />
+        Aprender
+      </div>
+      <div class="menu-item">
+        <img src="icones/working-hours.png" class="icon" alt="Quiz" />
+        Quiz
+      </div>
+      <div class="menu-item">
+        <img src="icones/trophy.png" class="icon" alt="Ranking" />
+        Ranking
+      </div>
+      <div class="menu-item">
+        <img src="icones/profile.png" class="icon" alt="Perfil" />
+        Perfil
+      </div>
+      <div class="menu-item">
+        <img src="icones/store.png" class="icon" alt="Loja" />
+        Loja
+      </div>
+      <div class="menu-item">
+        <img src="icones/info.png" class="icon" alt="Mais" />
+        Mais
+      </div>
+    </nav>
 
-    <main class="content">
-      <section class="ranking-box">
-        <h1>RANKING SEMANAL</h1>
-        <ul class="ranking-list">
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> <span class="first">Usuário12356</span> <span class="score">345</span> <img src="icones/arrows.png" class="icon"></li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> <span class="second">Usuário12356</span> <span class="score">336</span><img src="icones/chevron.png" class="large-icon">  </li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> <span class="third">Usuário12356</span> <span class="score">298</span> <img src="icones/arrows.png" class="icon"></li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span>Usuário12356 <span class="score">278</span> <img src="icones/arrows.png" class="icon">  </li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> Usuário12356 <span class="score">197</span> <img src="icones/chevron.png" class="large-icon"></li>
-        </ul>
-      </section>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+      <div class="modulo modulo1">
+        <h2>Módulo 1</h2>
+        <p>Concluído</p>
+        <button class="revisar-btn">REVISAR</button>
+      </div>
 
-      <aside class="info-box">
-        <div class="info"><span class="golden">2577</span> <img src="icones/stack-of-coins.png" class="icon"> </div>
-        <div class="info"><img src="icones/calendar.png" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
-        <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
-        <button class="quiz-btn">Quiz<br><span class="up">Treinar agora</span></button>
-        <div class="modulo">
-          <p>Módulo 2</p>
-          <div class="progress-bar">
-            <div class="progress" style="width: 21%"></div>
-          </div>
-          <button class="continue-btn">Continuar</button>
+      <div class="modulo modulo2">
+        <h2>Módulo 2</h2>
+        <div class="progress-bartp">
+          <div class="progresstp" style="width: 21%;">3/14</div>
         </div>
-      </aside>
+        <button class="continuar-btn">CONTINUAR</button>
+      </div>
+
+      <div class="modulo modulo3">
+        <h2>Módulo 3</h2>
+        <p> Encerre o módulo 2 para prosseguir</p>
+        <button hidden="true"></button>
+      </div>
     </main>
+
+    <!-- PAINEL LATERAL DIREITO -->
+    <aside class="sidebar-right">
+      <div class="info-box"><img src="icones/stack-of-coins.png" class="icon">2577</div>
+      <div class="info-box">
+        <img src="icones/calendar.png" class="icon-sm" alt="Calendário"/>
+        12 Dias consecutivos
+      </div>
+      <div class="info-box">2577 Total de Aurum Points</div>
+      <div class="info-box">#2 Posição no Ranking</div>
+
+      <div class="ranking-box">
+        <div class="rank-item">#1 <span class="first">Usuário12356</span></div>
+        <div class="rank-item">#2 <span class="second">Usuário12356</span></div>
+        <div class="rank-item">#3 <span class="third">Usuário12356</span></div>
+        <div class="rank-item">#4 Usuário12356</div>
+      </div>
+    </aside>
   </div>
 </body>
 </html>

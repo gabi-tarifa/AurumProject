@@ -372,3 +372,107 @@ body {
     color: rgb(99, 72, 2);
     font-size: 15px;
 }
+
+/*Tela Principal css*/
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modulo {
+  padding: 20px;
+  border-radius: 16px;
+  color: #222;
+  font-weight: bold;
+  height: 270px;
+}
+
+.modulo1 {
+  background: linear-gradient(135deg, #ffd54f, #ffca28);
+  color: #333;
+}
+
+.modulo2 {
+  background: linear-gradient(to right, #00bcd4, #3f51b5);
+  color: white;
+  position: relative;
+}
+
+.modulo3 {
+  background: linear-gradient(to right, #ab47bc, #64b5f6);
+  color: white;
+}
+
+.revisar-btn, .continuar-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.continuar-btn {
+  background: linear-gradient(to right, #e040fb, #00e5ff);
+  border: none;
+}
+
+
+.progress-bartp {
+  background-color: #0c162f;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+  width: 160px;
+}
+
+.progresstp {
+  background-color: #00e676;
+  text-align: center;
+  color: black;
+  padding: 4px;
+  font-size: 14px;
+}
+
+.sidebar-right {
+  width: 220px;
+  background-color: #0e152a;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-box {
+  background-color: #1c2745;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.icon-sm {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.ranking-box {
+  background-color: #1c2745;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.containerTP {
+  display: flex;
+  height: 100vh;
+}
