@@ -9,29 +9,29 @@
 <body>
   <div class="container">
     <aside class="sidebar">
-      <div class="menu-item"><img src="icones/open-book.png" class="icon">Aprender</div>
-      <div class="menu-item"><img src="icones/working-hours.png" class="icon"> Quiz</div>
-      <div class="menu-item active"><img src="icones/trophy.png" class="icon"> Ranking</div>
-      <div class="menu-item"><img src="icones/profile.png" class="icon"> Perfil</div>
-      <div class="menu-item"><img src="icones/store.png" class="icon"> Loja</div>
-      <div class="menu-item"><img src="icones/info.png" class="icon"> Mais</div>
+      <div class="menu-item"><img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon">Aprender</div>
+      <div class="menu-item"><img src="{{ url_for('static', filename='img/working-hours.png') }}" class="icon"> Quiz</div>
+      <div class="menu-item active"><img src="{{ url_for('static', filename='img/trophy.png') }}" class="icon"> Ranking</div>
+      <div class="menu-item"><img src="{{ url_for('static', filename='img/profile.png') }}" class="icon"> Perfil</div>
+      <div class="menu-item"><img src="{{ url_for('static', filename='img/store.png') }}" class="icon"> Loja</div>
+      <div class="menu-item"><img src="{{ url_for('static', filename='img/info.png') }}" class="icon"> Mais</div>
     </aside>
 
     <main class="content">
       <section class="ranking-box">
         <h1>RANKING SEMANAL</h1>
         <ul class="ranking-list">
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> <span class="first">Usuário12356</span> <span class="score">345</span> <img src="icones/arrows.png" class="icon"></li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> <span class="second">Usuário12356</span> <span class="score">336</span><img src="icones/chevron.png" class="large-icon">  </li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> <span class="third">Usuário12356</span> <span class="score">298</span> <img src="icones/arrows.png" class="icon"></li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span>Usuário12356 <span class="score">278</span> <img src="icones/arrows.png" class="icon">  </li>
-          <li><span class="icon"><img src="icones/user.png" class="icon"></span> Usuário12356 <span class="score">197</span> <img src="icones/chevron.png" class="large-icon"></li>
+          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> <span class="first">Usuário12356</span> <span class="score">345</span> <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon"></li>
+          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> <span class="second">Usuário12356</span> <span class="score">336</span><img src="{{ url_for('static', filename='img/chevron.png' ) }}" class="large-icon">  </li>
+          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> <span class="third">Usuário12356</span> <span class="score">298</span> <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon"></li>
+          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span>Usuário12356 <span class="score">278</span> <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon">  </li>
+          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> Usuário12356 <span class="score">197</span> <img src="{{ url_for('static', filename='img/chevron.png') }}" class="large-icon"></li>
         </ul>
       </section>
 
       <aside class="info-box">
-        <div class="info"><span class="golden">2577</span> <img src="icones/stack-of-coins.png" class="icon"> </div>
-        <div class="info"><img src="icones/calendar.png" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
+        <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="icon"> </div>
+        <div class="info"><img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
         <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
         <button class="quiz-btn">Quiz<br><span class="up">Treinar agora</span></button>
         <div class="modulo">
