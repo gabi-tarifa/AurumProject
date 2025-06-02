@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from models import db, Usuario
 from werkzeug.security import generate_password_hash
@@ -13,6 +13,29 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
+# 🔐 Página de Login
+@app.route("/login")
+def login_page():
+    return render_template("login.html")
+
+
+# 🆕 Página de Cadastro
+@app.route("/cadastro_page")
+def cadastro_page():
+    return render_template("cadastro.html")
+
+
+# 🏆 Página de Ranking
+@app.route("/ranking")
+def ranking_page():
+    return render_template("ranking.html")
+
+
+# 🏆 Página de Ranking
+@app.route("/semanal")
+def semanal_ranking_page():
+    return render_template("a.html")
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
