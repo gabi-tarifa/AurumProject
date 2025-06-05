@@ -1,183 +1,124 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
-
 body {
-  background-color: #0f1b3d;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #121c34;
   color: white;
 }
 
-.container {
+.containerTP {
   display: flex;
   height: 100vh;
 }
 
-.sidebar {
+.sidebartp {
   width: 200px;
-  background-color: #18294d;
-  padding: 20px 0;
+  background-color: #10182c;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-itemtp {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.menu-itemtp:hover {
+  background-color: #1f2a48;
+  border-left: 4px solid #00bcd4;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.menu-item {
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.menu-item.active {
-  background-color: #2f5581;
-  border-radius: 8px;
-}
-
-.content {
-  display: flex;
-  flex: 1;
-  padding: 30px;
-  gap: 30px;
-}
-
-.ranking-box {
-  background-color: #1e2e5a;
-  border-radius: 16px;
+.modulo {
   padding: 20px;
-  width: 60%;
-}
-
-.ranking-box h1 {
-  text-align: center;
-  background-color: #253b71;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.ranking-list {
-  list-style: none;
-}
-
-.ranking-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2b3d74;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  font-size: 18px;
-}
-
-.score {
+  border-radius: 16px;
+  color: #222;
   font-weight: bold;
-  color: #fbc02d;
+  height: 270px;
 }
 
-.up {
-  color: #00e676;
+.modulo1 {
+  background: linear-gradient(135deg, #ffd54f, #ffca28);
+  color: #333;
 }
 
-.down {
-  color: #e53935;
-}
-
-.info-box {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.info {
-  background-color: #2b3d74;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.quiz-btn {
-  background-color: #2b3d74;
+.modulo2 {
+  background: linear-gradient(to right, #00bcd4, #3f51b5);
   color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  position: relative;
+}
+
+.modulo3 {
+  background: linear-gradient(to right, #ab47bc, #64b5f6);
+  color: white;
+}
+
+.revisar-btn, .continuar-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
   cursor: pointer;
 }
 
-.quiz-btn span {
-  display: block;
+.continuar-btn {
+  background: linear-gradient(to right, #e040fb, #00e5ff);
+  border: none;
+}
+
+.progress-bartp {
+  background-color: #0c162f;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+  width: 160px;
+}
+
+.progresstp {
+  background-color: #00e676;
+  text-align: center;
+  color: black;
+  padding: 4px;
   font-size: 14px;
 }
 
-.modulo {
-  background-color: #1ec3c3;
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
+.sidebar-right {
+  width: 220px;
+  background-color: #0e152a;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.progress-bar {
-  background-color: #ccc;
-  height: 10px;
-  border-radius: 5px;
-  margin: 10px 0;
+.icon-sm {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px;
 }
 
-.progress {
-  background-color: #05696b;
-  height: 100%;
-  border-radius: 5px;
-}
-
-.continue-btn {
-  background-color: #05696b;
+.rank-item {
+  padding: 4px 0;
   color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
-.icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
-.large-icon {
-  width: 28px;
-  height: 32px;
-  margin-right: 22px;
-  vertical-align: middle;
-}
-
-.first {
-    color:#daa520;
-}
-
-.second {
-    color:#afafaf ;
-}
-
-.third {
-    color: #cd7f32;
-}
-
-.golden {
- color: goldenrod;
- font-size: 24px;
- vertical-align: middle;
- margin-right: 18px;
- margin-left: 18px;
-}
-
-.darkgolden {
-    color: rgb(99, 72, 2);
-    font-size: 15px;
+.highlight {
+  color: #ff9800;
+  font-weight: bold;
 }
