@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Usuario(db.Model):
-    __tablename__ = 'usuarios'
+    __tablename__ = 'Usuario'
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
@@ -12,3 +12,5 @@ class Usuario(db.Model):
 
     def __repr__(self):
         return f'<Usuario {self.nome} - {self.email}>'
+
+
