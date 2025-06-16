@@ -44,6 +44,10 @@ def starting_page():
 def presentation_page():
     return render_template("Aurum.html")
 
+@app.route("/perfil")
+def perfil_page():
+    return render_template("perfil.html")
+
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
     dados = request.json
@@ -86,6 +90,4 @@ def efetuar_login():
 
 
 if __name__ == "__main__":
-    print ("funciona")
-    print(app.root_path)
     app.run(debug=True)

@@ -2,64 +2,70 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tela Inicial</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}"></head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}" />
 </head>
 <body>
   <div class="containerTP">
-    <!-- MENU LATERAL -->
+    <!-- Menu Lateral -->
     <nav class="sidebar">
-      <div class="menu-item active">
+      <div class="menu-itemtp">
         <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
         Aprender
       </div>
-      <div class="menu-item">
+      <div class="menu-itemtp">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
         Quiz
       </div>
-      <div class="menu-item">
+      <div class="menu-itemtp">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
         Ranking
       </div>
-      <div class="menu-item">
+      <div class="menu-item active">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
         Perfil
       </div>
-      <div class="menu-item">
+      <div class="menu-itemtp">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
         Loja
       </div>
-      <div class="menu-item">
+      <div class="menu-itemtp">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         Mais
       </div>
     </nav>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- Conteúdo principal -->
     <main class="main-content">
-      <div class="modulo modulo1">
-        <h2>Módulo 1</h2>
-        <p>Concluído</p>
-        <button class="revisar-btn">REVISAR</button>
+      <!-- Cabeçalho com imagem -->
+      <div class="perfil-cabecalho">
+        <img src="{{ url_for('static', filename='img//rectangle.png') }}" alt="Usuários conversando" class="imagem-topo">
+        <img src="{{ url_for('static', filename='img//user.png') }}" alt="Foto do usuário" class="avatar">
       </div>
 
-      <div class="modulo modulo2">
-        <h2>Módulo 2</h2>
-        <div class="progress-bartp">
-          <div class="progresstp" style="width: 21%;">3/14</div>
+      <!-- Dados do usuário -->
+      <div class="dados-usuario">
+        <h2>Usuário123456</h2>
+        <p class="email">Usuario123456@gmail.com</p>
+        <p class="entrada">Entrou na Aurum em Novembro de 2024</p>
+      </div>
+
+      <!-- Conquistas -->
+      <div class="conquistas">
+        <h3>Conquistas</h3>
+        <div class="conquista conquista-vermelha">
+          <img class="icon" src="{{ url_for('static', filename='img//fire.png') }}" alt="Fogo" />
+          <span>Mais de 100 dias de ofensiva</span>
         </div>
-        <button class="continuar-btn">CONTINUAR</button>
-      </div>
-
-      <div class="modulo modulo3">
-        <h2>Módulo 3</h2>
-        <p style="font-size: 15px;"><br> Encerre o módulo 2 para prosseguir</p>
-        <button hidden="true"></button>
+        <div class="conquista conquista-amarela">
+          <img class="icon" src="{{ url_for('static', filename='img//gold-medal.png') }}" alt="Medalha" />
+          <span>Ficou em primeiro no Rankig</span>
+        </div>
       </div>
     </main>
 
-    <!-- PAINEL LATERAL DIREITO -->
+    <!-- Informações do lado direito -->
     <aside class="info-box">
       <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon"> </div>
       <div class="info"><img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
