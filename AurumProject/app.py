@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:pass123@localhost:3306/Aurum'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:pass123@localhost:3306/Aurum'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -69,6 +69,14 @@ def cadastro():
 
     return jsonify({"mensagem": f"Usuário {nome} cadastrado com sucesso!"})
 
+
+@app.route("/quiz")
+def quiz_page():
+    return render_template("quizes.html")
+
+@app.route("/loja")
+def store_page():
+    return render_template("loja.html")
 
 @app.route("/login", methods=["POST"])
 def efetuar_login():
