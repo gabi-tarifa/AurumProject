@@ -386,6 +386,25 @@ body {
   gap: 20px;
 }
 
+.quiz-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-gap: 20px; /* espaçamento entre colunas (horizontal) */
+  row-gap: 30px;    /* espaçamento entre linhas (vertical) */
+  padding: 30px;
+  justify-content: space-between;
+}
+
+.quiz-content > .modulo {
+  max-width: calc(50% - 10px); /* força 2 por linha respeitando o gap */
+  flex: 1 1 calc(50% - 10px);
+}
+
+.quiz-content {
+  align-self: flex-start;
+}
+
 .modulo {
   padding: 20px;
   border-radius: 16px;
@@ -407,6 +426,21 @@ body {
 
 .modulo3 {
   background: linear-gradient(to right, #ab47bc, #64b5f6);
+  color: white;
+}
+
+.modulo4 {
+  background: linear-gradient(to right, #ff5757, #8c52ff);
+  color: white;
+}
+
+.modulo5 {
+  background: linear-gradient(to right, #0097b2, #7ed957);
+  color: white;
+}
+
+.modulo6 {
+  background: linear-gradient(to right, #ff3131, #ff914d);
   color: white;
 }
 
