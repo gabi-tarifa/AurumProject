@@ -38,5 +38,3 @@ extend-ignore = ["E203", "W503"]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.poetry]
-package-mode = false
