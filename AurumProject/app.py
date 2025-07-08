@@ -2,12 +2,14 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from models import db, Usuario
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
 CORS(app)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:pass123@localhost:3306/Aurum'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:pass123@localhost:3306/Aurum'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
