@@ -1,5 +1,5 @@
 [project]
-name = "aurum"
+name = "AurumProject"
 version = "0.1.0"
 description = "Aplicação Flask com sistema de usuários, módulos, tarefas e premiações."
 authors = [
