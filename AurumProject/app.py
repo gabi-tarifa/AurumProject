@@ -12,6 +12,9 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
+
+
 
 db.init_app(app)
 
@@ -22,6 +25,10 @@ with app.app_context():
 @app.route("/login")
 def login_page():
     return render_template("login.html")
+    
+@app.route("/debug-db")
+def debug_db():
+    return f"Usando URI: {app.config['SQLALCHEMY_DATABASE_URI']}"
 
 
 # 🆕 Página de Cadastro
