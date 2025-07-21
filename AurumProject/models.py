@@ -36,4 +36,3 @@ class TarefaUsuario(db.Model):
     data_conclusao = db.Column(db.Date, nullable=False)
     pontuacao = db.Column(db.Integer, nullable=False)
 
-class
