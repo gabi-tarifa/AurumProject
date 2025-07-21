@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 alert(data.mensagem);
-                window.location.href = "/inicial";  // Redireciona para a página inicial (a.html)
+                window.location.href = "/questionario";  // Redireciona para a página inicial (a.html)
             } else {
                 alert(data.mensagem);
             }

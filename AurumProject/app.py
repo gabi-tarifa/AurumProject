@@ -8,11 +8,11 @@ app = Flask(__name__)
 CORS(app)
 
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:pass123@localhost:3306/Aurum'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum'
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
+#print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
 
 
 
