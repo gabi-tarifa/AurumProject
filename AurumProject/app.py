@@ -30,6 +30,10 @@ def login_page():
 def debug_db():
     return f"Usando URI: {app.config['SQLALCHEMY_DATABASE_URI']}"
 
+# Página do questionário de entrada
+@app.route("/questionario")
+def questionario_page():
+    return render_template("perguntasEntrada.html")
 
 # 🆕 Página de Cadastro
 @app.route("/cadastro")

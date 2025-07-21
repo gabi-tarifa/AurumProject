@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Aurum - Vamos Começar</title>
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/perguntasEntrada.css') }}">-->
+    <link rel="stylesheet" href="C:\Users\gabri\AurumProject\AurumProject\static\css\perguntasEntrada.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            template: `
+                <div id="container">
+                    <main class="quiz-container">
+                        <h1>Teste de Recomendação</h1>
+                        
+                        <p class="progress-label">{{ progressLabel }}</p>
+                        
+                        <h2>[[ perguntaAtual.desc_pergunta ]]</h2>
+
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" 
+                                 :style="{ width: progressPercentage + '%' }" 
+                                 :aria-valuenow="progressPercentage" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                        <div class="options">
+                            <button
+                                v-for="n in 5"
+                                :key="n"
+                                @click="responderPergunta(n)"
+                                :class="['option', getOptionColorClass(n)]"
+                                :data-value="n"
+                            >
+                                [[ n ]]<br><span>[[ getOptionDescription(n) ]]</span>
+                            </button>
+                        </div>
+                    </main>
+
+                </div>
+            `,
+            data() {
+                return {
+                    perguntas: [
+                        { numero_pergunta: 1, desc_pergunta: "O quanto o conforto interno importa na sua decisão?", resposta_pergunta: 0 },
+                        { numero_pergunta: 2, desc_pergunta: "Qual a sua prioridade em termos de economia de combustível?", resposta_pergunta: 0 },
+                        { numero_pergunta: 3, desc_pergunta: "Qual a importância do espaço de seu carro?", resposta_pergunta: 0 },
+                        { numero_pergunta: 4, desc_pergunta: "Qual a importância do preço de compra de um carro novo?", resposta_pergunta: 0 },
+                        { numero_pergunta: 5, desc_pergunta: "Qual a importância do preço de manutenção?", resposta_pergunta: 0 },
+                    ],
+                    i_pergunta_atual: 0,
+                }
+            },
+            computed: {
+                perguntaAtual() {
+                    if (this.i_pergunta_atual >= this.perguntas.length) {
+                        return this.perguntas[this.perguntas.length - 1]; 
+                    }
+                    return this.perguntas[this.i_pergunta_atual];
+                },
+                progressPercentage() {
+                    if (this.perguntas.length === 0) return 0;
+                    return ((this.i_pergunta_atual ) / this.perguntas.length) * 100;
+                },
+                progressLabel() {
+                    return `${this.i_pergunta_atual + 1}/${this.perguntas.length}`;
+                }
+            },
+            methods: {
+                responderPergunta: function(resposta) {
+                    this.perguntas[this.i_pergunta_atual].resposta_pergunta = resposta;
+
+                    if (this.i_pergunta_atual < this.perguntas.length - 1) {
+                        this.i_pergunta_atual++;
+                    } else {
+                        console.log("Todas as perguntas foram respondidas.");
+                        console.log("Respostas Finais:", this.perguntas);
+
+                        // Montar o payload
+                        const payload = {
+                            conforto: this.perguntas[0].resposta_pergunta,
+                            consumo: this.perguntas[1].resposta_pergunta,
+                            tamanho: this.perguntas[2].resposta_pergunta,
+                            preco: this.perguntas[3].resposta_pergunta,
+                            manutencao: this.perguntas[4].resposta_pergunta
+                        };
+                        console.log(payload);
+
+                        // Enviar para o back-end
+                        fetch('/api/recomendar', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            window.location.href = "/recomendacao";  // página que mostrará o resultado
+                        })
+                        .catch(error => {
+                            console.error('Erro ao obter recomendação:', error);
+                        });
+                    }
+                },
+                getOptionColorClass(value) {
+                    const classes = {
+                        1: 'red', 2: 'orange', 3: 'yellow', 4: 'lightgreen', 5: 'green'
+                    };
+                    return classes[value];
+                },
+                getOptionDescription(value) {
+                    const descriptions = {
+                        1: 'Nada importante', 2: 'Pouco importante', 3: 'Neutro',
+                        4: 'Importante', 5: 'Muito importante'
+                    };
+                    return descriptions[value];
+                }
+            }
+        })
+    </script>
+</body>
+</html>
