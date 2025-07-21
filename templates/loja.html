@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quizes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}"></head>
+</head>
+<body>
+  <div class="containerTP">
+    <!-- MENU LATERAL -->
+    <nav class="sidebar">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
+        Aprender
+      </div>
+      <div class="menu-item active">
+        <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
+        Quiz
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
+        Ranking
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
+        Perfil
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
+        Loja
+      </div>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
+        Mais
+      </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+  <p id="welcome-bank"></p>
+
+    <!-- PAINEL LATERAL DIREITO -->
+    <aside class="info-box">
+      <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon"> </div>
+      <div class="info"><img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
+      <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
+      <div class="info"><span class="golden" style="color: #afafaf;">#2</span> <br> <span class="darkgolden" style="color: #afafaf;">Posição no Ranking</span></div>
+
+      <div class="info">
+        <div class="rank-item">#1 <span class="first">Usuário12356</span></div>
+        <div class="rank-item">#2 <span class="second">Usuário12356</span></div>
+        <div class="rank-item">#3 <span class="third">Usuário12356</span></div>
+        <div class="rank-item">#4 Usuário12356</div>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>
