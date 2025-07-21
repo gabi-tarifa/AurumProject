@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario
+from models import db, Usuario, Modulo, Tarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
