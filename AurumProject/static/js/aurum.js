@@ -1,8 +1,8 @@
-document.getElementById('btnCadastro').addEventListener('click', () => {
+document.getElementById('btnCadastrar').addEventListener('click', () => {
     window.location.href = "/cadastro";
 });
 
-document.getElementById('btnLogin').addEventListener('click', () => {
+document.getElementById('btnEntrar').addEventListener('click', () => {
     window.location.href = "/login";
 });
 
