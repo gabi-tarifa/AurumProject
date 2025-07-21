@@ -74,7 +74,9 @@ CREATE TABLE RankingUsuario (
     posicao INT NOT NULL,
     FOREIGN KEY (id_ranking) REFERENCES RankingSemanal(id_ranking),
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
-);DELIMITER //
+);
+
+DELIMITER //
 
 CREATE PROCEDURE CalcularRankingSemanal(IN data_inicio DATE, IN data_fim DATE)
 BEGIN

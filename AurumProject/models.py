@@ -29,3 +29,11 @@ class Tarefa(db.Model):
     descricao = db.Column(db.String(255), nullable=False)
     pontos = db.Column(db.Integer, nullable=False)
 
+class TarefaUsuario(db.Model):
+    id_tarefa_usuario = db.Column(db.Integer, primary_key=True)
+    id_tarefa = db.Column(db.Integer, ForeignKey(Tarefa.id_tarefa),nullable=False)
+    id_modulo = db.Column(db.Integer, ForeignKey(Modulo.id), nullable=False)
+    data_conclusao = db.Column(db.Date, nullable=False)
+    pontuacao = db.Column(db.Integer, nullable=False)
+
+class
