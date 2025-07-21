@@ -12,12 +12,40 @@
 
 <div class="containerTP" id="rank-screen">
     <aside class="sidebar">
-     <div class="menu-item"><img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon">Aprender</div>
-      <div class="menu-item"><img src="{{ url_for('static', filename='img/working-hours.png') }}" class="icon"> Quiz</div>
-      <div class="menu-item active"><img src="{{ url_for('static', filename='img/trophy.png') }}" class="icon"> Ranking</div>
-      <div class="menu-item"><img src="{{ url_for('static', filename='img/profile.png') }}" class="icon"> Perfil</div>
-      <div class="menu-item"><img src="{{ url_for('static', filename='img/store.png') }}" class="icon"> Loja</div>
-      <div class="menu-item"><img src="{{ url_for('static', filename='img/info.png') }}" class="icon"> Mais</div>
+     <a href="{{ url_for('starting_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
+          <span style="color: white;">Aprender</span>
+        </div>
+      </a>
+      <a href="{{ url_for('quiz_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
+        <span style="color: white;">Quiz</span>
+      </div>
+      </a>
+      <a href="{{ url_for('ranking_page') }}">
+      <div class="menu-item active">
+        <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
+        <span style="color: white;">Ranking</span>
+      </div>
+      </a>
+      <a href="{{ url_for('perfil_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
+        <span style="color: white;">Perfil</span>
+      </div>
+      </a>
+      <a href="{{ url_for('store_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
+        <span style="color: white;">Loja</span>
+      </div>
+      </a>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
+        Mais
+      </div>
     </aside>
 
     <main class="main-content">

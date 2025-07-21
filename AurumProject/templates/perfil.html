@@ -10,28 +10,37 @@
 <body>
   <div class="containerTP">
     <!-- Menu Lateral -->
-    <nav class="sidebar">
-      <div class="menu-itemtp">
-        <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
-        Aprender
-      </div>
-      <div class="menu-itemtp">
+    <a href="{{ url_for('starting_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
+          <span style="color: white;">Aprender</span>
+        </div>
+      </a>
+      <a href="{{ url_for('quiz_page') }}">
+      <div class="menu-item">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
-        Quiz
+        <span style="color: white;">Quiz</span>
       </div>
-      <div class="menu-itemtp">
+      </a>
+      <a href="{{ url_for('ranking_page') }}">
+      <div class="menu-item">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
-        Ranking
+        <span style="color: white;">Ranking</span>
       </div>
+      </a>
+      <a href="{{ url_for('perfil_page') }}">
       <div class="menu-item active">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
-        Perfil
+        <span style="color: white;">Perfil</span>
       </div>
-      <div class="menu-itemtp">
+      </a>
+      <a href="{{ url_for('store_page') }}">
+      <div class="menu-item">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
-        Loja
+        <span style="color: white;">Loja</span>
       </div>
-      <div class="menu-itemtp">
+      </a>
+      <div class="menu-item">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         Mais
       </div>
