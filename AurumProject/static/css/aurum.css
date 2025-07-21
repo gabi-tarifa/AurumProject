@@ -237,6 +237,7 @@ body {
   border-radius: 16px;
   padding: 20px;
   width: 60%;
+  min-width: 370px;
 }
 
 .ranking-box h1 {
@@ -249,6 +250,7 @@ body {
 
 .ranking-list {
   list-style: none;
+  min-width: 325px;
 }
 
 .ranking-list li {
