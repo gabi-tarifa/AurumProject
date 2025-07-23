@@ -1,21 +1,16 @@
-document.getElementById("btnCadastrar").addEventListener('click', () => {
+/*document.getElementById("btnCadastrar").addEventListener('click', () => {
     window.location.href = "/cadastro";
 });
 
 document.getElementById("btnEntrar").addEventListener('click', () => {
     window.location.href = "/login";
 });
-
-document.getElementById("btnVoltar").addEventListener('click', () => {
-    window.location.href = "/";
-});
-
-
+*/
 
 document.addEventListener("DOMContentLoaded", () => {
 
     //cadastro 
-    
+
     const btnCadastro = document.getElementById("signup-btn");
     btnCadastro.addEventListener("click", async () => {
         const nome = document.querySelector('input[placeholder="Nome completo"]').value;
