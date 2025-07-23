@@ -230,7 +230,7 @@ body {
   flex: 1;
   padding: 30px;
   gap: 30px;
-  min-width: 740px;
+  min-width: 700px;
 }
 
 .ranking-box {
@@ -408,6 +408,7 @@ body {
 
 .quiz-content {
   align-self: flex-start;
+  min-width: 700px;
 }
 
 .modulo {
