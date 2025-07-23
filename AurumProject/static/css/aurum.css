@@ -230,7 +230,7 @@ body {
   flex: 1;
   padding: 30px;
   gap: 30px;
-  min-width: 700px;
+  min-width: 450px;
 }
 
 .ranking-box {
@@ -387,7 +387,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-width: 450px;
 
 }
 
@@ -408,7 +407,7 @@ body {
 
 .quiz-content {
   align-self: flex-start;
-  min-width: 700px;
+  min-width: 450px;
 }
 
 .modulo {
