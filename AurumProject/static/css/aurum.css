@@ -230,6 +230,7 @@ body {
   flex: 1;
   padding: 30px;
   gap: 30px;
+  min-width: 740px;
 }
 
 .ranking-box {
