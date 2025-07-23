@@ -1,18 +1,18 @@
-document.getElementById('btnCadastrar').addEventListener('click', () => {
+document.getElementById("btnCadastrar").addEventListener('click', () => {
     window.location.href = "/cadastro";
 });
 
-document.getElementById('btnEntrar').addEventListener('click', () => {
+document.getElementById("btnEntrar").addEventListener('click', () => {
     window.location.href = "/login";
 });
 
-document.getElementById('btnVoltar').addEventListener('click', () => {
+document.getElementById("btnVoltar").addEventListener('click', () => {
     window.location.href = "/";
 });
 
 
 
-document.addEventListener("signup-btn", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const btnCadastro = document.getElementById("signup-btn");
     btnCadastro.addEventListener("click", async () => {
         const nome = document.querySelector('input[placeholder="Nome completo"]').value;
@@ -25,7 +25,7 @@ document.addEventListener("signup-btn", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/cadastro", {
+            const response = await fetch("/cadastro", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/login", {
+            const response = await fetch("/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
