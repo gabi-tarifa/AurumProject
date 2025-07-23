@@ -1,16 +1,4 @@
-/*document.getElementById("btnCadastrar").addEventListener('click', () => {
-    window.location.href = "/cadastro";
-});
-
-document.getElementById("btnEntrar").addEventListener('click', () => {
-    window.location.href = "/login";
-});
-*/
-
 document.addEventListener("DOMContentLoaded", () => {
-
-    //cadastro 
-
     const btnCadastro = document.getElementById("signup-btn");
     btnCadastro.addEventListener("click", async () => {
         const nome = document.querySelector('input[placeholder="Nome completo"]').value;
@@ -43,9 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Erro ao cadastrar. Verifique sua conexão.");
         }
     });
+});
 
-    //login
 
+
+document.addEventListener("DOMContentLoaded", () => {
     const btnLogin = document.getElementById("login-btn");
 
     btnLogin.addEventListener("click", async () => {
