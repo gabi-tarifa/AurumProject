@@ -36,8 +36,8 @@ main {
 
 .quiz-container h1,
 .quiz-container h2,
-.quiz-container .progress,
-.quiz-container .options{
+.quiz-container ,
+.options{
     margin-bottom: 4rem;
 }
 
