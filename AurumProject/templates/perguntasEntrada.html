@@ -86,14 +86,8 @@
                     } else {
                         console.log("Todas as perguntas foram respondidas.");
                         console.log("Respostas Finais:", this.perguntas);
-
+                        window.location.href = "/inicial";  // página que mostrará o resultado
                         
-                        fetch(data => {
-                            window.location.href = "/inicial";  // página que mostrará o resultado
-                        })
-                        .catch(error => {
-                            console.error('Erro ao obter respostas:', error);
-                        });
                     }
                 },
                 getOptionColorClass(value) {
