@@ -31,7 +31,7 @@
 
     .topbar {
     background-color: #748096;
-    color: #fff;
+    color: #152238;
     padding: 20px;
     font-size: 2rem;
     display: flex;
@@ -180,7 +180,7 @@ footer {
     width: 200px;
   }
   .newsletter button {
-    background-color: #3b82f6;
+    background-color: goldenrod;
     color: #152238;
     padding: 0.5rem 1rem;
     border: none;
