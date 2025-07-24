@@ -42,7 +42,7 @@ main {
     margin-bottom: 4rem;
 }
 
-.progress {
+.progress .progress-bar{
   background-color: goldenrod;
   border-radius: 13px;
 }
