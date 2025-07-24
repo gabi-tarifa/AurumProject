@@ -419,6 +419,11 @@ body {
 }
 
 .modulo1 {
+  background: linear-gradient(135deg, #4ff3ff, #46f4a8);
+  color: whitesmoke;
+}
+
+.concluido {
   background: linear-gradient(135deg, #ffd54f, #ffca28);
   color: #333;
 }
