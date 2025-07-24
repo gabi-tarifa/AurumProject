@@ -21,7 +21,7 @@
             template: `
                 <div id="container">
                     <main class="quiz-container">
-                        <h1>Teste de Recomendação</h1>
+                        <h1>Teste sobre Conehcimento Financeiro</h1>
                         
                         <p class="progress-label">{{ progressLabel }}</p>
                         
@@ -87,30 +87,12 @@
                         console.log("Todas as perguntas foram respondidas.");
                         console.log("Respostas Finais:", this.perguntas);
 
-                        // Montar o payload
-                        const payload = {
-                            conforto: this.perguntas[0].resposta_pergunta,
-                            consumo: this.perguntas[1].resposta_pergunta,
-                            tamanho: this.perguntas[2].resposta_pergunta,
-                            preco: this.perguntas[3].resposta_pergunta,
-                            manutencao: this.perguntas[4].resposta_pergunta
-                        };
-                        console.log(payload);
-
-                        // Enviar para o back-end
-                        fetch('/api/recomendar', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
+                        
+                        fetch(data => {
                             window.location.href = "/inicial";  // página que mostrará o resultado
                         })
                         .catch(error => {
-                            console.error('Erro ao obter recomendação:', error);
+                            console.error('Erro ao obter respostas:', error);
                         });
                     }
                 },
