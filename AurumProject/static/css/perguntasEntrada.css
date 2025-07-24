@@ -82,12 +82,15 @@
 .quiz-container h1,
 .quiz-container h2,
 .quiz-container .progress,
-.quiz-container .options {
+.quiz-container .options .progress-label{
     margin-bottom: 4rem;
 }
   
+.progress-label {
+  background-color: goldenrod;
+}
 
-.progress{
+.progress {
   background-color: #dddddd !important; 
   border-radius: 13px !important;
 }
@@ -180,7 +183,7 @@ footer {
     width: 200px;
   }
   .newsletter button {
-    background-color: goldenrod;
+    background-color: white;
     color: #152238;
     padding: 0.5rem 1rem;
     border: none;
