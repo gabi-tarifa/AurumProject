@@ -44,14 +44,12 @@ main {
 
 .progress .progress-bar{
   background-color: darkgoldenrod;
-  border-radius: 30px;
 }
 
 #progressbar>div {
   background-color: darkgoldenrod;
   width: 0%;
   height: 20px;
-  border-radius: 30px;
 }
   
   /* Opções */
