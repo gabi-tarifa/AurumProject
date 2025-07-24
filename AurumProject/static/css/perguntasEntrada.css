@@ -44,7 +44,11 @@ main {
 
 .progress {
   background-color: goldenrod;
-  border-radius: 13px !important;
+  border-radius: 13px;
+}
+
+.progress-bar {
+  background-color: goldenrod;
 }
 
 
