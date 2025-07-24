@@ -82,11 +82,11 @@
 .quiz-container h1,
 .quiz-container h2,
 .quiz-container .progress,
-.quiz-container .options .progress-label{
+.quiz-container .options{
     margin-bottom: 4rem;
 }
   
-.progress-label {
+.progress-bar {
   background-color: goldenrod;
 }
 
