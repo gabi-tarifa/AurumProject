@@ -477,12 +477,12 @@ body {
   overflow: hidden;
   margin: 10px 0;
   width: 160px;
+  text-align: center;
 }
 
 .progresstp {
   background-color: #00e676;
-  text-align: center;
-  color: black;
+  color: grey;
   padding: 4px;
   font-size: 14px;
 }
