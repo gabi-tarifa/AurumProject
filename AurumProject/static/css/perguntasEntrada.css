@@ -11,7 +11,7 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   display: flex;
   flex-direction: column;
-  background: #152238;
+  background: #0f1e34;
     
 }
 
@@ -29,7 +29,6 @@ main {
     flex-direction: column;
     justify-content: center;
     margin: 2rem auto;
-    background: #0f1e34;
     padding: 2rem;
     border-radius: 14px;
     text-align: center;
@@ -47,20 +46,11 @@ main {
   border-radius: 13px;
 }
 
-.progress-bar {
-  background-color: goldenrod;
-}
-
-.progressbar {
-  background-color: goldenrod;
-}
-
-
 #progressbar>div {
   background-color: goldenrod;
   width: 0%;
   height: 20px;
-  border-radius: 30px;
+  border-radius: 13px;
 }
   
   /* Opções */
