@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   background: #0f1e34;
+  color: goldenrod;
     
 }
 
@@ -42,12 +43,12 @@ main {
 }
 
 .progress .progress-bar{
-  background-color: goldenrod;
+  background-color: darkgoldenrod;
   border-radius: 30px;
 }
 
 #progressbar>div {
-  background-color: goldenrod;
+  background-color: darkgoldenrod;
   width: 0%;
   height: 20px;
   border-radius: 30px;
