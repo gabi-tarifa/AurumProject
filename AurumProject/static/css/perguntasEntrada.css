@@ -73,7 +73,7 @@
     flex-direction: column;
     justify-content: center;
     margin: 2rem auto;
-    background: white;
+    background: #152238;
     padding: 2rem;
     border-radius: 14px;
     text-align: center;
@@ -94,7 +94,7 @@
 
 
 #progressbar>div {
-  background-color: rgb(0, 110, 255);
+  background-color: goldenrod;
   width: 0%;
   height: 20px;
   border-radius: 30px;
@@ -141,7 +141,7 @@
   /* Footer */
 footer {
     background-color: #0f172a;
-    color: white;
+    color: #152238;
     padding: 0.5rem;
     z-index: 100;
 }
@@ -181,7 +181,7 @@ footer {
   }
   .newsletter button {
     background-color: #3b82f6;
-    color: white;
+    color: #152238;
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 6px;
