@@ -41,13 +41,9 @@ main {
 .quiz-container .options{
     margin-bottom: 4rem;
 }
-  
-.progress-bar {
-  background-color: goldenrod;
-}
 
 .progress {
-  background-color: #dddddd !important; 
+  background-color: goldenrod;
   border-radius: 13px !important;
 }
 
