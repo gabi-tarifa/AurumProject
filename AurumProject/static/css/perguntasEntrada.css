@@ -43,7 +43,7 @@ main {
 
 .progress .progress-bar{
   background-color: goldenrod;
-  border-radius: 13px;
+  border-radius: 30px;
 }
 
 #progressbar>div {
