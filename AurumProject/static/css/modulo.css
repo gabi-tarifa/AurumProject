@@ -23,9 +23,9 @@
 }
 
 .etapa {
-  width: 60px;
+  min-width: 60px;
   height: 60px;
-  border-radius: 25%;
+  border-radius: 50%;
   font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
