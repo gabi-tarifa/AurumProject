@@ -61,6 +61,10 @@ def presentation_page():
 def perfil_page():
     return render_template("perfil.html")
 
+@app.route("/modulo")
+def modulo():
+    return render_template("modulos.html")
+
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
     dados = request.json
