@@ -331,6 +331,16 @@ body {
   border-radius: 5px;
 }
 
+a {
+  text-decoration: none; /* Remove o sublinhado */
+  color: inherit;         /* Faz o link herdar a cor do elemento pai */
+}
+
+a:visited {
+  color: inherit;         /* Remove o roxo do link visitado */
+  text-decoration: none;  /* Garante que não volte o sublinhado */
+}
+
 .continue-btn {
   background-color: #05696b;
   color: white;
