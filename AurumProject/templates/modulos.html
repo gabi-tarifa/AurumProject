@@ -54,11 +54,11 @@
     <main class="main-content">
       <h1 class="titulo-modulo">Módulo: Introdução ao Projeto Aurum</h1>
       <div class="linha-caminho">
-        <div class="etapa desbloqueada" onclick="irParaEtapa(1)">1</div>
-        <div class="etapa desbloqueada" onclick="irParaEtapa(2)">2</div>
-        <div class="etapa desbloqueada" onclick="irParaEtapa(3)">3</div>
-        <div class="etapa bloqueada">4</div>
-        <div class="etapa bloqueada">5</div>
+        <div class="etapa desbloqueada" onclick="irParaEtapa(1)"><img src="{{ url_for('static', filename='img//winner.png') }}" class="icon"></div>
+        <div class="etapa desbloqueada" onclick="irParaEtapa(2)"><img src="{{ url_for('static', filename='img//winner.png') }}" class="icon"></div>
+        <div class="etapa desbloqueada" onclick="irParaEtapa(3)"><img src="{{ url_for('static', filename='img//open-lock(1).png') }}" class="icon"></div>
+        <div class="etapa bloqueada"><img src="{{ url_for('static', filename='img//lock.png') }}" class="icon"></div>
+        <div class="etapa bloqueada"><img src="{{ url_for('static', filename='img//lock.png') }}" class="icon"></div>
       <div class="mascote">
         <img src="{{ url_for('static', filename='img//lion.png') }}" alt="Mascote Aurum" />
       </div>
