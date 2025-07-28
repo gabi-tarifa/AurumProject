@@ -50,6 +50,7 @@ main {
   background-color: darkgoldenrod;
   width: 0%;
   height: 20px;
+  border-radius: 20%;
 }
   
   /* Opções */
@@ -67,8 +68,9 @@ main {
     height: 120px;
     padding: 10px;
     font-size: 20px; /* valor principal */
-    background-color: white;
-    border: 2px solid #ccc;
+    background-color: #0f1b3d;
+    border: 2px solid goldenrod;
+    color: goldenrod;
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
