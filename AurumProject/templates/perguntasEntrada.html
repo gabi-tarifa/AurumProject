@@ -37,7 +37,7 @@
                         </div>
                         <div class="options">
                             <button
-                                v-for="n in 5"
+                                v-for="n in 12"
                                 :key="n"
                                 @click="responderPergunta(n)"
                                 :class="['option', getOptionColorClass(n)]"
@@ -53,11 +53,18 @@
             data() {
                 return {
                     perguntas: [
-                        { numero_pergunta: 1, desc_pergunta: "O quanto o conforto interno importa na sua decisão?", resposta_pergunta: 0 },
-                        { numero_pergunta: 2, desc_pergunta: "Qual a sua prioridade em termos de economia de combustível?", resposta_pergunta: 0 },
-                        { numero_pergunta: 3, desc_pergunta: "Qual a importância do espaço de seu carro?", resposta_pergunta: 0 },
-                        { numero_pergunta: 4, desc_pergunta: "Qual a importância do preço de compra de um carro novo?", resposta_pergunta: 0 },
-                        { numero_pergunta: 5, desc_pergunta: "Qual a importância do preço de manutenção?", resposta_pergunta: 0 },
+                        { numero_pergunta: 1, desc_pergunta: "O que é um orçamento pessoal?", resposta_pergunta: 0 },
+                        { numero_pergunta: 2, desc_pergunta: "Qual das opções abaixo é considerada uma despesa fixa?", resposta_pergunta: 0 },
+                        { numero_pergunta: 3, desc_pergunta: "Quando você gasta mais do que ganha, isso é chamado de:", resposta_pergunta: 0 },
+                        { numero_pergunta: 4, desc_pergunta: "O que significa \"guardar dinheiro na poupança\"", resposta_pergunta: 0 },
+                        { numero_pergunta: 5, desc_pergunta: "Se você compra algo parcelado no cartão com juros, você está:", resposta_pergunta: 0 },
+                        { numero_pergunta: 6, desc_pergunta: "O que é o \"juro composto\"?", resposta_pergunta: 0 },
+                        { numero_pergunta: 7, desc_pergunta: "Qual é a principal vantagem de anotar seus gastos diários?", resposta_pergunta: 0 },
+                        { numero_pergunta: 8, desc_pergunta: "O que significa \"renda variável\"?", resposta_pergunta: 0 },
+                        { numero_pergunta: 9, desc_pergunta: "O que é o \"score de crédito\"?", resposta_pergunta: 0 },
+                        { numero_pergunta: 10, desc_pergunta: "O que fazer primeiro ao receber o salário?", resposta_pergunta: 0 },
+                        { numero_pergunta: 11, desc_pergunta: "Qual desses é um bom hábito financeiro?", resposta_pergunta: 0 },
+                        { numero_pergunta: 12, desc_pergunta: "O que significa \"educação financeira\"", resposta_pergunta: 0 }
                     ],
                     i_pergunta_atual: 0,
                 }
