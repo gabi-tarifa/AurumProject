@@ -4,9 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const nome = document.querySelector('input[placeholder="Nome completo"]').value;
         const email = document.querySelector('input[placeholder="Email"]').value;
         const senha = document.querySelector('input[placeholder="Senha"]').value;
+        const conrfirmarSenha = document.querySelector('input[placeholder="Confirmar Senha"]').value;
 
         if (!nome || !email || !senha) {
             alert("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        if(senha.lenght < 6) {
+            alert("A senha tem que ser maior que 6 dígitos!");
+            return;
+        }
+
+        if(conrfirmarSenha != senha){
+            alert("As senhas não condizem! Verifique-as e tente novamente.");
             return;
         }
 
@@ -60,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 alert(data.mensagem);
-                window.location.href = "/questionario";  // Redireciona para a página inicial (a.html)
+                window.location.href = "/questionario";  // Redireciona para a página de perguntas
             } else {
                 alert(data.mensagem);
             }
