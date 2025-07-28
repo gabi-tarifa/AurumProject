@@ -31,7 +31,6 @@
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease;
-  alignment-baseline: central;
 }
 
 .etapa.concluida {
