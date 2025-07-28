@@ -225,11 +225,12 @@ body {
   border-radius: 8px;
 }
 
-.content {
+.main-content {
   display: flex;
   flex: 1;
   padding: 30px;
   gap: 30px;
+  min-width: 450px;
 }
 
 .ranking-box {
@@ -237,6 +238,7 @@ body {
   border-radius: 16px;
   padding: 20px;
   width: 60%;
+  min-width: 370px;
 }
 
 .ranking-box h1 {
@@ -249,6 +251,7 @@ body {
 
 .ranking-list {
   list-style: none;
+  min-width: 325px;
 }
 
 .ranking-list li {
@@ -323,9 +326,19 @@ body {
 }
 
 .progress {
-  background-color: #05696b;
+  background-color: #00e676;
   height: 100%;
   border-radius: 5px;
+}
+
+a {
+  text-decoration: none; /* Remove o sublinhado */
+  color: inherit;         /* Faz o link herdar a cor do elemento pai */
+}
+
+a:visited {
+  color: inherit;         /* Remove o roxo do link visitado */
+  text-decoration: none;  /* Garante que não volte o sublinhado */
 }
 
 .continue-btn {
@@ -342,6 +355,13 @@ body {
   height: 40px;
   margin-right: 10px;
   vertical-align: middle;
+}
+
+.lessonsicon {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  
 }
 
 .large-icon {
@@ -384,6 +404,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
 }
 
 .quiz-content {
@@ -403,6 +424,7 @@ body {
 
 .quiz-content {
   align-self: flex-start;
+  min-width: 450px;
 }
 
 .modulo {
@@ -414,6 +436,11 @@ body {
 }
 
 .modulo1 {
+  background: linear-gradient(75deg, #45cad8, #49f5aa);
+  color: whitesmoke;
+}
+
+.concluido {
   background: linear-gradient(135deg, #ffd54f, #ffca28);
   color: #333;
 }
@@ -467,12 +494,12 @@ body {
   overflow: hidden;
   margin: 10px 0;
   width: 160px;
+  text-align: center;
 }
 
 .progresstp {
   background-color: #00e676;
-  text-align: center;
-  color: black;
+  color: grey;
   padding: 4px;
   font-size: 14px;
 }
@@ -589,4 +616,59 @@ body {
   background-color: #fbc02d;
   color: #212121;
   font-weight: bold;
+}
+
+
+.poderes {
+  margin-top: 20px;
+}
+
+.poder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #172b4d;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.poder-icone {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
+.poder-info {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.poder-info h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #ffd700;
+}
+
+.poder-info p {
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.poder-custo {
+  background-color: #0f1e3d;
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.poder-custo img {
+  width: 20px;
+  height: 20px;
 }

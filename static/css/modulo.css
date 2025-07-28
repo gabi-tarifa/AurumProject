@@ -1,0 +1,82 @@
+.modulo-mapa {
+  display: flex;
+  height: 100vh;
+}
+
+/* Caminho */
+.caminho {
+  flex: 1;
+  padding: 2rem;
+}
+
+.titulo-modulo {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.linha-caminho {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.etapa {
+  min-width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.etapa.concluida {
+  background-color: #ffd700;
+  color: #000;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.etapa.desbloqueada {
+  background-color: #5eb0d6;
+  color: whitesmoke;
+  box-shadow: 0 0 10px rgba(63, 219, 216, 0.519);
+}
+
+.etapa.bloqueada {
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Painel lateral */
+.painel-lateral {
+  width: 280px;
+  background-color: #fafafa;
+  border-left: 2px solid #ddd;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.status, .ranking {
+  margin-bottom: 2rem;
+}
+
+.status h3, .ranking h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.ranking ol {
+  padding-left: 1.2rem;
+}
+
+.mascote img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}

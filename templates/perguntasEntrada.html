@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Aurum - Vamos Começar</title>
-    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/perguntasEntrada.css') }}">-->
-    <link rel="stylesheet" href="C:\Users\gabri\AurumProject\AurumProject\static\css\perguntasEntrada.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perguntasEntrada.css') }}">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
    
 </head>
@@ -21,7 +21,7 @@
             template: `
                 <div id="container">
                     <main class="quiz-container">
-                        <h1>Teste de Recomendação</h1>
+                        <h1>Teste sobre Conehcimento Financeiro</h1>
                         
                         <p class="progress-label">{{ progressLabel }}</p>
                         
@@ -37,7 +37,7 @@
                         </div>
                         <div class="options">
                             <button
-                                v-for="n in 5"
+                                v-for="n in 12"
                                 :key="n"
                                 @click="responderPergunta(n)"
                                 :class="['option', getOptionColorClass(n)]"
@@ -53,11 +53,18 @@
             data() {
                 return {
                     perguntas: [
-                        { numero_pergunta: 1, desc_pergunta: "O quanto o conforto interno importa na sua decisão?", resposta_pergunta: 0 },
-                        { numero_pergunta: 2, desc_pergunta: "Qual a sua prioridade em termos de economia de combustível?", resposta_pergunta: 0 },
-                        { numero_pergunta: 3, desc_pergunta: "Qual a importância do espaço de seu carro?", resposta_pergunta: 0 },
-                        { numero_pergunta: 4, desc_pergunta: "Qual a importância do preço de compra de um carro novo?", resposta_pergunta: 0 },
-                        { numero_pergunta: 5, desc_pergunta: "Qual a importância do preço de manutenção?", resposta_pergunta: 0 },
+                        { numero_pergunta: 1, desc_pergunta: "O que é um orçamento pessoal?", resposta_pergunta: 0 },
+                        { numero_pergunta: 2, desc_pergunta: "Qual das opções abaixo é considerada uma despesa fixa?", resposta_pergunta: 0 },
+                        { numero_pergunta: 3, desc_pergunta: "Quando você gasta mais do que ganha, isso é chamado de:", resposta_pergunta: 0 },
+                        { numero_pergunta: 4, desc_pergunta: "O que significa \"guardar dinheiro na poupança\"", resposta_pergunta: 0 },
+                        { numero_pergunta: 5, desc_pergunta: "Se você compra algo parcelado no cartão com juros, você está:", resposta_pergunta: 0 },
+                        { numero_pergunta: 6, desc_pergunta: "O que é o \"juro composto\"?", resposta_pergunta: 0 },
+                        { numero_pergunta: 7, desc_pergunta: "Qual é a principal vantagem de anotar seus gastos diários?", resposta_pergunta: 0 },
+                        { numero_pergunta: 8, desc_pergunta: "O que significa \"renda variável\"?", resposta_pergunta: 0 },
+                        { numero_pergunta: 9, desc_pergunta: "O que é o \"score de crédito\"?", resposta_pergunta: 0 },
+                        { numero_pergunta: 10, desc_pergunta: "O que fazer primeiro ao receber o salário?", resposta_pergunta: 0 },
+                        { numero_pergunta: 11, desc_pergunta: "Qual desses é um bom hábito financeiro?", resposta_pergunta: 0 },
+                        { numero_pergunta: 12, desc_pergunta: "O que significa \"educação financeira\"", resposta_pergunta: 0 }
                     ],
                     i_pergunta_atual: 0,
                 }
@@ -86,32 +93,8 @@
                     } else {
                         console.log("Todas as perguntas foram respondidas.");
                         console.log("Respostas Finais:", this.perguntas);
-
-                        // Montar o payload
-                        const payload = {
-                            conforto: this.perguntas[0].resposta_pergunta,
-                            consumo: this.perguntas[1].resposta_pergunta,
-                            tamanho: this.perguntas[2].resposta_pergunta,
-                            preco: this.perguntas[3].resposta_pergunta,
-                            manutencao: this.perguntas[4].resposta_pergunta
-                        };
-                        console.log(payload);
-
-                        // Enviar para o back-end
-                        fetch('/api/recomendar', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            window.location.href = "/recomendacao";  // página que mostrará o resultado
-                        })
-                        .catch(error => {
-                            console.error('Erro ao obter recomendação:', error);
-                        });
+                        window.location.href = "/inicial";  // página que mostrará o resultado
+                        
                     }
                 },
                 getOptionColorClass(value) {

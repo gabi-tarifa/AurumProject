@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario
+from models import db, Usuario, Modulo, Tarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
@@ -8,9 +8,9 @@ app = Flask(__name__)
 CORS(app)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum'
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
 
@@ -60,6 +60,10 @@ def presentation_page():
 @app.route("/perfil")
 def perfil_page():
     return render_template("perfil.html")
+
+@app.route("/modulo")
+def modulo():
+    return render_template("modulos.html")
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
