@@ -357,6 +357,13 @@ a:visited {
   vertical-align: middle;
 }
 
+.lessonsicon {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  align-content: center;
+}
+
 .large-icon {
   width: 28px;
   height: 32px;
@@ -612,56 +619,56 @@ a:visited {
 }
 
 
-    .poderes {
-      margin-top: 20px;
-    }
+.poderes {
+  margin-top: 20px;
+}
 
-    .poder {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #172b4d;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+.poder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #172b4d;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
 
-    .poder-icone {
-      width: 60px;
-      height: 60px;
-      margin-right: 15px;
-    }
+.poder-icone {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
 
-    .poder-info {
-      flex: 1;
-      margin-right: 15px;
-    }
+.poder-info {
+  flex: 1;
+  margin-right: 15px;
+}
 
-    .poder-info h4 {
-      margin: 0;
-      font-size: 1.2rem;
-      color: #ffd700;
-    }
+.poder-info h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #ffd700;
+}
 
-    .poder-info p {
-      margin: 5px 0 0 0;
-      font-size: 0.9rem;
-      color: #ddd;
-    }
+.poder-info p {
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+  color: #ddd;
+}
 
-    .poder-custo {
-      background-color: #0f1e3d;
-      padding: 8px 12px;
-      border-radius: 20px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-weight: bold;
-    }
+.poder-custo {
+  background-color: #0f1e3d;
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
 
-    .poder-custo img {
-      width: 20px;
-      height: 20px;
-    }
+.poder-custo img {
+  width: 20px;
+  height: 20px;
+}
