@@ -10,7 +10,7 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     senha = db.Column(db.String(255), nullable=False)
-    pontos = db.Column(db.Integer, default=0)
+    pontos = db.Column(db.Integer, default=0, nullable=False)
     profilepicture = db.Column(db.String(255), nullable=False, default="https://cdn-icons-png.flaticon.com/256/149/149071.png")
 
     def __repr__(self):

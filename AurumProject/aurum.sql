@@ -76,6 +76,10 @@ CREATE TABLE RankingUsuario (
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
+ALTER TABLE Usuario
+ADD COLUMN pontos INT NOT NULL DEFAULT 0,
+ADD COLUMN profilepicture VARCHAR(255) NOT NULL DEFAULT 'https://cdn-icons-png.flaticon.com/256/149/149071.png';
+
 DELIMITER //
 
 CREATE PROCEDURE CalcularRankingSemanal(IN data_inicio DATE, IN data_fim DATE)
