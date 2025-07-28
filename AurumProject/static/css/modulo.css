@@ -25,17 +25,13 @@
 .etapa {
   min-width: 60px;
   height: 60px;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
   font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
-  line-height: 60px;
   cursor: pointer;
   transition: transform 0.2s ease;
   alignment-baseline: central;
-  display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center;     /* Centraliza verticalmente */
 }
 
 .etapa.concluida {
