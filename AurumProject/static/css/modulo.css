@@ -32,6 +32,7 @@
   line-height: 60px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  align-items: center;
 }
 
 .etapa.concluida {
@@ -43,7 +44,7 @@
 .etapa.desbloqueada {
   background-color: #5eb0d6;
   color: whitesmoke;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 10px rgba(63, 219, 216, 0.519);
 }
 
 .etapa.bloqueada {
