@@ -33,6 +33,9 @@
   cursor: pointer;
   transition: transform 0.2s ease;
   alignment-baseline: central;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
 }
 
 .etapa.concluida {
