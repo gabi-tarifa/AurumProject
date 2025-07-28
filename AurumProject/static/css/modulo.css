@@ -32,7 +32,7 @@
   line-height: 60px;
   cursor: pointer;
   transition: transform 0.2s ease;
-  align-items: center;
+  alignment-baseline: central;
 }
 
 .etapa.concluida {
