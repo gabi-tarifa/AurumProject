@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 alert(data.mensagem);
-                window.location.href = "/questionario";  // Redireciona para a página de perguntas
+                window.location.href = "/introducao";  // Redireciona para a página de perguntas
             } else {
                 alert(data.mensagem);
             }
