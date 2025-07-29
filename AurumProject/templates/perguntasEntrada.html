@@ -37,16 +37,15 @@
                         </div>
                         <div class="options">
                             <button
-                                v-for="n in 12"
-                                :key="n"
-                                @click="responderPergunta(n)"
-                                :data-value="n"
+                                v-for="(opcao, index) in respostas[i_pergunta_atual].desc_respostas"
+                                :key="index"
+                                @click="responderPergunta(index + 1)"
+                                class="option"
                             >
-                                [[ n ]]<br><span>[[ getOptionDescription(n) ]]</span>
-                            </button>
+                            [[ opcao ]]
+                        </button>
                         </div>
                     </main>
-
                 </div>
             `,
             data() {
@@ -65,9 +64,71 @@
                         { numero_pergunta: 11, desc_pergunta: "Qual desses é um bom hábito financeiro?", resposta_pergunta: 0 },
                         { numero_pergunta: 12, desc_pergunta: "O que significa \"educação financeira\"", resposta_pergunta: 0 }
                     ],
-                    i_pergunta_atual: 0,
+                    respostas: [
+                        {numero_resposta: 1, desc_respostas: [
+                            "Um plano para gastar o máximo possível todo mês",
+                            "Um registro de todas as receitas e despesas mensais",
+                            "Um tipo de cartão de crédito",
+                            "Um imposto sobre a renda"]},
+                        {numero_resposta: 2, desc_respostas: [
+                            "Conta de luz",
+                            "Mensalidade da escola",
+                            "Compra de roupas",
+                            "Lazer de fim de semana"]},
+                        {numero_resposta: 3, desc_respostas: [
+                            "Superávit",
+                            "Orçamento equilibrado",
+                            "Endividamento",
+                            "Investimento"]},
+                        {numero_resposta: 4, desc_respostas: [
+                            "Colocar o dinheiro debaixo do colchão",
+                            "Gastar menos no cartão",
+                            "Aplicar dinheiro em uma conta que rende juros",
+                            "Comprar algo mais barato"]},
+                        {numero_resposta: 5, desc_respostas: [
+                            "Economizando",
+                            "Fazendo um investimento",
+                            "Pegando um empréstimo do banco",
+                            "Recebendo um desconto"]},
+                        {numero_resposta: 6, desc_respostas: [
+                            "Juros pagos apenas uma vez",
+                            "Juros que crescem sobre o valor inicial apenas",
+                            "Juros calculados sobre o valor inicial e os juros anteriores",
+                            "Uma taxa de imposto"]},
+                        {numero_resposta: 7, desc_respostas: [
+                            "Aumentar os lucros",
+                            "Pagar menos impostos",
+                            "Ter controle sobre o que foi gasto",
+                            "Receber desconto nas compras"]},
+                        {numero_resposta: 8, desc_respostas: [
+                            "Salário fixo todo mês",
+                            "Dinheiro que vem só de empréstimos",
+                            "Investimentos que podem mudar de valor com o tempo",
+                            "Contas a pagar"]},
+                        {numero_resposta: 9, desc_respostas: [
+                            "Nota de provas escolares",
+                            "Número que representa sua reputação como consumidor",
+                            "Senha do cartão",
+                            "Valor dos seus investimentos"]},
+                        {numero_resposta: 10, desc_respostas: [
+                            "Comprar roupas",
+                            "Pagar dívidas e guardar uma parte",
+                            "Sair para comemorar",
+                            "Investir tudo em criptomoedas"]},
+                        {numero_resposta: 11, desc_respostas: [
+                            "Usar todo o limite do cartão de crédito",
+                            "Gastar sem registrar nada",
+                            "Guardar uma parte do que recebe todo mês",
+                            "Pedir dinheiro emprestado sempre que possível"]},
+                        {numero_resposta: 12, desc_respostas: [
+                            "Aprender a ganhar mais dinheiro sem trabalhar",
+                            "Estudar como gastar todo o salário em diversão",
+                            "Conhecimento para fazer boas escolhas com o dinheiro",
+                            "Saber quando pedir dinheiro emprestado"]}
+                    ],
+                    respostasCorretas: [3,2,4,1,1,2,1,3,4,3,1,4],
+                    i_pergunta_atual: 0
                 }
-                respostasCorretas = [3,2,4,1,1,2,1,3,4,3,1,4]
             },
             computed: {
                 perguntaAtual() {
@@ -87,24 +148,33 @@
             methods: {
                 responderPergunta: function(resposta) {
                     this.perguntas[this.i_pergunta_atual].resposta_pergunta = resposta;
+                    var texto = "";
 
                     if (this.i_pergunta_atual < this.perguntas.length - 1) {
                         this.i_pergunta_atual++;
                     } else {
-                        console.log("Todas as perguntas foram respondidas.");
-                        console.log("Respostas Finais:", this.perguntas);
-                        window.location.href = "/inicial";  // página que mostrará o resultado
-                        
+                        alert("Todas as perguntas foram respondidas.");
+                        this.perguntas.forEach((p, index) => {
+                            const alternativa = p.resposta_pergunta;
+                            texto += (`Pergunta ${index + 1}: alternativa ${alternativa}\n`);
+                    });
+                    alert(texto);
+                    let acertos = 0;
+                    this.perguntas.forEach((p, index) => {
+                        const respostaCorreta = this.respostasCorretas[index];
+                        if (p.resposta_pergunta == respostaCorreta) {
+                        acertos++;
                     }
-                },
-                getOptionDescription(value) {
-                    const descriptions = {
-                        1: 'Nada importante', 2: 'Pouco importante', 3: 'Neutro',
-                        4: 'Importante'
-                    };
-                    return descriptions[value];
+                    });
+                    alert(`Você acertou ${acertos} de ${this.perguntas.length} perguntas.`);
+                    window.location.href = "/inicial";}
+                },getOptionDescription(value) {
+                    const perguntaIndex = this.i_pergunta_atual;
+                    const respostas = this.respostas[perguntaIndex].desc_respostas;
+                    return respostas[value - 1];
                 },
                 getTotalPontuation(){
+
 
                 }
             }
