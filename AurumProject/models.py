@@ -32,9 +32,18 @@ class Tarefa(db.Model):
     pontos = db.Column(db.Integer, nullable=False)
 
 class TarefaUsuario(db.Model):
+    __tablename__ = 'TarefaUsuario'
+
     id_tarefa_usuario = db.Column(db.Integer, primary_key=True)
     id_tarefa = db.Column(db.Integer, ForeignKey(Tarefa.id_tarefa),nullable=False)
     id_modulo = db.Column(db.Integer, ForeignKey(Modulo.id), nullable=False)
     data_conclusao = db.Column(db.Date, nullable=False)
     pontuacao = db.Column(db.Integer, nullable=False)
 
+class Conquistas(db.Model):
+    __tablename__ = 'Conquistas'
+
+    id_conquista = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    descricao = db.Column(db.String(255), nullable=False)
+    imagem = db.Column(db.String(255), nullable=False, default="https://cdn-icons-png.flaticon.com/128/5355/5355671.png")

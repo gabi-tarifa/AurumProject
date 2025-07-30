@@ -14,8 +14,8 @@
     <div id="app"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script>
-        new Vue({
+    <script src="{{ url_for('static', filename='js/questionario_respostas.js') }}">
+        /*new Vue({
             el: '#app',
             delimiters: ['[[', ']]'],
             template: `
@@ -167,7 +167,7 @@
                     }
                     });
                     alert(`Você acertou ${acertos} de ${this.perguntas.length} perguntas.`);
-                    window.location.href = "/inicial";}
+                    window.location.href = "/pre-entrada";}
                 },getOptionDescription(value) {
                     const perguntaIndex = this.i_pergunta_atual;
                     const respostas = this.respostas[perguntaIndex].desc_respostas;
@@ -178,7 +178,7 @@
 
                 }
             }
-        })
+        })*/
     </script>
 </body>
 </html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Resultado - Aurum</title>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d1b2a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #1b263b;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      width: 500px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .mensagem {
+      border: 3px solid transparent;
+      border-radius: 15px;
+      padding: 20px;
+      background: linear-gradient(#1b263b, #1b263b) padding-box,
+                  linear-gradient(to right, #54e346, #00c9ff) border-box;
+      margin-bottom: 30px;
+    }
+
+    .mensagem strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .mensagem span {
+      font-weight: bold;
+      color: #00ff88;
+    }
+
+    .modulo-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to right, #00c853, #64dd17);
+      color: black;
+      padding: 15px 20px;
+      border-radius: 15px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .modulo-box button {
+      background: black;
+      color: #00ff88;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .leao {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="{{ url_for('static', filename='img/lion.png') }}" alt="Leão" class="leao">
+
+    <div class="mensagem">
+      <strong>MUITO OBRIGADO POR RESPONDER.</strong>
+      <span id="texto">Vimos que você é iniciante nesta área de finanças, mas sem problemas! Estamos aqui para te ajudar.</span><br><br>
+      VOCÊ IRÁ COMEÇAR NO: <span id="modulo-indicado">MÓDULO 1</span>
+    </div>
+
+    <div class="modulo-box">
+      <div id="nome-modulo">Módulo 1</div>
+      <button onclick="comecarModulo()">Começar</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/questionario_respostas.js') }}">
+    /* Simulação de resultado (isso viria da lógica do questionário real)
+    const pontuacao = new URLSearchParams(window.location.search("/questionario")).get("acertos") || 9;
+    let modulo = "";
+    let texto = "";
+    
+    if (pontuacao <= 4) {
+      modulo = "MÓDULO 1";
+      texto = "Vimos que você é iniciante nesta área de finanças, mas sem problemas! Estamos aqui para te ajudar."
+    } else if (pontuacao <= 8) {
+      modulo = "MÓDULO 2";
+      texto = "Vimos que você entende um pouco sobre esta área de finanças, mas sem problemas! Estamos aqui para te ajudar a entender mais!"
+    } else {
+      modulo = "MÓDULO 3";
+      texto = "Vimos que você é entende bem desta área de finanças! Estamos aqui para te ajudar a crescer ainda mais!"
+    }
+
+    document.getElementById("modulo-indicado").textContent = modulo;
+    document.getElementById("nome-modulo").textContent = modulo;
+    document.getElementById("texto").textContent = texto;
+
+    function comecarModulo() {
+      alert("Indo para " + modulo); 
+      location.href = '/modulo';//`modulo${modulo.split(' ')[1]}.html`
+    }*/
+  </script>
+
+</body>
+</html>
