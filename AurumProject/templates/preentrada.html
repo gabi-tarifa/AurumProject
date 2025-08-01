@@ -90,9 +90,9 @@
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='js/questionario_respostas.js') }}">
-    /* Simulação de resultado (isso viria da lógica do questionário real)
-    const pontuacao = new URLSearchParams(window.location.search("/questionario")).get("acertos") || 9;
+  <script>
+    /* Simulação de resultado (isso viria da lógica do questionário real)*/
+    const pontuacao = parseInt(localStorage.getItem('acertos')) || 0;
     let modulo = "";
     let texto = "";
     
@@ -114,7 +114,7 @@
     function comecarModulo() {
       alert("Indo para " + modulo); 
       location.href = '/modulo';//`modulo${modulo.split(' ')[1]}.html`
-    }*/
+    }
   </script>
 
 </body>
