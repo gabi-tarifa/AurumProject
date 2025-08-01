@@ -92,7 +92,7 @@
 
   <script>
     /* Simulação de resultado (isso viria da lógica do questionário real)*/
-    const pontuacao = parseInt(localStorage.getItem('acertos')) || 0;
+    const pontuacao = parseInt(sessionStorage.getItem('acertos')) || 0;
     let modulo = "";
     let texto = "";
     

@@ -128,6 +128,19 @@
   animation: pulseUpDownWithPause 2s ease-in-out 0.4s infinite;
 }
 
+.smolbtn{
+  margin-top: 30px;
+  background: linear-gradient(to right, #4f4f4f, #252427);
+  color: white;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-family: 'Courier New', Courier, monospace;
+  cursor: pointer;
+  box-shadow: 0 0 10px #3f3f3fd5;
+}
+
   </style>
 </head>
 <body>
@@ -137,7 +150,7 @@
       Antes de começarmos com o pé direito precisamos que você responda algumas perguntas para entendermos seu nível de conhecimento sobre finanças
     </div>
 
-    <button class="btn" onclick="iniciarQuiz()">VAMOS NESSA!</button>
+    <button class="btn" onclick="iniciarQuiz()">VAMOS NESSA!</button> <br> <button class="smolbtn" onclick="pular()">Pular</button>
 
     <img src="{{ url_for('static', filename='img/lion.png') }}" alt="leão" class="lion" />
     <div class="thought-bubble">
@@ -150,6 +163,10 @@
   <script>
     function iniciarQuiz() {
       window.location.href = "/questionario"; // redireciona para a tela de perguntas
+    }
+
+    function pular(){
+      window.location.href = "/inicial";
     }
 
     setInterval(() => {
