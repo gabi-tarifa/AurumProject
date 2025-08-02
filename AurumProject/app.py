@@ -167,17 +167,18 @@ def allowed_file(filename):
 @app.route('/atualizar_perfil', methods=['POST'])
 @login_required
 def atualizar_perfil():
-    apelido = request.form['apelido']
+    nome = request.form['apelido']
     foto = request.files['foto_perfil']
     usuario = get_usuario_atual()  # ← substitua com sua lógica
 
     if foto and allowed_file(foto.filename):
         filename = secure_filename(f"{usuario.id}_{foto.filename}")
         caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        filepath = caminho.removeprefix("static/")
         foto.save(caminho)
-        usuario.caminho_foto = caminho  # Salva no banco o caminho do arquivo
+        usuario.profilepicture = filepath  # Salva no banco o caminho do arquivo
 
-    usuario.apelido = apelido
+    usuario.nome = nome
     salvar_usuario(usuario)  # Atualiza o banco com os dados
 
     flash('Perfil atualizado com sucesso!')
@@ -186,7 +187,7 @@ def atualizar_perfil():
 def get_usuario_atual():
     return current_user
 
-def salvar_usuario(usuario):
+def salvar_usuario(nome):
     try:
         db.session.commit()
     except Exception as e:
