@@ -3,9 +3,21 @@ from flask_cors import CORS
 from models import db, Usuario, Modulo, Tarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from flask import redirect, url_for, flash
+from werkzeug.utils import secure_filename
+from flask_login import current_user, login_required
+from app import db
+from flask_login import LoginManager, login_user, logout_user
+import secrets
 
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
 CORS(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login_page"  # Redireciona para /login se não autenticado
+login_manager.login_message_category = "info"
 
 #Quem for pegar o projeto, poe em comentario e faz a sua rota do bdd, e so troca quem fica comentado ou nao
 
@@ -28,6 +40,10 @@ with app.app_context():
 @app.route("/login")
 def login_page():
     return render_template("login.html")
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
     
 @app.route("/debug-db")
 def debug_db():
@@ -35,6 +51,7 @@ def debug_db():
 
 # Página do questionário de entrada
 @app.route("/questionario")
+@login_required
 def questionario_page():
     return render_template("perguntasEntrada.html")
 
@@ -46,12 +63,14 @@ def cadastro_page():
 
 # 🏆 Página de Ranking
 @app.route("/ranking")
+@login_required
 def ranking_page():
     return render_template("ranking.html")
 
 
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
+@login_required
 def starting_page():
     return render_template("a.html")
 
@@ -61,18 +80,22 @@ def presentation_page():
     return render_template("Aurum.html")
 
 @app.route("/pre-entrada")
+@login_required
 def pre_entrada():
     return render_template("preentrada.html")
 
 @app.route("/perfil")
+@login_required
 def perfil_page():
-    return render_template("perfil.html")
+    return render_template("perfil.html", usuario=current_user)
 
 @app.route("/modulo")
+@login_required
 def modulo():
     return render_template("modulos.html")
 
 @app.route("/introducao")
+@login_required
 def intro_page():
     return render_template("introducao.html")
 
@@ -99,10 +122,12 @@ def cadastro():
 
 
 @app.route("/quiz")
+@login_required
 def quiz_page():
     return render_template("quizes.html")
 
 @app.route("/loja")
+@login_required
 def store_page():
     return render_template("loja.html")
 
@@ -120,9 +145,57 @@ def efetuar_login():
     ).first()
 
     if usuario and check_password_hash(usuario.senha, senha):
+        login_user(usuario)  # ← faz o login real do usuário
         return jsonify({"mensagem": "Login efetuado com sucesso!"}), 200
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("Você saiu da sua conta.", "info")
+    return redirect(url_for("login_page"))    
+
+UPLOAD_FOLDER = 'static/uploads/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/atualizar_perfil', methods=['POST'])
+@login_required
+def atualizar_perfil():
+    apelido = request.form['apelido']
+    foto = request.files['foto_perfil']
+    usuario = get_usuario_atual()  # ← substitua com sua lógica
+
+    if foto and allowed_file(foto.filename):
+        filename = secure_filename(f"{usuario.id}_{foto.filename}")
+        caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        foto.save(caminho)
+        usuario.caminho_foto = caminho  # Salva no banco o caminho do arquivo
+
+    usuario.apelido = apelido
+    salvar_usuario(usuario)  # Atualiza o banco com os dados
+
+    flash('Perfil atualizado com sucesso!')
+    return redirect(url_for('perfil_page'))
+
+def get_usuario_atual():
+    return current_user
+
+def salvar_usuario(usuario):
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print("Erro ao salvar no banco:", e)
+        raise
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg'}
 
 
 if __name__ == "__main__":

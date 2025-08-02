@@ -51,14 +51,14 @@
       <!-- Cabeçalho com imagem -->
       <div class="perfil-cabecalho">
         <img src="{{ url_for('static', filename='img//rectangle.png') }}" alt="Usuários conversando" class="imagem-topo">
-        <img src="{{ url_for('static', filename='img//user.png') }}" alt="Foto do usuário" class="avatar">
+        <img src="{{ url_for('static', filename=usuario.caminho_foto) }}" alt="Foto do usuário" class="avatar">
       </div>
 
       <!-- Dados do usuário -->
       <div class="dados-usuario">
-        <h2>Usuário123456</h2>
-        <p class="email">Usuario123456@gmail.com</p>
-        <p class="entrada">Entrou na Aurum em Novembro de 2024</p>
+        <h2>{{ usuario.apelido }}</h2>
+        <p class="email">{{ usuario.email }}</p>
+        <p class="entrada">Entrou na Aurum em Novembro de 2024 <button onclick="abrirEdicao()">Editar Perfil</button></p>
       </div>
 
       <!-- Conquistas -->
@@ -89,6 +89,24 @@
         <div class="rank-item">#4 Usuário12356</div>
       </div>
     </aside>
+    <!-- Painel de edição do perfil (invisível por padrão) -->
+<div id="editarPerfil" class="painel-edicao oculto">
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('atualizar_perfil') }}">
+    <h2>Editar Perfil</h2>
+    
+    <label for="apelido">Novo Apelido:</label>
+    <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" required>
+
+    <label for="foto_perfil">Nova Foto de Perfil:</label>
+    <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
+
+    <div class="botoes">
+      <button type="submit">Salvar</button>
+      <button type="button" onclick="fecharEdicao()">Cancelar</button>
+    </div>
+  </form>
+</div>
   </div>
+  <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 </body>
 </html>
