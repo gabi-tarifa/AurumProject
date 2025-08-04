@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmarSenha = document.querySelector('input[placeholder="Confirmar Senha"]').value;
 
         if (!nome || !email || !senha || !confirmarSenha) {
-            alert("Por favor, preencha todos os campos.");
+alert("Por favor, preencha todos os campos.");
             return;
         }
 
