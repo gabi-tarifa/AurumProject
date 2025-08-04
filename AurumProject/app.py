@@ -158,8 +158,10 @@ def logout():
     return redirect(url_for("login_page"))    
 
 UPLOAD_FOLDER = 'static/uploads/'
+UPLOADBG_FOLDER = 'static/uploadsBG/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOADBG_FOLDER'] = UPLOADBG_FOLDER
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -168,8 +170,9 @@ def allowed_file(filename):
 @login_required
 def atualizar_perfil():
     nome = request.form['apelido']
-    foto = request.files['foto_perfil']
-    usuario = get_usuario_atual()  # ← substitua com sua lógica
+    foto = request.files['foto_perfil']    
+    fundo = request.files['foto_fundo']
+    usuario = get_usuario_atual()
 
     if foto and allowed_file(foto.filename):
         filename = secure_filename(f"{usuario.id}_{foto.filename}")
@@ -177,6 +180,13 @@ def atualizar_perfil():
         filepath = caminho.removeprefix("static/")
         foto.save(caminho)
         usuario.profilepicture = filepath  # Salva no banco o caminho do arquivo
+
+    if fundo and allowed_file(fundo.filename):
+        filename_fundo = secure_filename(f"{usuario.id}_fundo_{fundo.filename}")
+        caminho_fundo = os.path.join(app.config['UPLOADBG_FOLDER'], filename_fundo)
+        filepathbg = caminho_fundo.removeprefix("static/")
+        fundo.save(caminho_fundo)
+        usuario.backgroundpicture = filepathbg  # ← nova coluna
 
     usuario.nome = nome
     salvar_usuario(usuario)  # Atualiza o banco com os dados

@@ -50,7 +50,7 @@
     <main class="main-content">
       <!-- Cabeçalho com imagem -->
       <div class="perfil-cabecalho">
-        <img src="{{ url_for('static', filename='img//rectangle.png') }}" alt="Usuários conversando" class="imagem-topo">
+        <img src="{{ url_for('static', filename=usuario.backgroundpicture) }}" alt="Usuários conversando" class="imagem-topo">
         <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto do usuário" class="avatar">
       </div>
 
@@ -99,6 +99,11 @@
 
     <label for="foto_perfil">Nova Foto de Perfil:</label>
     <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
+    <p>Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto</p>
+
+    <label for="foto_fundo">Nova Foto de Fundo:</label>
+    <input type="file" id="foto_fundo" name="foto_fundo" accept="image/*">
+    <p>Obs: a resolução dessa imagem deve ser de 2x1 ou a imagem ficará desproporcional ao seu gosto</p>
 
     <div class="botoes">
       <button type="submit">Salvar</button>
