@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     const btnCadastro = document.getElementById("signup-btn");
     btnCadastro.addEventListener("click", async () => {
-        const nome = document.querySelector('input[placeholder="Nome completo"]').value;
+        const nome = document.querySelector('input[placeholder="Nome/Apelido"]').value;
         const email = document.querySelector('input[placeholder="Email"]').value;
         const senha = document.querySelector('input[placeholder="Senha"]').value;
-        const conrfirmarSenha = document.querySelector('input[placeholder="Confirmar Senha"]').value;
+        const confirmarSenha = document.querySelector('input[placeholder="Confirmar Senha"]').value;
 
-        if (!nome || !email || !senha) {
+        if (!nome || !email || !senha || !confirmarSenha) {
             alert("Por favor, preencha todos os campos.");
             return;
         }
 
-        if(senha.lenght < 6) {
+        if(senha.length < 6) {
             alert("A senha tem que ser maior que 6 dígitos!");
             return;
         }
