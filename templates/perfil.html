@@ -50,29 +50,27 @@
     <main class="main-content">
       <!-- Cabeçalho com imagem -->
       <div class="perfil-cabecalho">
-        <img src="{{ url_for('static', filename='img//rectangle.png') }}" alt="Usuários conversando" class="imagem-topo">
-        <img src="{{ url_for('static', filename='img//user.png') }}" alt="Foto do usuário" class="avatar">
+        <img src="{{ url_for('static', filename=usuario.backgroundpicture) }}" alt="Usuários conversando" class="imagem-topo">
+        <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto do usuário" class="avatar">
       </div>
 
       <!-- Dados do usuário -->
       <div class="dados-usuario">
-        <h2>Usuário123456</h2>
-        <p class="email">Usuario123456@gmail.com</p>
-        <p class="entrada">Entrou na Aurum em Novembro de 2024</p>
+        <h2>{{ usuario.nome }}</h2>
+        <p class="email">{{ usuario.email }}</p>
+        <p class="entrada">Entrou na Aurum em Novembro de 2024 <button class="editar" onclick="abrirEdicao()">Editar Perfil</button></p>
       </div>
 
       <!-- Conquistas -->
-      <div class="conquistas">
-        <h3>Conquistas</h3>
-        <div class="conquista conquista-vermelha">
-          <img class="icon" src="{{ url_for('static', filename='img//fire.png') }}" alt="Fogo" />
-          <span>Mais de 100 dias de ofensiva</span>
+      <h3 class="textoConquistas">Conquistas</h3> 
+      {% for conquista in conquistas %}
+        <div class="conquistas conquista cor-{{ conquista.cor }}">
+          <img class="iconeconquista" src="{{ url_for('static', filename=conquista.imagem) }}" alt="Ícone">
+          <span><strong>{{ conquista.nome }}</strong><br>{{ conquista.descricao }}</span>
         </div>
-        <div class="conquista conquista-amarela">
-          <img class="icon" src="{{ url_for('static', filename='img//gold-medal.png') }}" alt="Medalha" />
-          <span>Ficou em primeiro no Rankig</span>
-        </div>
-      </div>
+      {% else %}
+        <p>Nenhuma conquista desbloqueada ainda.</p>
+      {% endfor %}
     </main>
 
     <!-- Informações do lado direito -->
@@ -80,7 +78,7 @@
       <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon"> </div>
       <div class="info"><img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
       <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
-      <div class="info"><span class="golden" style="color: #afafaf;">#2</span> <br> <span class="darkgolden" style="color: #afafaf;">Posição no Ranking</span></div>
+      <div class="info"><span class="golden" style="color: #afafaf;">#2</span> <br> <span class="darkgolden">Posição no Ranking</span></div>
 
       <div class="info">
         <div class="rank-item">#1 <span class="first">Usuário12356</span></div>
@@ -89,6 +87,29 @@
         <div class="rank-item">#4 Usuário12356</div>
       </div>
     </aside>
+    <!-- Painel de edição do perfil (invisível por padrão) -->
+<div id="editarPerfil" class="painel-edicao oculto">
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('atualizar_perfil') }}">
+    <h2>Editar Perfil</h2>
+    
+    <label for="apelido">Novo Apelido:</label>
+    <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" required>
+
+    <label for="foto_perfil">Nova Foto de Perfil:</label>
+    <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
+    <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto </span>
+
+    <label for="foto_fundo">Nova Foto de Fundo:</label>
+    <input type="file" id="foto_fundo" name="foto_fundo" accept="image/*">
+    <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 2x1 ou a imagem ficará desproporcional ao seu gosto</span>
+
+    <div class="botoes">
+      <button class="selecionar" type="submit">Salvar</button>
+      <button class="selecionar" type="button" onclick="fecharEdicao()">Cancelar</button>
+    </div>
+  </form>
+</div>
   </div>
+  <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 </body>
 </html>

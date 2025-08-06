@@ -1,12 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
     const btnCadastro = document.getElementById("signup-btn");
     btnCadastro.addEventListener("click", async () => {
-        const nome = document.querySelector('input[placeholder="Nome completo"]').value;
+        const nome = document.querySelector('input[placeholder="Nome/Apelido"]').value;
         const email = document.querySelector('input[placeholder="Email"]').value;
         const senha = document.querySelector('input[placeholder="Senha"]').value;
+        const confirmarSenha = document.querySelector('input[placeholder="Confirmar Senha"]').value;
 
-        if (!nome || !email || !senha) {
+        if (!nome || !email || !senha || !confirmarSenha) {
             alert("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        if(senha.length < 6) {
+            alert("A senha tem que ser maior que 6 dígitos!");
+            return;
+        }
+
+        if(confirmarSenha != senha){
+            alert("As senhas não condizem! Verifique-as e tente novamente.");
             return;
         }
 
@@ -60,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 alert(data.mensagem);
-                window.location.href = "/questionario";  // Redireciona para a página inicial (a.html)
+                window.location.href = "/introducao";  // Redireciona para a página de perguntas
             } else {
                 alert(data.mensagem);
             }

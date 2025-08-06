@@ -52,11 +52,16 @@
       <section class="ranking-box">
         <h1>RANKING SEMANAL</h1>
         <ul class="ranking-list">
-          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> <span class="first">Usuário12356</span> <span class="score">345</span> <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon"></li>
-          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> <span class="second">Usuário12356</span> <span class="score">336</span><img src="{{ url_for('static', filename='img/chevron.png') }}" class="large-icon">  </li>
-          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> <span class="third">Usuário12356</span> <span class="score">298</span> <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon"></li>
-          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span>Usuário12356 <span class="score">278</span> <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon">  </li>
-          <li><span class="icon"><img src="{{ url_for('static', filename='img/user.png') }}" class="icon"></span> Usuário12356 <span class="score">197</span> <img src="{{ url_for('static', filename='img/chevron.png') }}" class="large-icon"></li>
+          {% for usuario in usuarios %}
+            <li>
+              <span class="icon">
+                <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
+              </span> 
+              <span class="first">{{ usuario.nome }}</span> 
+              <span class="score">{{ usuario.pontos }}</span> 
+                <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon">
+            </li>
+          {% endfor %}
         </ul>
       </section>
     </main>
