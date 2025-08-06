@@ -187,7 +187,7 @@ def atualizar_perfil():
     nome = request.form['apelido']
     foto = request.files['foto_perfil']
     fundo = request.files['foto_fundo']
-    usuario = get_usuario_atual()  # ← substitua com sua lógica
+    usuario = get_usuario_atual()
 
     if foto and allowed_file(foto.filename):
         filename = secure_filename(f"{usuario.id}_{foto.filename}")
