@@ -156,7 +156,7 @@ def efetuar_login():
 @app.route("/testar_conquistas")
 @login_required
 def testar_conquistas():
-    conquistas_a_dar = ["Eu SOU um OG", "Vencedor", "Aurum Master"]
+    conquistas_a_dar = ["Eu SOU um OG", "Vencedor", "Aurum Master", "Campeão Invicto"]
     
     for nome in conquistas_a_dar:
         conquista = Conquistas.query.filter_by(nome=nome).first()

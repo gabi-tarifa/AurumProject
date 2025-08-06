@@ -65,7 +65,8 @@
       <h3 class="textoConquistas">Conquistas</h3> 
       {% for conquista in conquistas %}
         <div class="conquistas conquista cor-{{ conquista.cor }}">
-          <img class="iconeconquista" src="{{ url_for('static', filename=conquista.imagem) }}" alt="Ícone">
+            <img class="iconeconquista" src="{{ url_for('static', filename=conquista.imagem) }}" alt="Ícone">
+        
           <span><strong>{{ conquista.nome }}</strong><br>{{ conquista.descricao }}</span>
         </div>
       {% else %}
