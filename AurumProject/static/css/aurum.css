@@ -255,15 +255,17 @@ body {
 }
 
 .ranking-list li {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 40px 1fr 60px 30px; /* ícone, nome, pontuação, seta */
   align-items: center;
   background-color: #2b3d74;
   padding: 10px 15px;
   margin-bottom: 10px;
   border-radius: 10px;
   font-size: 18px;
+  gap: 30px;
 }
+
 
 .score {
   font-weight: bold;
@@ -564,6 +566,16 @@ a:visited {
   object-fit: cover;
   display: block;
 }
+
+.profile-picture {
+  width: 40px;             /* ou qualquer tamanho desejado */
+  height: 40px;            /* mantenha igual à largura para ficar redondo */
+  border-radius: 50%;       /* deixa a imagem totalmente redonda */
+  object-fit: cover;        /* garante que a imagem preencha o espaço sem distorcer */
+}
+
+
+
 
 .avatar {
   width: 120px;
