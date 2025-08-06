@@ -48,4 +48,12 @@ class Conquistas(db.Model):
     id_conquista = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     descricao = db.Column(db.String(255), nullable=False)
-    imagem = db.Column(db.String(255), nullable=False, default="https://cdn-icons-png.flaticon.com/128/5355/5355671.png")
+    imagem = db.Column(db.String(255), nullable=False, default="img/gold-medal.png")
+    cor = db.Column(db.String(10), nullable=False, default="azul")
+
+class UsuarioConquistas(db.Model):
+    __tablename__ = 'UsuarioConquistas'
+
+    id_usuario_conquista = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
+    id_conquista = db.Column(db.Integer, ForeignKey(Conquistas.id_conquista), nullable=False)

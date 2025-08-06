@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -9,6 +9,7 @@ from flask_login import current_user, login_required
 from app import db
 from flask_login import LoginManager, login_user, logout_user
 import secrets
+from setup_conquistas import criar_conquistas
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -35,6 +36,7 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+    criar_conquistas()
 
 # 🔐 Página de Login
 @app.route("/login")
@@ -87,7 +89,8 @@ def pre_entrada():
 @app.route("/perfil")
 @login_required
 def perfil_page():
-    return render_template("perfil.html", usuario=current_user)
+    conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
+    return render_template("perfil.html", usuario=current_user, conquistas=conquistas_usuario)
 
 @app.route("/modulo")
 @login_required
@@ -149,6 +152,18 @@ def efetuar_login():
         return jsonify({"mensagem": "Login efetuado com sucesso!"}), 200
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
+    
+@app.route("/testar_conquistas")
+@login_required
+def testar_conquistas():
+    conquistas_a_dar = ["Eu SOU um OG", "Vencedor", "Aurum Master"]
+    
+    for nome in conquistas_a_dar:
+        conquista = Conquistas.query.filter_by(nome=nome).first()
+        if conquista:
+            desbloquear_conquista(current_user.id, conquista.id_conquista)
+
+    return redirect(url_for("perfil_page"))
 
 @app.route("/logout")
 @login_required
@@ -196,6 +211,13 @@ def atualizar_perfil():
 
 def get_usuario_atual():
     return current_user
+
+def desbloquear_conquista(id_usuario, id_conquista):
+    ja_tem = UsuarioConquistas.query.filter_by(id_usuario=id_usuario, id_conquista=id_conquista).first()
+    if not ja_tem:
+        nova = UsuarioConquistas(id_usuario=id_usuario, id_conquista=id_conquista)
+        db.session.add(nova)
+        db.session.commit()
 
 def salvar_usuario(nome):
     try:
