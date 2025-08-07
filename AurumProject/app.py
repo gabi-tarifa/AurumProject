@@ -22,7 +22,7 @@ login_manager.login_message_category = "info"
 
 #Quem for pegar o projeto, poe em comentario e faz a sua rota do bdd, e so troca quem fica comentado ou nao
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Local Banco Tarifa
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Tarifa
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Local banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
@@ -68,13 +68,36 @@ def cadastro_page():
 @login_required
 def ranking_page():
     usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
-    return render_template('ranking.html', usuarios=usuarios)
+
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+
+    return render_template(
+        "ranking.html",
+        usuario=current_user,
+        usuarios=usuarios,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+    )
 
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
 @login_required
 def starting_page():
-    return render_template("a.html")
+    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+
+    return render_template(
+        "a.html",
+        usuario=current_user,
+        usuarios=usuarios,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+    )
 
 # 🏆 Página de Quando Inicia o Sistema
 @app.route("/")
@@ -90,7 +113,20 @@ def pre_entrada():
 @login_required
 def perfil_page():
     conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
-    return render_template("perfil.html", usuario=current_user, conquistas=conquistas_usuario)
+    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+
+    return render_template(
+        "perfil.html",
+        usuario=current_user,
+        conquistas=conquistas_usuario,
+        usuarios=usuarios,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+    )
 
 @app.route("/modulo")
 @login_required
@@ -127,12 +163,36 @@ def cadastro():
 @app.route("/quiz")
 @login_required
 def quiz_page():
-    return render_template("quizes.html")
+    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+
+    return render_template(
+        "quizes.html",
+        usuario=current_user,
+        usuarios=usuarios,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+    )
 
 @app.route("/loja")
 @login_required
 def store_page():
-    return render_template("loja.html")
+    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+
+    return render_template(
+        "loja.html",
+        usuario=current_user,
+        usuarios=usuarios,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+    )
 
 @app.route("/login", methods=["POST"])
 def efetuar_login():
