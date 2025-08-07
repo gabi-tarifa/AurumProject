@@ -109,13 +109,13 @@
 
   // Alternar visibilidade ao clicar
   maisBtn.addEventListener('click', () => {
-    submenuMais.classList.toggle('hidden');
+    submenuMais.classList.toggle('oculto');
   });
 
   // Ocultar submenu ao clicar fora
   document.addEventListener('click', (event) => {
     if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
-      submenuMais.classList.add('hidden');
+      submenuMais.classList.add('oculto');
     }
   });
 </script>
