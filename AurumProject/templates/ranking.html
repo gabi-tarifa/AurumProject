@@ -50,9 +50,9 @@
     <!-- Submenu do botão "Mais" -->
     <div class="submenu-mais oculto" id="submenuMais">
       <ul>
-        <li><a href="/ajuda">Ajuda</a></li>
-        <li><a href="/config">Configurações</a></li>
-        <li><a href="/logout">Sair</a></li>
+        <li><a href="/ajuda" class="ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda">Ajuda</a></li>
+        <li><a href="/config" class="config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações">Configurações</a></li>
+        <li><a href="/logout" class="sair"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair">Sair</a></li>
       </ul>
     </div>
 

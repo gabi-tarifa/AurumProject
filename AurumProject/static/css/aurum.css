@@ -875,3 +875,22 @@ label{
 .submenu-mais a:hover {
   text-decoration: underline;
 }
+
+.ajuda{
+  color: #00e676
+}
+
+.config{
+  color: silver;
+}
+
+.sair{
+  color: red;
+}
+
+.smallimage{
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
