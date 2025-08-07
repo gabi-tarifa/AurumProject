@@ -41,11 +41,19 @@
         <span style="color: white;">Loja</span>
       </div>
       </a>
-      <div class="menu-item">
+      <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         Mais
       </div>
     </nav>
+    <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda">Ajuda</a></li>
+        <li><a href="/config">Configurações</a></li>
+        <li><a href="/logout">Sair</a></li>
+      </ul>
+    </div>
     <!-- Conteúdo principal -->
     <main class="main-content">
       <!-- Cabeçalho com imagem -->
@@ -105,28 +113,45 @@
 
     </aside>
     <!-- Painel de edição do perfil (invisível por padrão) -->
-<div id="editarPerfil" class="painel-edicao oculto">
-  <form method="POST" enctype="multipart/form-data" action="{{ url_for('atualizar_perfil') }}">
-    <h2>Editar Perfil</h2>
+  <div id="editarPerfil" class="painel-edicao oculto">
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('atualizar_perfil') }}">
+      <h2>Editar Perfil</h2>
     
-    <label for="apelido">Novo Apelido:</label>
-    <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" required>
+      <label for="apelido">Novo Apelido:</label>
+      <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" required>
 
-    <label for="foto_perfil">Nova Foto de Perfil:</label>
-    <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
-    <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto </span>
+      <label for="foto_perfil">Nova Foto de Perfil:</label>
+      <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
+      <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto </span>
 
-    <label for="foto_fundo">Nova Foto de Fundo:</label>
-    <input type="file" id="foto_fundo" name="foto_fundo" accept="image/*">
-    <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 2x1 ou a imagem ficará desproporcional ao seu gosto</span>
+      <label for="foto_fundo">Nova Foto de Fundo:</label>
+      <input type="file" id="foto_fundo" name="foto_fundo" accept="image/*">
+      <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará desproporcional ao seu gosto</span>
 
-    <div class="botoes">
-      <button class="selecionar" type="submit">Salvar</button>
-      <button class="selecionar" type="button" onclick="fecharEdicao()">Cancelar</button>
-    </div>
-  </form>
-</div>
+      <div class="botoes">
+        <button class="selecionar" type="submit">Salvar</button>
+        <button class="selecionar" type="button" onclick="fecharEdicao()">Cancelar</button>
+      </div>
+    </form>
+  </div>
   </div>
   <script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+  
+  <script>
+    const maisBtn = document.getElementById('openMais');
+    const submenuMais = document.getElementById('submenuMais');
+
+    // Alternar visibilidade ao clicar
+    maisBtn.addEventListener('click', () => {
+      submenuMais.classList.toggle('oculto');
+    });
+
+      // Ocultar submenu ao clicar fora
+      document.addEventListener('click', (event) => {
+      if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+        submenuMais.classList.add('oculto');
+      }
+    });
+  </script>
 </body>
 </html>

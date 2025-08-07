@@ -41,11 +41,19 @@
         <span style="color: white;">Loja</span>
       </div>
       </a>
-      <div class="menu-item">
+      <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         Mais
       </div>
     </nav>
+    <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda">Ajuda</a></li>
+        <li><a href="/config">Configurações</a></li>
+        <li><a href="/logout">Sair</a></li>
+      </ul>
+    </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="quiz-content">
@@ -107,5 +115,21 @@
 
     </aside>
   </div>
+<script>
+  const maisBtn = document.getElementById('openMais');
+  const submenuMais = document.getElementById('submenuMais');
+
+  // Alternar visibilidade ao clicar
+  maisBtn.addEventListener('click', () => {
+    submenuMais.classList.toggle('oculto');
+  });
+
+  // Ocultar submenu ao clicar fora
+  document.addEventListener('click', (event) => {
+    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+      submenuMais.classList.add('oculto');
+    }
+  });
+</script>
 </body>
 </html>
