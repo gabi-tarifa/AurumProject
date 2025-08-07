@@ -242,6 +242,9 @@ body {
   border-radius: 16px;
   padding: 20px;
   width: 60%;
+  margin-left: 250px;    /* espaço da sidebar esquerda */
+  margin-right: 250px;   /* espaço da barra da direita */
+  padding: 20px;
 }
 
 .ranking-box h1 {
