@@ -224,6 +224,18 @@ def testar_conquistas():
             desbloquear_conquista(current_user.id, conquista.id_conquista)
 
     return redirect(url_for("perfil_page"))
+    
+@app.route("/eusouOG")
+@login_required
+def testar_conquistas():
+    conquistas_a_dar = ["Eu SOU um OG"]
+    
+    for nome in conquistas_a_dar:
+        conquista = Conquistas.query.filter_by(nome=nome).first()
+        if conquista:
+            desbloquear_conquista(current_user.id, conquista.id_conquista)
+
+    return redirect(url_for("perfil_page"))
 
 @app.route("/logout")
 @login_required
