@@ -58,3 +58,6 @@ class UsuarioConquistas(db.Model):
     id_usuario_conquista = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
     id_conquista = db.Column(db.Integer, ForeignKey(Conquistas.id_conquista), nullable=False)
+
+"""class Poder(db.Model):
+    __tablename__ = 'Poderes'"""

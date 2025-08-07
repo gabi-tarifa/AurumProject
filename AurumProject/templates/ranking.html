@@ -62,6 +62,7 @@
         <ul class="ranking-list">
           {% for usuario in usuarios %}
             <li>
+              <span> #{{usuarios.index(usuario)+1}} </span>
               <span class="icon">
                 <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
               </span> 
