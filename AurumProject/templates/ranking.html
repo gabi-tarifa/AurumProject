@@ -67,9 +67,21 @@
     </main>
 
       <aside class="info-box">
-        <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="icon"> </div>
-        <div class="info"><img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
-        <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
+        <div class="info">
+          <span class="golden">{{ coins }}</span>
+          <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
+        </div>
+
+        <div class="info">
+          <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+          <span class="golden">12</span> <br>
+          <span class="darkgolden">Dias consecutivos</span>
+        </div>
+
+        <div class="info">
+          <span class="golden">{{ pontos }}</span> <br>
+          <span class="darkgolden">Total de Aurum Points</span>
+        </div>        
         <button class="quiz-btn">Quiz<br><span class="up">Treinar agora</span></button>
         <div class="modulo modulo2">
           <p>Módulo 2</p>
