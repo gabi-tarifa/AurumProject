@@ -564,8 +564,10 @@ a:visited {
 }
 
 .imagem-topo {
-  height: 200px;
-  width: 645px;
+  min-height: 300px;
+  min-width: 645px;
+  max-height: 300px;
+  max-width: 645px;
   border-radius: 10px;
   object-fit: cover;
   display: block;
@@ -842,4 +844,36 @@ label{
   margin-left: 250px;    /* espaço da sidebar esquerda */
   margin-right: 250px;   /* espaço da barra da direita */
   padding: 20px;
+}
+
+.submenu-mais {
+  position: absolute;
+  top: 70%; /* ajuste conforme a posição do botão "Mais" */
+  left: 80px; /* afasta do menu lateral */
+  background-color: #1c1c2e;
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.submenu-mais ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.submenu-mais li {
+  margin: 10px 0;
+}
+
+.submenu-mais a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.submenu-mais a:hover {
+  text-decoration: underline;
 }

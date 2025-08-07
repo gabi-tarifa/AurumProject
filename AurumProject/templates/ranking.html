@@ -47,6 +47,14 @@
         Mais
       </div>
     </aside>
+    <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda">Ajuda</a></li>
+        <li><a href="/config">Configurações</a></li>
+        <li><a href="/logout">Sair</a></li>
+      </ul>
+    </div>
 
     <main class="main-content">
       <section class="ranking-box">
@@ -95,5 +103,21 @@
 </div>
     
 <script src="{{ url_for('static', filename='js/aurum.js') }}"></script>
+<script>
+  const maisBtn = document.getElementById('openMais');
+  const submenuMais = document.getElementById('submenuMais');
+
+  // Alternar visibilidade ao clicar
+  maisBtn.addEventListener('click', () => {
+    submenuMais.classList.toggle('hidden');
+  });
+
+  // Ocultar submenu ao clicar fora
+  document.addEventListener('click', (event) => {
+    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+      submenuMais.classList.add('hidden');
+    }
+  });
+</script>
 </body>
 </html>
