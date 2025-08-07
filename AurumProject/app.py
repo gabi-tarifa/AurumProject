@@ -227,7 +227,7 @@ def testar_conquistas():
     
 @app.route("/eusouOG")
 @login_required
-def testar_conquistas():
+def eusouOG():
     conquistas_a_dar = ["Eu SOU um OG"]
     
     for nome in conquistas_a_dar:
