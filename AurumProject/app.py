@@ -36,13 +36,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
 
 
-
-db.init_app(app)
-
-with app.app_context():
-    db.create_all()
-    criar_conquistas()
-
 # --- Função para atualizar o banco ---
 def atualizar_banco():
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -54,10 +47,14 @@ def atualizar_banco():
 
     command.upgrade(alembic_cfg, "head")  # aplica todas as migrações
 
-# --- Executa antes do primeiro request ---
-@app.before_first_request
-def inicializar():
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
     atualizar_banco()
+    criar_conquistas()
+
+
 
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
