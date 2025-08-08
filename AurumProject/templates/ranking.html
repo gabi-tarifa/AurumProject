@@ -67,7 +67,7 @@
                 <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
               </span> 
               <span class="first">{{ usuario.nome }}</span> 
-              <span class="score">{{ usuario.pontos }}</span> 
+              <span class="score">{{ usuario.pontos_semanais }}</span> 
                 <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon">
             </li>
           {% endfor %}
