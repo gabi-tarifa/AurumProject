@@ -49,7 +49,7 @@ def atualizar_banco():
     command.upgrade(alembic_cfg, 'head')  # aplica todas as migrações
 
 # --- Executa antes do primeiro request ---
-@app.before_serving
+@app.before_first_request
 def inicializar():
     atualizar_banco()
 
