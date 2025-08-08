@@ -42,11 +42,19 @@
         <span style="color: white;">Loja</span>
       </div>
       </a>
-      <div class="menu-item">
+      <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         Mais
       </div>
     </aside>
+    <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+      </ul>
+    </div>
 
     <main class="main-content">
       <section class="ranking-box">
@@ -54,11 +62,12 @@
         <ul class="ranking-list">
           {% for usuario in usuarios %}
             <li>
+              <span> #{{usuarios.index(usuario)+1}} </span>
               <span class="icon">
                 <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
               </span> 
               <span class="first">{{ usuario.nome }}</span> 
-              <span class="score">{{ usuario.pontos }}</span> 
+              <span class="score">{{ usuario.pontos_semanais }}</span> 
                 <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon">
             </li>
           {% endfor %}
@@ -67,11 +76,23 @@
     </main>
 
       <aside class="info-box">
-        <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="icon"> </div>
-        <div class="info"><img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
-        <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
-        <button class="quiz-btn">Quiz<br><span class="up">Treinar agora</span></button>
-        <div class="modulo modulo2">
+        <div class="info">
+          <span class="golden">{{ coins }}</span>
+          <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
+        </div>
+
+        <div class="info">
+          <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+          <span class="golden">12</span> <br>
+          <span class="darkgolden">Dias consecutivos</span>
+        </div>
+
+        <div class="info">
+          <span class="golden">{{ pontos }}</span> <br>
+          <span class="darkgolden">Total de Aurum Points</span>
+        </div>        
+        <button class="quiz-btn info">Quiz<br><span class="up">Treinar agora</span></button>
+        <div class="modulo modulo2 info">
           <p>Módulo 2</p>
           <div class="progress-bar" style="align-content: center;">
             <div class="progress" style="width: 21%"></div>
@@ -82,6 +103,21 @@
     </main>
 </div>
     
-<script src="{{ url_for('static', filename='js/aurum.js') }}"></script>
+<script>
+  const maisBtn = document.getElementById('openMais');
+  const submenuMais = document.getElementById('submenuMais');
+
+  // Alternar visibilidade ao clicar
+  maisBtn.addEventListener('click', () => {
+    submenuMais.classList.toggle('oculto');
+  });
+
+  // Ocultar submenu ao clicar fora
+  document.addEventListener('click', (event) => {
+    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+      submenuMais.classList.add('oculto');
+    }
+  });
+</script>
 </body>
 </html>

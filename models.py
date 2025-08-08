@@ -12,6 +12,8 @@ class Usuario(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     senha = db.Column(db.String(255), nullable=False)
     pontos = db.Column(db.Integer, default=0, nullable=False)
+    pontos_semanais = db.Column(db.Integer, default=0, nullable=False)
+    moedas = db.Column(db.Integer, default = 0, nullable= False)
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
 
@@ -57,3 +59,6 @@ class UsuarioConquistas(db.Model):
     id_usuario_conquista = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
     id_conquista = db.Column(db.Integer, ForeignKey(Conquistas.id_conquista), nullable=False)
+
+"""class Poder(db.Model):
+    __tablename__ = 'Poderes'"""
