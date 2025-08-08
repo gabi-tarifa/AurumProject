@@ -12,6 +12,7 @@ import secrets
 from setup_conquistas import criar_conquistas
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -39,6 +40,18 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     criar_conquistas()
+
+# --- Função para atualizar o banco ---
+def atualizar_banco():
+    from alembic import command
+    from alembic.config import Config
+    alembic_cfg = Config(os.path.join(os.path.dirname(__file__), 'migrations', 'alembic.ini'))
+    command.upgrade(alembic_cfg, 'head')  # aplica todas as migrações
+
+# --- Executa antes do primeiro request ---
+@app.before_first_request
+def inicializar():
+    atualizar_banco()
 
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
