@@ -16,6 +16,7 @@ COPY requirements.txt .
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install flask==2.2.5 --force-reinstall
 
 COPY . .
 
