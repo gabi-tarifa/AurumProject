@@ -58,7 +58,7 @@ def atualizar_banco():
 @app.before_first_request
 def inicializar():
     atualizar_banco()
-    
+
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
         Usuario.query.update({Usuario.pontos_semanais: 0})
