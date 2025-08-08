@@ -258,7 +258,7 @@ body {
 
 .ranking-list li {
   display: grid;
-  grid-template-columns: 40px 1fr 60px 30px; /* ícone, nome, pontuação, seta */
+  grid-template-columns: 10px 30px 1fr 60px 30px; /* posição, ícone, nome, pontuação, seta */
   align-items: center;
   background-color: #2b3d74;
   padding: 10px 15px;
