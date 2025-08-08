@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quizes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+</head>
+<body>
+  <div class="containerTP">
+    <!-- MENU LATERAL -->
+    <nav class="sidebar">
+      <a href="{{ url_for('starting_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
+          <span style="color: white;">Aprender</span>
+        </div>
+      </a>
+      <a href="{{ url_for('quiz_page') }}">
+      <div class="menu-item active">
+        <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
+        <span style="color: white;">Quiz</span>
+      </div>
+      </a>
+      <a href="{{ url_for('ranking_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
+        <span style="color: white;">Ranking</span>
+      </div>
+      </a>
+      <a href="{{ url_for('perfil_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
+        <span style="color: white;">Perfil</span>
+      </div>
+      </a>
+      <a href="{{ url_for('store_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
+        <span style="color: white;">Loja</span>
+      </div>
+      </a>
+      <div class="menu-item" id="openMais">
+        <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
+        Mais
+      </div>
+    </nav>
+    <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+      </ul>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="quiz-content">
+      <div class="modulo modulo1">
+        <h2>Quiz 1</h2>
+        <p>Concluído</p>
+      </div>
+
+      <div class="modulo modulo4">
+        <h2>Quiz 2</h2>
+        <div class="progress-bartp" style="width: 50%;">
+          <div class="progresstp" style="width: 21%;">21%</div>
+        </div>
+      </div>
+
+      <div class="modulo modulo5">
+        <h2>Quiz 3</h2>
+        <p style="font-size: 15px;"><br> Encerre o quiz 2 para prosseguir</p>
+        <button hidden="true"></button>
+      </div>
+
+      <div class="modulo modulo6">
+        <h2>Quiz 4</h2>
+        <p style="font-size: 15px;"><br> Encerre o quiz 3 para prosseguir</p>
+        <button hidden="true"></button>
+      </div>
+    
+      </main>
+
+
+    <!-- PAINEL LATERAL DIREITO -->
+    <aside class="info-box">
+      <div class="info">
+        <span class="golden">{{ coins }}</span>
+        <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
+      </div>
+
+      <div class="info">
+        <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+        <span class="golden">12</span> <br>
+        <span class="darkgolden">Dias consecutivos</span>
+      </div>
+
+      <div class="info">
+        <span class="golden">{{ pontos }}</span> <br>
+        <span class="darkgolden">Total de Aurum Points</span>
+      </div>
+
+      <div class="info">
+        <span class="golden" style="color: #afafaf;">#{{ posicao_ranking }}</span> <br>
+        <span class="darkgolden">Posição no Ranking</span>
+      </div>
+      
+      <div class="info">
+        {% for usuario in usuarios %}
+          <div class="rank-item">#{{usuarios.index(usuario)+1}} <span class="first">{{ usuario.nome }}</span></div>
+        {% endfor %}
+      </div>
+
+    </aside>
+  </div>
+<script>
+  const maisBtn = document.getElementById('openMais');
+  const submenuMais = document.getElementById('submenuMais');
+
+  // Alternar visibilidade ao clicar
+  maisBtn.addEventListener('click', () => {
+    submenuMais.classList.toggle('oculto');
+  });
+
+  // Ocultar submenu ao clicar fora
+  document.addEventListener('click', (event) => {
+    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+      submenuMais.classList.add('oculto');
+    }
+  });
+</script>
+</body>
+</html>

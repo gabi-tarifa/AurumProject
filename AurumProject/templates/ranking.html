@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rankig</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+</head>
+<body>
+
+<div class="containerTP" id="rank-screen">
+    <aside class="sidebar">
+     <a href="{{ url_for('starting_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
+          <span style="color: white;">Aprender</span>
+        </div>
+      </a>
+      <a href="{{ url_for('quiz_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
+        <span style="color: white;">Quiz</span>
+      </div>
+      </a>
+      <a href="{{ url_for('ranking_page') }}">
+      <div class="menu-item active">
+        <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
+        <span style="color: white;">Ranking</span>
+      </div>
+      </a>
+      <a href="{{ url_for('perfil_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
+        <span style="color: white;">Perfil</span>
+      </div>
+      </a>
+      <a href="{{ url_for('store_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
+        <span style="color: white;">Loja</span>
+      </div>
+      </a>
+      <div class="menu-item" id="openMais">
+        <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
+        Mais
+      </div>
+    </aside>
+    <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+      </ul>
+    </div>
+
+    <main class="main-content">
+      <section class="ranking-box">
+        <h1>RANKING SEMANAL</h1>
+        <ul class="ranking-list">
+          {% for usuario in usuarios %}
+            <li>
+              <span> #{{usuarios.index(usuario)+1}} </span>
+              <span class="icon">
+                <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
+              </span> 
+              <span class="first">{{ usuario.nome }}</span> 
+              <span class="score">{{ usuario.pontos_semanais }}</span> 
+                <img src="{{ url_for('static', filename='img/arrows.png') }}" class="icon">
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </main>
+
+      <aside class="info-box">
+        <div class="info">
+          <span class="golden">{{ coins }}</span>
+          <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
+        </div>
+
+        <div class="info">
+          <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+          <span class="golden">12</span> <br>
+          <span class="darkgolden">Dias consecutivos</span>
+        </div>
+
+        <div class="info">
+          <span class="golden">{{ pontos }}</span> <br>
+          <span class="darkgolden">Total de Aurum Points</span>
+        </div>        
+        <button class="quiz-btn info">Quiz<br><span class="up">Treinar agora</span></button>
+        <div class="modulo modulo2 info">
+          <p>Módulo 2</p>
+          <div class="progress-bar" style="align-content: center;">
+            <div class="progress" style="width: 21%"></div>
+          </div>
+          <button class="continue-btn">Continuar</button>
+        </div>
+      </aside>
+    </main>
+</div>
+    
+<script>
+  const maisBtn = document.getElementById('openMais');
+  const submenuMais = document.getElementById('submenuMais');
+
+  // Alternar visibilidade ao clicar
+  maisBtn.addEventListener('click', () => {
+    submenuMais.classList.toggle('oculto');
+  });
+
+  // Ocultar submenu ao clicar fora
+  document.addEventListener('click', (event) => {
+    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+      submenuMais.classList.add('oculto');
+    }
+  });
+</script>
+</body>
+</html>
