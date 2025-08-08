@@ -10,6 +10,8 @@ from app import db
 from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
+from datetime import datetime
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -37,6 +39,17 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     criar_conquistas()
+
+def zerar_pontos_semanais():
+    with app.app_context():  # Necessário para acessar o banco
+        Usuario.query.update({Usuario.pontos_semanais: 0})
+        db.session.commit()
+        print(f"Pontos semanais resetados em {datetime.now()}")
+
+scheduler = BackgroundScheduler()
+# Executa todo domingo às 00:00
+scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='sun', hour=0, minute=0)
+scheduler.start()
 
 # 🔐 Página de Login
 @app.route("/login")
@@ -67,7 +80,7 @@ def cadastro_page():
 @app.route("/ranking")
 @login_required
 def ranking_page():
-    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+    usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
@@ -77,7 +90,8 @@ def ranking_page():
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
-        pontos=current_user.pontos,
+        pontos = current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -85,7 +99,7 @@ def ranking_page():
 @app.route("/inicial")
 @login_required
 def starting_page():
-    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+    usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
@@ -96,6 +110,7 @@ def starting_page():
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
         pontos=current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -113,7 +128,7 @@ def pre_entrada():
 @login_required
 def perfil_page():
     conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
-    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+    usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
@@ -124,7 +139,8 @@ def perfil_page():
         conquistas=conquistas_usuario,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
-        pontos=current_user.pontos,
+        pontos = current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -163,7 +179,7 @@ def cadastro():
 @app.route("/quiz")
 @login_required
 def quiz_page():
-    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+    usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
@@ -173,14 +189,15 @@ def quiz_page():
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
-        pontos=current_user.pontos,
+        pontos = current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
 @app.route("/loja")
 @login_required
 def store_page():
-    usuarios = Usuario.query.order_by(Usuario.pontos.desc()).all()
+    usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
@@ -190,7 +207,8 @@ def store_page():
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
-        pontos=current_user.pontos,
+        pontos = current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 

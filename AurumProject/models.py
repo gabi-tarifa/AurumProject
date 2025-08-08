@@ -12,6 +12,7 @@ class Usuario(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     senha = db.Column(db.String(255), nullable=False)
     pontos = db.Column(db.Integer, default=0, nullable=False)
+    pontos_semanais = db.Column(db.Integer, default=0, nullable=False)
     moedas = db.Column(db.Integer, default = 0, nullable= False)
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
