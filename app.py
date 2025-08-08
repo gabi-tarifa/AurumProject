@@ -40,6 +40,8 @@ with app.app_context():
     db.create_all()
     criar_conquistas()
 
+
+
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
         Usuario.query.update({Usuario.pontos_semanais: 0})
