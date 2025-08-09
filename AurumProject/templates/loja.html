@@ -61,31 +61,22 @@
         <main>
       <h1>Bem-vindo à Loja</h1>
       <section class="poderes">
-        <h3>Poderes:</h3>
+  <h3>Poderes:</h3>
 
-        <div class="poder">
-          <img class="icon" src="{{ url_for('static', filename='img//info.png') }}" alt="Segunda Chance" class="poder-icone">
-          <div class="poder-info">
-            <h4>Segunda chance</h4>
-            <p>Mantenha a sua ofensiva intacta mesmo se você deixar de praticar por 24 horas.</p>
-          </div>
-          <div class="poder-custo">
-            200 <img class="icon" src="{{ url_for('static', filename='img//stack-of-coins.png') }}" alt="Aurum Points">
-          </div>
-        </div>
-
-        <div class="poder">
-          <img class="icon" src="{{ url_for('static', filename='img//broken-heart.png') }}" alt="Recuperar Coração" class="poder-icone">
-          <div class="poder-info">
-            <h4>Recuperar coração</h4>
-            <p>Recupere um coração pra não ter medo de errar.</p>
-          </div>
-          <div class="poder-custo">
-            80 <img class="icon" src="{{ url_for('static', filename='img//stack-of-coins.png') }}" alt="Aurum Points">
-          </div>
-        </div>
-
-      </section>
+  {% for poder in poderes %}
+    <div class="poder">
+      <img class="icon" src="{{ url_for('static', filename=poder.imagem) }}" alt="{{ poder.nome }}">
+      <div class="poder-info">
+        <h4>{{ poder.nome }}</h4>
+        <p>{{ poder.descricao }}</p>
+      </div>
+      <div class="poder-custo">
+        {{ poder.preco }} 
+        <img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
+      </div>
+    </div>
+  {% endfor %}
+</section>
     </main>
       </div>
      </main>

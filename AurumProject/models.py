@@ -60,5 +60,25 @@ class UsuarioConquistas(db.Model):
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
     id_conquista = db.Column(db.Integer, ForeignKey(Conquistas.id_conquista), nullable=False)
 
-"""class Poder(db.Model):
-    __tablename__ = 'Poderes'"""
+class Poderes(db.Model):
+    __tablename__ = "Poderes"
+    
+    id_poder = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False, unique=True)
+    descricao = db.Column(db.Text, nullable=False)
+    preco = db.Column(db.Integer, nullable=False)  # Preço em moedas/jogo
+    imagem = db.Column(db.String(255), default="", nullable=False)  # Caminho para o ícone
+
+    def __repr__(self):
+        return f"<Poder {self.nome}>"
+    
+class PoderesUsuario(db.Model):
+    __tablename__ = "PoderUsuario"
+
+    id_poder_usuario = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
+    id_poder = db.Column(db.Integer, ForeignKey(Poderes.id_poder), nullable=False)
+    quantidade = db.Column(db.Integer, default=1)  # Ex.: se o poder for acumulável
+
+    def __repr__(self):
+        return f"<PoderUsuario usuario={self.id_usuario} poder={self.id_poder}>"

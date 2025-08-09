@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -10,6 +10,7 @@ from app import db
 from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
+from setup_poderes import criar_poderes
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -39,6 +40,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     criar_conquistas()
+    criar_poderes()
 
 
 
@@ -200,13 +202,17 @@ def quiz_page():
 @login_required
 def store_page():
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
+    
+    poderes = Poderes.query.all()
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    
 
     return render_template(
         "loja.html",
         usuario=current_user,
+        poderes=poderes,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
