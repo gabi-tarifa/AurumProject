@@ -232,12 +232,12 @@ def comprar_poder():
         return redirect(url_for("store_page"))
 
     # Verifica saldo
-    if current_user.coins < poder.preco:
+    if current_user.moedas < poder.preco:
         flash("Você não tem moedas suficientes.", "error")
         return redirect(url_for("store_page"))
 
     # Cria relacionamento no PoderesUsuario
-    compra = PoderesUsuario(usuario_id=current_user.id, poder_id=poder.id_poder)
+    compra = PoderesUsuario(usuario_id=current_user.id, id_poder=poder.id_poder)
     db.session.add(compra)
 
     # Desconta moedas
