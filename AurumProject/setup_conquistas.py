@@ -26,7 +26,7 @@ def criar_conquistas():
             {"nome": "Persistente", "descricao": "Completou atividades por 30 dias seguidos", "imagem": "icons/ofensiva_30.png", "cor": "vermelha"},
             {"nome": "Imparável", "descricao": "Completou atividades por 180 dias seguidos", "imagem": "icons/ofensiva_180.png", "cor": "vermelha"},
             {"nome": "Lenda da Constância", "descricao": "Completou atividades por 365 dias seguidos", "imagem": "icons/crown.png", "cor": "darkred"},
-            {"nome": "Farinha do Mesmo Saco", "descricao": "Estudou na mesma turma que o dev e o assistiu durante o desenvolvimento", "imagem": "icons/ifsp.png", "cor": "verde"},
+            {"nome": "Farinha do Mesmo Saco", "descricao": "Estudou na mesma turma que o dev e o assistiu durante o desenvolvimento", "imagem": "icons/ifsp.png", "cor": "branco"},
         ]
 
         for conquista in conquistas_novas:

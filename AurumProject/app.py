@@ -224,8 +224,8 @@ def store_page():
 @app.route("/comprar_poder", methods=["POST"])
 @login_required
 def comprar_poder():
-    poder_id = request.form.get("poder_id")
-    poder = Poderes.query.get(poder_id)
+    id_poder = request.form.get("id_poder")
+    poder = db.session.get(Poderes, id_poder)
 
     if not poder:
         flash("Poder não encontrado.", "error")

@@ -774,6 +774,11 @@ label{
   color: white;
 }
 
+.cor-branco {
+  background-color: white;
+  color: black;
+}
+
 /* Amarela */
 .cor-amarela {
   background-color: #fbc02d;
