@@ -132,7 +132,6 @@ function comprarPoder(poderId) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": "{{ csrf_token() }}" // só se você estiver usando CSRF
     },
     body: JSON.stringify({ poder_id: poderId })
   })
