@@ -61,7 +61,7 @@
         <main>
       <h1>Bem-vindo à Loja</h1>
       <section class="poderes">
-  <h3>Poderes:</h3>
+  <h3>Poderes:</h3><br>
 
   {% for poder in poderes %}
     <div class="poder">
@@ -70,7 +70,7 @@
         <h4>{{ poder.nome }}</h4>
         <p>{{ poder.descricao }}</p>
       </div>
-      <div class="poder-custo">
+      <div class="poder-custo" style="cursor:pointer;" onclick="comprarPoder( {{poder.id_poder}} )">
         {{ poder.preco }} 
         <img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
       </div>
@@ -126,6 +126,27 @@
       submenuMais.classList.add('oculto');
     }
   });
+  
+function comprarPoder(poderId) {
+  fetch("/comprar_poder", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": "{{ csrf_token() }}" // só se você estiver usando CSRF
+    },
+    body: JSON.stringify({ poder_id: poderId })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.sucesso) {
+      alert("Compra realizada com sucesso!");
+      location.reload(); // atualiza a página para mostrar as moedas atualizadas
+    } else {
+      alert(data.mensagem || "Não foi possível realizar a compra.");
+    }
+  })
+  .catch(err => console.error(err));
+}
 </script>
 </body>
 </html>

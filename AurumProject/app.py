@@ -220,6 +220,33 @@ def store_page():
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
+
+@app.route("/comprar_poder", methods=["POST"])
+@login_required
+def comprar_poder():
+    poder_id = request.form.get("poder_id")
+    poder = Poderes.query.get(poder_id)
+
+    if not poder:
+        flash("Poder não encontrado.", "error")
+        return redirect(url_for("store_page"))
+
+    # Verifica saldo
+    if current_user.coins < poder.preco:
+        flash("Você não tem moedas suficientes.", "error")
+        return redirect(url_for("store_page"))
+
+    # Cria relacionamento no PoderesUsuario
+    compra = PoderesUsuario(usuario_id=current_user.id, poder_id=poder.id_poder)
+    db.session.add(compra)
+
+    # Desconta moedas
+    current_user.coins -= poder.preco
+    db.session.commit()
+
+    flash(f"Você comprou '{poder.nome}'!", "success")
+    return redirect(url_for("store_page"))
+
 @app.route("/login", methods=["POST"])
 def efetuar_login():
     dados = request.get_json()
