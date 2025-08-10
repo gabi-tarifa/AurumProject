@@ -264,7 +264,6 @@ def comprar_poder():
     # Salva tudo
     db.session.commit()
 
-    flash(f"Você comprou o poder: {poder.nome}!", "success")
     return redirect(url_for("store_page"))
 
 @app.route("/login", methods=["POST"])

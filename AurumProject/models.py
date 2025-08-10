@@ -62,7 +62,7 @@ class UsuarioConquistas(db.Model):
 
 class Poderes(db.Model):
     __tablename__ = "Poderes"
-    
+
     id_poder = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False, unique=True)
     descricao = db.Column(db.Text, nullable=False)
@@ -73,7 +73,7 @@ class Poderes(db.Model):
         return f"<Poder {self.nome}>"
     
 class PoderesUsuario(db.Model):
-    __tablename__ = "PoderUsuario"
+    __tablename__ = "PoderesUsuario"
 
     id_poder_usuario = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
@@ -81,4 +81,4 @@ class PoderesUsuario(db.Model):
     quantidade = db.Column(db.Integer, default=1)  # Ex.: se o poder for acumulável
 
     def __repr__(self):
-        return f"<PoderUsuario usuario={self.id_usuario} poder={self.id_poder}>"
+        return f"<PoderesUsuario usuario={self.id_usuario} poder={self.id_poder}>"
