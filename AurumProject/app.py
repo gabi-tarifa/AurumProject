@@ -243,7 +243,7 @@ def comprar_poder():
     # Verifica se o usuário já tem esse poder
     poder_usuario = PoderesUsuario.query.filter_by(
         id_usuario=current_user.id,
-        id_poder=poder.id
+        id_poder=poder.id_poder
     ).first()
 
     if poder_usuario:
@@ -253,7 +253,7 @@ def comprar_poder():
         # Não existe → cria novo registro com quantidade 1
         poder_usuario = PoderesUsuario(
             id_usuario=current_user.id,
-            id_poder=poder.id,
+            id_poder=poder.id_poder,
             quantidade=1
         )
         db.session.add(poder_usuario)
