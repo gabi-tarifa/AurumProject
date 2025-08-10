@@ -903,3 +903,8 @@ label{
   margin-right: 10px;
   vertical-align: middle;
 }
+
+.vocepossui{
+  font-size: smaller;
+  color: goldenrod;
+}

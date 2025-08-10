@@ -69,12 +69,14 @@
       <div class="poder-info">
         <h4>{{ poder.nome }}</h4>
         <p>{{ poder.descricao }}</p>
-      </div><form action="/comprar_poder" method="POST">
-    <input type="hidden" name="id_poder" value="{{ poder.id_poder }}">
-    <button type="submit" class="poder-custo">
-        {{ poder.preco }}<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
-    </button>
-</form>
+      </div>
+      <form action="/comprar_poder" method="POST">
+        <input type="hidden" name="id_poder" value="{{ poder.id_poder }}">
+        <button type="submit" class="poder-custo">
+          {{ poder.preco }}<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
+        </button>
+      </form>
+      <spam class="vocepossui">Você possui: {{ quantidades.get(poder.id_poder, 0) }}</spam>
     </div>
         
   {% endfor %}

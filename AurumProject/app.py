@@ -207,6 +207,12 @@ def store_page():
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+
+    # Busca todos os poderes que o usuário possui
+    poderes_usuario = PoderesUsuario.query.filter_by(usuario_id=current_user.id).all()
+
+    # Cria um dicionário {id_poder: quantidade}
+    quantidades = {pu.poder_id: pu.quantidade for pu in poderes_usuario}
     
 
     return render_template(
@@ -217,6 +223,7 @@ def store_page():
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        quantidades=quantidades,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
