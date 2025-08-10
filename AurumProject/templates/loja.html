@@ -121,33 +121,6 @@
   maisBtn.addEventListener('click', () => {
     submenuMais.classList.toggle('oculto');
   });
-
-  // Ocultar submenu ao clicar fora
-  document.addEventListener('click', (event) => {
-    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
-      submenuMais.classList.add('oculto');
-    }
-  });
-  
-function comprarPoder(poderId) {
-  fetch("/comprar_poder", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ poder_id: poderId })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.sucesso) {
-      alert("Compra realizada com sucesso!");
-      location.reload(); // atualiza a página para mostrar as moedas atualizadas
-    } else {
-      alert(data.mensagem || "Não foi possível realizar a compra.");
-    }
-  })
-  .catch(err => console.error(err));
-}
 </script>
 </body>
 </html>
