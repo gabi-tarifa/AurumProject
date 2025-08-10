@@ -209,10 +209,10 @@ def store_page():
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
     # Busca todos os poderes que o usuário possui
-    poderes_usuario = PoderesUsuario.query.filter_by(usuario_id=current_user.id).all()
+    poderes_usuario = PoderesUsuario.query.filter_by(id_usuario=current_user.id).all()
 
     # Cria um dicionário {id_poder: quantidade}
-    quantidades = {pu.poder_id: pu.quantidade for pu in poderes_usuario}
+    quantidades = {pu.id_poder: pu.quantidade for pu in poderes_usuario}
     
 
     return render_template(
