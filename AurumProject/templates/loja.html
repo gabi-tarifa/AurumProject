@@ -72,7 +72,7 @@
       </div><form action="/comprar_poder" method="POST">
     <input type="hidden" name="id_poder" value="{{ poder.id }}">
     <button type="submit" class="poder-custo">
-        {{ poder.preco }}v<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
+        {{ poder.preco }}<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
     </button>
 </form>
     </div>

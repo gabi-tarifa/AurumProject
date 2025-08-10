@@ -224,28 +224,47 @@ def store_page():
 @login_required
 def comprar_poder():
     id_poder = request.form.get("id_poder", type=int)
-    preco = request.form.get("preco", type=int)
 
     if not id_poder:
         flash("ID do poder inválido.", "error")
         return redirect(url_for("store_page"))
 
+    # Busca o poder no banco
     poder = db.session.get(Poderes, id_poder)
     if not poder:
         flash("Poder não encontrado.", "error")
         return redirect(url_for("store_page"))
 
-    # Aqui você pode usar o preço enviado pelo form
-    # ou o preço que está no banco de dados (mais seguro)
-    if current_user.moedas < preco:
+    # Checa moedas do usuário
+    if current_user.moedas < poder.preco:
         flash("Você não tem moedas suficientes!", "error")
         return redirect(url_for("store_page"))
 
-    # Desconta moedas e registra compra
-    current_user.moedas -= preco
+    # Verifica se o usuário já tem esse poder
+    poder_usuario = PoderesUsuario.query.filter_by(
+        usuario_id=current_user.id,
+        poder_id=poder.id
+    ).first()
+
+    if poder_usuario:
+        # Já existe → aumenta a quantidade
+        poder_usuario.quantidade += 1
+    else:
+        # Não existe → cria novo registro com quantidade 1
+        poder_usuario = PoderesUsuario(
+            usuario_id=current_user.id,
+            poder_id=poder.id,
+            quantidade=1
+        )
+        db.session.add(poder_usuario)
+
+    # Desconta moedas
+    current_user.moedas -= poder.preco
+
+    # Salva tudo
     db.session.commit()
 
-    flash(f"Você comprou: {poder.nome} por {preco} moedas!", "success")
+    flash(f"Você comprou o poder: {poder.nome}!", "success")
     return redirect(url_for("store_page"))
 
 @app.route("/login", methods=["POST"])
