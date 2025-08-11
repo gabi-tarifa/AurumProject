@@ -93,6 +93,6 @@ class Bloco(db.Model):
 class UsuarioBloco(db.Model):
     __tablename__ = "UsuarioBloco"
     id_usuario_bloco = db.Column(db.Integer, primary_key=True)
-    id_usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"), nullable=False)
-    id_bloco = db.Column(db.Integer, db.ForeignKey("bloco.id_bloco"), nullable=False)
+    id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
+    id_bloco = db.Column(db.Integer, db.ForeignKey(Bloco.id_bloco), nullable=False)
 
