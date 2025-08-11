@@ -333,7 +333,7 @@ def efetuar_login():
             # Adiciona usuário no bloco
             novo_registro = UsuarioBloco(
                 id_usuario=current_user.id,
-                id_bloco_semanal=bloco.id_bloco_semanal
+                id_bloco=bloco.id_bloco
             )
             db.session.add(novo_registro)
             db.session.commit()
