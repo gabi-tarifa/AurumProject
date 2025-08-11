@@ -60,9 +60,9 @@
       <section class="ranking-box">
         <h1>RANKING SEMANAL</h1>
         <ul class="ranking-list">
-          {% for i, usuario in enumerate(ranking, 1) %}
+          {% for usuario in ranking %}
           <li>
-            <span> #{{ i }} </span>
+            <span> #{{ loop.index }} </span>
             <span class="icon">
               <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
             </span> 
