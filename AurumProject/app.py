@@ -101,7 +101,7 @@ def ranking_page():
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
-        .filter(UsuarioBloco.id_bloco_semanal == bloco_usuario.id_bloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
 
