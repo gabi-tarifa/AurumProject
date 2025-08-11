@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if(senha.length < 6) {
-            alert("A senha tem que ser maior que 6 dígitos!");
+        if(senha.length < 6 && senha.length > 16) {
+            alert("A senha tem que ser maior que 6 dígitos e menor que 16 dígitos!");
             return;
         }
 

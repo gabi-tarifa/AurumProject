@@ -52,8 +52,7 @@ def zerar_pontos_semanais():
 
 scheduler = BackgroundScheduler()
 # Executa todo domingo às 00:00
-#scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='sun', hour=0, minute=0)
-scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=19, minute=30)
+scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='sun', hour=0, minute=0)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -73,6 +72,8 @@ def debug_db():
 @app.route("/questionario")
 @login_required
 def questionario_page():
+    if current_user.ja_passou_intro:
+        return redirect(url_for("pagina_principal"))
     return render_template("perguntasEntrada.html")
 
 # 🆕 Página de Cadastro
@@ -123,6 +124,8 @@ def ranking_page():
 @app.route("/inicial")
 @login_required
 def starting_page():
+    current_user.ja_passou_intro = True
+    db.session.commit()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     # Encontrar a posição do usuário no ranking

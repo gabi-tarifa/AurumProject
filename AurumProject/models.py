@@ -16,7 +16,7 @@ class Usuario(db.Model, UserMixin):
     moedas = db.Column(db.Integer, default = 0, nullable= False)
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
-    #ja_passou_intro = db.Column(db.Boolean, default=False)
+    ja_passou_intro = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f'<Usuario {self.nome} - {self.email}>'
