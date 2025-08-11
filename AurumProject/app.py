@@ -72,8 +72,6 @@ def debug_db():
 @app.route("/questionario")
 @login_required
 def questionario_page():
-    if current_user.ja_passou_intro:
-        return redirect(url_for("pagina_principal"))
     return render_template("perguntasEntrada.html")
 
 # 🆕 Página de Cadastro
@@ -179,6 +177,8 @@ def modulo():
 @app.route("/introducao")
 @login_required
 def intro_page():
+    if current_user.ja_passou_intro:
+        return redirect(url_for("starting_page"))
     return render_template("introducao.html")
 
 @app.route("/cadastro", methods=["POST"])
