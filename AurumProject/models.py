@@ -16,6 +16,7 @@ class Usuario(db.Model, UserMixin):
     moedas = db.Column(db.Integer, default = 0, nullable= False)
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
+    #ja_passou_intro = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f'<Usuario {self.nome} - {self.email}>'
@@ -82,3 +83,16 @@ class PoderesUsuario(db.Model):
 
     def __repr__(self):
         return f"<PoderesUsuario usuario={self.id_usuario} poder={self.id_poder}>"
+    
+class Bloco(db.Model):
+    __tablename__ = "Bloco"
+
+    id_bloco = db.Column(db.Integer, primary_key=True)
+    semana = db.Column(db.Date, nullable=False)
+
+class UsuarioBloco(db.Model):
+    __tablename__ = "UsuarioBloco"
+    id_usuario_bloco = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"), nullable=False)
+    id_bloco = db.Column(db.Integer, db.ForeignKey("bloco.id_bloco"), nullable=False)
+

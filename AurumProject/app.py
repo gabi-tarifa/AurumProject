@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -11,7 +11,7 @@ from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
 from setup_poderes import criar_poderes
-from datetime import datetime
+from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
@@ -52,7 +52,8 @@ def zerar_pontos_semanais():
 
 scheduler = BackgroundScheduler()
 # Executa todo domingo às 00:00
-scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='sun', hour=0, minute=0)
+#scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='sun', hour=0, minute=0)
+scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=19, minute=30)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -86,6 +87,24 @@ def cadastro_page():
 def ranking_page():
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco_semanal == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
@@ -96,6 +115,7 @@ def ranking_page():
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        ranking=ranking,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -288,6 +308,35 @@ def efetuar_login():
 
     if usuario and check_password_hash(usuario.senha, senha):
         login_user(usuario)  # ← faz o login real do usuário
+        semana_atual = inicio_semana()
+        bloco_existente = (UsuarioBloco.query
+            .join(Bloco)
+            .filter(UsuarioBloco.id_usuario == current_user.id,
+                    Bloco.semana == semana_atual)
+            .first())
+
+        if not bloco_existente:
+            # Procura bloco com vaga
+            bloco = (Bloco.query
+                .filter(Bloco.semana == semana_atual)
+                .join(UsuarioBloco)
+                .group_by(Bloco.id_bloco)
+                .having(db.func.count(UsuarioBloco.id_usuario) < 20)
+                .first())
+
+            if not bloco:
+                # Cria novo bloco
+                bloco = Bloco(semana=semana_atual)
+                db.session.add(bloco)
+                db.session.commit()
+
+            # Adiciona usuário no bloco
+            novo_registro = UsuarioBloco(
+                id_usuario=current_user.id,
+                id_bloco_semanal=bloco.id_bloco_semanal
+            )
+            db.session.add(novo_registro)
+            db.session.commit()
         return jsonify({"mensagem": "Login efetuado com sucesso!"}), 200
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
@@ -392,6 +441,11 @@ def salvar_usuario(nome):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg'}
+
+def inicio_semana():
+    hoje = date.today()
+    # Ajustar para segunda-feira
+    return hoje - timedelta(days=hoje.weekday())
 
 
 if __name__ == "__main__":
