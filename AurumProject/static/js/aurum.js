@@ -28,31 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if(senha.length < 6 || senha.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || ) {
-            texto.textContent = "A senha tem que ser maior que 6 dígitos e menor que 16 dígitos!";
+        if(senha.length < 6 || senha.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || !temNumero(senha) || !temCaractereEspecial(senha)) {
+            texto.innerHTML = "Um dos seguintes requisitos não foi cumprido: <br>- A senha tem que ser maior que 6 dígitos e menor que 16 dígitos;<br>- A senha deve conter pelo menos uma letra maiúscula;<br>- A senha deve conter pelo menos uma letra minúscula;<br>- A senha deve conter pelo menos um número;<br>- A senha deve conter pelo menos um caractere especial.";
             return;
         }
         
-        if () {
-            texto.textContent = "A senha deve conter pelo menos uma letra maiúscula.";
-            return;
-        }
-
-        if () {
-            texto.textContent = "A senha deve conter pelo menos uma letra minúscula.";
-            return;
-        }
-
-        if (!temNumero(senha)) {
-            texto.textContent = "A senha deve conter pelo menos um número.";
-            return;
-        }
-
-        if (!temCaractereEspecial(senha)) {
-            texto.textContent = "A senha deve conter pelo menos um caractere especial.";
-            return;
-        }
-
         if(confirmarSenha != senha){
             texto.textContent = "As senhas não condizem!";
             return;

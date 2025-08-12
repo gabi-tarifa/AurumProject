@@ -910,7 +910,6 @@ label{
 }
 
 .textoerro{
-  font-size: small;
+  font-size: x-small;
   color: #e53935;
-  margin-left: 5px;
 }
