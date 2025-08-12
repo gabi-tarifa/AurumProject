@@ -222,6 +222,24 @@ def perfil_page():
         .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
+    
+    
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -232,6 +250,7 @@ def perfil_page():
         conquistas=conquistas_usuario,
         usuarios=usuarios,
         ranking=ranking,
+        top5_bloco=top5_bloco,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
@@ -296,6 +315,24 @@ def quiz_page():
         .order_by(Usuario.pontos_semanais.desc())
         .all())
     
+    
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+    
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
@@ -305,6 +342,7 @@ def quiz_page():
         usuarios=usuarios,
         ranking=ranking,
         posicao_ranking=posicao_ranking,
+        top5_bloco=top5_bloco,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
@@ -336,6 +374,23 @@ def store_page():
         .order_by(Usuario.pontos_semanais.desc())
         .all())
     
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+    
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
@@ -350,6 +405,7 @@ def store_page():
         "loja.html",
         usuario=current_user,
         poderes=poderes,
+        top5_bloco=top5_bloco,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
         ranking=ranking,
