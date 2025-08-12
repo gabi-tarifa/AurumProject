@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Aurum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/configuracoes.css') }}">
+    <link rel="stylesheet" href="C:/Users/gabri/AurumProject/AurumProject/static/css/configuracoes.css">
+</head>
+<body>
+
+    <header>
+        <button onclick="location.href('/inicial')">← Voltar</button>
+        <h1>Configurações</h1>
+        <div></div>
+    </header>
+
+    <main>
+        <section class="config-section">
+            <h2>Preferências</h2>
+            <div class="config-item">
+                <label for="sound">Som do jogo</label>
+                <input type="checkbox" id="sound" checked>
+            </div>
+            <div class="config-item">
+                <label for="music">Música de fundo</label>
+                <input type="checkbox" id="music">
+            </div>
+            <div class="config-item">
+                <label for="notifications">Notificações</label>
+                <input type="checkbox" id="notifications" checked>
+            </div>
+            <div class="config-item">
+                <label for="language">Idioma</label>
+                <select id="language"></select>
+            </div>
+        </section>
+
+        <section class="config-section">
+            <h2>Conta</h2>
+            <div class="config-item">
+                <label>Alterar Apelido</label>
+                <button onclick="alterarApelido()">Editar</button>
+            </div>
+            <div class="config-item">
+                <label>Alterar Foto de Perfil</label>
+                <button onclick="alterarFoto()">Editar</button>
+            </div>
+            <div class="config-item">
+                <label>Alterar Senha</label>
+                <button onclick="alterarSenha()">Editar</button>
+            </div>
+        </section>
+
+        <section class="config-section">
+            <h2>Aplicativo</h2>
+            <div class="config-item">
+                <label>Versão do App</label>
+                <span>0.2.56 Beta</span>
+            </div>
+            <div class="config-item">
+                <label>Redefinir configurações</label>
+                <button onclick="resetarConfig()">Resetar</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/configuracoes.js') }}">
+        
+    </script>
+
+</body>
+</html>

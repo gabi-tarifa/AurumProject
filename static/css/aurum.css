@@ -908,3 +908,8 @@ label{
   font-size: smaller;
   color: goldenrod;
 }
+
+.textoerro{
+  font-size: x-small;
+  color: #e53935;
+}

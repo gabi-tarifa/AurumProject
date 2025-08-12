@@ -17,6 +17,7 @@ class Usuario(db.Model, UserMixin):
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
     ja_passou_intro = db.Column(db.Boolean, default=False)
+    #idioma = db.Column(db.String(20), ForeignKey(Configuracoes.idioma), nullable=False, default="Português (Brasil)")
 
     def __repr__(self):
         return f'<Usuario {self.nome} - {self.email}>'
@@ -92,7 +93,19 @@ class Bloco(db.Model):
 
 class UsuarioBloco(db.Model):
     __tablename__ = "UsuarioBloco"
+
     id_usuario_bloco = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
     id_bloco = db.Column(db.Integer, db.ForeignKey(Bloco.id_bloco), nullable=False)
 
+"""
+class Configuracoes(db.Model):
+    __tablename__ = "Configurações"
+
+    id_ajuste = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
+    idioma = db.Column(db.String(20), nullable=False, default="Português (Brasil)")
+
+    #Outras colunas do bdd virao aqui, mas provavelmente isso sera alterado
+    
+"""

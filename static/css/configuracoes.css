@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0f1b3d;
+    color: #fff;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #14234f;
+    padding: 10px 20px;
+    border-bottom: 2px solid #c9af1b;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #c7af28;
+}
+
+header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #c7af28;
+    font-size: 1.2rem;
+}
+
+main {
+    padding: 20px;
+}
+
+.config-section {
+    background-color: #10214e;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #1a2647;
+}
+
+.config-section h2 {
+    margin-top: 0;
+    color: #c7af28;
+}
+
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a2647;
+}
+
+.config-item:last-child {
+    border-bottom: none;
+}
+
+.config-item label {
+    flex: 1;
+}
+
+.config-item input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+.config-item button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #c7af28;
+    color: #0f1e47;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.config-item button:hover {
+    background-color: #b09b23;
+}
+
+
+/* Select estilizado */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #10214e;
+    border: 1px solid #1a2647;
+    border-radius: 8px;
+    padding: 10px 40px 10px 15px;
+    font-size: 1rem;
+    color: #c7af28;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Seta personalizada */
+.select-container::after {
+    content: "▼";
+    font-size: 14px;
+    color: #c7af28;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Foco */
+select:focus {
+    outline: none;
+    border-color: #c7af28;
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+/* Opções */
+option {
+    background-color: #1a2647;
+    color: #c7af28;
+}
+
+input[type="checkbox"] {
+    accent-color: #c7af28; /* Cor do preenchimento quando marcado */
+}
