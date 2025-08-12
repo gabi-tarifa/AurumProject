@@ -13,6 +13,7 @@ from setup_conquistas import criar_conquistas
 from setup_poderes import criar_poderes
 from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
+from sqlalchemy import desc
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -159,11 +160,29 @@ def starting_page():
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+
     return render_template(
         "a.html",
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
+        top5_bloco=top5_bloco,
         ranking=ranking,
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
