@@ -108,8 +108,8 @@
       </div>
       
       <div class="info">
-        {% for usuario in usuarios %}
-          <div class="rank-item">#{{usuarios.index(usuario)+1}} <span class="first">{{ usuario.nome }}</span></div>
+        {% for usuario in ranking %}
+          <div class="rank-item">#{{ loop.index }} <span class="first">{{ usuario.nome }}</span></div>
         {% endfor %}
       </div>
 

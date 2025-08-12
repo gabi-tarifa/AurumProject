@@ -126,6 +126,24 @@ def starting_page():
     db.session.commit()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
@@ -134,6 +152,7 @@ def starting_page():
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
+        ranking=ranking,
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
@@ -230,10 +249,29 @@ def quiz_page():
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     return render_template(
         "quizes.html",
         usuario=current_user,
         usuarios=usuarios,
+        ranking=ranking,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
@@ -250,6 +288,24 @@ def store_page():
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Busca todos os poderes que o usuário possui
     poderes_usuario = PoderesUsuario.query.filter_by(id_usuario=current_user.id).all()
 
@@ -263,6 +319,7 @@ def store_page():
         poderes=poderes,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
+        ranking=ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         quantidades=quantidades,
