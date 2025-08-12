@@ -155,6 +155,24 @@ def perfil_page():
     conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
@@ -163,6 +181,7 @@ def perfil_page():
         usuario=current_user,
         conquistas=conquistas_usuario,
         usuarios=usuarios,
+        ranking=ranking,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
