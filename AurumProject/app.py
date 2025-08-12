@@ -27,8 +27,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -145,7 +145,7 @@ def starting_page():
         .all())
 
     # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     return render_template(
         "a.html",
@@ -193,7 +193,7 @@ def perfil_page():
         .all())
 
     # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     return render_template(
         "perfil.html",
@@ -246,8 +246,6 @@ def cadastro():
 def quiz_page():
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
-    # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
     semana_atual = inicio_semana()
 
@@ -266,6 +264,9 @@ def quiz_page():
         .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
+    
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     return render_template(
         "quizes.html",
@@ -285,8 +286,6 @@ def store_page():
     
     poderes = Poderes.query.all()
 
-    # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
     semana_atual = inicio_semana()
 
@@ -305,6 +304,9 @@ def store_page():
         .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
+    
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     # Busca todos os poderes que o usuário possui
     poderes_usuario = PoderesUsuario.query.filter_by(id_usuario=current_user.id).all()
@@ -528,6 +530,6 @@ def inicio_semana():
 
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
