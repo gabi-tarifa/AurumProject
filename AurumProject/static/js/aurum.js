@@ -28,17 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if(senha.length < 6 || senha.length > 16) {
+        if(senha.length < 6 || senha.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || ) {
             texto.textContent = "A senha tem que ser maior que 6 dígitos e menor que 16 dígitos!";
             return;
         }
         
-        if (!temMaiuscula(senha)) {
+        if () {
             texto.textContent = "A senha deve conter pelo menos uma letra maiúscula.";
             return;
         }
 
-        if (!temMinuscula(senha)) {
+        if () {
             texto.textContent = "A senha deve conter pelo menos uma letra minúscula.";
             return;
         }
