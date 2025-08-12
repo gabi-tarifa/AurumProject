@@ -1,3 +1,19 @@
+function temMaiuscula(str) {
+    return /[A-Z]/.test(str);
+}
+
+function temMinuscula(str) {
+    return /[a-z]/.test(str);
+}
+
+function temNumero(str) {
+    return /\d/.test(str);
+}
+
+function temCaractereEspecial(str) {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(str);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const btnCadastro = document.getElementById("signup-btn");
     btnCadastro.addEventListener("click", async () => {
@@ -11,8 +27,28 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if(senha.length < 6) {
-            alert("A senha tem que ser maior que 6 dígitos!");
+        if(senha.length < 6 || senha.length > 16) {
+            alert("A senha tem que ser maior que 6 dígitos e menor que 16 dígitos!");
+            return;
+        }
+        
+        if (!temMaiuscula(senha)) {
+            alert("A senha deve conter pelo menos uma letra maiúscula.");
+            return;
+        }
+
+        if (!temMinuscula(senha)) {
+            alert("A senha deve conter pelo menos uma letra minúscula.");
+            return;
+        }
+
+        if (!temNumero(senha)) {
+            alert("A senha deve conter pelo menos um número.");
+            return;
+        }
+
+        if (!temCaractereEspecial(senha)) {
+            alert("A senha deve conter pelo menos um caractere especial.");
             return;
         }
 

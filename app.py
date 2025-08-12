@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -10,7 +10,8 @@ from app import db
 from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
-from datetime import datetime
+from setup_poderes import criar_poderes
+from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
@@ -26,8 +27,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -39,6 +40,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     criar_conquistas()
+    criar_poderes()
 
 
 
@@ -84,6 +86,24 @@ def cadastro_page():
 def ranking_page():
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
 
@@ -94,6 +114,7 @@ def ranking_page():
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        ranking=ranking,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -101,16 +122,37 @@ def ranking_page():
 @app.route("/inicial")
 @login_required
 def starting_page():
+    current_user.ja_passou_intro = True
+    db.session.commit()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     return render_template(
         "a.html",
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
+        ranking=ranking,
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
@@ -132,14 +174,33 @@ def perfil_page():
     conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+
     # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     return render_template(
         "perfil.html",
         usuario=current_user,
         conquistas=conquistas_usuario,
         usuarios=usuarios,
+        ranking=ranking,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
@@ -154,6 +215,8 @@ def modulo():
 @app.route("/introducao")
 @login_required
 def intro_page():
+    if current_user.ja_passou_intro:
+        return redirect(url_for("starting_page"))
     return render_template("introducao.html")
 
 @app.route("/cadastro", methods=["POST"])
@@ -183,13 +246,33 @@ def cadastro():
 def quiz_page():
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
+
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+    
     # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     return render_template(
         "quizes.html",
         usuario=current_user,
         usuarios=usuarios,
+        ranking=ranking,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
@@ -200,19 +283,96 @@ def quiz_page():
 @login_required
 def store_page():
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
+    
+    poderes = Poderes.query.all()
 
+
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+    
     # Encontrar a posição do usuário no ranking
-    posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
+
+    # Busca todos os poderes que o usuário possui
+    poderes_usuario = PoderesUsuario.query.filter_by(id_usuario=current_user.id).all()
+
+    # Cria um dicionário {id_poder: quantidade}
+    quantidades = {pu.id_poder: pu.quantidade for pu in poderes_usuario}
+    
 
     return render_template(
         "loja.html",
         usuario=current_user,
+        poderes=poderes,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
+        ranking=ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        quantidades=quantidades,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
+
+@app.route("/comprar_poder", methods=["POST"])
+@login_required
+def comprar_poder():
+    id_poder = request.form.get("id_poder", type=int)
+
+    if not id_poder:
+        flash("ID do poder inválido.", "error")
+        return redirect(url_for("store_page"))
+
+    # Busca o poder no banco
+    poder = db.session.get(Poderes, id_poder)
+    if not poder:
+        flash("Poder não encontrado.", "error")
+        return redirect(url_for("store_page"))
+
+    # Checa moedas do usuário
+    if current_user.moedas < poder.preco:
+        flash("Você não tem moedas suficientes!", "error")
+        return redirect(url_for("store_page"))
+
+    # Verifica se o usuário já tem esse poder
+    poder_usuario = PoderesUsuario.query.filter_by(
+        id_usuario=current_user.id,
+        id_poder=poder.id_poder
+    ).first()
+
+    if poder_usuario:
+        # Já existe → aumenta a quantidade
+        poder_usuario.quantidade += 1
+    else:
+        # Não existe → cria novo registro com quantidade 1
+        poder_usuario = PoderesUsuario(
+            id_usuario=current_user.id,
+            id_poder=poder.id_poder,
+            quantidade=1
+        )
+        db.session.add(poder_usuario)
+
+    # Desconta moedas
+    current_user.moedas -= poder.preco
+
+    # Salva tudo
+    db.session.commit()
+
+    return redirect(url_for("store_page"))
 
 @app.route("/login", methods=["POST"])
 def efetuar_login():
@@ -229,6 +389,35 @@ def efetuar_login():
 
     if usuario and check_password_hash(usuario.senha, senha):
         login_user(usuario)  # ← faz o login real do usuário
+        semana_atual = inicio_semana()
+        bloco_existente = (UsuarioBloco.query
+            .join(Bloco)
+            .filter(UsuarioBloco.id_usuario == current_user.id,
+                    Bloco.semana == semana_atual)
+            .first())
+
+        if not bloco_existente:
+            # Procura bloco com vaga
+            bloco = (Bloco.query
+                .filter(Bloco.semana == semana_atual)
+                .join(UsuarioBloco)
+                .group_by(Bloco.id_bloco)
+                .having(db.func.count(UsuarioBloco.id_usuario) < 20)
+                .first())
+
+            if not bloco:
+                # Cria novo bloco
+                bloco = Bloco(semana=semana_atual)
+                db.session.add(bloco)
+                db.session.commit()
+
+            # Adiciona usuário no bloco
+            novo_registro = UsuarioBloco(
+                id_usuario=current_user.id,
+                id_bloco=bloco.id_bloco
+            )
+            db.session.add(novo_registro)
+            db.session.commit()
         return jsonify({"mensagem": "Login efetuado com sucesso!"}), 200
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
@@ -334,8 +523,13 @@ def salvar_usuario(nome):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg'}
 
+def inicio_semana():
+    hoje = date.today()
+    # Ajustar para segunda-feira
+    return hoje - timedelta(days=hoje.weekday())
+
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

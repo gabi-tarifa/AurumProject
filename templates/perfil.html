@@ -58,8 +58,8 @@
     <main class="main-content">
       <!-- Cabeçalho com imagem -->
       <div class="perfil-cabecalho">
-        <img src="{{ url_for('static', filename=usuario.backgroundpicture) }}" alt="Usuários conversando" class="imagem-topo">
-        <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto do usuário" class="avatar">
+        <img src="{{ url_for('static', filename=usuario.backgroundpicture) }}" alt="Foto de Fundo" class="imagem-topo">
+        <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto de Perfil" class="avatar">
       </div>
 
       <!-- Dados do usuário -->
@@ -106,8 +106,8 @@
       </div>
       
       <div class="info">
-        {% for usuario in usuarios %}
-          <div class="rank-item">#{{usuarios.index(usuario)+1}} <span class="first">{{ usuario.nome }}</span></div>
+        {% for usuario in ranking %}
+          <div class="rank-item">#{{ loop.index }} <span class="first">{{ usuario.nome }}</span></div>
         {% endfor %}
       </div>
 
@@ -118,7 +118,7 @@
       <h2>Editar Perfil</h2>
     
       <label for="apelido">Novo Apelido:</label>
-      <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" required>
+      <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" value="{{ usuario.nome }}" required>
 
       <label for="foto_perfil">Nova Foto de Perfil:</label>
       <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">

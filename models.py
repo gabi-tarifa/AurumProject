@@ -16,6 +16,7 @@ class Usuario(db.Model, UserMixin):
     moedas = db.Column(db.Integer, default = 0, nullable= False)
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
+    ja_passou_intro = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f'<Usuario {self.nome} - {self.email}>'
@@ -60,5 +61,38 @@ class UsuarioConquistas(db.Model):
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
     id_conquista = db.Column(db.Integer, ForeignKey(Conquistas.id_conquista), nullable=False)
 
-"""class Poder(db.Model):
-    __tablename__ = 'Poderes'"""
+class Poderes(db.Model):
+    __tablename__ = "Poderes"
+
+    id_poder = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False, unique=True)
+    descricao = db.Column(db.Text, nullable=False)
+    preco = db.Column(db.Integer, nullable=False)  # Preço em moedas/jogo
+    imagem = db.Column(db.String(255), default="", nullable=False)  # Caminho para o ícone
+
+    def __repr__(self):
+        return f"<Poder {self.nome}>"
+    
+class PoderesUsuario(db.Model):
+    __tablename__ = "PoderesUsuario"
+
+    id_poder_usuario = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
+    id_poder = db.Column(db.Integer, ForeignKey(Poderes.id_poder), nullable=False)
+    quantidade = db.Column(db.Integer, default=1)  # Ex.: se o poder for acumulável
+
+    def __repr__(self):
+        return f"<PoderesUsuario usuario={self.id_usuario} poder={self.id_poder}>"
+    
+class Bloco(db.Model):
+    __tablename__ = "Bloco"
+
+    id_bloco = db.Column(db.Integer, primary_key=True)
+    semana = db.Column(db.Date, nullable=False)
+
+class UsuarioBloco(db.Model):
+    __tablename__ = "UsuarioBloco"
+    id_usuario_bloco = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
+    id_bloco = db.Column(db.Integer, db.ForeignKey(Bloco.id_bloco), nullable=False)
+
