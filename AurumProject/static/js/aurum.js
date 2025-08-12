@@ -16,6 +16,7 @@ function temCaractereEspecial(str) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const btnCadastro = document.getElementById("signup-btn");
+    const texto = document.getElementById("textoerro");
     btnCadastro.addEventListener("click", async () => {
         const nome = document.querySelector('input[placeholder="Nome/Apelido"]').value;
         const email = document.querySelector('input[placeholder="Email"]').value;
@@ -23,37 +24,37 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmarSenha = document.querySelector('input[placeholder="Confirmar Senha"]').value;
 
         if (!nome || !email || !senha || !confirmarSenha) {
-            alert("Por favor, preencha todos os campos.");
+            texto.textContent = "Por favor, preencha todos os campos";
             return;
         }
 
         if(senha.length < 6 || senha.length > 16) {
-            alert("A senha tem que ser maior que 6 dígitos e menor que 16 dígitos!");
+            texto.textContent = "A senha tem que ser maior que 6 dígitos e menor que 16 dígitos!";
             return;
         }
         
         if (!temMaiuscula(senha)) {
-            alert("A senha deve conter pelo menos uma letra maiúscula.");
+            texto.textContent = "A senha deve conter pelo menos uma letra maiúscula.";
             return;
         }
 
         if (!temMinuscula(senha)) {
-            alert("A senha deve conter pelo menos uma letra minúscula.");
+            texto.textContent = "A senha deve conter pelo menos uma letra minúscula.";
             return;
         }
 
         if (!temNumero(senha)) {
-            alert("A senha deve conter pelo menos um número.");
+            texto.textContent = "A senha deve conter pelo menos um número.";
             return;
         }
 
         if (!temCaractereEspecial(senha)) {
-            alert("A senha deve conter pelo menos um caractere especial.");
+            texto.textContent = "A senha deve conter pelo menos um caractere especial.";
             return;
         }
 
         if(confirmarSenha != senha){
-            alert("As senhas não condizem! Verifique-as e tente novamente.");
+            texto.textContent = "As senhas não condizem!";
             return;
         }
 
