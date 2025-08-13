@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Módulo 1 - Aurum</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modulo.css') }}">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+</head>
+<body>
+  <div class="containerTP">
+    
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <a href="{{ url_for('starting_page') }}">
+        <div class="menu-item active">
+          <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
+          <span style="color: white;">Aprender</span>
+        </div>
+      </a>
+      <a href="{{ url_for('quiz_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
+        <span style="color: white;">Quiz</span>
+      </div>
+      </a>
+      <a href="{{ url_for('ranking_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
+        <span style="color: white;">Ranking</span>
+      </div>
+      </a>
+      <a href="{{ url_for('perfil_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
+        <span style="color: white;">Perfil</span>
+      </div>
+      </a>
+      <a href="{{ url_for('store_page') }}">
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
+        <span style="color: white;">Loja</span>
+      </div>
+      </a>
+      <div class="menu-item">
+        <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
+        Mais
+      </div>
+    </nav>
+
+
+    <!-- Caminho do módulo -->
+    <main class="main-content">
+      <h1 class="titulo-modulo">Módulo 1: Introdução ao Mundo Financeiro</h1>
+      <div class="linha-caminho">
+        <div class="etapa concluida" onclick="irParaEtapa(1)"><img src="{{ url_for('static', filename='img//winner.png') }}" class="lessonsicon"></div>
+        <div class="etapa concluida" onclick="irParaEtapa(2)"><img src="{{ url_for('static', filename='img//winner.png') }}" class="lessonsicon"></div>
+        <div class="etapa desbloqueada" onclick="irParaEtapa(3)"><img src="{{ url_for('static', filename='img//open-lock.png') }}" class="lessonsicon"></div>
+        <div class="etapa bloqueada" ><img src="{{ url_for('static', filename='img//lock.png') }}" class="lessonsicon"></div>
+        <div class="etapa bloqueada" ><img src="{{ url_for('static', filename='img//lock.png') }}" class="lessonsicon"></div>
+      <div class="mascote">
+        <img src="{{ url_for('static', filename='img//lion.png') }}" alt="Mascote Aurum" />
+      </div>
+      </div>
+    </main>
+
+    <!-- Painel lateral -->
+    <aside class="info-box">
+      <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon"> </div>
+      <div class="info"><img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
+      <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
+      <div class="info"><span class="golden" style="color: #afafaf;">#2</span> <br> <span class="darkgolden" style="color: #afafaf;">Posição no Ranking</span></div>
+
+      <div class="info">
+        <div class="rank-item">#1 <span class="first">Usuário12356</span></div>
+        <div class="rank-item">#2 <span class="second">Usuário12356</span></div>
+        <div class="rank-item">#3 <span class="third">Usuário12356</span></div>
+        <div class="rank-item">#4 Usuário12356</div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+</body>
+</html>

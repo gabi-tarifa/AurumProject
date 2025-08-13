@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -257,10 +257,20 @@ def perfil_page():
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
-@app.route("/modulo")
+@app.route("/modulo1")
 @login_required
-def modulo():
-    return render_template("modulos.html")
+def modulo1():
+    return render_template("modulo1.html")
+
+@app.route("/modulo2")
+@login_required
+def modulo2():
+    return render_template("modulo2.html")
+
+@app.route("/modulo3")
+@login_required
+def modulo3():
+    return render_template("modulo3.html")
 
 @app.route("/introducao")
 @login_required
