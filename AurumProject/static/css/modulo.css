@@ -23,12 +23,14 @@
 }
 
 .etapa {
-  min-width: 60px;
+  width: 60px;
   height: 60px;
   border-radius: 50%;
   font-size: 1.3rem;
   font-weight: bold;
-  text-align: center;
+  display: flex;
+  align-items: center;  /* centraliza no eixo Y */
+  justify-content: center; /* centraliza no eixo X */
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -75,8 +77,53 @@
   padding-left: 1.2rem;
 }
 
-.mascote img {
+.mascote{
+  width: 200px;
+  height: 200px;
+}
+
+.mapa-modulo {
+  position: relative; /* importante para o cálculo relativo */
+}
+
+.linhas-map {
+  position: absolute;
+  inset: 0;          /* top/right/bottom/left = 0; cobre todo o container */
+  z-index: 0;        /* por baixo das etapas */
+  pointer-events: none;
+}
+
+.etapa-wrapper {
+  position: relative;
+  margin: 40px 0; /* espaço entre etapas */
   width: 100%;
-  max-height: 200px;
-  object-fit: contain;
+  display: flex;
+  justify-content: center;
+}
+
+.etapa {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Zigue-zague */
+.etapa-wrapper:nth-child(odd) {
+  justify-content: flex-start;
+  padding-left: 40%;
+}
+.etapa-wrapper:nth-child(even) {
+  justify-content: flex-end;
+  padding-right: 40%;
 }

@@ -51,18 +51,29 @@
 
 
     <!-- Caminho do módulo -->
-    <main class="main-content">
-      <h1 class="titulo-modulo">Módulo 1: Introdução ao Mundo Financeiro</h1>
-      <div class="linha-caminho">
-        <div class="etapa concluida" onclick="irParaEtapa(1)"><img src="{{ url_for('static', filename='img//winner.png') }}" class="lessonsicon"></div>
-        <div class="etapa concluida" onclick="irParaEtapa(2)"><img src="{{ url_for('static', filename='img//winner.png') }}" class="lessonsicon"></div>
-        <div class="etapa desbloqueada" onclick="irParaEtapa(3)"><img src="{{ url_for('static', filename='img//open-lock.png') }}" class="lessonsicon"></div>
-        <div class="etapa bloqueada" ><img src="{{ url_for('static', filename='img//lock.png') }}" class="lessonsicon"></div>
-        <div class="etapa bloqueada" ><img src="{{ url_for('static', filename='img//lock.png') }}" class="lessonsicon"></div>
-      <div class="mascote">
-        <img src="{{ url_for('static', filename='img//lion.png') }}" alt="Mascote Aurum" />
-      </div>
-      </div>
+    <main class="main-content mapa-modulo">
+      <!--<img src="{{ url_for('static', filename='img//lion.png') }}" class="mascote" alt="Mascote Aurum" />-->
+    {% for tarefa in tarefas_json %}
+      <div class="etapa-wrapper">
+        <div class="etapa 
+          {% if tarefa.status == 'concluida' %} concluida 
+          {% elif tarefa.status == 'desbloqueada' %} desbloqueada 
+          {% else %} bloqueada {% endif %}" 
+          
+          {% if tarefa.status != 'bloqueada' %}
+            onclick="window.location.href='/modulo_{{ id_modulo }}/tarefa_{{ tarefa.id }}'"
+          {% endif %}>
+          
+          {% if tarefa.status == 'concluida' %}
+            <img src="{{ url_for('static', filename='img/winner.png') }}" alt="Concluída" class="lessonsicon">
+          {% elif tarefa.status == 'bloqueada' %}
+            <img src="{{ url_for('static', filename='img/lock.png') }}" alt="Bloqueada" class="lessonsicon">
+          {% else %}
+            <img src="{{ url_for('static', filename='img/open-lock.png') }}" alt="Desbloqueada" class="lessonsicon">
+          {% endif %}
+        </div>
+      </div>      
+    {% endfor %}
     </main>
 
     <!-- Painel lateral -->
@@ -80,7 +91,5 @@
       </div>
     </aside>
   </div>
-
-  <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
 </body>
 </html>

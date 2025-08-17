@@ -57,7 +57,7 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-      <a href="{{ url_for('modulo1') }}">
+      <a href="/modulo_1">
       <div class="modulo modulo1">
         <h2>Módulo 1</h2>
         <p>Concluído</p>
@@ -65,7 +65,7 @@
       </div>
       
       </a>
-      <a href="{{ url_for('modulo2') }}">
+      <a href="/modulo_2">
       <div class="modulo modulo2">
         <h2>Módulo 2</h2>
         <div class="progress-bartp">
@@ -75,20 +75,13 @@
       </div>
 
       </a>
-      <a href="{{ url_for('modulo3') }}">
+      <a href="/modulo_3">
       <div class="modulo modulo3">
         <h2>Módulo 3</h2>
         <p style="font-size: 15px;"><br> Encerre o módulo 2 para prosseguir</p>
         <button hidden="true"></button>
       </div>
-      </a><!--
-      <a href="{{ url_for('modulo1') }}">
-      <div class="modulo modulo4">
-        <h2>Módulo 4</h2>
-        <p style="font-size: 15px;"><br> Encerre o módulo 3 para prosseguir</p>
-        <button hidden="true"></button>
-      </div>
-      </a>-->
+      </a>
     </main>
 
     <!-- PAINEL LATERAL DIREITO -->
@@ -115,6 +108,7 @@
       </div>
       
       <div class="info">
+        <span class="golden" style="font-size: large;">Top 5:</span>
         {% for usuario in top5_bloco %}
           <div class="rank-item">#{{ loop.index }} <span class="first">{{ usuario.nome }}</span></div>
         {% endfor %}

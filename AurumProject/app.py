@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -14,6 +14,9 @@ from setup_poderes import criar_poderes
 from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc
+from setup_modulos import criar_modulos
+from setup_tarefas import criar_tarefas
+from setup_conteudo import criar_conteudo
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -28,8 +31,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -42,8 +45,9 @@ with app.app_context():
     db.create_all()
     criar_conquistas()
     criar_poderes()
-
-
+    criar_modulos()
+    criar_tarefas()
+    criar_conteudo()
 
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
@@ -87,11 +91,39 @@ def configuracoes():
 def ajuda():
     return render_template("ajuda.html")
 
+@app.route("/modulo_<int:id_modulo>/tarefa_<int:id_tarefa>")
+@login_required
+def licoes(id_tarefa, id_modulo):
+    tarefa = Tarefa.query.filter_by(id_modulo=id_modulo, id_tarefa=id_tarefa).first()
+    blocos = []
+
+    for c in tarefa.conteudos:
+        if c.tipo == "texto":
+            blocos.append({
+                "tipo": "texto",
+                "conteudo": c.conteudo
+            })
+        elif c.tipo == "quiz":
+            alternativas = []
+            if c.alternativas:
+                opcoes = c.alternativas.split("||")
+                for idx, opcao in enumerate(opcoes, start=1):
+                    alternativas.append({
+                        "texto": opcao.strip(),
+                        "correta": (idx == c.correta)
+                    })
+            blocos.append({
+                "tipo": "quiz",
+                "pergunta": c.pergunta,
+                "alternativas": alternativas
+            })
+
+    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, id_tarefa=tarefa.id_tarefa)
+
 # 🆕 Página de Cadastro
 @app.route("/cadastro")
 def cadastro_page():
     return render_template("cadastro.html")
-
 
 # 🏆 Página de Ranking
 @app.route("/ranking")
@@ -256,21 +288,33 @@ def perfil_page():
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
-
-@app.route("/modulo1")
+@app.route("/modulo_<int:id_modulo>")
 @login_required
-def modulo1():
-    return render_template("modulo1.html")
+def ver_modulo(id_modulo):
+    # todas as tarefas do módulo
+    tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.id_tarefa).all()
+    
+    # ids concluídos pelo usuário
+    concluidas = {t.id_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
 
-@app.route("/modulo2")
-@login_required
-def modulo2():
-    return render_template("modulo2.html")
+    tarefas_json = []
+    desbloqueada = True  # só a primeira não concluída fica desbloqueada
 
-@app.route("/modulo3")
-@login_required
-def modulo3():
-    return render_template("modulo3.html")
+    for tarefa in tarefas:
+        if tarefa.id_tarefa in concluidas:
+            status = "concluida"
+        elif desbloqueada:
+            status = "desbloqueada"
+            desbloqueada = False
+        else:
+            status = "bloqueada"
+        tarefas_json.append({
+            "id": tarefa.id_tarefa,
+            "descicao": tarefa.descricao,
+            "status": status
+        })
+
+    return render_template("modulo.html", tarefas_json=tarefas_json, id_modulo=id_modulo)
 
 @app.route("/introducao")
 @login_required
@@ -625,8 +669,40 @@ def inicio_semana():
     # Ajustar para segunda-feira
     return hoje - timedelta(days=hoje.weekday())
 
+@app.route("/concluir_tarefa/<int:id_tarefa>", methods=["POST"])
+@login_required
+def concluir_tarefa(id_tarefa):
+    # buscar a tarefa
+    tarefa = Tarefa.query.get_or_404(id_tarefa)
+
+    # calcular pontuação (pode vir fixa da tarefa ou ser dinâmica)
+    pontuacao = tarefa.pontuacao if hasattr(tarefa, "pontuacao") else 10  
+
+    # verificar se já existe um registro para esse usuário e tarefa
+    registro = TarefaUsuario.query.filter_by(
+        id_usuario=current_user.id, id_tarefa=id_tarefa
+    ).first()
+
+    if registro:
+        registro.concluida = True
+        registro.pontuacao = pontuacao
+    else:
+        registro = TarefaUsuario(
+            id_usuario=current_user.id,
+            id_tarefa=id_tarefa,
+            concluida=True,
+            pontuacao=pontuacao
+        )
+        db.session.add(registro)
+
+    current_user.pontos += tarefa.pontos
+    current_user.pontos_semanais += tarefa.pontos
+
+    db.session.commit()
+
+    return jsonify({"message": "Tarefa concluída!", "pontuacao": pontuacao})
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
