@@ -293,6 +293,8 @@ def perfil_page():
 def ver_modulo(id_modulo):
     # todas as tarefas do módulo
     tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.id_tarefa).all()
+
+    modulo = Modulo.query.get_or_404(id_modulo)
     
     # ids concluídos pelo usuário
     concluidas = {t.id_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
@@ -314,7 +316,7 @@ def ver_modulo(id_modulo):
             "status": status
         })
 
-    return render_template("modulo.html", tarefas_json=tarefas_json, id_modulo=id_modulo)
+    return render_template("modulo.html", tarefas_json=tarefas_json, id_modulo=id_modulo, modulo=modulo)
 
 @app.route("/introducao")
 @login_required

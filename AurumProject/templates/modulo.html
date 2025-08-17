@@ -52,6 +52,8 @@
 
     <!-- Caminho do módulo -->
     <main class="main-content mapa-modulo">
+      <h2 style="text-align: center;">Módulo {{ modulo.id_modulo }} - {{ modulo.nome }}</h2>
+      <h3 style="text-align: center;">{{ modulo.descricao }}</h3>
       <!--<img src="{{ url_for('static', filename='img//lion.png') }}" class="mascote" alt="Mascote Aurum" />-->
     {% for tarefa in tarefas_json %}
       <div class="etapa-wrapper">
