@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurum</title>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+    <style>
+#aula-container {
+    max-width: 600px;
+    margin: auto;
+    background: #1a1a1a;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#progresso {
+    width: 100%;
+    background: #333;
+    height: 8px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+#barra-progresso {
+    height: 100%;
+    background: #00ff99;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+#conteudo {
+    margin: 20px 0;
+}
+#navegacao {
+    text-align: right;
+}
+#navegacao button {
+    background: #00ff99;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#navegacao button:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+#conteudo button {
+    display: block;
+    margin: 8px 0;
+    padding: 10px;
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+    <div id="aula-container">
+  <h2 id="aula-titulo">{{ tarefa.descricao }}</h2>
+  <div id="progresso">
+    <div id="barra-progresso"></div>
+  </div>
+
+  <div id="conteudo"></div>
+
+  <div id="navegacao">
+    <button id="btn-voltar" disabled>Voltar</button>
+    <button id="btn-avancar">Avançar</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const blocos = {{ blocos_json|tojson }};
+    
+    const tarefaId = {{ tarefa.id_tarefa }};
+
+    const moduloId = {{ tarefa.id_modulo }};
+
+    let indice = 0;
+    const conteudoEl = document.getElementById("conteudo");
+    const barraProgresso = document.getElementById("barra-progresso");
+    const btnAvancar = document.getElementById("btn-avancar");
+    const btnVoltar = document.getElementById("btn-voltar");
+
+    function renderizarBloco() {
+        const bloco = blocos[indice];
+        barraProgresso.style.width = ((indice) / blocos.length * 100) + "%";
+
+        if (bloco.tipo === "texto") {
+            conteudoEl.innerHTML = bloco.conteudo;
+            btnAvancar.disabled = false;
+            btnVoltar.disabled = false
+        } else if (bloco.tipo === "quiz") {
+            conteudoEl.innerHTML = `<h3>${bloco.pergunta}</h3>`;
+            bloco.alternativas.forEach((alt, i) => {
+                const btn = document.createElement("button");
+                btn.textContent = alt.texto;
+                btn.onclick = () => {
+                    if (alt.correta) {
+                        //Certa a respota! em innerHTML
+                        btnAvancar.disabled = false;
+                        btnVoltar.disabled = false;
+                    } else {
+                        //Vc errou! em innerHTML
+                    }
+                };
+                conteudoEl.appendChild(btn);
+            });
+            btnAvancar.disabled = true;
+            btnVoltar.disabled = true;
+        }
+    }
+
+    btnAvancar.addEventListener("click", () => {
+        if (indice < blocos.length - 1) {
+            indice++;
+            renderizarBloco();
+        } else {
+            fetch(`/concluir_tarefa/${tarefaId}`, { method: "POST" })
+                .then(() => {
+                    alert("Aula concluída!");
+                    window.location.href = `/modulo_${moduloId}`;// volta para o mapa
+                })
+                .catch(() => {
+                    alert("Erro ao concluir a aula.");
+                });
+        }
+    });   
+    btnVoltar.addEventListener("click", () => {
+        if (indice > 0) {
+            indice--;
+            renderizarBloco();
+        }
+    });
+
+    renderizarBloco();
+});
+</script>
+</body>
+
+</html>

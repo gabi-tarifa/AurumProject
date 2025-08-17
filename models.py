@@ -19,6 +19,20 @@ class Usuario(db.Model, UserMixin):
     ja_passou_intro = db.Column(db.Boolean, default=False)
     #idioma = db.Column(db.String(20), ForeignKey(Configuracoes.idioma), nullable=False, default="Português (Brasil)")
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "email": self.email,
+            "pontos": self.pontos,
+            "pontos_semanais": self.pontos_semanais,
+            "moedas": self.moedas,
+            "profilepicture": self.profilepicture,
+            "backgroundpicture": self.backgroundpicture,
+            "ja_passou_intro": self.ja_passou_intro
+        }
+
+
     def __repr__(self):
         return f'<Usuario {self.nome} - {self.email}>'
 
@@ -29,6 +43,13 @@ class Modulo(db.Model):
     nome = db.Column(db.String(30), nullable=False)
     descricao = db.Column(db.String(255), nullable=False)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "descricao": self.descricao
+        }
+
 class Tarefa(db.Model):
     __tablename__ = 'Tarefa'
 
@@ -36,15 +57,59 @@ class Tarefa(db.Model):
     id_modulo = db.Column(db.Integer, ForeignKey(Modulo.id), nullable=False)
     descricao = db.Column(db.String(255), nullable=False)
     pontos = db.Column(db.Integer, nullable=False)
+    
+    conteudos = db.relationship("ConteudoTarefa", backref="tarefa", lazy=True)
+
+    def to_dict(self):
+        return {
+            "id_tarefa": self.id_tarefa,
+            "id_modulo": self.id_modulo,
+            "descricao": self.descricao,
+            "pontos": self.pontos,
+            "conteudos": [c.to_dict() for c in self.conteudos]
+        }
+    
+class ConteudoTarefa(db.Model):
+    __tablename__ = 'ConteudoTarefa'
+
+    id_conteudo = db.Column(db.Integer, primary_key=True)
+    id_tarefa = db.Column(db.Integer, ForeignKey(Tarefa.id_tarefa), nullable=False)
+    tipo = db.Column(db.String(15))
+    conteudo = db.Column(db.Text)
+    pergunta = db.Column(db.Text)
+    alternativas = db.Column(db.Text)
+    correta = db.Column(db.Integer)
+
+    def to_dict(self):
+        return {
+            "id_conteudo": self.id_conteudo,
+            "id_tarefa": self.id_tarefa,
+            "tipo": self.tipo,
+            "conteudo": self.conteudo,
+            "pergunta": self.pergunta,
+            "alternativas": self.alternativas.split("||") if self.alternativas else [],
+            "correta": self.correta
+        }
+
 
 class TarefaUsuario(db.Model):
     __tablename__ = 'TarefaUsuario'
 
     id_tarefa_usuario = db.Column(db.Integer, primary_key=True)
     id_tarefa = db.Column(db.Integer, ForeignKey(Tarefa.id_tarefa),nullable=False)
-    id_modulo = db.Column(db.Integer, ForeignKey(Modulo.id), nullable=False)
-    data_conclusao = db.Column(db.Date, nullable=False)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
+    concluida = db.Column(db.Boolean, nullable=False, default=False)
     pontuacao = db.Column(db.Integer, nullable=False)
+
+    def to_dict(self):
+        return {
+            "id_tarefa_usuario": self.id_tarefa_usuario,
+            "id_tarefa": self.id_tarefa,
+            "id_usuario": self.id_usuario,
+            "data_conclusao": self.data_conclusao.isoformat() if self.data_conclusao else None,
+            "pontuacao": self.pontuacao
+        }
+
 
 class Conquistas(db.Model):
     __tablename__ = 'Conquistas'
@@ -55,6 +120,16 @@ class Conquistas(db.Model):
     imagem = db.Column(db.String(255), nullable=False, default="img/gold-medal.png")
     cor = db.Column(db.String(10), nullable=False, default="azul")
 
+    def to_dict(self):
+        return {
+            "id_conquista": self.id_conquista,
+            "nome": self.nome,
+            "descricao": self.descricao,
+            "imagem": self.imagem,
+            "cor": self.cor
+        }
+
+
 class UsuarioConquistas(db.Model):
     __tablename__ = 'UsuarioConquistas'
 
@@ -62,17 +137,33 @@ class UsuarioConquistas(db.Model):
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
     id_conquista = db.Column(db.Integer, ForeignKey(Conquistas.id_conquista), nullable=False)
 
+    def to_dict(self):
+        return {
+            "id_usuario_conquista": self.id_usuario_conquista,
+            "id_usuario": self.id_usuario,
+            "id_conquista": self.id_conquista
+        }
+
 class Poderes(db.Model):
     __tablename__ = "Poderes"
 
     id_poder = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False, unique=True)
     descricao = db.Column(db.Text, nullable=False)
-    preco = db.Column(db.Integer, nullable=False)  # Preço em moedas/jogo
+    preco = db.Column(db.Integer, nullable=False)  
     imagem = db.Column(db.String(255), default="", nullable=False)  # Caminho para o ícone
 
     def __repr__(self):
         return f"<Poder {self.nome}>"
+    
+    def to_dict(self):
+        return {
+            "id_poder": self.id_poder,
+            "nome": self.nome,
+            "descricao": self.descricao,
+            "preco": self.preco,
+            "imagem": self.imagem
+        }
     
 class PoderesUsuario(db.Model):
     __tablename__ = "PoderesUsuario"
@@ -85,11 +176,25 @@ class PoderesUsuario(db.Model):
     def __repr__(self):
         return f"<PoderesUsuario usuario={self.id_usuario} poder={self.id_poder}>"
     
+    def to_dict(self):
+        return {
+            "id_poder_usuario": self.id_poder_usuario,
+            "id_usuario": self.id_usuario,
+            "id_poder": self.id_poder,
+            "quantidade": self.quantidade
+        }
+    
 class Bloco(db.Model):
     __tablename__ = "Bloco"
 
     id_bloco = db.Column(db.Integer, primary_key=True)
     semana = db.Column(db.Date, nullable=False)
+
+    def to_dict(self):
+        return {
+            "id_bloco": self.id_bloco,
+            "semana": self.semana.isoformat() if self.semana else None
+        }
 
 class UsuarioBloco(db.Model):
     __tablename__ = "UsuarioBloco"
@@ -97,6 +202,13 @@ class UsuarioBloco(db.Model):
     id_usuario_bloco = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
     id_bloco = db.Column(db.Integer, db.ForeignKey(Bloco.id_bloco), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id_usuario_bloco": self.id_usuario_bloco,
+            "id_usuario": self.id_usuario,
+            "id_bloco": self.id_bloco
+        }
 
 """
 class Configuracoes(db.Model):

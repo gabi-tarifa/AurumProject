@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -13,6 +13,10 @@ from setup_conquistas import criar_conquistas
 from setup_poderes import criar_poderes
 from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
+from sqlalchemy import desc
+from setup_modulos import criar_modulos
+from setup_tarefas import criar_tarefas
+from setup_conteudo import criar_conteudo
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -41,8 +45,9 @@ with app.app_context():
     db.create_all()
     criar_conquistas()
     criar_poderes()
-
-
+    criar_modulos()
+    criar_tarefas()
+    criar_conteudo()
 
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
@@ -86,11 +91,39 @@ def configuracoes():
 def ajuda():
     return render_template("ajuda.html")
 
+@app.route("/modulo_<int:id_modulo>/tarefa_<int:id_tarefa>")
+@login_required
+def licoes(id_tarefa, id_modulo):
+    tarefa = Tarefa.query.filter_by(id_modulo=id_modulo, id_tarefa=id_tarefa).first()
+    blocos = []
+
+    for c in tarefa.conteudos:
+        if c.tipo == "texto":
+            blocos.append({
+                "tipo": "texto",
+                "conteudo": c.conteudo
+            })
+        elif c.tipo == "quiz":
+            alternativas = []
+            if c.alternativas:
+                opcoes = c.alternativas.split("||")
+                for idx, opcao in enumerate(opcoes, start=1):
+                    alternativas.append({
+                        "texto": opcao.strip(),
+                        "correta": (idx == c.correta)
+                    })
+            blocos.append({
+                "tipo": "quiz",
+                "pergunta": c.pergunta,
+                "alternativas": alternativas
+            })
+
+    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, id_tarefa=tarefa.id_tarefa)
+
 # 🆕 Página de Cadastro
 @app.route("/cadastro")
 def cadastro_page():
     return render_template("cadastro.html")
-
 
 # 🏆 Página de Ranking
 @app.route("/ranking")
@@ -159,11 +192,29 @@ def starting_page():
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+
     return render_template(
         "a.html",
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
+        top5_bloco=top5_bloco,
         ranking=ranking,
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
@@ -203,6 +254,24 @@ def perfil_page():
         .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
+    
+    
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -213,16 +282,41 @@ def perfil_page():
         conquistas=conquistas_usuario,
         usuarios=usuarios,
         ranking=ranking,
+        top5_bloco=top5_bloco,
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
-
-@app.route("/modulo")
+@app.route("/modulo_<int:id_modulo>")
 @login_required
-def modulo():
-    return render_template("modulos.html")
+def ver_modulo(id_modulo):
+    # todas as tarefas do módulo
+    tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.id_tarefa).all()
+
+    modulo = Modulo.query.get_or_404(id_modulo)
+    
+    # ids concluídos pelo usuário
+    concluidas = {t.id_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
+
+    tarefas_json = []
+    desbloqueada = True  # só a primeira não concluída fica desbloqueada
+
+    for tarefa in tarefas:
+        if tarefa.id_tarefa in concluidas:
+            status = "concluida"
+        elif desbloqueada:
+            status = "desbloqueada"
+            desbloqueada = False
+        else:
+            status = "bloqueada"
+        tarefas_json.append({
+            "id": tarefa.id_tarefa,
+            "descicao": tarefa.descricao,
+            "status": status
+        })
+
+    return render_template("modulo.html", tarefas_json=tarefas_json, id_modulo=id_modulo, modulo=modulo)
 
 @app.route("/introducao")
 @login_required
@@ -277,6 +371,24 @@ def quiz_page():
         .order_by(Usuario.pontos_semanais.desc())
         .all())
     
+    
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+    
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
@@ -286,6 +398,7 @@ def quiz_page():
         usuarios=usuarios,
         ranking=ranking,
         posicao_ranking=posicao_ranking,
+        top5_bloco=top5_bloco,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
@@ -317,6 +430,23 @@ def store_page():
         .order_by(Usuario.pontos_semanais.desc())
         .all())
     
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+    
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
@@ -331,6 +461,7 @@ def store_page():
         "loja.html",
         usuario=current_user,
         poderes=poderes,
+        top5_bloco=top5_bloco,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
         ranking=ranking,
@@ -540,6 +671,38 @@ def inicio_semana():
     # Ajustar para segunda-feira
     return hoje - timedelta(days=hoje.weekday())
 
+@app.route("/concluir_tarefa/<int:id_tarefa>", methods=["POST"])
+@login_required
+def concluir_tarefa(id_tarefa):
+    # buscar a tarefa
+    tarefa = Tarefa.query.get_or_404(id_tarefa)
+
+    # calcular pontuação (pode vir fixa da tarefa ou ser dinâmica)
+    pontuacao = tarefa.pontuacao if hasattr(tarefa, "pontuacao") else 10  
+
+    # verificar se já existe um registro para esse usuário e tarefa
+    registro = TarefaUsuario.query.filter_by(
+        id_usuario=current_user.id, id_tarefa=id_tarefa
+    ).first()
+
+    if registro:
+        registro.concluida = True
+        registro.pontuacao = pontuacao
+    else:
+        registro = TarefaUsuario(
+            id_usuario=current_user.id,
+            id_tarefa=id_tarefa,
+            concluida=True,
+            pontuacao=pontuacao
+        )
+        db.session.add(registro)
+
+    current_user.pontos += tarefa.pontos
+    current_user.pontos_semanais += tarefa.pontos
+
+    db.session.commit()
+
+    return jsonify({"message": "Tarefa concluída!", "pontuacao": pontuacao})
 
 if __name__ == "__main__":
     #app.run(debug=True)

@@ -6,11 +6,12 @@
     <title>Configurações - Aurum</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/configuracoes.css') }}">
     <link rel="stylesheet" href="C:/Users/gabri/AurumProject/AurumProject/static/css/configuracoes.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
 </head>
 <body>
 
     <header>
-        <button onclick="location.href('/inicial')">← Voltar</button>
+        <button onclick="window.history.back()">← Voltar</button>
         <h1>Configurações</h1>
         <div></div>
     </header>
@@ -19,7 +20,7 @@
         <section class="config-section">
             <h2>Preferências</h2>
             <div class="config-item">
-                <label for="sound">Som do jogo</label>
+                <label for="sound">Sons</label>
                 <input type="checkbox" id="sound" checked>
             </div>
             <div class="config-item">
@@ -56,7 +57,7 @@
             <h2>Aplicativo</h2>
             <div class="config-item">
                 <label>Versão do App</label>
-                <span>0.2.56 Beta</span>
+                <span>0.2.61 Beta</span>
             </div>
             <div class="config-item">
                 <label>Redefinir configurações</label>
