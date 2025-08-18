@@ -31,8 +31,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -56,8 +56,8 @@ def zerar_pontos_semanais():
         print(f"Pontos semanais resetados em {datetime.now()}")
 
 scheduler = BackgroundScheduler()
-# Executa todo domingo às 00:00
-scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='sun', hour=0, minute=0)
+# Executa toda segunda-feira às 00:00
+scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -193,7 +193,8 @@ def starting_page():
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     # Busca o registro UsuarioBloco do usuário logado
-    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+    usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
+    usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
 
     if not usuario_bloco:
         top5_bloco = []  # Usuário não está em bloco
@@ -257,7 +258,8 @@ def perfil_page():
     
     
     # Busca o registro UsuarioBloco do usuário logado
-    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+    usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
+    usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
 
     if not usuario_bloco:
         top5_bloco = []  # Usuário não está em bloco
@@ -291,6 +293,47 @@ def perfil_page():
 @app.route("/modulo_<int:id_modulo>")
 @login_required
 def ver_modulo(id_modulo):
+
+    semana_atual = inicio_semana()
+
+    bloco_usuario = (UsuarioBloco.query
+        .join(Bloco)
+        .filter(UsuarioBloco.id_usuario == current_user.id,
+                Bloco.semana == semana_atual)
+        .first())
+
+    if not bloco_usuario:
+        flash("Você ainda não está em um bloco esta semana.", "error")
+        return redirect(url_for("dashboard"))
+
+    ranking = (Usuario.query
+        .join(UsuarioBloco)
+        .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
+        .order_by(Usuario.pontos_semanais.desc())
+        .all())
+    
+    
+    # Busca o registro UsuarioBloco do usuário logado
+    usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
+    usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
+
+    if not usuario_bloco:
+        top5_bloco = []  # Usuário não está em bloco
+    else:
+        id_bloco = usuario_bloco.id_bloco
+
+    top5_bloco = (
+        db.session.query(Usuario)
+        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+        .filter(UsuarioBloco.id_bloco == id_bloco)
+        .order_by(desc(Usuario.pontos_semanais))
+        .limit(5)
+        .all()
+    )
+    
+    # Encontrar a posição do usuário no ranking
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
+
     # todas as tarefas do módulo
     tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.id_tarefa).all()
 
@@ -316,7 +359,19 @@ def ver_modulo(id_modulo):
             "status": status
         })
 
-    return render_template("modulo.html", tarefas_json=tarefas_json, id_modulo=id_modulo, modulo=modulo)
+    return render_template(
+        "modulo.html", 
+        tarefas_json=tarefas_json, 
+        id_modulo=id_modulo, 
+        modulo=modulo,
+        usuario=current_user,
+        ranking=ranking,
+        posicao_ranking=posicao_ranking,
+        top5_bloco=top5_bloco,
+        pontos = current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
+        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+    )
 
 @app.route("/introducao")
 @login_required
@@ -373,7 +428,8 @@ def quiz_page():
     
     
     # Busca o registro UsuarioBloco do usuário logado
-    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+    usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
+    usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
 
     if not usuario_bloco:
         top5_bloco = []  # Usuário não está em bloco
@@ -431,7 +487,8 @@ def store_page():
         .all())
     
     # Busca o registro UsuarioBloco do usuário logado
-    usuario_bloco = UsuarioBloco.query.filter_by(id_usuario=current_user.id).first()
+    usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
+    usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
 
     if not usuario_bloco:
         top5_bloco = []  # Usuário não está em bloco
@@ -705,6 +762,6 @@ def concluir_tarefa(id_tarefa):
     return jsonify({"message": "Tarefa concluída!", "pontuacao": pontuacao})
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

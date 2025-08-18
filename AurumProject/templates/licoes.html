@@ -6,25 +6,39 @@
     <title>Aurum</title>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
     <style>
+body {
+    background: #0f1e34;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px; /* respiro extra */
+}
 #aula-container {
-    max-width: 600px;
+    width: 600px;
     margin: auto;
-    background: #1a1a1a;
+    background: #0f1b3d;
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
+
+    box-shadow: 
+        0 4px 12px rgba(54, 53, 53, 0.666),   /* sombra padrão */
+        0 0 20px rgba(218, 164, 26, 0.588); /* brilho dourado */
 }
 
 #progresso {
     width: 100%;
-    background: #333;
+    background: #000000;
     height: 8px;
     border-radius: 4px;
     margin: 10px 0;
 }
 #barra-progresso {
     height: 100%;
-    background: #00ff99;
+    background: darkgoldenrod;
     width: 0%;
     border-radius: 4px;
     transition: width 0.3s ease;
@@ -36,25 +50,30 @@
     text-align: right;
 }
 #navegacao button {
-    background: #00ff99;
+    background: darkgoldenrod;
     border: none;
     padding: 10px 15px;
     border-radius: 6px;
     cursor: pointer;
 }
 #navegacao button:disabled {
-    background: #666;
+    background: rgb(104, 77, 7);
     cursor: not-allowed;
 }
 #conteudo button {
     display: block;
     margin: 8px 0;
     padding: 10px;
-    background: #222;
+    background: #2b3d74;
     color: white;
-    border: 1px solid #555;
+    border: 2px solid #2f3b74;
     border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+#conteudo button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 </style>
 </head>
@@ -100,15 +119,26 @@ document.addEventListener("DOMContentLoaded", () => {
             bloco.alternativas.forEach((alt, i) => {
                 const btn = document.createElement("button");
                 btn.textContent = alt.texto;
-                btn.onclick = () => {
-                    if (alt.correta) {
-                        //Certa a respota! em innerHTML
-                        btnAvancar.disabled = false;
-                        btnVoltar.disabled = false;
-                    } else {
-                        //Vc errou! em innerHTML
-                    }
-                };
+    btn.onclick = () => {
+    // reseta estilos anteriores (pra não acumular)
+    [...conteudoEl.querySelectorAll("button")].forEach(b => {
+        b.style.background = "#2b3d74";
+        b.style.borderColor = "#2f3b74";
+    });
+
+    if (alt.correta) {
+        btn.style.background = "green";
+        btn.style.borderColor = "darkgreen";
+        btnAvancar.disabled = false;
+        btnVoltar.disabled = false;
+            // desabilita todas as alternativas
+            let botoes = document.querySelectorAll("#conteudo button");
+            botoes.forEach(b => b.disabled = true);
+    } else {
+        btn.style.background = "crimson";
+        btn.style.borderColor = "darkred";
+    }
+};
                 conteudoEl.appendChild(btn);
             });
             btnAvancar.disabled = true;
