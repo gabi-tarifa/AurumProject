@@ -271,7 +271,8 @@ body {
 
 .score {
   font-weight: bold;
-  color: #fbc02d;
+  /*color: #fbc02d;*/
+  color: #000;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -373,18 +374,6 @@ a:visited {
   height: 32px;
   margin-right: 22px;
   vertical-align: middle;
-}
-
-.first {
-    color:#daa520;
-}
-
-.second {
-    color:#afafaf ;
-}
-
-.third {
-    color: #cd7f32;
 }
 
 .golden {
@@ -912,4 +901,71 @@ label{
 .textoerro{
   font-size: x-small;
   color: #e53935;
+}
+
+/* destaque dos 3 primeiros */
+.first {
+    background: linear-gradient(135deg, goldenrod, gold);
+    color: #000;
+    font-weight: bold;
+}
+.second {
+    background: linear-gradient(135deg, silver, #dcdcdc);
+    color: #000;
+    font-weight: bold;
+}
+.third {
+    background: linear-gradient(135deg, #cd7f32, #a97142); /* bronze */
+    color: #000;
+    font-weight: bold;
+}
+
+/* jogador próprio - gradiente entre posição e amarelo */
+.ownplayer {
+    font-weight: bold;
+    color: #fff;
+    box-shadow: 0 0 15px rgb(153, 153, 4);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/* combinações com posição */
+.first.ownplayer {
+    background: linear-gradient(90deg, goldenrod 50%, rgb(227, 227, 0) 100%);
+    color: #000;
+}
+.second.ownplayer {
+    background: linear-gradient(90deg, silver 50%, rgb(227, 227, 0) 100%);
+    color: #000;
+}
+.third.ownplayer {
+    background: linear-gradient(90deg, #cd7f32 50%, rgb(227, 227, 0) 100%);
+    color: #000;
+}
+
+/* destaque dos 3 primeiros */
+.minifirst {
+    color: gold;
+}
+.minisecond {
+    color: #afafaf;
+}
+.minithird {
+    color:#cd7f32; /* bronze */
+}
+
+/* jogador próprio - gradiente entre posição e amarelo */
+.miniownplayer {
+    font-weight: bold;
+}
+
+.top5-list{
+  list-style: none;
+}
+
+.top5-list li {
+  display: grid;
+  grid-template-columns: 7px 1fr; /* posição, nome*/
+  align-items: center;
+  padding: 5px 15px;
 }

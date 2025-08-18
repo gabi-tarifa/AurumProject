@@ -80,16 +80,49 @@
 
     <!-- Painel lateral -->
     <aside class="info-box">
-      <div class="info"><span class="golden">2577</span> <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon"> </div>
-      <div class="info"><img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon"> <span class="golden">12</span> <br> <span class="darkgolden">Dias consecutivos</span></div>
-      <div class="info"><span class="golden">2577</span> <br> <span class="darkgolden">Total de Aurum Points</span></div>
-      <div class="info"><span class="golden" style="color: #afafaf;">#2</span> <br> <span class="darkgolden" style="color: #afafaf;">Posição no Ranking</span></div>
+      <div class="info">
+        <span class="golden">{{ coins }}</span>
+        <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
+      </div>
 
       <div class="info">
-        <div class="rank-item">#1 <span class="first">Usuário12356</span></div>
-        <div class="rank-item">#2 <span class="second">Usuário12356</span></div>
-        <div class="rank-item">#3 <span class="third">Usuário12356</span></div>
-        <div class="rank-item">#4 Usuário12356</div>
+        <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+        <span class="golden">12</span> <br>
+        <span class="darkgolden">Dias consecutivos</span>
+      </div>
+
+      <div class="info">
+        <span class="golden">{{ pontos }}</span> <br>
+        <span class="darkgolden">Total de Aurum Points</span>
+      </div>
+
+      <div class="info">
+        <span class="golden">#{{ posicao_ranking }}</span> <br>
+        <span class="darkgolden">Posição no Ranking</span>
+      </div>
+      
+      <div class="info">
+        <span class="golden" style="font-size: large;">Top 5:</span>
+        <ul class="top5-list">
+          {% for usuario in top5_bloco %}
+            {% set classes = [] %}
+            {% if loop.index == 1 %}
+              {% set _ = classes.append('minifirst') %}
+            {% elif loop.index == 2 %}
+              {% set _ = classes.append('minisecond') %}
+            {% elif loop.index == 3 %}
+              {% set _ = classes.append('minithird') %}
+            {% endif %}
+            {% if usuario.id == current_user.id %}
+              {% set _ = classes.append('miniownplayer') %}
+            {% endif %}
+
+            <li class="{{ ' '.join(classes) }}">
+              <span>#{{ loop.index }}</span>
+              <span>{{ usuario.nome }}</span>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
     </aside>
   </div>
