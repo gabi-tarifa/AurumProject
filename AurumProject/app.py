@@ -31,8 +31,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -200,15 +200,52 @@ def starting_page():
         top5_bloco = []  # Usuário não está em bloco
     else:
         id_bloco = usuario_bloco.id_bloco
+        top5_bloco = (
+            db.session.query(Usuario)
+            .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
+            .filter(UsuarioBloco.id_bloco == id_bloco)
+            .order_by(desc(Usuario.pontos_semanais))
+            .limit(5)
+            .all()
+        )
 
-    top5_bloco = (
-        db.session.query(Usuario)
-        .join(UsuarioBloco, Usuario.id == UsuarioBloco.id_usuario)
-        .filter(UsuarioBloco.id_bloco == id_bloco)
-        .order_by(desc(Usuario.pontos_semanais))
-        .limit(5)
-        .all()
-    )
+    # 🔹 Agora os módulos + progresso (com bloqueio sequencial)
+    modulos = Modulo.query.order_by(Modulo.id).all()
+    modulos_progresso = []
+
+    for i, modulo in enumerate(modulos):
+        # Total de tarefas do módulo
+        tarefas = Tarefa.query.filter_by(id_modulo=modulo.id).all()
+        tarefas_totais = len(tarefas)
+
+        # Tarefas concluídas pelo usuário
+        tarefas_feitas = (TarefaUsuario.query
+            .filter(TarefaUsuario.id_usuario == current_user.id,
+                    TarefaUsuario.id_tarefa.in_([t.id_tarefa for t in tarefas]),
+                    TarefaUsuario.concluida == True)
+            .count())
+
+        # Verifica se o módulo foi concluído
+        concluido = tarefas_totais > 0 and tarefas_feitas == tarefas_totais
+
+        # Bloqueia se não for o primeiro módulo e o anterior não estiver concluído
+        bloqueado = False
+        if i > 0:
+            modulo_anterior = modulos_progresso[i-1]
+            if not modulo_anterior["concluido"]:
+                bloqueado = True
+
+        # Adiciona ao progresso
+        modulos_progresso.append({
+            "id": modulo.id,
+            "nome": modulo.nome,
+            "descricao": modulo.descricao,
+            "tarefas_feitas": tarefas_feitas,
+            "tarefas_totais": tarefas_totais,
+            "progresso": (tarefas_feitas / tarefas_totais * 100) if tarefas_totais > 0 else 0,
+            "concluido": concluido,
+            "bloqueado": bloqueado
+        })
 
     return render_template(
         "a.html",
@@ -219,7 +256,8 @@ def starting_page():
         ranking=ranking,
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
-        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+        coins=current_user.moedas,
+        modulos=modulos_progresso
     )
 
 # 🏆 Página de Quando Inicia o Sistema
@@ -762,6 +800,6 @@ def concluir_tarefa(id_tarefa):
     return jsonify({"message": "Tarefa concluída!", "pontuacao": pontuacao})
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

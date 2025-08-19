@@ -57,31 +57,36 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-      <a href="/modulo_1">
-      <div class="modulo modulo1">
-        <h2>Módulo 1</h2>
-        <p>Concluído</p>
-        <button class="revisar-btn">REVISAR</button>
+<div class="modulos">
+  {% for modulo in modulos %}
+    {% if modulo.bloqueado %}
+      <div class="modulo modulo{{modulo.id}}">
+        <h3>{{ modulo.nome }}</h3>
+        <p>{{ modulo.descricao }}</p>
+        <p class="aviso">Conclua o módulo anterior para desbloquear este.</p>
       </div>
-      
-      </a>
-      <a href="/modulo_2">
-      <div class="modulo modulo2">
-        <h2>Módulo 2</h2>
-        <div class="progress-bartp">
-          <div class="progresstp" style="width: 21%;">3/14</div>
-        </div>
-        <button class="continuar-btn">CONTINUAR</button>
-      </div>
+    {% else %}
+      <a href="/modulo_{{ modulo.id }}" class="modulo-link">
+        <div class="modulo modulo{{modulo.id}} {% if modulo.concluido %}concluido{% endif %}">
+          <h3>{{ modulo.nome }}</h3>
+          <p>{{ modulo.descricao }}</p>
 
+          <div class="progress-bartp">
+            <div class="progresstp" style="width: {{ modulo.progresso }}%;">
+          {{ modulo.tarefas_feitas }}/{{ modulo.tarefas_totais }} tarefas concluídas</div>
+          </div>
+          <p>{{ modulo.progresso }}% concluído</p>
+
+          {% if modulo.concluido %}
+            <button class="revisar-btn">Revisar</button>
+          {% else %}
+            <button class="continuar-btn">Continuar</button>
+          {% endif %}
+        </div>
       </a>
-      <a href="/modulo_3">
-      <div class="modulo modulo3">
-        <h2>Módulo 3</h2>
-        <p style="font-size: 15px;"><br> Encerre o módulo 2 para prosseguir</p>
-        <button hidden="true"></button>
-      </div>
-      </a>
+    {% endif %}
+  {% endfor %}
+</div>
     </main>
 
     <!-- PAINEL LATERAL DIREITO -->

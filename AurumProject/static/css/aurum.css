@@ -475,19 +475,12 @@ a:visited {
   cursor: pointer;
 }
 
-.continuar-btn {
-  background: linear-gradient(to right, #e040fb, #00e5ff);
-  border: none;
-}
-
 
 .progress-bartp {
   background-color: #0c162f;
   border-radius: 10px;
   overflow: hidden;
   margin: 10px 0;
-  width: 160px;
-  text-align: center;
 }
 
 .progresstp {
