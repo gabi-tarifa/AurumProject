@@ -43,11 +43,19 @@
         <span style="color: white;">Loja</span>
       </div>
       </a>
-      <div class="menu-item">
+      <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         Mais
       </div>
     </nav>
+        <!-- Submenu do botão "Mais" -->
+    <div class="submenu-mais oculto" id="submenuMais">
+      <ul>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+      </ul>
+    </div>
 
 
     <!-- Caminho do módulo -->
@@ -76,6 +84,7 @@
         </div>
       </div>      
     {% endfor %}
+    <img src="{{ url_for('static', filename='img/lion.png') }}" alt="Mascote Aurum" class="mascote">
     </main>
 
     <!-- Painel lateral -->
@@ -126,5 +135,21 @@
       </div>
     </aside>
   </div>
+    <script>
+    const maisBtn = document.getElementById('openMais');
+    const submenuMais = document.getElementById('submenuMais');
+
+    // Alternar visibilidade ao clicar
+    maisBtn.addEventListener('click', () => {
+      submenuMais.classList.toggle('oculto');
+    });
+
+      // Ocultar submenu ao clicar fora
+      document.addEventListener('click', (event) => {
+      if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+        submenuMais.classList.add('oculto');
+      }
+    });
+  </script>
 </body>
 </html>

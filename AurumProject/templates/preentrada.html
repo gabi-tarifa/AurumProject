@@ -71,6 +71,12 @@
       width: 100px;
       margin-bottom: 20px;
     }
+
+    #textoAcertos{
+      color: white;
+      font-weight: normal;
+    }
+
   </style>
 </head>
 <body>
@@ -81,7 +87,7 @@
     <div class="mensagem">
       <strong>MUITO OBRIGADO POR RESPONDER.</strong>
       <span id="texto">Vimos que você é iniciante nesta área de finanças, mas sem problemas! Estamos aqui para te ajudar.</span><br><br>
-      VOCÊ IRÁ COMEÇAR NO: <span id="modulo-indicado">MÓDULO 1</span>
+      VOCÊ IRÁ COMEÇAR NO: <span id="modulo-indicado">MÓDULO 1</span><br>Pontuação: <span id="textoAcertos">1</span>/12
     </div>
 
     <div class="modulo-box">
@@ -110,9 +116,9 @@
     document.getElementById("modulo-indicado").textContent = modulo;
     document.getElementById("nome-modulo").textContent = modulo;
     document.getElementById("texto").textContent = texto;
+    document.getElementById("textoAcertos").textContent = pontuacao;
 
     function comecarModulo() {
-      alert("Indo para " + modulo); 
       location.href = `/modulo_${modulo.split(' ')[1]}`
     }
   </script>
