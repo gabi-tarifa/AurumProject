@@ -94,6 +94,7 @@ body {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
     const blocos = {{ blocos_json|tojson }};
     
     const tarefaId = {{ tarefa.id_tarefa }};
@@ -154,11 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             fetch(`/concluir_tarefa/${tarefaId}`, { method: "POST" })
                 .then(() => {
-                    alert({{ _('Aula concluída!') }});
+                    alert({{ _('Aula concluída!')|tojson }});
                     window.location.href = `/modulo_${moduloId}`;// volta para o mapa
                 })
                 .catch(() => {
-                    alert({{ _('Erro ao concluir a aula.') }});
+                    alert({{ _('Erro ao concluir a aula.')|tojson }});
                 });
         }
     });   
