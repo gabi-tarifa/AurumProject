@@ -35,8 +35,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -109,7 +109,7 @@ def distribuir_recompensas(usuarios):
 
         # Campeão (só o primeiro de cada bloco)
         if i == 0:
-            desbloquear_conquista(usuario.id, "Campeão") 
+            desbloquear_conquista(usuario.id, "Vencedor") 
 
 def processar_premiacoes():
     # semana "ativa" que está terminando agora
@@ -130,7 +130,7 @@ def processar_premiacoes():
         usuarios = [Usuario.query.get(ub.id_usuario) for ub in usuarios_bloco]
 
         # ordenar por pontuação
-        usuarios.sort(key=lambda u: u.pontuacao, reverse=True)
+        usuarios.sort(key=lambda u: u.pontos, reverse=True)
 
         if usuarios:
             distribuir_recompensas(usuarios)
@@ -141,7 +141,7 @@ scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=14, minute=10)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=14, minute=32)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -361,6 +361,8 @@ def starting_page():
 
         
     ofensiva = get_or_create_ofensiva(current_user.id)
+
+    processar_premiacoes()
     
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
@@ -824,18 +826,6 @@ def efetuar_login():
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
     
-@app.route("/testar_conquistas")
-@login_required
-def testar_conquistas():
-    conquistas_a_dar = ["Eu SOU um OG", "Vencedor", "Aurum Master", "Campeão Invicto"]
-    
-    for nome in conquistas_a_dar:
-        conquista = Conquistas.query.filter_by(nome=nome).first()
-        if conquista:
-            desbloquear_conquista(current_user.id, conquista.id_conquista)
-
-    return redirect(url_for("perfil_page"))
-    
 @app.route("/eusouOG")
 @login_required
 def eusouOG():
@@ -1048,6 +1038,6 @@ def resetar_senha(email):
     return render_template("redefinirsenha.html", email=email)
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
