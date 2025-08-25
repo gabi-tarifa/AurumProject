@@ -143,7 +143,7 @@ scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=15, minute=39)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=15, minute=41)
 scheduler.start()
 
 # 🔐 Página de Login
