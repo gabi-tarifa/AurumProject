@@ -19,7 +19,7 @@ class Usuario(db.Model, UserMixin):
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
     ja_passou_intro = db.Column(db.Boolean, default=False)
-    idioma = db.Column(db.String(20), nullable=False, default="Português (Brasil)")
+    idioma = db.Column(db.String(20), nullable=False, default="pt")
 
     def to_dict(self):
         return {
