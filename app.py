@@ -139,9 +139,9 @@ def processar_premiacoes():
 
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
-scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=13, minute=45)
-scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=13, minute=45)
-scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=13, minute=45)
+scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
+scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=14, minute=0)
 scheduler.start()
 
 # 🔐 Página de Login
