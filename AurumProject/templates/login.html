@@ -11,20 +11,20 @@
 <body>
 
 <div class="container" id="login-screen">
-    <h2 style="color:#f4d160; margin-bottom: 20px;">Entrar</h2>
-  <input type="text" placeholder="E-mail ou nome de usuário" />
-  <input type="password" placeholder="Senha" />
-  <div class="forgot" onclick="window.location.href = '/esqueci_senha'">Não lembra a senha?</div>
-  <button class="btn" id="login-btn">Entrar</button>
-  <div class="divider">OU</div>
+    <h2 style="color:#f4d160; margin-bottom: 20px;">{{ _('Entrar') }}</h2>
+  <input type="text" placeholder="{{ _('E-mail ou nome de usuário') }}" />
+  <input type="password" placeholder="{{ _('Senha') }}" />
+  <div class="forgot" onclick="window.location.href = '/esqueci_senha'">{{ _('Não lembra a senha?') }}?</div>
+  <button class="btn" id="login-btn">{{ _('Entrar') }}</button>
+  <div class="divider">{{ _('OU') }}</div>
   <div class="social">
     <button><img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="G" /> GOOGLE</button>
     <button><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="F" /> FACEBOOK</button>
   </div>
   <div class="terms">
-    Ao entrar na Aurum, você concorda com os nossos <br> Termos e Política de Privacidade.
+    {{ _('Ao entrar na Aurum, você concorda com os nossos Termos e Política de Privacidade.') }}
   </div>
-  <button type="button" class="btn" id="btnVoltar" onclick="window.location.href='/'" >← Voltar ao início</button>
+  <button type="button" class="btn" id="btnVoltar" onclick="window.location.href='/'" >{{ _('← Voltar ao início') }}</button>
 </div>
 
 <script src="{{ url_for('static', filename='js/aurum.js') }}"></script>

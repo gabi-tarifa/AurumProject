@@ -11,54 +11,56 @@
 <body>
 
 <div class="containerTP" id="rank-screen">
-    <aside class="sidebar">
-     <a href="{{ url_for('starting_page') }}">
+<!-- MENU LATERAL -->
+    
+    <nav class="sidebar">
+      <a href="{{ url_for('starting_page') }}">
         <div class="menu-item">
           <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
-          <span style="color: white;">Aprender</span>
+          <span style="color: white;">{{ _('Aprender') }}</span>
         </div>
       </a>
       <a href="{{ url_for('quiz_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
-        <span style="color: white;">Quiz</span>
+        <span style="color: white;">{{ _('Quiz') }}</span>
       </div>
       </a>
       <a href="{{ url_for('ranking_page') }}">
       <div class="menu-item active">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
-        <span style="color: white;">Ranking</span>
+        <span style="color: white;">{{ _('Ranking') }}</span>
       </div>
       </a>
       <a href="{{ url_for('perfil_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
-        <span style="color: white;">Perfil</span>
+        <span style="color: white;">{{ _('Perfil') }}</span>
       </div>
       </a>
       <a href="{{ url_for('store_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
-        <span style="color: white;">Loja</span>
+        <span style="color: white;">{{ _('Loja') }}</span>
       </div>
       </a>
       <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
-        Mais
+        {{ _('Mais') }}
       </div>
-    </aside>
-    <!-- Submenu do botão "Mais" -->
+    </nav>
+     <!-- Submenu do botão "Mais" -->
     <div class="submenu-mais oculto" id="submenuMais">
       <ul>
-        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
-        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
-        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">{{ _('Ajuda') }}</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">{{ _('Configurações') }}</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a></li>
       </ul>
     </div>
 
     <main class="main-content">
       <section class="ranking-box">
-        <h1>RANKING SEMANAL</h1>
+        <h1>{{ _('RANKING SEMANAL') }}</h1>
         <ul class="ranking-list">
           {% for usuario in ranking %}
             {% set classes = [] %}
@@ -96,15 +98,15 @@
         <div class="info">
           <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
           <span class="golden">12</span> <br>
-          <span class="darkgolden">Dias consecutivos</span>
+          <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
         </div>
 
         <div class="info">
           <span class="golden">{{ pontos }}</span> <br>
-          <span class="darkgolden">Total de Aurum Points</span>
-        </div>        
-        <div class="info">
-  <span style="color: goldenrod;">Registro Semanal</span>
+          <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
+        </div>
+                <div class="info">
+  <span style="color: goldenrod;">{{ _('Registro Semanal') }}</span>
   <div class="registro-semanal">
     {% for concluido in ofensiva.dias_semana %}
       {% set index = loop.index0 %}
@@ -120,16 +122,16 @@
       {% endif %}
     {% endfor %}
   </div>
-  <span class="darkgolden">Recompensa: 50 </span>
+  <span class="darkgolden">{{ _('Recompensa: 50') }} </span>
   <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
-</div>
-        <button class="quiz-btn info">Quiz<br><span class="up">Treinar agora</span></button>
+</div>        
+        <button class="quiz-btn info">Quiz<br><span class="up">{{ _('Treinar agora') }}</span></button>
         <div class="modulo modulo2 info">
-          <p>Módulo 2</p>
+          <p>{{ _('Módulo 2') }}</p>
           <div class="progress-bar" style="align-content: center;">
             <div class="progress" style="width: 21%"></div>
           </div>
-          <button class="continue-btn">Continuar</button>
+          <button class="continue-btn">{{ _('Continuar') }}</button>
         </div>
       </aside>
     </main>

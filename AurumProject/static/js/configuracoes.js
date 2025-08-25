@@ -16,7 +16,7 @@ function alterarSenha() {
     }
 }
 
-const languages = [
+/*const languages = [
     { code: "pt-BR", name: "Português (Brasil)" },
     { code: "pt-PT", name: "Português (Portugal)" },
     { code: "en-US", name: "English (United States)" },
@@ -32,4 +32,27 @@ languages.forEach(lang => {
     option.value = lang.code;
     option.textContent = lang.name;
     select.appendChild(option);
+});*/
+
+const sel = document.getElementById('idioma');
+const apiUrl = sel.dataset.url; // agora deve ter o valor correto
+
+sel.addEventListener('change', async (e) => {
+  e.preventDefault(); // se estiver dentro de um form
+  const idioma = e.target.value;
+
+  try {
+    const r = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idioma })
+    });
+
+    if (r.ok) {
+  console.log("Idioma alterado:", idioma);
+  window.location.reload(); // força recarregar com o novo idioma
+}
+  } catch (err) {
+    console.error(err);
+  }
 });

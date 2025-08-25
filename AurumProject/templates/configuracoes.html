@@ -11,57 +11,75 @@
 <body>
 
     <header>
-        <button onclick="window.history.back()">← Voltar</button>
-        <h1>Configurações</h1>
+<button onclick="voltarRecarregando()">←{{ _(' Voltar') }}</button>
+
+<script>
+function voltarRecarregando() {
+    window.history.back();
+    setTimeout(() => {
+        window.location.reload();
+    }, 50); // pequeno delay para dar tempo do navegador mudar de página
+}
+</script>
+        <h1>{{ _('Configurações') }}</h1>
         <div></div>
     </header>
 
     <main>
         <section class="config-section">
-            <h2>Preferências</h2>
+            <h2>{{ _('Preferências') }}</h2>
             <div class="config-item">
-                <label for="sound">Sons</label>
+                <label for="sound">{{ _('Sons') }}</label>
                 <input type="checkbox" id="sound" checked>
             </div>
             <div class="config-item">
-                <label for="music">Música de fundo</label>
+                <label for="music">{{ _('Música de fundo') }}</label>
                 <input type="checkbox" id="music">
             </div>
             <div class="config-item">
-                <label for="notifications">Notificações</label>
+                <label for="notifications">{{ _('Notificações') }}</label>
                 <input type="checkbox" id="notifications" checked>
             </div>
             <div class="config-item">
-                <label for="language">Idioma</label>
-                <select id="language"></select>
+    <label for="idioma">{{ _('Idioma') }}</label>
+    <select id="idioma" data-url="{{ url_for('api_idioma') }}">
+        {% for lang in idiomas %}
+        {% set sel = 'selected' if lang.code == idioma else '' %}
+            <option value="{{ lang.code }}" {{ sel }}>
+                {{ lang.name }}
+            </option>
+        {% endfor %}
+
+    </select>
+
             </div>
         </section>
 
         <section class="config-section">
-            <h2>Conta</h2>
+            <h2>{{ _('Conta') }}</h2>
             <div class="config-item">
-                <label>Alterar Apelido</label>
-                <button onclick="alterarApelido()">Editar</button>
+                <label>{{ _('Alterar Apelido') }}</label>
+                <button onclick="alterarApelido()">{{ _('Editar') }}</button>
             </div>
             <div class="config-item">
-                <label>Alterar Foto de Perfil</label>
-                <button onclick="alterarFoto()">Editar</button>
+                <label>{{ _('Alterar Foto de Perfil') }}</label>
+                <button onclick="alterarFoto()">{{ _('Editar') }}</button>
             </div>
             <div class="config-item">
-                <label>Alterar Senha</label>
-                <button onclick="alterarSenha()">Editar</button>
+                <label>{{ _('Alterar Senha') }}</label>
+                <button onclick="alterarSenha()">{{ _('Editar') }}</button>
             </div>
         </section>
 
         <section class="config-section">
-            <h2>Aplicativo</h2>
+            <h2>{{ _('Aplicativo') }}</h2>
             <div class="config-item">
-                <label>Versão do App</label>
+                <label>{{ _('Versão do App') }}</label>
                 <span>0.2.70 Beta</span>
             </div>
             <div class="config-item">
-                <label>Redefinir configurações</label>
-                <button onclick="resetarConfig()">Resetar</button>
+                <label>{{ _('Redefinir configurações') }}</label>
+                <button onclick="resetarConfig()">{{ _('Resetar') }}</button>
             </div>
         </section>
     </main>
