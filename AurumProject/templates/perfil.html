@@ -91,7 +91,7 @@
 
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
-        <span class="golden">12</span> <br>
+          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>
         <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
       </div>
 
@@ -159,19 +159,11 @@
 
       <label for="foto_perfil">{{ _('Nova Foto de Perfil:') }}</label>
       <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
-<<<<<<< HEAD
-      <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará distocida </span>
-=======
       <span class="textopequeno">{{ _('Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto') }} </span>
->>>>>>> 6fb5f8c2959773705a19b1b89a6c188c6ca73d1c
 
       <label for="foto_fundo">{{ _('Nova Foto de Fundo:') }}</label>
       <input type="file" id="foto_fundo" name="foto_fundo" accept="image/*">
-<<<<<<< HEAD
-      <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará distorcida</span>
-=======
       <span class="textopequeno">{{ _('Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará desproporcional ao seu gosto') }}</span>
->>>>>>> 6fb5f8c2959773705a19b1b89a6c188c6ca73d1c
 
       <div class="botoes">
         <button class="selecionar" type="submit">{{ _('Salvar') }}</button>

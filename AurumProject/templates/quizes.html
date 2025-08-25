@@ -93,8 +93,8 @@
 
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
-        <span class="golden">12</span> <br>
-        <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
+          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
+          <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
       </div>
 
       <div class="info">

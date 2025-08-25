@@ -62,6 +62,7 @@
       <section class="ranking-box">
         <h1>{{ _('RANKING SEMANAL') }}</h1>
         <ul class="ranking-list">
+          <span class="cabecalho"><span></span><span>Apelido</span> <span>Pontos</span> <span>Recompensas</span></span>
           {% for usuario in ranking %}
             {% set classes = [] %}
           {% if loop.index == 1 %}
@@ -82,7 +83,12 @@
             </span> 
             <span class="name">{{ usuario.nome }}</span> 
             <span class="score">{{ usuario.pontos_semanais }}</span>   
-            <!--Lembrar de ver esse negocio de recompensa do ranking, como atribuir e como exibir.-->
+            
+        <span class="reward">
+          {{ recompensas[loop.index0] }}
+        </span><div class="coin-bg">
+          <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="coin-icon" alt="moedas">
+        </div>
           </li>
           {% endfor %}
           </ul>
@@ -97,7 +103,7 @@
 
         <div class="info">
           <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
-          <span class="golden">12</span> <br>
+          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>
           <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
         </div>
 

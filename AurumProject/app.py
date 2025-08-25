@@ -35,8 +35,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -143,7 +143,7 @@ scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=15, minute=41)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -263,6 +263,10 @@ def ranking_page():
     # Descobre o dia da semana (0 = segunda, 6 = domingo)
     dia_semana = agora
 
+    
+    recompensas = [70, 55, 45, 40, 40, 30, 30, 30, 30, 30,
+                   20, 20, 20, 20, 20, 10, 10, 10, 10, 10]
+
 
     return render_template(
         "ranking.html",
@@ -273,6 +277,7 @@ def ranking_page():
         pontos_semanais=current_user.pontos_semanais,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
+        recompensas=recompensas,
         ranking=ranking,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
@@ -983,6 +988,14 @@ def concluir_tarefa(id_tarefa):
 
     dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
 
+    if not ofensiva.dias_semana[dia_semana]:
+        ofensiva.data_ultima_atividade = datetime.now()
+        ofensiva.sequencia_atual += 1
+        if not ofensiva.dias_semana[dia_semana-1]:
+            ofensiva.recorde = 1
+        else:
+            ofensiva.recorde += 1
+
     ofensiva.dias_semana[dia_semana] = True
     db.session.commit()
 
@@ -1038,6 +1051,6 @@ def resetar_senha(email):
     return render_template("redefinirsenha.html", email=email)
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

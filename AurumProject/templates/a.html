@@ -68,7 +68,7 @@
     {% else %}
       <a href="/modulo_{{ modulo.id }}" class="modulo-link">
         <div class="modulo modulo{{modulo.id}} {% if modulo.concluido %}concluido{% endif %}">
-          <h3>{{ modulo.nome }}</h3>
+          <h3>{{ modulo.nome }}</h3><br>
           <p>{{ modulo.descricao }}</p>
 
           <div class="progress-bartp">
@@ -98,7 +98,7 @@
 
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
-        <span class="golden">12</span> <br>
+          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>
         <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
       </div>
 

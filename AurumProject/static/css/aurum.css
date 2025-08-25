@@ -258,7 +258,7 @@ body {
 
 .ranking-list li {
   display: grid;
-  grid-template-columns: 10px 30px 1fr 60px 30px; /* posição, ícone, nome, pontuação, seta */
+  grid-template-columns: 40px 50px 1fr 60px 10px 70px; /* posição, ícone, nome, pontuação, recompensa, moedas */
   align-items: center;
   background-color: #2b3d74;
   padding: 10px 15px;
@@ -268,6 +268,32 @@ body {
   gap: 30px;
 }
 
+.cabecalho{
+  display: grid;
+  grid-template-columns: 120px  1fr 45px 125px; /* espaco vazio, nome, pontuação, recompensa */
+  align-items: center;
+  background-color: #2b3d74;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+  gap: 30px;
+}
+
+.coin-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(43, 61, 116); /* Fundo circular */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.coin-icon {
+  width: 25px;
+  height: 25px;
+}
 
 .score {
   font-weight: bold;
