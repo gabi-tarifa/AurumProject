@@ -14,6 +14,7 @@ from setup_poderes import criar_poderes
 from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc
+from flask_babel import Babel, _, format_datetime
 from setup_modulos import criar_modulos
 from setup_tarefas import criar_tarefas
 from setup_conteudo import criar_conteudo
@@ -29,15 +30,17 @@ login_manager.login_message_category = "info"
 
 #Quem for pegar o projeto, poe em comentario e faz a sua rota do bdd, e so troca quem fica comentado ou nao
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
 
-
+app.config["BABEL_DEFAULT_LOCALE"] = "pt"
+app.config["BABEL_SUPPORTED_LOCALES"] = ["pt", "en"]
+app.config["BABEL_TRANSLATION_DIRECTORIES"] = "translations"
 
 db.init_app(app)
 
@@ -48,6 +51,16 @@ with app.app_context():
     criar_modulos()
     criar_tarefas()
     criar_conteudo()
+
+# Babel
+babel = Babel()
+def select_locale():
+    # usa o idioma salvo no usuário; se não autenticado, usa padrão
+    if current_user.is_authenticated and current_user.idioma:
+        return current_user.idioma
+    return request.accept_languages.best_match(['pt', 'en'])
+
+babel.init_app(app, locale_selector=select_locale)
 
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
@@ -83,7 +96,24 @@ def questionario_page():
 @app.route("/config")
 @login_required
 def configuracoes():
-    return render_template("configuracoes.html")
+    # idiomas visíveis no select
+    idiomas = [
+        {"code": "pt", "name": "Português"},
+        {"code": "en", "name": "English"}
+    ]
+    return render_template("configuracoes.html", idiomas=idiomas, idioma = current_user.idioma)
+
+@app.route("/api/idioma", methods=["POST"])
+@login_required
+def api_idioma():
+    data = request.get_json(silent=True) or request.form
+    novo = (data.get("idioma") or "").strip()
+    if novo not in app.config["BABEL_SUPPORTED_LOCALES"]:
+        return jsonify({"ok": False, "msg": _("Idioma inválido.")}), 400
+    current_user.idioma = novo
+    db.session.commit()
+    # Dica: poderíamos retornar JSON e o front recarregar a página
+    return jsonify({"ok": True, "msg": _("Idioma atualizado para %(lang)s.", lang=novo)})
 
 # Pagina de Ajuda
 @app.route("/ajuda")
