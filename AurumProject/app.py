@@ -361,8 +361,6 @@ def starting_page():
 
         
     ofensiva = get_or_create_ofensiva(current_user.id)
-
-    processar_premiacoes()
     
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
