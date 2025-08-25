@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Esqueci minha senha</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/senha.css') }}">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+    <h2>Recuperar Senha</h2>
+    <form method="POST">
+        <label for="email">Digite seu e-mail:</label><br>
+        <input type="email" name="email" required><br><br>
+        <button type="submit">Enviar código</button>
+    </form>
+</div>
+</body>
+</html>

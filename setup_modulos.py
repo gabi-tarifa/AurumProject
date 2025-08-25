@@ -6,6 +6,7 @@ def criar_modulos():
 
         modulos_novos = [
             {"nome": "Introdução ao Mundo Financeiro", "descricao":"Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples."}
+            #,{"nome": "", "descricao":""}
         ]
 
         for modulo in modulos_novos:

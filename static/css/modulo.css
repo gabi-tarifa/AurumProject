@@ -80,6 +80,9 @@
 .mascote{
   width: 200px;
   height: 200px;
+  position: absolute;
+  margin-top: 50%;
+  margin-left: -15%;
 }
 
 .mapa-modulo {
@@ -95,7 +98,7 @@
 
 .etapa-wrapper {
   position: relative;
-  margin: 40px 0; /* espaço entre etapas */
+  margin: 20px 0; /* espaço entre etapas */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -121,9 +124,9 @@
 /* Zigue-zague */
 .etapa-wrapper:nth-child(odd) {
   justify-content: flex-start;
-  padding-left: 40%;
+  padding-left:30%;
 }
 .etapa-wrapper:nth-child(even) {
   justify-content: flex-end;
-  padding-right: 40%;
+  padding-right: 30%;
 }

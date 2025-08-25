@@ -475,19 +475,12 @@ a:visited {
   cursor: pointer;
 }
 
-.continuar-btn {
-  background: linear-gradient(to right, #e040fb, #00e5ff);
-  border: none;
-}
-
 
 .progress-bartp {
   background-color: #0c162f;
   border-radius: 10px;
   overflow: hidden;
   margin: 10px 0;
-  width: 160px;
-  text-align: center;
 }
 
 .progresstp {
@@ -923,8 +916,9 @@ label{
 /* jogador próprio - gradiente entre posição e amarelo */
 .ownplayer {
     font-weight: bold;
-    color: #fff;
-    box-shadow: 0 0 15px rgb(153, 153, 4);
+    color: black;
+    background: linear-gradient(90deg, #253b71 50%, rgb(227, 227, 0) 100%);
+    box-shadow: 0 0 20px rgb(153, 153, 4);
     border-radius: 8px;
     padding: 8px;
 }
@@ -954,7 +948,6 @@ label{
     color:#cd7f32; /* bronze */
 }
 
-/* jogador próprio - gradiente entre posição e amarelo */
 .miniownplayer {
     font-weight: bold;
 }
@@ -968,4 +961,36 @@ label{
   grid-template-columns: 7px 1fr; /* posição, nome*/
   align-items: center;
   padding: 5px 15px;
+}
+
+.registro-semanal {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.dia {
+    min-width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+/* Dourado para concluído */
+.dia.concluido {
+    background-color: goldenrod;
+    box-shadow: 0 0 8px goldenrod;
+}
+
+/* Dourado opaco para o dia atual ainda não feito */
+.dia.atual {
+    background-color: rgba(218, 165, 32, 0.60);
+    border: 2px solid rgb(218, 165, 32);
+}
+
+/* Azul para os dias futuros */
+.dia.futuro {
+    background-color: #3399ff;
+    opacity: 0.6;
 }

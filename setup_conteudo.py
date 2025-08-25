@@ -5,6 +5,7 @@ def criar_conteudo():
         conteudo_existente = {c.conteudo or c.pergunta for c in ConteudoTarefa.query.all()}
 
         conteudos_novos = [
+            # ===== Mini-aula 1 — Receita e Despesa (id_tarefa = 1) =====
             {"id_tarefa":1, "tipo":"texto", "conteudo":"<h3>Conceito</h3> <p><strong>Receita</strong>: Todo dinheiro que entra. (Ex.: salário, venda de produtos, mesada, aluguéis recebidos.)</p> <p><strong>Despesa</strong>: Todo dinheiro que sai. (Ex.: contas de luz, compras no mercado, passagem de ônibus.)</p>"},
             {"id_tarefa":1, "tipo":"texto", "conteudo":"<h3>Exemplo prático</h3><p>Se você recebe R$ 1.500 e gasta R$ 600 em contas, a parte que sobra pode ser usada para outros propósitos.</p><p>Portanto, os R$1.500,00 recebidos são RECEITA e os R$600,00 gastos são DESPESAS</p>"},
             {"id_tarefa":1, "tipo":"quiz", "pergunta":"O que é uma receita?", "alternativas":"O dinheiro que você gasta||O dinheiro que você recebe||Uma dívida", "correta":2},

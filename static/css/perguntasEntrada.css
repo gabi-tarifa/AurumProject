@@ -65,7 +65,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120px;
+    height: 150px;
     padding: 10px;
     font-size: 20px; /* valor principal */
     background-color: #0f1b3d;

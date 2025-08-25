@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_login import UserMixin
+from sqlalchemy.dialects.mysql import JSON
+from sqlalchemy.ext.mutable import MutableList
 
 db = SQLAlchemy()
 
@@ -17,7 +19,7 @@ class Usuario(db.Model, UserMixin):
     profilepicture = db.Column(db.String(255), nullable=False, default="img/user.png")
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
     ja_passou_intro = db.Column(db.Boolean, default=False)
-    #idioma = db.Column(db.String(20), ForeignKey(Configuracoes.idioma), nullable=False, default="Português (Brasil)")
+    idioma = db.Column(db.String(20), nullable=False, default="Português (Brasil)")
 
     def to_dict(self):
         return {
@@ -208,8 +210,24 @@ class UsuarioBloco(db.Model):
             "id_usuario_bloco": self.id_usuario_bloco,
             "id_usuario": self.id_usuario,
             "id_bloco": self.id_bloco
-        }
+}
+    
+class Ofensiva(db.Model):
+    __tablename__ = "Ofensiva"
 
+    id_ofensiva = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
+
+    # Última vez que o usuário registrou atividade
+    data_ultima_atividade = db.Column(db.Date)
+
+    # Dias consecutivos atuais (ofensiva em andamento)
+    sequencia_atual = db.Column(db.Integer, default=0)
+
+    # Maior sequência já atingida
+    recorde = db.Column(db.Integer, default=0)
+
+    dias_semana = db.Column(MutableList.as_mutable(db.JSON),default=lambda: [False]*7,nullable=False)
 """
 class Configuracoes(db.Model):
     __tablename__ = "Configurações"

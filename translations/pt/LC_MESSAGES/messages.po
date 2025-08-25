@@ -1,0 +1,364 @@
+# Portuguese translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-08-24 21:50-0300\n"
+"PO-Revision-Date: 2025-08-24 22:17-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt\n"
+"Language-Team: pt <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:112
+msgid "Idioma inválido."
+msgstr ""
+
+#: app.py:116
+#, python-format
+msgid "Idioma atualizado para %(lang)s."
+msgstr ""
+
+#: templates/Aurum.html:17
+msgid "Simples, divertido e eficaz. O jeito AURUM de aprender sobre dinheiro"
+msgstr ""
+
+#: templates/Aurum.html:19
+msgid "Criar Conta"
+msgstr ""
+
+#: templates/Aurum.html:20 templates/login.html:14 templates/login.html:18
+msgid "Entrar"
+msgstr ""
+
+#: templates/a.html:17 templates/loja.html:18 templates/modulo.html:19
+#: templates/perfil.html:17 templates/quizes.html:18 templates/ranking.html:20
+msgid "Aprender"
+msgstr ""
+
+#: templates/a.html:23 templates/loja.html:24 templates/modulo.html:25
+#: templates/perfil.html:23 templates/quizes.html:24 templates/ranking.html:26
+msgid "Quiz"
+msgstr ""
+
+#: templates/a.html:29 templates/loja.html:30 templates/modulo.html:31
+#: templates/perfil.html:29 templates/quizes.html:30 templates/ranking.html:32
+msgid "Ranking"
+msgstr ""
+
+#: templates/a.html:35 templates/loja.html:36 templates/modulo.html:37
+#: templates/perfil.html:35 templates/quizes.html:36 templates/ranking.html:38
+msgid "Perfil"
+msgstr ""
+
+#: templates/a.html:41 templates/loja.html:42 templates/modulo.html:43
+#: templates/perfil.html:41 templates/quizes.html:42 templates/ranking.html:44
+msgid "Loja"
+msgstr ""
+
+#: templates/a.html:46 templates/loja.html:47 templates/modulo.html:48
+#: templates/perfil.html:46 templates/quizes.html:47 templates/ranking.html:49
+msgid "Mais"
+msgstr ""
+
+#: templates/a.html:66
+msgid "Conclua o módulo anterior para desbloquear este."
+msgstr ""
+
+#: templates/a.html:78
+msgid "concluído"
+msgstr ""
+
+#: templates/a.html:81
+msgid "Revisar"
+msgstr ""
+
+#: templates/a.html:83 templates/ranking.html:114
+msgid "Continuar"
+msgstr ""
+
+#: templates/a.html:102 templates/loja.html:99 templates/modulo.html:99
+#: templates/perfil.html:95 templates/quizes.html:97 templates/ranking.html:101
+msgid "Dias consecutivos"
+msgstr ""
+
+#: templates/a.html:107 templates/loja.html:104 templates/modulo.html:104
+#: templates/perfil.html:100 templates/quizes.html:102
+#: templates/ranking.html:106
+msgid "Total de Aurum Points"
+msgstr ""
+
+#: templates/a.html:112 templates/loja.html:109 templates/modulo.html:109
+#: templates/perfil.html:105 templates/quizes.html:107
+msgid "Posição no Ranking"
+msgstr ""
+
+#: templates/cadastro.html:14 templates/cadastro.html:20
+msgid "Criar conta"
+msgstr ""
+
+#: templates/cadastro.html:21 templates/login.html:19
+msgid "OU"
+msgstr ""
+
+#: templates/cadastro.html:27
+msgid ""
+"Ao se cadastrar, você concorda com os nossos Termos e Política de "
+"Privacidade."
+msgstr ""
+
+#: templates/cadastro.html:29 templates/login.html:27
+msgid "← Voltar ao início"
+msgstr ""
+
+#: templates/configuracoes.html:15 templates/loja.html:54
+#: templates/modulo.html:55 templates/perfil.html:53 templates/quizes.html:54
+#: templates/ranking.html:56
+msgid "Configurações"
+msgstr ""
+
+#: templates/configuracoes.html:21
+msgid "Preferências"
+msgstr ""
+
+#: templates/configuracoes.html:23
+msgid "Sons"
+msgstr ""
+
+#: templates/configuracoes.html:27
+msgid "Música de fundo"
+msgstr ""
+
+#: templates/configuracoes.html:31
+msgid "Notificações"
+msgstr ""
+
+#: templates/configuracoes.html:35
+msgid "Idioma"
+msgstr ""
+
+#: templates/configuracoes.html:50
+msgid "Conta"
+msgstr ""
+
+#: templates/configuracoes.html:52
+msgid "Alterar Apelido"
+msgstr ""
+
+#: templates/configuracoes.html:53 templates/configuracoes.html:57
+#: templates/configuracoes.html:61
+msgid "Editar"
+msgstr ""
+
+#: templates/configuracoes.html:56
+msgid "Alterar Foto de Perfil"
+msgstr ""
+
+#: templates/configuracoes.html:60
+msgid "Alterar Senha"
+msgstr ""
+
+#: templates/configuracoes.html:66
+msgid "Aplicativo"
+msgstr ""
+
+#: templates/configuracoes.html:68
+msgid "Versão do App"
+msgstr ""
+
+#: templates/configuracoes.html:72
+msgid "Redefinir configurações"
+msgstr ""
+
+#: templates/configuracoes.html:73
+msgid "Resetar"
+msgstr ""
+
+#: templates/introducao.html:150
+msgid ""
+"Antes de começarmos com o pé direito precisamos que você responda algumas"
+" perguntas para entendermos seu nível de conhecimento sobre finanças"
+msgstr ""
+
+#: templates/introducao.html:153
+msgid "VAMOS NESSA!"
+msgstr ""
+
+#: templates/introducao.html:153
+msgid "Pular"
+msgstr ""
+
+#: templates/licoes.html:90
+msgid "Voltar"
+msgstr ""
+
+#: templates/licoes.html:91
+msgid "Avançar"
+msgstr ""
+
+#: templates/licoes.html:157
+msgid "Aula concluída!"
+msgstr ""
+
+#: templates/licoes.html:161
+msgid "Erro ao concluir a aula."
+msgstr ""
+
+#: templates/login.html:15
+msgid "E-mail ou nome de usuário"
+msgstr ""
+
+#: templates/login.html:16
+msgid "Senha"
+msgstr ""
+
+#: templates/login.html:17
+msgid "Não lembra a senha?"
+msgstr ""
+
+#: templates/login.html:25
+msgid ""
+"Ao entrar na Aurum, você concorda com os nossos Termos e Política de "
+"Privacidade."
+msgstr ""
+
+#: templates/loja.html:53 templates/modulo.html:54 templates/perfil.html:52
+#: templates/quizes.html:53 templates/ranking.html:55
+msgid "Ajuda"
+msgstr ""
+
+#: templates/loja.html:55 templates/modulo.html:56 templates/perfil.html:54
+#: templates/quizes.html:55 templates/ranking.html:57
+msgid "Sair"
+msgstr ""
+
+#: templates/loja.html:62
+msgid "Bem-vindo à Loja"
+msgstr ""
+
+#: templates/loja.html:65
+msgid "Poderes:"
+msgstr ""
+
+#: templates/loja.html:74
+msgid "Você possui: "
+msgstr ""
+
+#: templates/loja.html:79
+msgid "Aurum Points"
+msgstr ""
+
+#: templates/modulo.html:62
+msgid "Módulo"
+msgstr ""
+
+#: templates/perfil.html:69
+msgid "Entrou na Aurum em Novembro de 2024"
+msgstr ""
+
+#: templates/perfil.html:69 templates/perfil.html:136
+msgid "Editar Perfil"
+msgstr ""
+
+#: templates/perfil.html:73
+msgid "Conquistas"
+msgstr ""
+
+#: templates/perfil.html:81
+msgid "Nenhuma conquista desbloqueada ainda."
+msgstr ""
+
+#: templates/perfil.html:138
+msgid "Novo Apelido:"
+msgstr ""
+
+#: templates/perfil.html:141
+msgid "Nova Foto de Perfil:"
+msgstr ""
+
+#: templates/perfil.html:143
+msgid ""
+"Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará "
+"desproporcional ao seu gosto"
+msgstr ""
+
+#: templates/perfil.html:145
+msgid "Nova Foto de Fundo:"
+msgstr ""
+
+#: templates/perfil.html:147
+msgid ""
+"Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará "
+"desproporcional ao seu gosto"
+msgstr ""
+
+#: templates/perfil.html:150
+msgid "Salvar"
+msgstr ""
+
+#: templates/perfil.html:151
+msgid "Cancelar"
+msgstr ""
+
+#: templates/perguntasEntrada.html:24
+msgid "Teste sobre Conhecimento Financeiro"
+msgstr ""
+
+#: templates/preentrada.html:88
+msgid "MUITO OBRIGADO POR RESPONDER."
+msgstr ""
+
+#: templates/preentrada.html:89
+msgid ""
+"Vimos que você é iniciante nesta área de finanças, mas sem problemas! "
+"Estamos aqui para te ajudar."
+msgstr ""
+
+#: templates/preentrada.html:90
+msgid "VOCÊ IRÁ COMEÇAR NO:"
+msgstr ""
+
+#: templates/preentrada.html:90
+msgid "MÓDULO 1"
+msgstr ""
+
+#: templates/preentrada.html:90
+msgid "Pontuação: "
+msgstr ""
+
+#: templates/preentrada.html:94
+msgid "Módulo 1"
+msgstr ""
+
+#: templates/preentrada.html:95
+msgid "Começar"
+msgstr ""
+
+#: templates/quizes.html:74
+msgid "Encerre o quiz 2 para prosseguir"
+msgstr ""
+
+#: templates/quizes.html:80
+msgid "Encerre o quiz 3 para prosseguir"
+msgstr ""
+
+#: templates/ranking.html:63
+msgid "RANKING SEMANAL"
+msgstr ""
+
+#: templates/ranking.html:108
+msgid "Treinar agor"
+msgstr ""
+
+#: templates/ranking.html:110
+msgid "Módulo 2"
+msgstr ""
+

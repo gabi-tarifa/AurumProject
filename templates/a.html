@@ -14,36 +14,36 @@
       <a href="{{ url_for('starting_page') }}">
         <div class="menu-item active">
           <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
-          <span style="color: white;">Aprender</span>
+          <span style="color: white;">{{ _('Aprender') }}</span>
         </div>
       </a>
       <a href="{{ url_for('quiz_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
-        <span style="color: white;">Quiz</span>
+        <span style="color: white;">{{ _('Quiz') }}</span>
       </div>
       </a>
       <a href="{{ url_for('ranking_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
-        <span style="color: white;">Ranking</span>
+        <span style="color: white;">{{ _('Ranking') }}</span>
       </div>
       </a>
       <a href="{{ url_for('perfil_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
-        <span style="color: white;">Perfil</span>
+        <span style="color: white;">{{ _('Perfil') }}</span>
       </div>
       </a>
       <a href="{{ url_for('store_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
-        <span style="color: white;">Loja</span>
+        <span style="color: white;">{{ _('Loja') }}</span>
       </div>
       </a>
       <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
-        Mais
+        {{ _('Mais') }}
       </div>
     </nav>
     <!-- Submenu do botão "Mais" -->
@@ -57,31 +57,36 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-      <a href="/modulo_1">
-      <div class="modulo modulo1">
-        <h2>Módulo 1</h2>
-        <p>Concluído</p>
-        <button class="revisar-btn">REVISAR</button>
+<div class="modulos">
+  {% for modulo in modulos %}
+    {% if modulo.bloqueado %}
+      <div class="modulo modulo{{modulo.id}}">
+        <h3>{{ modulo.nome }}</h3>
+        <p>{{ modulo.descricao }}</p>
+        <p class="aviso">{{ _('Conclua o módulo anterior para desbloquear este.') }}</p>
       </div>
-      
-      </a>
-      <a href="/modulo_2">
-      <div class="modulo modulo2">
-        <h2>Módulo 2</h2>
-        <div class="progress-bartp">
-          <div class="progresstp" style="width: 21%;">3/14</div>
-        </div>
-        <button class="continuar-btn">CONTINUAR</button>
-      </div>
+    {% else %}
+      <a href="/modulo_{{ modulo.id }}" class="modulo-link">
+        <div class="modulo modulo{{modulo.id}} {% if modulo.concluido %}concluido{% endif %}">
+          <h3>{{ modulo.nome }}</h3>
+          <p>{{ modulo.descricao }}</p>
 
+          <div class="progress-bartp">
+            <div class="progresstp" style="width: {{ modulo.progresso }}%;">
+          {{ modulo.tarefas_feitas }}/{{ modulo.tarefas_totais }}</div>
+          </div>
+          <p>{{ modulo.progresso }}% {{_( 'concluído')}}</p>
+
+          {% if modulo.concluido %}
+            <button class="revisar-btn">{{ _('Revisar') }}</button>
+          {% else %}
+            <button class="continuar-btn">{{ _('Continuar') }}</button>
+          {% endif %}
+        </div>
       </a>
-      <a href="/modulo_3">
-      <div class="modulo modulo3">
-        <h2>Módulo 3</h2>
-        <p style="font-size: 15px;"><br> Encerre o módulo 2 para prosseguir</p>
-        <button hidden="true"></button>
-      </div>
-      </a>
+    {% endif %}
+  {% endfor %}
+</div>
     </main>
 
     <!-- PAINEL LATERAL DIREITO -->
@@ -94,18 +99,39 @@
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
         <span class="golden">12</span> <br>
-        <span class="darkgolden">Dias consecutivos</span>
+        <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
       </div>
 
       <div class="info">
         <span class="golden">{{ pontos }}</span> <br>
-        <span class="darkgolden">Total de Aurum Points</span>
+        <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
       </div>
 
       <div class="info">
         <span class="golden">#{{ posicao_ranking }}</span> <br>
-        <span class="darkgolden">Posição no Ranking</span>
+        <span class="darkgolden">{{ _('Posição no Ranking') }}</span>
       </div>
+
+      <div class="info">
+  <span style="color: goldenrod;">Registro Semanal</span>
+  <div class="registro-semanal">
+    {% for concluido in ofensiva.dias_semana %}
+      {% set index = loop.index0 %}
+      {% if concluido %}
+        <!-- Dia concluído -->
+        <div class="dia concluido"></div>
+      {% elif index == dia_semana %}
+        <!-- Dia atual ainda não concluído -->
+        <div class="dia atual"></div>
+      {% else %}
+        <!-- Futuro da semana -->
+        <div class="dia futuro"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <span class="darkgolden">Recompensa: 50 </span>
+  <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
+</div>
       
 <div class="info">
         <span class="golden" style="font-size: large;">Top 5:</span>
