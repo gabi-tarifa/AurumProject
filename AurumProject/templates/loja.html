@@ -15,53 +15,55 @@
       <a href="{{ url_for('starting_page') }}">
         <div class="menu-item">
           <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
-          <span style="color: white;">Aprender</span>
+          <span style="color: white;">{{ _('Aprender') }}</span>
         </div>
       </a>
       <a href="{{ url_for('quiz_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
-        <span style="color: white;">Quiz</span>
+        <span style="color: white;">{{ _('Quiz') }}</span>
       </div>
       </a>
       <a href="{{ url_for('ranking_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
-        <span style="color: white;">Ranking</span>
+        <span style="color: white;">{{ _('Ranking') }}</span>
       </div>
       </a>
       <a href="{{ url_for('perfil_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
-        <span style="color: white;">Perfil</span>
+        <span style="color: white;">{{ _('Perfil') }}</span>
       </div>
       </a>
       <a href="{{ url_for('store_page') }}">
       <div class="menu-item active">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
-        <span style="color: white;">Loja</span>
+        <span style="color: white;">{{ _('Loja') }}</span>
       </div>
       </a>
       <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
-        Mais
+        {{ _('Mais') }}
       </div>
     </nav>
-    <!-- Submenu do botão "Mais" -->
+     <!-- Submenu do botão "Mais" -->
     <div class="submenu-mais oculto" id="submenuMais">
       <ul>
-        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
-        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
-        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">{{ _('Ajuda') }}</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">{{ _('Configurações') }}</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a></li>
       </ul>
     </div>
     <!-- CONTEÚDO PRINCIPAL -->
      <main class="main-content">
       <div>
         <main>
-      <h1>Bem-vindo à Loja</h1>
+      <h1>{{ _('Bem-vindo à Loja') }}</h1>
+
       <section class="poderes">
-  <h3>Poderes:</h3><br>
+  <h3>{{ _('Poderes:') }}</h3>
+<br>
 
   {% for poder in poderes %}
     <div class="poder">
@@ -69,12 +71,12 @@
       <div class="poder-info">
         <h4>{{ poder.nome }}</h4>
         <p>{{ poder.descricao }}</p>
-        <spam class="vocepossui">Você possui: {{ quantidades.get(poder.id_poder, 0) }}</spam>
+        <spam class="vocepossui">{{ _('Você possui: ') }}{{ quantidades.get(poder.id_poder, 0) }}</spam>
       </div>
       <form action="/comprar_poder" method="POST">
         <input type="hidden" name="id_poder" value="{{ poder.id_poder }}">
         <button type="submit" class="poder-custo">
-          {{ poder.preco }}<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="Aurum Points">
+          {{ poder.preco }}<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="{{ _('Aurum Points') }}">
         </button>
       </form>
     </div>
@@ -94,20 +96,20 @@
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
         <span class="golden">12</span> <br>
-        <span class="darkgolden">Dias consecutivos</span>
+        <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
       </div>
 
       <div class="info">
         <span class="golden">{{ pontos }}</span> <br>
-        <span class="darkgolden">Total de Aurum Points</span>
+        <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
       </div>
 
       <div class="info">
         <span class="golden">#{{ posicao_ranking }}</span> <br>
-        <span class="darkgolden">Posição no Ranking</span>
+        <span class="darkgolden">{{ _('Posição no Ranking') }}</span>
       </div>
       
-      <div class="info">
+<div class="info">
         <span class="golden" style="font-size: large;">Top 5:</span>
         <ul class="top5-list">
           {% for usuario in top5_bloco %}
@@ -130,6 +132,7 @@
           {% endfor %}
         </ul>
       </div>
+
     </aside>
   </div>
 <script>

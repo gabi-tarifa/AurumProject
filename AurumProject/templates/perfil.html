@@ -14,44 +14,44 @@
     <a href="{{ url_for('starting_page') }}">
         <div class="menu-item">
           <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
-          <span style="color: white;">Aprender</span>
+          <span style="color: white;">{{ _('Aprender') }}</span>
         </div>
       </a>
       <a href="{{ url_for('quiz_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
-        <span style="color: white;">Quiz</span>
+        <span style="color: white;">{{ _('Quiz') }}</span>
       </div>
       </a>
       <a href="{{ url_for('ranking_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
-        <span style="color: white;">Ranking</span>
+        <span style="color: white;">{{ _('Ranking') }}</span>
       </div>
       </a>
       <a href="{{ url_for('perfil_page') }}">
       <div class="menu-item active">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
-        <span style="color: white;">Perfil</span>
+        <span style="color: white;">{{ _('Perfil') }}</span>
       </div>
       </a>
       <a href="{{ url_for('store_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
-        <span style="color: white;">Loja</span>
+        <span style="color: white;">{{ _('Loja') }}</span>
       </div>
       </a>
       <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
-        Mais
+        {{ _('Mais') }}
       </div>
     </nav>
     <!-- Submenu do botão "Mais" -->
     <div class="submenu-mais oculto" id="submenuMais">
       <ul>
-        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
-        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
-        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">{{ _('Ajuda') }}</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">{{ _('Configurações') }}</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a></li>      </ul>
       </ul>
     </div>
     <!-- Conteúdo principal -->
@@ -66,11 +66,11 @@
       <div class="dados-usuario">
         <h2>{{ usuario.nome }}</h2>
         <p class="email">{{ usuario.email }}</p>
-        <p class="entrada">Entrou na Aurum em Novembro de 2024 <button class="editar" onclick="abrirEdicao()">Editar Perfil</button></p>
+        <p class="entrada">{{ _('Entrou na Aurum em Novembro de 2024') }} <button class="editar" onclick="abrirEdicao()">{{ _('Editar Perfil') }}</button></p>
       </div>
 
       <!-- Conquistas -->
-      <h3 class="textoConquistas">Conquistas</h3> 
+      <h3 class="textoConquistas">{{ _('Conquistas') }}</h3> 
       {% for conquista in conquistas %}
         <div class="conquistas conquista cor-{{ conquista.cor }}">
             <img class="iconeconquista" src="{{ url_for('static', filename=conquista.imagem) }}" alt="Ícone">
@@ -78,11 +78,11 @@
           <span><strong>{{ conquista.nome }}</strong><br>{{ conquista.descricao }}</span>
         </div>
       {% else %}
-        <p>Nenhuma conquista desbloqueada ainda.</p>
+        <p>{{ _('Nenhuma conquista desbloqueada ainda.') }}</p>
       {% endfor %}
     </main>
 
-    <!-- Informações do lado direito -->
+    <!-- PAINEL LATERAL DIREITO -->
     <aside class="info-box">
       <div class="info">
         <span class="golden">{{ coins }}</span>
@@ -92,17 +92,17 @@
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
         <span class="golden">12</span> <br>
-        <span class="darkgolden">Dias consecutivos</span>
+        <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
       </div>
 
       <div class="info">
         <span class="golden">{{ pontos }}</span> <br>
-        <span class="darkgolden">Total de Aurum Points</span>
+        <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
       </div>
 
       <div class="info">
         <span class="golden">#{{ posicao_ranking }}</span> <br>
-        <span class="darkgolden">Posição no Ranking</span>
+        <span class="darkgolden">{{ _('Posição no Ranking') }}</span>
       </div>
       
 <div class="info">
@@ -133,22 +133,22 @@
     <!-- Painel de edição do perfil (invisível por padrão) -->
   <div id="editarPerfil" class="painel-edicao oculto">
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('atualizar_perfil') }}">
-      <h2>Editar Perfil</h2>
+      <h2>{{ _('Editar Perfil') }}</h2>
     
-      <label for="apelido">Novo Apelido:</label>
+      <label for="apelido">{{ _('Novo Apelido:') }}</label>
       <input type="text" id="apelido" name="apelido" placeholder="Digite um novo apelido" value="{{ usuario.nome }}" required>
 
-      <label for="foto_perfil">Nova Foto de Perfil:</label>
+      <label for="foto_perfil">{{ _('Nova Foto de Perfil:') }}</label>
       <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
-      <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto </span>
+      <span class="textopequeno">{{ _('Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará desproporcional ao seu gosto') }} </span>
 
-      <label for="foto_fundo">Nova Foto de Fundo:</label>
+      <label for="foto_fundo">{{ _('Nova Foto de Fundo:') }}</label>
       <input type="file" id="foto_fundo" name="foto_fundo" accept="image/*">
-      <span class="textopequeno">Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará desproporcional ao seu gosto</span>
+      <span class="textopequeno">{{ _('Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará desproporcional ao seu gosto') }}</span>
 
       <div class="botoes">
-        <button class="selecionar" type="submit">Salvar</button>
-        <button class="selecionar" type="button" onclick="fecharEdicao()">Cancelar</button>
+        <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
+        <button class="selecionar" type="button" onclick="fecharEdicao()">{{ _('Cancelar') }}</button>
       </div>
     </form>
   </div>

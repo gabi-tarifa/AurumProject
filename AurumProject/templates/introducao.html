@@ -147,10 +147,10 @@
 
   <div class="card">
     <div class="msg-box">
-      Antes de começarmos com o pé direito precisamos que você responda algumas perguntas para entendermos seu nível de conhecimento sobre finanças
+       {{ _('Antes de começarmos com o pé direito precisamos que você responda algumas perguntas para entendermos seu nível de conhecimento sobre finanças') }}
     </div>
 
-    <button class="btn" onclick="iniciarQuiz()">VAMOS NESSA!</button> <br> <button class="smolbtn" onclick="pular()">Pular</button>
+    <button class="btn" onclick="iniciarQuiz()">{{ _('VAMOS NESSA!') }}</button> <br> <button class="smolbtn" onclick="pular()">{{ _('Pular') }}</button>
 
     <img src="{{ url_for('static', filename='img/lion.png') }}" alt="leão" class="lion" />
     <div class="thought-bubble">

@@ -85,14 +85,14 @@
     <img src="{{ url_for('static', filename='img/lion.png') }}" alt="Leão" class="leao">
 
     <div class="mensagem">
-      <strong>MUITO OBRIGADO POR RESPONDER.</strong>
-      <span id="texto">Vimos que você é iniciante nesta área de finanças, mas sem problemas! Estamos aqui para te ajudar.</span><br><br>
-      VOCÊ IRÁ COMEÇAR NO: <span id="modulo-indicado">MÓDULO 1</span><br>Pontuação: <span id="textoAcertos">1</span>/12
+      <strong>{{ _('MUITO OBRIGADO POR RESPONDER.') }}</strong>
+      <span id="texto">{{ _('Vimos que você é iniciante nesta área de finanças, mas sem problemas! Estamos aqui para te ajudar.') }}</span><br><br>
+      {{ _('VOCÊ IRÁ COMEÇAR NO:') }}<span id="modulo-indicado">{{ _('MÓDULO 1') }}</span><br>{{ _('Pontuação: ') }}<span id="textoAcertos">1</span>/12
     </div>
 
     <div class="modulo-box">
-      <div id="nome-modulo">Módulo 1</div>
-      <button onclick="comecarModulo()">Começar</button>
+      <div id="nome-modulo">{{ _('Módulo 1') }}</div>
+      <button onclick="comecarModulo()">{{ _('Começar') }}</button>
     </div>
   </div>
 

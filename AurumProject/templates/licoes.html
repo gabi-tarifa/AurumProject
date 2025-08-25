@@ -87,8 +87,8 @@ body {
   <div id="conteudo"></div>
 
   <div id="navegacao">
-    <button id="btn-voltar" disabled>Voltar</button>
-    <button id="btn-avancar">Avançar</button>
+    <button id="btn-voltar" disabled>{{ _('Voltar') }}</button>
+    <button id="btn-avancar">{{ _('Avançar') }}</button>
   </div>
 </div>
 
@@ -154,11 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             fetch(`/concluir_tarefa/${tarefaId}`, { method: "POST" })
                 .then(() => {
-                    alert("Aula concluída!");
+                    alert({{ _('Aula concluída!') }});
                     window.location.href = `/modulo_${moduloId}`;// volta para o mapa
                 })
                 .catch(() => {
-                    alert("Erro ao concluir a aula.");
+                    alert({{ _('Erro ao concluir a aula.') }});
                 });
         }
     });   
