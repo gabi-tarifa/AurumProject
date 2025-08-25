@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes
+from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -11,12 +12,14 @@ from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
 from setup_poderes import criar_poderes
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, timezone
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc
 from setup_modulos import criar_modulos
 from setup_tarefas import criar_tarefas
 from setup_conteudo import criar_conteudo
+from flask_mail import Mail, Message
+import random, string
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -31,11 +34,19 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = "grupomoneto2025@gmail.com"
+app.config['MAIL_PASSWORD'] = "nzstkfupqrjdyoun"
+app.config['MAIL_DEFAULT_SENDER'] = ("Suporte Aurum", "grupomoneto2025@gmail.com")
+mail = Mail(app)
 
 
 
@@ -49,6 +60,27 @@ with app.app_context():
     criar_tarefas()
     criar_conteudo()
 
+def verificar_bonus_semana():
+    with app.app_context():
+        usuarios = Usuario.query.all()
+
+        for user in usuarios:
+            ofensiva = Ofensiva.query.filter_by(id_usuario=user.id).first()
+
+            if not ofensiva:
+                continue  # usuário ainda não começou ofensiva
+
+            if ofensiva.semanal >= 7:
+                user.moedas += 50
+                print(f"Usuário {user.id} recebeu 50 moedas pela ofensiva semanal!")
+            else:
+                print(f"Usuário {user.id} não completou a ofensiva semanal.")
+
+            # Resetar a contagem semanal sempre
+            ofensiva.semanal = 0
+
+        db.session.commit()  # um único commit para todos
+
 def zerar_pontos_semanais():
     with app.app_context():  # Necessário para acessar o banco
         Usuario.query.update({Usuario.pontos_semanais: 0})
@@ -58,6 +90,7 @@ def zerar_pontos_semanais():
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
+scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -151,6 +184,15 @@ def ranking_page():
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(usuarios) if u.id == current_user.id), None)
+    
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    
+    # Pega o horário atual em UTC, com timezone explícito
+    agora = datetime.now().weekday()
+
+    # Descobre o dia da semana (0 = segunda, 6 = domingo)
+    dia_semana = agora
+
 
     return render_template(
         "ranking.html",
@@ -159,6 +201,8 @@ def ranking_page():
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
         ranking=ranking,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
@@ -247,6 +291,16 @@ def starting_page():
             "bloqueado": bloqueado
         })
 
+        
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    
+    # Pega o horário atual em UTC, com timezone explícito
+    agora = datetime.now().weekday()
+
+    # Descobre o dia da semana (0 = segunda, 6 = domingo)
+    dia_semana = agora
+
+
     return render_template(
         "a.html",
         usuario=current_user,
@@ -257,6 +311,8 @@ def starting_page():
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
         modulos=modulos_progresso
     )
 
@@ -275,6 +331,14 @@ def pre_entrada():
 def perfil_page():
     conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
+
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    
+    # Pega o horário atual em UTC, com timezone explícito
+    agora = datetime.now().weekday()
+
+    # Descobre o dia da semana (0 = segunda, 6 = domingo)
+    dia_semana = agora
 
     semana_atual = inicio_semana()
 
@@ -326,6 +390,8 @@ def perfil_page():
         posicao_ranking=posicao_ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 @app.route("/modulo_<int:id_modulo>")
@@ -396,6 +462,14 @@ def ver_modulo(id_modulo):
             "descicao": tarefa.descricao,
             "status": status
         })
+            
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    
+    # Pega o horário atual em UTC, com timezone explícito
+    agora = datetime.now().weekday()
+
+    # Descobre o dia da semana (0 = segunda, 6 = domingo)
+    dia_semana = agora
 
     return render_template(
         "modulo.html", 
@@ -408,6 +482,8 @@ def ver_modulo(id_modulo):
         top5_bloco=top5_bloco,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -482,6 +558,14 @@ def quiz_page():
         .limit(5)
         .all()
     )
+                
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    
+    # Pega o horário atual em UTC, com timezone explícito
+    agora = datetime.now().weekday()
+
+    # Descobre o dia da semana (0 = segunda, 6 = domingo)
+    dia_semana = agora
     
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -495,6 +579,8 @@ def quiz_page():
         top5_bloco=top5_bloco,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -541,6 +627,14 @@ def store_page():
         .limit(5)
         .all()
     )
+                    
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    
+    # Pega o horário atual em UTC, com timezone explícito
+    agora = datetime.now().weekday()
+
+    # Descobre o dia da semana (0 = segunda, 6 = domingo)
+    dia_semana = agora
     
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -563,6 +657,8 @@ def store_page():
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         quantidades=quantidades,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -735,6 +831,9 @@ def atualizar_perfil():
         usuario.backgroundpicture = filepathbg  # ← nova coluna
 
     usuario.nome = nome
+
+    desbloquear_conquista(current_user.id, "Eu sou eu mesmo")
+
     salvar_usuario(usuario)  # Atualiza o banco com os dados
 
     flash('Perfil atualizado com sucesso!')
@@ -743,7 +842,32 @@ def atualizar_perfil():
 def get_usuario_atual():
     return current_user
 
-def desbloquear_conquista(id_usuario, id_conquista):
+def get_or_create_ofensiva(id_usuario):
+    ofensiva = Ofensiva.query.filter_by(id_usuario=id_usuario).first()
+    diahoje = datetime.now()
+    if not ofensiva:
+        ofensiva = Ofensiva(
+            id_usuario=current_user.id,
+            dias_semana=[False]*7,
+            recorde=0,
+            sequencia_atual=0,
+            data_ultima_atividade=diahoje
+        )
+        db.session.add(ofensiva)
+        db.session.commit()
+    return ofensiva
+
+def desbloquear_conquista(id_usuario, conquista):
+        # Se for string, buscar o ID pelo nome
+    if isinstance(conquista, str):
+        conquista_obj = Conquistas.query.filter_by(nome=conquista).first()
+        if not conquista_obj:
+            print(f"Conquista '{conquista}' não encontrada.")
+            return
+        id_conquista = conquista_obj.id_conquista
+    else:
+        id_conquista = conquista  # já é um número
+
     ja_tem = UsuarioConquistas.query.filter_by(id_usuario=id_usuario, id_conquista=id_conquista).first()
     if not ja_tem:
         nova = UsuarioConquistas(id_usuario=id_usuario, id_conquista=id_conquista)
@@ -795,11 +919,67 @@ def concluir_tarefa(id_tarefa):
     current_user.pontos += tarefa.pontos
     current_user.pontos_semanais += tarefa.pontos
 
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    if not ofensiva:
+        return
+
+    dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
+
+    ofensiva.dias_semana[dia_semana] = True
     db.session.commit()
 
     return jsonify({"message": "Tarefa concluída!", "pontuacao": pontuacao})
 
+reset_codes = {}
+
+@app.route("/esqueci_senha", methods=["GET", "POST"])
+def esqueci_senha():
+    if request.method == "POST":
+        email = request.form.get("email")
+        usuario = Usuario.query.filter_by(email=email).first()
+
+        if usuario:
+            # Gera código aleatório
+            codigo = ''.join(random.choices(string.digits, k=6))
+            reset_codes[email] = codigo
+
+            msg = Message(
+                subject="Recuperação de Senha - Aurum",
+                recipients=[email],
+                body=f"Olá!\n\nSeu código de recuperação de senha é: {codigo}\n\nUse-o para redefinir sua senha no Aurum."
+            )
+            mail.send(msg)
+
+            flash("Um código de verificação foi enviado para seu e-mail.")
+            return redirect(url_for("resetar_senha", email=email))
+        else:
+            flash("E-mail não encontrado.")
+    
+    return render_template("esquecisenha.html")
+
+
+@app.route("/resetar_senha/<email>", methods=["GET", "POST"])
+def resetar_senha(email):
+    if request.method == "POST":
+        codigo = request.form.get("codigo")
+        nova_senha = request.form.get("nova_senha")
+
+        if reset_codes.get(email) == codigo:
+            usuario = Usuario.query.filter_by(email=email).first()
+            if usuario:
+                senha_hash = generate_password_hash(nova_senha)
+                usuario.senha = senha_hash
+                db.session.commit()
+
+                reset_codes.pop(email)  # remove código usado
+                flash("Senha alterada com sucesso. Faça login novamente.")
+                return redirect(url_for("login_page"))
+        else:
+            flash("Código inválido ou expirado.")
+
+    return render_template("redefinirsenha.html", email=email)
+
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

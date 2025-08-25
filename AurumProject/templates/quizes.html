@@ -106,6 +106,27 @@
         <span class="golden">#{{ posicao_ranking }}</span> <br>
         <span class="darkgolden">Posição no Ranking</span>
       </div>
+
+      <div class="info">
+  <span style="color: goldenrod;">Registro Semanal</span>
+  <div class="registro-semanal">
+    {% for concluido in ofensiva.dias_semana %}
+      {% set index = loop.index0 %}
+      {% if concluido %}
+        <!-- Dia concluído -->
+        <div class="dia concluido"></div>
+      {% elif index == dia_semana %}
+        <!-- Dia atual ainda não concluído -->
+        <div class="dia atual"></div>
+      {% else %}
+        <!-- Futuro da semana -->
+        <div class="dia futuro"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <span class="darkgolden">Recompensa: 50 </span>
+  <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
+</div>
       
 <div class="info">
         <span class="golden" style="font-size: large;">Top 5:</span>

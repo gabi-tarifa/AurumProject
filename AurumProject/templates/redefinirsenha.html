@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resetar Senha</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/senha.css') }}">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+    <h2>Redefinir Senha</h2>
+    <form method="POST">
+        <label for="codigo">Código recebido:</label><br>
+        <input type="text" name="codigo" required><br><br>
+
+        <label for="nova_senha">Nova senha:</label><br>
+        <input type="password" name="nova_senha" required><br>
+        
+        
+        <label for="confirmar_senha">Confirmar senha:</label><br>
+        <input type="password" name="confirmar_senha" required><br><span style="font-size: small;">A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial</span> <br><br>
+
+        <button type="submit">Atualizar Senha</button>
+    </form>
+    </div>
+<script>
+    function temMaiuscula(str) {
+    return /[A-Z]/.test(str);
+}
+
+function temMinuscula(str) {
+    return /[a-z]/.test(str);
+}
+
+function temNumero(str) {
+    return /\d/.test(str);
+}
+
+function temCaractereEspecial(str) {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(str);
+}
+
+    document.getElementById("reset-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const senha = document.getElementById("nova_senha").value;
+    const confirma = document.getElementById("confirmar_senha").value;
+
+    if(senha.length < 6 || senha.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || !temNumero(senha) || !temCaractereEspecial(senha)) {
+        return;
+    }
+    
+    if(confirmarSenha != senha){
+        return;
+    }
+    })
+</script>
+</body>
+</html>
