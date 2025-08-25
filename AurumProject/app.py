@@ -81,7 +81,7 @@ def verificar_bonus_semana():
                 print(f"Usuário {user.id} não completou a ofensiva semanal.")
 
             # Resetar a contagem semanal sempre
-            ofensiva.semanal = 0
+            ofensiva.dias_semana = [False]*7
 
         db.session.commit()  # um único commit para todos
 # Babel
@@ -100,10 +100,48 @@ def zerar_pontos_semanais():
         db.session.commit()
         print(f"Pontos semanais resetados em {datetime.now()}")
 
+def distribuir_recompensas(usuarios):
+    recompensas = [70, 55, 45, 40, 40, 30, 30, 30, 30, 30,
+                   20, 20, 20, 20, 20, 10, 10, 10, 10, 10]
+
+    for i, usuario in enumerate(usuarios[:len(recompensas)]):
+        usuario.moedas += recompensas[i]
+
+        # Campeão (só o primeiro de cada bloco)
+        if i == 0:
+            desbloquear_conquista(usuario.id, "Campeão") 
+
+def processar_premiacoes():
+    # semana "ativa" que está terminando agora
+    semana_terminando = inicio_semana()  
+
+    # pega todos os blocos da semana que está acabando
+    blocos = Bloco.query.filter(Bloco.semana == semana_terminando).all()
+
+    for bloco in blocos:
+        usuarios_bloco = (
+            UsuarioBloco.query
+            .filter_by(id_bloco=bloco.id_bloco)
+            .join(Usuario, Usuario.id == UsuarioBloco.id_usuario)
+            .all()
+        )
+
+        # transformar em lista de usuários reais
+        usuarios = [Usuario.query.get(ub.id_usuario) for ub in usuarios_bloco]
+
+        # ordenar por pontuação
+        usuarios.sort(key=lambda u: u.pontuacao, reverse=True)
+
+        if usuarios:
+            distribuir_recompensas(usuarios)
+
+    db.session.commit()
+
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=14, minute=10)
 scheduler.start()
 
 # 🔐 Página de Login
