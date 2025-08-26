@@ -20,6 +20,7 @@ class Usuario(db.Model, UserMixin):
     backgroundpicture = db.Column(db.String(255), nullable=False, default="img/rectangle.png")
     ja_passou_intro = db.Column(db.Boolean, default=False)
     idioma = db.Column(db.String(20), nullable=False, default="pt")
+    entrada = db.Column(db.Date)
 
     def to_dict(self):
         return {
@@ -102,6 +103,7 @@ class TarefaUsuario(db.Model):
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
     concluida = db.Column(db.Boolean, nullable=False, default=False)
     pontuacao = db.Column(db.Integer, nullable=False)
+    repeticao = db.Column(db.Integer, nullable=False, default=1)
 
     def to_dict(self):
         return {
@@ -109,7 +111,8 @@ class TarefaUsuario(db.Model):
             "id_tarefa": self.id_tarefa,
             "id_usuario": self.id_usuario,
             "data_conclusao": self.data_conclusao.isoformat() if self.data_conclusao else None,
-            "pontuacao": self.pontuacao
+            "pontuacao": self.pontuacao,
+            "repeticao": self.repeticao
         }
 
 

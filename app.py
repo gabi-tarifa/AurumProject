@@ -1,3 +1,4 @@
+import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes
@@ -21,6 +22,7 @@ from setup_tarefas import criar_tarefas
 from setup_conteudo import criar_conteudo
 from flask_mail import Mail, Message
 import random, string
+import re
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -101,47 +103,49 @@ def zerar_pontos_semanais():
         print(f"Pontos semanais resetados em {datetime.now()}")
 
 def distribuir_recompensas(usuarios):
-    recompensas = [70, 55, 45, 40, 40, 30, 30, 30, 30, 30,
-                   20, 20, 20, 20, 20, 10, 10, 10, 10, 10]
+    with app.app_context():
+        recompensas = [70, 55, 45, 40, 40, 30, 30, 30, 30, 30,
+                       20, 20, 20, 20, 20, 10, 10, 10, 10, 10]
 
-    for i, usuario in enumerate(usuarios[:len(recompensas)]):
-        usuario.moedas += recompensas[i]
+        for i, usuario in enumerate(usuarios[:len(recompensas)]):
+            usuario.moedas += recompensas[i]
 
-        # Campeão (só o primeiro de cada bloco)
-        if i == 0:
-            desbloquear_conquista(usuario.id, "Campeão") 
+           # Campeão (só o primeiro de cada bloco)
+            if i == 0:
+                desbloquear_conquista(usuario.id, "Vencedor") 
 
 def processar_premiacoes():
+    with app.app_context():
     # semana "ativa" que está terminando agora
-    semana_terminando = inicio_semana()  
+        semana_terminando = inicio_semana()  
 
     # pega todos os blocos da semana que está acabando
-    blocos = Bloco.query.filter(Bloco.semana == semana_terminando).all()
+        blocos = Bloco.query.filter(Bloco.semana == semana_terminando).all()
 
-    for bloco in blocos:
-        usuarios_bloco = (
-            UsuarioBloco.query
-            .filter_by(id_bloco=bloco.id_bloco)
-            .join(Usuario, Usuario.id == UsuarioBloco.id_usuario)
-            .all()
-        )
+        for bloco in blocos:
+            usuarios_bloco = (
+                UsuarioBloco.query
+                .filter_by(id_bloco=bloco.id_bloco)
+                .join(Usuario, Usuario.id == UsuarioBloco.id_usuario)
+                .all()
+            )
 
-        # transformar em lista de usuários reais
-        usuarios = [Usuario.query.get(ub.id_usuario) for ub in usuarios_bloco]
+            # transformar em lista de usuários reais
+            usuarios = [Usuario.query.get(ub.id_usuario) for ub in usuarios_bloco]
 
-        # ordenar por pontuação
-        usuarios.sort(key=lambda u: u.pontuacao, reverse=True)
+            # ordenar por pontuação
+            usuarios.sort(key=lambda u: u.pontos, reverse=True)
 
-        if usuarios:
-            distribuir_recompensas(usuarios)
+            if usuarios:
+                distribuir_recompensas(usuarios)
 
-    db.session.commit()
+        db.session.commit()
 
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=14, minute=0)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -261,6 +265,10 @@ def ranking_page():
     # Descobre o dia da semana (0 = segunda, 6 = domingo)
     dia_semana = agora
 
+    
+    recompensas = [70, 55, 45, 40, 40, 30, 30, 30, 30, 30,
+                   20, 20, 20, 20, 20, 10, 10, 10, 10, 10]
+
 
     return render_template(
         "ranking.html",
@@ -271,6 +279,7 @@ def ranking_page():
         pontos_semanais=current_user.pontos_semanais,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
+        recompensas=recompensas,
         ranking=ranking,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
@@ -792,6 +801,9 @@ def efetuar_login():
     if usuario and check_password_hash(usuario.senha, senha):
         login_user(usuario)  # ← faz o login real do usuário
         semana_atual = inicio_semana()
+        if not usuario.entrada:
+            usuario.entrada = datetime.now()
+            db.session.commit()
         bloco_existente = (UsuarioBloco.query
             .join(Bloco)
             .filter(UsuarioBloco.id_usuario == current_user.id,
@@ -823,18 +835,6 @@ def efetuar_login():
         return jsonify({"mensagem": "Login efetuado com sucesso!"}), 200
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
-    
-@app.route("/testar_conquistas")
-@login_required
-def testar_conquistas():
-    conquistas_a_dar = ["Eu SOU um OG", "Vencedor", "Aurum Master", "Campeão Invicto"]
-    
-    for nome in conquistas_a_dar:
-        conquista = Conquistas.query.filter_by(nome=nome).first()
-        if conquista:
-            desbloquear_conquista(current_user.id, conquista.id_conquista)
-
-    return redirect(url_for("perfil_page"))
     
 @app.route("/eusouOG")
 @login_required
@@ -961,11 +961,11 @@ def inicio_semana():
 @app.route("/concluir_tarefa/<int:id_tarefa>", methods=["POST"])
 @login_required
 def concluir_tarefa(id_tarefa):
-    # buscar a tarefa
+       # buscar a tarefa
     tarefa = Tarefa.query.get_or_404(id_tarefa)
 
-    # calcular pontuação (pode vir fixa da tarefa ou ser dinâmica)
-    pontuacao = tarefa.pontuacao if hasattr(tarefa, "pontuacao") else 10  
+    # pontuação base da tarefa
+    pontuacao_base = tarefa.pontos if hasattr(tarefa, "pontos") else 10  
 
     # verificar se já existe um registro para esse usuário e tarefa
     registro = TarefaUsuario.query.filter_by(
@@ -973,30 +973,52 @@ def concluir_tarefa(id_tarefa):
     ).first()
 
     if registro:
+        # já existe → incrementar repetição
+        registro.repeticao += 1
         registro.concluida = True
-        registro.pontuacao = pontuacao
+
+        # aplicar lógica do desconto
+        descontador = min(math.ceil(registro.repeticao / 2), 5)
+        registro.pontuacao = pontuacao_base // descontador
     else:
+        # primeira vez concluindo
         registro = TarefaUsuario(
             id_usuario=current_user.id,
             id_tarefa=id_tarefa,
             concluida=True,
-            pontuacao=pontuacao
+            pontuacao=pontuacao_base,
+            repeticao=1
         )
         db.session.add(registro)
 
-    current_user.pontos += tarefa.pontos
-    current_user.pontos_semanais += tarefa.pontos
+    # atualizar pontos do usuário com a pontuação já descontada
+    current_user.pontos += registro.pontuacao
+    current_user.pontos_semanais += registro.pontuacao
+    current_user.moedas += registro.pontuacao/2 
 
+    # manter lógica da ofensiva
     ofensiva = get_or_create_ofensiva(current_user.id)
     if not ofensiva:
         return
 
     dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
 
+    if not ofensiva.dias_semana[dia_semana]:
+        ofensiva.data_ultima_atividade = datetime.now()
+        ofensiva.sequencia_atual += 1
+        if not ofensiva.dias_semana[dia_semana-1]:
+            ofensiva.recorde = 1
+        else:
+            ofensiva.recorde += 1
+
     ofensiva.dias_semana[dia_semana] = True
     db.session.commit()
 
-    return jsonify({"message": "Tarefa concluída!", "pontuacao": pontuacao})
+    return jsonify({
+        "message": "Tarefa concluída!",
+        "pontuacao": registro.pontuacao,
+        "repeticao": registro.repeticao
+        })
 
 reset_codes = {}
 
@@ -1014,7 +1036,7 @@ def esqueci_senha():
             msg = Message(
                 subject="Recuperação de Senha - Aurum",
                 recipients=[email],
-                body=f"Olá!\n\nSeu código de recuperação de senha é: {codigo}\n\nUse-o para redefinir sua senha no Aurum."
+                body=f"Olá {usuario.nome}!\n\nSeu código de recuperação de senha é: {codigo}\n\nUse-o para redefinir sua senha no Aurum."
             )
             mail.send(msg)
 
@@ -1026,13 +1048,37 @@ def esqueci_senha():
     return render_template("esquecisenha.html")
 
 
+
+def senha_valida(senha: str) -> bool:
+    if len(senha) < 6 or len(senha) > 16:
+        return False
+    if not re.search(r"[A-Z]", senha):  # pelo menos 1 maiúscula
+        return False
+    if not re.search(r"[a-z]", senha):  # pelo menos 1 minúscula
+        return False
+    if not re.search(r"\d", senha):     # pelo menos 1 número
+        return False
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", senha):  # especial
+        return False
+    return True
+
+
 @app.route("/resetar_senha/<email>", methods=["GET", "POST"])
 def resetar_senha(email):
     if request.method == "POST":
         codigo = request.form.get("codigo")
         nova_senha = request.form.get("nova_senha")
+        confirmar_senha = request.form.get("confirmar_senha")
 
         if reset_codes.get(email) == codigo:
+            if nova_senha != confirmar_senha:
+                flash("As senhas não coincidem.")
+                return redirect(request.url)
+
+            if not senha_valida(nova_senha):
+                flash("A senha não atende aos requisitos de segurança.")
+                return redirect(request.url)
+
             usuario = Usuario.query.filter_by(email=email).first()
             if usuario:
                 senha_hash = generate_password_hash(nova_senha)

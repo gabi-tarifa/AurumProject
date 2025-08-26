@@ -21,11 +21,9 @@
             template: `
                 <div id="container">
                     <main class="quiz-container">
-                        <h1>{{ _('Teste sobre Conhecimento Financeiro') }}</h1>
-                        <h3 id="progessaoPerguntas">0/12</h3>
-                        <p class="progress-label">{{ progressLabel }}</p>
+                        <h1>[[ perguntaAtual.desc_pergunta ]]</h1>
+                        <p class="progress-label">{{ progressLabel }}</p><br>
                         
-                        <h2>[[ perguntaAtual.desc_pergunta ]]</h2>
 
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" 
@@ -45,6 +43,7 @@
                             [[ opcao ]]
                         </button>
                         </div>
+                        <h3 id="progessaoPerguntas">0/12</h3>
                     </main>
                 </div>
             `,
