@@ -66,7 +66,7 @@
       <div class="dados-usuario">
         <h2>{{ usuario.nome }}</h2>
         <p class="email">{{ usuario.email }}</p>
-        <p class="entrada">{{ _('Entrou na Aurum em Novembro de 2024') }} <button class="editar" onclick="abrirEdicao()">{{ _('Editar Perfil') }}</button></p>
+        <p class="entrada">{{ _('Entrou na Aurum em') }} {{ usuario.entrada.strftime("%d/%m/%Y") }} <button class="editar" onclick="abrirEdicao()">{{ _('Editar Perfil') }}</button></p>
       </div>
 
       <!-- Conquistas -->

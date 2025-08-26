@@ -740,7 +740,8 @@ a:visited {
   border: none;
   padding: 8px;
   cursor: pointer;
-  margin-left: 292px;
+  position: absolute;
+  margin-left: 345px;
 }
 
 input[type="text"] {

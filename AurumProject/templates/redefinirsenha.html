@@ -9,51 +9,47 @@
 <body>
     <div class="container">
     <h2>Redefinir Senha</h2>
-    <form method="POST">
-        <label for="codigo">Código recebido:</label><br>
-        <input type="text" name="codigo" required><br><br>
+<form method="POST" id="reset-form">
+    <label for="codigo">Código recebido:</label><br>
+    <input type="text" name="codigo" required><br><br>
 
-        <label for="nova_senha">Nova senha:</label><br>
-        <input type="password" name="nova_senha" required><br>
-        
-        
-        <label for="confirmar_senha">Confirmar senha:</label><br>
-        <input type="password" name="confirmar_senha" required><br><span style="font-size: small;">A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial</span> <br><br>
+    <label for="nova_senha">Nova senha:</label><br>
+    <input type="password" id="nova_senha" name="nova_senha" required><br>
+    
+    <label for="confirmar_senha">Confirmar senha:</label><br>
+    <input type="password" id="confirmar_senha" name="confirmar_senha" required><br>
+    <span style="font-size: small;">
+        A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial
+    </span> <br>
+        <span id="textoerro" style="color: red; font-size: small;"></span><br><br>
 
-        <button type="submit">Atualizar Senha</button>
-    </form>
+    <button type="submit">Atualizar Senha</button>
+</form>
     </div>
 <script>
-    function temMaiuscula(str) {
-    return /[A-Z]/.test(str);
-}
+function temMaiuscula(str) { return /[A-Z]/.test(str); }
+function temMinuscula(str) { return /[a-z]/.test(str); }
+function temNumero(str) { return /\d/.test(str); }
+function temCaractereEspecial(str) { return /[!@#$%^&*(),.?":{}|<>]/.test(str); }
 
-function temMinuscula(str) {
-    return /[a-z]/.test(str);
-}
-
-function temNumero(str) {
-    return /\d/.test(str);
-}
-
-function temCaractereEspecial(str) {
-    return /[!@#$%^&*(),.?":{}|<>]/.test(str);
-}
-
-    document.getElementById("reset-form").addEventListener("submit", function(e) {
-    e.preventDefault();
-
+document.getElementById("reset-form").addEventListener("submit", function(e) {
     const senha = document.getElementById("nova_senha").value;
     const confirma = document.getElementById("confirmar_senha").value;
+    const textoerro = document.getElementById("textoerro");
 
-    if(senha.length < 6 || senha.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || !temNumero(senha) || !temCaractereEspecial(senha)) {
+    if (senha.length < 6 || senha.length > 16 ||
+        !temMaiuscula(senha) || !temMinuscula(senha) ||
+        !temNumero(senha) || !temCaractereEspecial(senha)) {
+        textoerro.textContent = "A senha não atende os requisitos";
+        e.preventDefault();
         return;
     }
-    
-    if(confirmarSenha != senha){
-        return;
+
+    if (senha !== confirma) {
+        textoerro.textContent = "As senhas não coincidem";
+        e.preventDefault();
     }
-    })
+});
 </script>
 </body>
 </html>
