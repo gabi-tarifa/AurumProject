@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #0f1b3d;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.support-page {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #152238;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.support-page h1 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: #f1c40f;
+}
+
+.support-page .intro {
+  text-align: center;
+  margin-bottom: 25px;
+  color: goldenrod;
+}
+
+.ticket-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-form label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #f1c40f;
+}
+
+.ticket-form input,
+.ticket-form textarea {
+  padding: 12px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #273a64;
+  color: #fff;
+  outline: none;
+  transition: background 0.3s;
+  resize: none;
+}
+
+.ticket-form input:focus,
+.ticket-form textarea:focus {
+  background: #2f4677;
+}
+
+.ticket-form input:-webkit-autofill,
+.ticket-form textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #273a64 inset !important; /* cor de fundo */
+  -webkit-text-fill-color: whitesmoke !important; /* cor do texto */
+  transition: background-color 5000s ease-in-out 0s;
+}
+.btn-enviar {
+  background: #273a64;
+  color: #ffffff;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-enviar:hover {
+  background: #3d528a;
+}

@@ -800,6 +800,19 @@ def efetuar_login():
 
     if usuario and check_password_hash(usuario.senha, senha):
         login_user(usuario)  # ← faz o login real do usuário
+
+        # manter lógica da ofensiva
+        ofensiva = get_or_create_ofensiva(current_user.id)
+        if not ofensiva:
+            return
+
+        dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
+
+        if not ofensiva.dias_semana[dia_semana-1]:
+            ofensiva.recorde = 0
+        else:
+            ofensiva.recorde += 1
+
         semana_atual = inicio_semana()
         if not usuario.entrada:
             usuario.entrada = datetime.now()
@@ -1092,6 +1105,63 @@ def resetar_senha(email):
             flash("Código inválido ou expirado.")
 
     return render_template("redefinirsenha.html", email=email)
+
+@app.route('/suporte', methods=['GET', 'POST'])
+@login_required
+def enviar_ticket():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email_usuario = request.form['email']
+        assunto = request.form['assunto']
+        mensagem = request.form['mensagem']
+
+        # gerar um ID de oito digitos para o ticket
+        ticket_id = random.randint(10000000, 99999999)
+
+        # email para o suporte
+        msg_suporte = Message(
+            subject=f"[SUPORTE] Ticket {ticket_id} - {assunto}",
+            sender=("Aurum Suporte", email_usuario),
+            recipients=["grupomoneto2025@gmail.com"]  # altere para o email real do suporte
+        )
+        msg_suporte.body = f"""
+        Novo ticket recebido:
+
+        ID do Ticket: {ticket_id}
+        Nome: {nome}
+        Email: {email_usuario}
+        Assunto: {assunto}
+        Mensagem:
+        {mensagem}
+        """
+        mail.send(msg_suporte)
+
+        # email de confirmação para o usuário
+        msg_usuario = Message(
+            subject=f"[Aurum] Recebemos seu ticket #{ticket_id}",
+            sender=("Aurum Suporte", "seu_email@gmail.com"),
+            recipients=[email_usuario]
+        )
+        msg_usuario.body = f"""
+        Olá {nome},
+
+        Recebemos sua solicitação de suporte. Nosso time entrará em contato em breve.
+        
+        ID do seu ticket: {ticket_id}
+        Assunto: {assunto}
+
+        Descrição:
+        {mensagem}
+
+        Obrigado por nos contatar,
+        Equipe Aurum
+        """
+        mail.send(msg_usuario)
+
+        flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
+        return redirect(url_for("starting_page"))
+
+    return render_template("enviarticket.html")
 
 if __name__ == "__main__":
     #app.run(debug=True)
