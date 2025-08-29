@@ -82,13 +82,11 @@
               <img src="{{ url_for('static', filename=usuario.profilepicture) }}" class="profile-picture">
             </span> 
             <span class="name">{{ usuario.nome }}</span> 
-            <span class="score">{{ usuario.pontos_semanais }}</span>   
-            
-        <span class="reward">
-          {{ recompensas[loop.index0] }}
-        </span><div class="coin-bg">
-          <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="coin-icon" alt="moedas">
-        </div>
+            <span>{{ usuario.pontos_semanais }}</span>   
+            <span">{{ recompensas[loop.index0] }}</span>
+            <div class="coin-bg">
+              <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="coin-icon" alt="moedas">
+            </div>
           </li>
           {% endfor %}
           </ul>
@@ -101,11 +99,25 @@
           <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
         </div>
 
-        <div class="info">
-          <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
-          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>
-          <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
-        </div>
+      <div class="info">
+        <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
+          <span class="darkgolden">
+            {% if ofensiva.sequencia_atual == 1 %}
+              {{ _('Dia consecutivo') }}
+            {% else %}
+              {{ _('Dias consecutivos') }}
+            {% endif %}
+          </span>
+      </div>
+
+      <div class="info">
+        <img src="{{ url_for('static', filename='img//award.png') }}" alt="Trofeu" class="icon">
+          <span class="golden">
+            {{ ofensiva.recorde }}
+          </span><br>
+        <span class="darkgolden">{{_('Recorde') }}</span>
+      </div>
 
         <div class="info">
           <span class="golden">{{ pontos }}</span> <br>

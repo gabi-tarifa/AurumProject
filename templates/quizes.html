@@ -94,7 +94,21 @@
       <div class="info">
         <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
           <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
-          <span class="darkgolden">{{ _('Dias consecutivos') }}</span>
+          <span class="darkgolden">
+            {% if ofensiva.sequencia_atual == 1 %}
+              {{ _('Dia consecutivo') }}
+            {% else %}
+              {{ _('Dias consecutivos') }}
+            {% endif %}
+          </span>
+      </div>
+
+      <div class="info">
+        <img src="{{ url_for('static', filename='img//award.png') }}" alt="Trofeu" class="icon">
+          <span class="golden">
+            {{ ofensiva.recorde }}
+          </span><br>
+        <span class="darkgolden">{{_('Recorde') }}</span>
       </div>
 
       <div class="info">
