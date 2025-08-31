@@ -26,15 +26,11 @@ function voltarRecarregando() {
             <h2>{{ _('Preferências') }}</h2>
             <div class="config-item">
                 <label for="sound">{{ _('Sons') }}</label>
-                <input type="checkbox" id="sound" checked>
+                <input type="checkbox" id="sound" {% if sons %} checked {% endif %}>
             </div>
             <div class="config-item">
                 <label for="music">{{ _('Música de fundo') }}</label>
-                <input type="checkbox" id="music">
-            </div>
-            <div class="config-item">
-                <label for="notifications">{{ _('Notificações') }}</label>
-                <input type="checkbox" id="notifications" checked>
+                <input type="checkbox" id="music" {% if musica %} checked {% endif %}>
             </div>
             <div class="config-item">
     <label for="idioma">{{ _('Idioma') }}</label>
@@ -51,21 +47,68 @@ function voltarRecarregando() {
             </div>
         </section>
 
-        <section class="config-section">
-            <h2>{{ _('Conta') }}</h2>
-            <div class="config-item">
-                <label>{{ _('Alterar Apelido') }}</label>
-                <button onclick="alterarApelido()">{{ _('Editar') }}</button>
+<section class="config-section">
+    <h2>{{ _('Conta') }}</h2>
+
+    <div class="config-item">
+        <label>{{ _('Alterar Apelido') }}</label>
+        <button onclick="abrirDiv('painel-apelido')">{{ _('Editar') }}</button>
+    </div>
+    <div id="painel-apelido" class="painel-edicao oculto">
+        <form onsubmit="salvarApelido(); return false;">
+            <h2>{{ _('Alterar Apelido') }}</h2>
+            <label for="novo-apelido">{{ _('Novo Apelido:') }}</label>
+            <input type="text" id="novo-apelido" name="novo-apelido" placeholder="{{ _('Digite o novo apelido') }}" value="{{ usuario.nome }}" required>
+            
+            <div class="botoes">
+                <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
+                <button class="selecionar" type="button" onclick="fecharDiv('painel-apelido')">{{ _('Cancelar') }}</button>
             </div>
-            <div class="config-item">
-                <label>{{ _('Alterar Foto de Perfil') }}</label>
-                <button onclick="alterarFoto()">{{ _('Editar') }}</button>
+        </form>
+    </div>
+
+    <div class="config-item">
+        <label>{{ _('Alterar Email Cadastrado') }}</label>
+        <button onclick="abrirDiv('painel-email')">{{ _('Editar') }}</button>
+    </div>
+    <div id="painel-email" class="painel-edicao oculto">
+        <form onsubmit="salvarEmail(); return false;">
+            <h2>{{ _('Alterar Email') }}</h2>
+            <label for="novo-email">{{ _('Novo Email:') }}</label>
+            <input type="email" id="novo-email" name="novo-email" placeholder="{{ _('Digite o novo email') }}" value="{{ usuario.email }}" required>
+            
+            <div class="botoes">
+                <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
+                <button class="selecionar" type="button" onclick="fecharDiv('painel-email')">{{ _('Cancelar') }}</button>
             </div>
-            <div class="config-item">
-                <label>{{ _('Alterar Senha') }}</label>
-                <button onclick="alterarSenha()">{{ _('Editar') }}</button>
+        </form>
+    </div>
+
+    <div class="config-item">
+        <label>{{ _('Alterar Senha') }}</label>
+        <button onclick="abrirDiv('painel-senha')">{{ _('Editar') }}</button>
+    </div>
+    <div id="painel-senha" class="painel-edicao oculto">
+        <form onsubmit="salvarSenha(); return false;">
+            <h2>{{ _('Alterar Senha') }}</h2>
+            <label for="senha-atual">{{ _('Senha Atual:') }}</label>
+            <input type="password" id="senha-atual" name="senha-atual" required><br>
+
+            <label for="nova-senha">{{ _('Nova Senha:') }}</label>
+            <input type="password" id="nova-senha" name="nova-senha" required><br>
+
+            <label for="confirmar-senha">{{ _('Confirmar Nova Senha:') }}</label>
+            <input type="password" id="confirmar-senha" name="confirmar-senha" required>
+            
+            <span id="textoerro" class="textoerro"></span><br>
+            
+            <div class="botoes">
+                <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
+                <button class="selecionar" type="button" onclick="fecharDiv('painel-senha')">{{ _('Cancelar') }}</button>
             </div>
-        </section>
+        </form>
+    </div>
+</section>
 
         <section class="config-section">
             <h2>{{ _('Aplicativo') }}</h2>

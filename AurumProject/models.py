@@ -231,14 +231,12 @@ class Ofensiva(db.Model):
     recorde = db.Column(db.Integer, default=0)
 
     dias_semana = db.Column(MutableList.as_mutable(db.JSON),default=lambda: [False]*7,nullable=False)
-"""
+
 class Configuracoes(db.Model):
-    __tablename__ = "Configurações"
+    __tablename__ = "configuracoes"
 
-    id_ajuste = db.Column(db.Integer, primary_key=True)
+    id_config = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
-    idioma = db.Column(db.String(20), nullable=False, default="Português (Brasil)")
 
-    #Outras colunas do bdd virao aqui, mas provavelmente isso sera alterado
-    
-"""
+    sons = db.Column(db.Boolean, default=True)
+    musica = db.Column(db.Boolean, default=True)

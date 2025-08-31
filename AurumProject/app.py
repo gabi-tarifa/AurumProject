@@ -2,7 +2,7 @@ import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes
-from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa
+from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa, Configuracoes
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
@@ -167,16 +167,29 @@ def debug_db():
 def questionario_page():
     return render_template("perguntasEntrada.html")
 
-# Pagina de Configuracoes
+#Pagina de Configuracoes
 @app.route("/config")
 @login_required
 def configuracoes():
-    # idiomas visíveis no select
     idiomas = [
         {"code": "pt", "name": "Português"},
         {"code": "en", "name": "English"}
     ]
-    return render_template("configuracoes.html", idiomas=idiomas, idioma = current_user.idioma)
+
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    if not conf:
+        conf = Configuracoes(id_usuario=current_user.id, sons=True, musica=False)
+        db.session.add(conf)
+        db.session.commit()
+
+    return render_template(
+        "configuracoes.html",
+        idiomas=idiomas,
+        idioma=current_user.idioma,
+        sons=conf.sons,
+        musica=conf.musica,
+        usuario=current_user
+    )
 
 @app.route("/api/idioma", methods=["POST"])
 @login_required
@@ -785,6 +798,72 @@ def comprar_poder():
 
     return redirect(url_for("store_page"))
 
+@app.route("/api/config/apelido", methods=["POST"])
+@login_required
+def alterar_apelido():
+    data = request.get_json()
+    novo_apelido = data.get("apelido")
+    current_user.nome = novo_apelido
+    db.session.commit()
+    return jsonify({"message": "Apelido atualizado com sucesso!"})
+
+
+@app.route("/api/config/email", methods=["POST"])
+@login_required
+def alterar_email():
+    data = request.get_json()
+    novo_email = data.get("email")
+    current_user.email = novo_email
+    db.session.commit()
+    return jsonify({"message": "Email atualizado com sucesso!"})
+
+
+@app.route("/api/config/senha", methods=["POST"])
+@login_required
+def alterar_senha():
+    data = request.get_json()
+    senha_atual = data.get("atual")
+    nova_senha = data.get("nova")
+
+    if not check_password_hash(current_user.password, senha_atual):
+        return jsonify({"message": "Senha atual incorreta!"}), 400
+
+    current_user.password = generate_password_hash(nova_senha)
+    db.session.commit()
+    return jsonify({"message": "Senha alterada com sucesso!"})
+
+@app.route("/api/config", methods=["POST"])
+@login_required
+def salvar_config():
+    data = request.get_json()
+
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    if not conf:
+        conf = Configuracoes(id_usuario=current_user.id)
+        db.session.add(conf)
+
+    if "sons" in data:
+        conf.sons = bool(data["sons"])
+    if "musica" in data:
+        conf.musica = bool(data["musica"])
+
+    db.session.commit()
+    return jsonify({"success": True})
+
+@app.route("/api/config", methods=["GET"])
+@login_required
+def get_config():
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    if not conf:
+        conf = Configuracoes(id_usuario=current_user.id)
+        db.session.add(conf)
+        db.session.commit()
+
+    return jsonify({
+        "sons": conf.sons,
+        "musica": conf.musica
+    })
+
 @app.route("/login", methods=["POST"])
 def efetuar_login():
     dados = request.get_json()
@@ -800,6 +879,13 @@ def efetuar_login():
 
     if usuario and check_password_hash(usuario.senha, senha):
         login_user(usuario)  # ← faz o login real do usuário
+
+        if current_user.is_authenticated:
+            conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+            if not conf:
+                conf = Configuracoes(id_usuario=current_user.id)
+                db.session.add(conf)
+                db.session.commit()
 
         # manter lógica da ofensiva
         ofensiva = get_or_create_ofensiva(current_user.id)
