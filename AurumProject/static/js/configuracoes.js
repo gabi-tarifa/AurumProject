@@ -49,8 +49,9 @@ function salvarSenha() {
     const atual = document.getElementById("senha-atual").value;
     const nova = document.getElementById("nova-senha").value;
     const confirmar = document.getElementById("confirmar-senha").value;
+    const texto = document.getElementById("textoerro");
 
-    if(nova.length < 6 || nova.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || !temNumero(senha) || !temCaractereEspecial(senha)) {
+    if(nova.length < 6 || nova.length > 16 || !temMaiuscula(nova) || !temMinuscula(nova) || !temNumero(nova) || !temCaractereEspecial(nova)) {
         texto.innerHTML = "Um dos seguintes requisitos não foi cumprido: <br>- A senha tem que ser maior que 6 dígitos e menor que 16 dígitos;<br>- A senha deve conter pelo menos uma letra maiúscula;<br>- A senha deve conter pelo menos uma letra minúscula;<br>- A senha deve conter pelo menos um número;<br>- A senha deve conter pelo menos um caractere especial.";
         return;
         }
@@ -65,18 +66,42 @@ function salvarSenha() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ atual, nova })
     })
-    .then(r => r.json())
-    .then(data => {
-        alert(data.message);
-        fecharDiv("div-senha");
-    });
+    .then(async (r) => {
+        const data = await r.json();
+
+        if (!r.ok) {
+            // erro vindo do backend (ex: senha atual incorreta)
+            texto.textContent = data.message;
+            return;
+        } else {
+          texto.textContent = "";
+
+          
+          document.getElementById("senha-atual").value = "";
+          document.getElementById("nova-senha").value = "";
+          document.getElementById("confirmar-senha").value = "";
+
+          fecharDiv("painel-senha");
+        }
+      });
 }
 
- function resetarConfig() {
-     if (confirm("Tem certeza que deseja redefinir as configurações?")) {
-        alert("Configurações redefinidas!");
-    }
+function resetarConfig() {
+
+    fetch("/api/config/reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+    })
+    .then(r => r.json())
+    .then(data => {
+        // atualiza checkboxes
+        document.getElementById("sound").checked = data.sons;
+        document.getElementById("music").checked = data.musica;
+
+    })
+    .catch(err => console.error(err));
 }
+
 
 const sel = document.getElementById('idioma');
 const apiUrl = sel.dataset.url; // agora deve ter o valor correto

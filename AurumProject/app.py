@@ -37,8 +37,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -825,12 +825,31 @@ def alterar_senha():
     senha_atual = data.get("atual")
     nova_senha = data.get("nova")
 
-    if not check_password_hash(current_user.password, senha_atual):
+    if not check_password_hash(current_user.senha, senha_atual):
         return jsonify({"message": "Senha atual incorreta!"}), 400
 
-    current_user.password = generate_password_hash(nova_senha)
+    current_user.senha = generate_password_hash(nova_senha)
     db.session.commit()
     return jsonify({"message": "Senha alterada com sucesso!"})
+
+@app.route("/api/config/reset", methods=["POST"])
+@login_required
+def resetar_config():
+    # buscar as configurações do usuário
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
+    if not conf:
+        # se não existir, cria com valores padrão
+        conf = Configuracoes(id_usuario=current_user.id, sons=True, musica=False)
+        db.session.add(conf)
+    else:
+        # resetar para padrão
+        conf.sons = True
+        conf.musica = False
+
+    db.session.commit()
+    return jsonify({"message": "Configurações redefinidas com sucesso!", 
+                    "sons": conf.sons, "musica": conf.musica})
 
 @app.route("/api/config", methods=["POST"])
 @login_required
@@ -1250,6 +1269,6 @@ def enviar_ticket():
     return render_template("enviarticket.html")
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
