@@ -142,6 +142,11 @@
   </div>
   <span class="darkgolden">Recompensa: 50 </span>
   <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
+          {% if semana_completa %}
+    <div class="bonus-confirmado">
+      ✅ Semana concluída! Você receberá sua recompensa.
+    </div>
+  {% endif %}
 </div>
       
 <div class="info">

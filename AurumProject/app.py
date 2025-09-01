@@ -146,7 +146,7 @@ def processar_premiacoes():
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=13, minute=22)
+scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
 scheduler.start()
 
@@ -283,6 +283,11 @@ def ranking_page():
     
     recompensas = [70, 55, 45, 40, 40, 30, 30, 30, 30, 30,
                    20, 20, 20, 20, 20, 10, 10, 10, 10, 10]
+    
+    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    
+    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+    semana_completa = dias_completos == 7
 
 
     return render_template(
@@ -296,6 +301,7 @@ def ranking_page():
         dia_semana=dia_semana,
         recompensas=recompensas,
         ranking=ranking,
+        semana_completa=semana_completa,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -344,6 +350,11 @@ def starting_page():
             .limit(5)
             .all()
         )
+
+    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    
+    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+    semana_completa = dias_completos == 7
 
     # 🔹 Agora os módulos + progresso (com bloqueio sequencial)
     modulos = Modulo.query.order_by(Modulo.id).all()
@@ -403,6 +414,7 @@ def starting_page():
         pontos=current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         coins=current_user.moedas,
+        semana_completa=semana_completa,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
         modulos=modulos_progresso
@@ -450,6 +462,11 @@ def perfil_page():
         .order_by(Usuario.pontos_semanais.desc())
         .all())
     
+    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    
+    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+    semana_completa = dias_completos == 7
+    
     
     # Busca o registro UsuarioBloco do usuário logado
     usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
@@ -483,6 +500,7 @@ def perfil_page():
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
         ofensiva=ofensiva,
+        semana_completa=semana_completa,
         dia_semana=dia_semana,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
@@ -526,6 +544,11 @@ def ver_modulo(id_modulo):
         .limit(5)
         .all()
     )
+
+    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    
+    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+    semana_completa = dias_completos == 7
     
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -574,6 +597,7 @@ def ver_modulo(id_modulo):
         top5_bloco=top5_bloco,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        semana_completa=semana_completa,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
@@ -632,6 +656,11 @@ def quiz_page():
         .order_by(Usuario.pontos_semanais.desc())
         .all())
     
+    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    
+    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+    semana_completa = dias_completos == 7
+    
     
     # Busca o registro UsuarioBloco do usuário logado
     usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
@@ -673,6 +702,7 @@ def quiz_page():
         pontos_semanais=current_user.pontos_semanais,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
+        semana_completa=semana_completa,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
 
@@ -719,6 +749,11 @@ def store_page():
         .limit(5)
         .all()
     )
+
+    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    
+    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+    semana_completa = dias_completos == 7
                     
     ofensiva = get_or_create_ofensiva(current_user.id)
     
@@ -748,6 +783,7 @@ def store_page():
         ranking=ranking,
         pontos = current_user.pontos,
         pontos_semanais=current_user.pontos_semanais,
+        semana_completa=semana_completa,
         quantidades=quantidades,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
@@ -915,10 +951,17 @@ def efetuar_login():
 
         dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
 
-        if not ofensiva.dias_semana[dia_semana-1]:
-            ofensiva.recorde = 0
-        else:
-            ofensiva.recorde += 1
+        
+        if not ofensiva.dias_semana[dia_semana]:
+            ofensiva.data_ultima_atividade = datetime.now()
+            ofensiva.sequencia_atual += 1
+            if not ofensiva.dias_semana[dia_semana-1]:
+                ofensiva.recorde = ofensiva.sequencia_atual
+                ofensiva.sequencia_atual = 0
+            else:
+                ofensiva.sequencia_atual += 1
+                if ofensiva.sequencia_atual > ofensiva.recorde:
+                    ofensiva.recorde = ofensiva.sequencia_atual
 
         semana_atual = inicio_semana()
         if not usuario.entrada:
@@ -1127,9 +1170,12 @@ def concluir_tarefa(id_tarefa):
         ofensiva.data_ultima_atividade = datetime.now()
         ofensiva.sequencia_atual += 1
         if not ofensiva.dias_semana[dia_semana-1]:
-            ofensiva.recorde = 1
+            ofensiva.recorde = ofensiva.sequencia_atual
+            ofensiva.sequencia_atual = 0
         else:
-            ofensiva.recorde += 1
+            ofensiva.sequencia_atual += 1
+            if ofensiva.sequencia_atual > ofensiva.recorde:
+                ofensiva.recorde = ofensiva.sequencia_atual
 
     ofensiva.dias_semana[dia_semana] = True
     db.session.commit()
