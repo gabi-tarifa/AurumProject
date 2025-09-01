@@ -75,8 +75,10 @@ def verificar_bonus_semana():
 
             if not ofensiva:
                 continue  # usuário ainda não começou ofensiva
+            
+            dias_completos = sum(1 for dia in ofensiva.dias_semana if dia)
 
-            if ofensiva.semanal >= 7:
+            if dias_completos == 7:
                 user.moedas += 50
                 print(f"Usuário {user.id} recebeu 50 moedas pela ofensiva semanal!")
             else:
@@ -144,7 +146,7 @@ def processar_premiacoes():
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
+scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=13, minute=22)
 scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
 scheduler.start()
 
