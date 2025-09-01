@@ -1021,3 +1021,16 @@ label{
     background-color: #3399ff;
     opacity: 0.6;
 }
+
+.bonus-confirmado {
+  margin-top: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #222;
+  border: 1px solid goldenrod;
+  border-radius: 8px;
+  color: rgb(42, 156, 1);
+  font-weight: bold;
+  text-align: center;
+  font-size: smaller;
+}
