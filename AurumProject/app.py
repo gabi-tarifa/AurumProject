@@ -13,7 +13,7 @@ from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
 from setup_poderes import criar_poderes
-from datetime import datetime, timedelta, date, timezone
+from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc
 from flask_babel import Babel, _, format_datetime
@@ -37,8 +37,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -88,6 +88,55 @@ def verificar_bonus_semana():
             ofensiva.dias_semana = [False]*7
 
         db.session.commit()  # um único commit para todos
+
+def checar_ofensivas():
+    """
+    Checa todas as ofensivas dos usuários na virada do dia.
+    - Se já marcou atividade no dia atual -> não faz nada.
+    - Se ontem teve atividade (dia_anterior=True) -> mantém sequência.
+    - Se ontem não teve atividade -> zera sequência.
+    - Atualiza dia_hoje/dia_anterior.
+    """
+    hoje = date.today()
+    ontem = hoje - timedelta(days=1)
+
+    ofensivas = Ofensiva.query.all()
+
+    for ofensiva in ofensivas:
+        # Se já registrou atividade hoje, não mexe
+        if ofensiva.data_ultima_atividade == hoje:
+            continue
+
+        # Move "dia_hoje" para "dia_anterior"
+        ofensiva.dia_anterior = ofensiva.dia_hoje
+        ofensiva.dia_hoje = False
+
+        # Se ontem teve atividade, mantém a sequência
+        if ofensiva.data_ultima_atividade == ontem and ofensiva.dia_anterior:
+            ofensiva.sequencia_atual += 1
+        else:
+            ofensiva.sequencia_atual = 0
+
+        # Atualiza recorde
+        if ofensiva.sequencia_atual > ofensiva.recorde:
+            ofensiva.recorde = ofensiva.sequencia_atual
+
+        # Atualiza a data da última checagem
+        ofensiva.data_ultima_atividade = hoje
+
+        if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
+            desbloquear_conquista(current_user.id, "Primeira Ofensiva")
+        if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
+            desbloquear_conquista(current_user.id, "Semana de Fogo")
+        if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
+            desbloquear_conquista(current_user.id, "Persistente")
+        if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
+            desbloquear_conquista(current_user.id, "Imparável")
+        if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
+            desbloquear_conquista(current_user.id, "Lenda da Consistência")
+
+    db.session.commit()
+    
 # Babel
 babel = Babel()
 def select_locale():
@@ -114,7 +163,17 @@ def distribuir_recompensas(usuarios):
 
            # Campeão (só o primeiro de cada bloco)
             if i == 0:
-                desbloquear_conquista(usuario.id, "Vencedor") 
+                usuario.vitorias += 1
+                usuario.vitorias_consecutivas += 1
+                desbloquear_conquista(usuario.id, "Vencedor")
+                if usuario.vitorias >= 10:
+                    desbloquear_conquista(usuario.id, "Veterano")
+                if usuario.vitorias >= 100:
+                    desbloquear_conquista(usuario.id, "Campeão")
+                if usuario.vitorias_consecutivas >= 30:
+                    desbloquear_conquista(usuario.id, "Campeão Invicto")
+            else:
+                usuario.vitorias_consecutivas = 0
 
 def processar_premiacoes():
     with app.app_context():
@@ -148,6 +207,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
+scheduler.add_job(checar_ofensivas, 'cron', hour=23, minute=59)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -944,25 +1004,6 @@ def efetuar_login():
                 db.session.add(conf)
                 db.session.commit()
 
-        # manter lógica da ofensiva
-        ofensiva = get_or_create_ofensiva(current_user.id)
-        if not ofensiva:
-            return
-
-        dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
-
-        
-        if not ofensiva.dias_semana[dia_semana]:
-            ofensiva.data_ultima_atividade = datetime.now()
-            ofensiva.sequencia_atual += 1
-            if not ofensiva.dias_semana[dia_semana-1]:
-                ofensiva.recorde = ofensiva.sequencia_atual
-                ofensiva.sequencia_atual = 0
-            else:
-                ofensiva.sequencia_atual += 1
-                if ofensiva.sequencia_atual > ofensiva.recorde:
-                    ofensiva.recorde = ofensiva.sequencia_atual
-
         semana_atual = inicio_semana()
         if not usuario.entrada:
             usuario.entrada = datetime.now()
@@ -1082,7 +1123,9 @@ def get_or_create_ofensiva(id_usuario):
             dias_semana=[False]*7,
             recorde=0,
             sequencia_atual=0,
-            data_ultima_atividade=diahoje
+            data_ultima_atividade=diahoje,
+            dia_hoje=False,
+            dia_anterior=False
         )
         db.session.add(ofensiva)
         db.session.commit()
@@ -1159,6 +1202,15 @@ def concluir_tarefa(id_tarefa):
     current_user.pontos_semanais += registro.pontuacao
     current_user.moedas += registro.pontuacao/2 
 
+    if current_user.pontos >= 100:
+        desbloquear_conquista(current_user.id, "Em crescimento")
+    if current_user.pontos >= 1000:
+        desbloquear_conquista(current_user.id, "Experiente")
+    if current_user.pontos >= 10000:
+        desbloquear_conquista(current_user.id, "O Guru")
+    if current_user.pontos >= 999999:
+        desbloquear_conquista(current_user.id, "Aurum Master")
+
     # manter lógica da ofensiva
     ofensiva = get_or_create_ofensiva(current_user.id)
     if not ofensiva:
@@ -1166,18 +1218,32 @@ def concluir_tarefa(id_tarefa):
 
     dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
 
-    if not ofensiva.dias_semana[dia_semana]:
+    if not ofensiva.dia_hoje:
         ofensiva.data_ultima_atividade = datetime.now()
-        ofensiva.sequencia_atual += 1
-        if not ofensiva.dias_semana[dia_semana-1]:
-            ofensiva.recorde = ofensiva.sequencia_atual
-            ofensiva.sequencia_atual = 0
+        if not ofensiva.dia_anterior:
+            if ofensiva.sequencia_atual > ofensiva.recorde:
+                ofensiva.recorde = ofensiva.sequencia_atual
+            ofensiva.sequencia_atual = 1
         else:
             ofensiva.sequencia_atual += 1
             if ofensiva.sequencia_atual > ofensiva.recorde:
                 ofensiva.recorde = ofensiva.sequencia_atual
 
+    
+    if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
+        desbloquear_conquista(current_user.id, "Primeira Ofensiva")
+    if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
+        desbloquear_conquista(current_user.id, "Semana de Fogo")
+    if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
+        desbloquear_conquista(current_user.id, "Persistente")
+    if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
+        desbloquear_conquista(current_user.id, "Imparável")
+    if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
+        desbloquear_conquista(current_user.id, "Lenda da Consistência")
+
+
     ofensiva.dias_semana[dia_semana] = True
+    ofensiva.dia_hoje = True
     db.session.commit()
 
     return jsonify({
@@ -1317,6 +1383,6 @@ def enviar_ticket():
     return render_template("enviarticket.html")
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

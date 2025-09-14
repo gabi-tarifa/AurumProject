@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_login import UserMixin
-from sqlalchemy.dialects.mysql import JSON
 from sqlalchemy.ext.mutable import MutableList
 
 db = SQLAlchemy()
@@ -21,6 +20,8 @@ class Usuario(db.Model, UserMixin):
     ja_passou_intro = db.Column(db.Boolean, default=False)
     idioma = db.Column(db.String(20), nullable=False, default="pt")
     entrada = db.Column(db.Date)
+    vitorias = db.Column(db.Integer, nullable=False, default=0)
+    vitorias_consecutivas = db.Column(db.Integer, nullable=False, default=0)
 
     def to_dict(self):
         return {
@@ -32,7 +33,11 @@ class Usuario(db.Model, UserMixin):
             "moedas": self.moedas,
             "profilepicture": self.profilepicture,
             "backgroundpicture": self.backgroundpicture,
-            "ja_passou_intro": self.ja_passou_intro
+            "ja_passou_intro": self.ja_passou_intro,
+            "idioma": self.idioma,
+            "entrada": self.entrada,
+            "vitorias": self.vitorias,
+            "vitorias_consecutivas": self.vitorias_consecutivas
         }
 
 
@@ -231,6 +236,9 @@ class Ofensiva(db.Model):
     recorde = db.Column(db.Integer, default=0)
 
     dias_semana = db.Column(MutableList.as_mutable(db.JSON),default=lambda: [False]*7,nullable=False)
+
+    dia_hoje = db.Column(db.Boolean, default=False)
+    dia_anterior = db.Column(db.Boolean, default=False)
 
 class Configuracoes(db.Model):
     __tablename__ = "configuracoes"
