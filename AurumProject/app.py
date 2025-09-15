@@ -321,7 +321,7 @@ def ranking_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -383,7 +383,7 @@ def starting_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -514,7 +514,7 @@ def perfil_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -578,7 +578,7 @@ def ver_modulo(id_modulo):
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -708,7 +708,7 @@ def quiz_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -784,7 +784,7 @@ def store_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
