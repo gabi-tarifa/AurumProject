@@ -105,11 +105,10 @@ def checar_ofensivas():
     for ofensiva in ofensivas:
         # Se já registrou atividade hoje, não mexe
         if ofensiva.data_ultima_atividade == hoje:
+            # Move "dia_hoje" para "dia_anterior"
+            ofensiva.dia_anterior = ofensiva.dia_hoje
+            ofensiva.dia_hoje = False
             continue
-
-        # Move "dia_hoje" para "dia_anterior"
-        ofensiva.dia_anterior = ofensiva.dia_hoje
-        ofensiva.dia_hoje = False
 
         # Se ontem teve atividade, mantém a sequência
         if ofensiva.data_ultima_atividade == ontem and ofensiva.dia_anterior:
