@@ -414,6 +414,8 @@ def starting_page():
             .limit(5)
             .all()
         )
+        
+    ofensiva = get_or_create_ofensiva(current_user.id)
 
     ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
     
@@ -459,7 +461,6 @@ def starting_page():
         })
 
         
-    ofensiva = get_or_create_ofensiva(current_user.id)
     
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
