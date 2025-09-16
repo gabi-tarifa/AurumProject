@@ -97,49 +97,50 @@ def checar_ofensivas():
     - Se ontem não teve atividade -> zera sequência.
     - Atualiza dia_hoje/dia_anterior.
     """
-    hoje = date.today()
-    ontem = hoje - timedelta(days=1)
+    with app.app_context:
+        hoje = date.today()
+        ontem = hoje - timedelta(days=1)
 
-    ofensivas = Ofensiva.query.all()
+        ofensivas = Ofensiva.query.all()
 
-    for ofensiva in ofensivas:
-        # Se já registrou atividade hoje, não mexe
-        if ofensiva.data_ultima_atividade == hoje:
+        for ofensiva in ofensivas:
+            # Se já registrou atividade hoje, não mexe
+            if ofensiva.data_ultima_atividade == hoje:
+                # Move "dia_hoje" para "dia_anterior"
+                ofensiva.dia_anterior = ofensiva.dia_hoje
+                ofensiva.dia_hoje = False
+                continue
+
+                
             # Move "dia_hoje" para "dia_anterior"
             ofensiva.dia_anterior = ofensiva.dia_hoje
             ofensiva.dia_hoje = False
-            continue
 
-        
-        # Move "dia_hoje" para "dia_anterior"
-        ofensiva.dia_anterior = ofensiva.dia_hoje
-        ofensiva.dia_hoje = False
+            # Se ontem teve atividade, mantém a sequência
+            if ofensiva.data_ultima_atividade == ontem and ofensiva.dia_anterior:
+                ofensiva.sequencia_atual += 1
+            else:
+                ofensiva.sequencia_atual = 0
 
-        # Se ontem teve atividade, mantém a sequência
-        if ofensiva.data_ultima_atividade == ontem and ofensiva.dia_anterior:
-            ofensiva.sequencia_atual += 1
-        else:
-            ofensiva.sequencia_atual = 0
+            # Atualiza recorde
+            if ofensiva.sequencia_atual > ofensiva.recorde:
+                ofensiva.recorde = ofensiva.sequencia_atual
 
-        # Atualiza recorde
-        if ofensiva.sequencia_atual > ofensiva.recorde:
-            ofensiva.recorde = ofensiva.sequencia_atual
+            # Atualiza a data da última checagem
+            ofensiva.data_ultima_atividade = hoje
 
-        # Atualiza a data da última checagem
-        ofensiva.data_ultima_atividade = hoje
+            if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
+                desbloquear_conquista(current_user.id, "Primeira Ofensiva")
+            if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
+                desbloquear_conquista(current_user.id, "Semana de Fogo")
+            if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
+                desbloquear_conquista(current_user.id, "Persistente")
+            if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
+                desbloquear_conquista(current_user.id, "Imparável")
+            if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
+                desbloquear_conquista(current_user.id, "Lenda da Consistência")
 
-        if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
-            desbloquear_conquista(current_user.id, "Primeira Ofensiva")
-        if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
-            desbloquear_conquista(current_user.id, "Semana de Fogo")
-        if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
-            desbloquear_conquista(current_user.id, "Persistente")
-        if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
-            desbloquear_conquista(current_user.id, "Imparável")
-        if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
-            desbloquear_conquista(current_user.id, "Lenda da Consistência")
-
-    db.session.commit()
+        db.session.commit()
     
 # Babel
 babel = Babel()
