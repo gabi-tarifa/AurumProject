@@ -97,7 +97,7 @@ def checar_ofensivas():
     - Se ontem não teve atividade -> zera sequência.
     - Atualiza dia_hoje/dia_anterior.
     """
-    with app.app_context:
+    with app.app_context():
         hoje = date.today()
         ontem = hoje - timedelta(days=1)
 
