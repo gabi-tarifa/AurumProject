@@ -130,15 +130,15 @@ def checar_ofensivas():
             ofensiva.data_ultima_atividade = hoje
 
             if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
-                desbloquear_conquista(current_user.id, "Primeira Ofensiva")
+                desbloquear_conquista(ofensiva.id_usuario, "Primeira Ofensiva")
             if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
-                desbloquear_conquista(current_user.id, "Semana de Fogo")
+                desbloquear_conquista(ofensiva.id_usuario, "Semana de Fogo")
             if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
-                desbloquear_conquista(current_user.id, "Persistente")
+                desbloquear_conquista(ofensiva.id_usuario, "Persistente")
             if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
-                desbloquear_conquista(current_user.id, "Imparável")
+                desbloquear_conquista(ofensiva.id_usuario, "Imparável")
             if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
-                desbloquear_conquista(current_user.id, "Lenda da Consistência")
+                desbloquear_conquista(ofensiva.id_usuario, "Lenda da Consistência")
 
         db.session.commit()
     
