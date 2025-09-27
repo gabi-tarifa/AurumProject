@@ -93,84 +93,126 @@ body {
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+const blocos = {{ blocos_json|tojson }};
+const tarefaId = {{ tarefa.numero_tarefa }};
+const moduloId = {{ tarefa.id_modulo }};
 
-    const blocos = {{ blocos_json|tojson }};
-    
-    const tarefaId = {{ tarefa.id_tarefa }};
+let indice = 0;
+let totalQuestoes = blocos.filter(b => b.tipo === "quiz").length;
+let acertos = 0;
+let respondidas = 0;
 
-    const moduloId = {{ tarefa.id_modulo }};
+const conteudoEl = document.getElementById("conteudo");
+const barraProgresso = document.getElementById("barra-progresso");
+const btnAvancar = document.getElementById("btn-avancar");
+const btnVoltar = document.getElementById("btn-voltar");
 
-    let indice = 0;
-    const conteudoEl = document.getElementById("conteudo");
-    const barraProgresso = document.getElementById("barra-progresso");
-    const btnAvancar = document.getElementById("btn-avancar");
-    const btnVoltar = document.getElementById("btn-voltar");
+// Armazena as respostas: { indice: {correta: bool, escolhida: index} }
+let respostas = {};
 
-    function renderizarBloco() {
-        const bloco = blocos[indice];
-        barraProgresso.style.width = ((indice) / blocos.length * 100) + "%";
+function renderizarBloco() {
+    const bloco = blocos[indice];
+    barraProgresso.style.width = ((indice) / blocos.length * 100) + "%";
 
-        if (bloco.tipo === "texto") {
-            conteudoEl.innerHTML = bloco.conteudo;
-            btnAvancar.disabled = false;
-            btnVoltar.disabled = false
-        } else if (bloco.tipo === "quiz") {
-            conteudoEl.innerHTML = `<h3>${bloco.pergunta}</h3>`;
-            bloco.alternativas.forEach((alt, i) => {
-                const btn = document.createElement("button");
-                btn.textContent = alt.texto;
-    btn.onclick = () => {
-    // reseta estilos anteriores (pra não acumular)
-    [...conteudoEl.querySelectorAll("button")].forEach(b => {
-        b.style.background = "#2b3d74";
-        b.style.borderColor = "#2f3b74";
-    });
+    conteudoEl.innerHTML = "";
 
-    if (alt.correta) {
-        btn.style.background = "green";
-        btn.style.borderColor = "darkgreen";
+    if (bloco.tipo === "texto") {
+        conteudoEl.innerHTML = bloco.conteudo;
         btnAvancar.disabled = false;
-        btnVoltar.disabled = false;
-            // desabilita todas as alternativas
-            let botoes = document.querySelectorAll("#conteudo button");
-            botoes.forEach(b => b.disabled = true);
+    } else if (bloco.tipo === "quiz") {
+        conteudoEl.innerHTML = `<h3>${bloco.pergunta}</h3>`;
+        btnAvancar.disabled = true;
+
+        bloco.alternativas.forEach((alt, i) => {
+            const btn = document.createElement("button");
+            btn.textContent = alt.texto;
+
+            // Se já respondeu antes, aplica estilo e trava
+            if (respostas[indice]) {
+                if (respostas[indice].escolhida === i) {
+                    if (respostas[indice].correta) {
+                        btn.style.background = "green";
+                        btn.style.borderColor = "darkgreen";
+                    } else {
+                        btn.style.background = "crimson";
+                        btn.style.borderColor = "darkred";
+                    }
+                }
+                btn.disabled = true; // trava todos
+                btnAvancar.disabled = false; // pode avançar sem responder de novo
+            }
+
+            btn.onclick = () => {
+                if (!respostas[indice]) {
+                    respostas[indice] = {
+                        correta: alt.correta,
+                        escolhida: i
+                    };
+
+                    respondidas++;
+                    if (alt.correta) acertos++;
+
+                    [...conteudoEl.querySelectorAll("button")].forEach((b, j) => {
+                        b.disabled = true;
+                        if (j === i) {
+                            if (alt.correta) {
+                                b.style.background = "green";
+                                b.style.borderColor = "darkgreen";
+                            } else {
+                                b.style.background = "crimson";
+                                b.style.borderColor = "darkred";
+                            }
+                        }
+                    });
+
+                    btnAvancar.disabled = false;
+
+                    // avança sozinho se quiser
+                    setTimeout(() => {
+                        if (indice < blocos.length - 1) {
+                            indice++;
+                            renderizarBloco();
+                        }
+                    }, 800);
+                }
+            };
+
+            conteudoEl.appendChild(btn);
+        });
+    }
+
+    btnVoltar.disabled = indice === 0;
+}
+
+btnAvancar.addEventListener("click", () => {
+    if (indice < blocos.length - 1) {
+        indice++;
+        renderizarBloco();
     } else {
-        btn.style.background = "crimson";
-        btn.style.borderColor = "darkred";
-        btnVoltar.disabled = false;
-    }
-};
-                conteudoEl.appendChild(btn);
-            });
-            btnAvancar.disabled = true;
-        }
-    }
+        let taxa = totalQuestoes > 0 ? (acertos / totalQuestoes) * 100 : 100;
 
-    btnAvancar.addEventListener("click", () => {
-        if (indice < blocos.length - 1) {
-            indice++;
-            renderizarBloco();
-        } else {
-            fetch(`/concluir_tarefa/${tarefaId}`, { method: "POST" })
-                .then(() => {
-                    alert({{ _('Aula concluída!')|tojson }});
-                    window.location.href = `/modulo_${moduloId}`;// volta para o mapa
-                })
-                .catch(() => {
-                    alert({{ _('Erro ao concluir a aula.')|tojson }});
-                });
-        }
-    });   
-    btnVoltar.addEventListener("click", () => {
-        if (indice > 0) {
-            indice--;
-            renderizarBloco();
-        }
-    });
-
-    renderizarBloco();
+if (taxa >= 70) {
+    fetch(`/concluir_tarefa/modulo_${moduloId}/tarefa_${tarefaId}`, { method: "POST" })
+        .then(() => {
+            window.location.href = `/licao_sucesso/${tarefaId}/${moduloId}`;
+        })
+        .catch(() => {
+            alert("Erro ao concluir a aula.");
+        });
+} else {
+    window.location.href = `/licao_falha/${tarefaId}/${moduloId}`;
+}
+    }
 });
+
+btnVoltar.addEventListener("click", () => {
+    if (indice > 0) {
+        indice--;
+        renderizarBloco();
+    }
+});
+
+renderizarBloco();
 </script>
 </body>
 

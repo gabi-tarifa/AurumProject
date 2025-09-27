@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lição não concluída</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Você não concluiu a lição 😥</h1>
+      <p>Infelizmente você não atingiu o mínimo necessário para completar <strong>{{ tarefa.titulo if tarefa.titulo else "esta lição" }}</strong>.</p>
+      <p>Tente novamente para avançar no módulo.</p>
+      
+      <a onclick="window.location.href = `/modulo_${id_modulo}`" class="btn">Voltar ao módulo</a>
+    </div>
+  </div>
+</body>
+</html>
