@@ -59,8 +59,9 @@
 
     <!-- Caminho do módulo -->
     <main class="main-content mapa-modulo">
-      <h2 style="text-align: center;">{{ _('Módulo') }} {{ id_modulo }} - {{ modulo.nome }}</h2>
-      <h3 style="text-align: center;">{{ modulo.descricao }}</h3>
+      <h2 style="text-align: center;">{{ _('Módulo') }} {{ modulo.id_modulo }} - {{ _(modulo.chave_nome) }}</h2>
+      <h3 style="text-align: center;">{{ _(modulo.chave_descricao) }}</h3>
+      <!--<img src="{{ url_for('static', filename='img//lion.png') }}" class="mascote" alt="Mascote Aurum" />-->
     {% for tarefa in tarefas_json %}
       <div class="etapa-wrapper">
         <div class="etapa 
@@ -69,7 +70,7 @@
           {% else %} bloqueada {% endif %}" 
           
           {% if tarefa.status != 'bloqueada' %}
-            onclick="window.location.href='/modulo_{{ id_modulo }}/tarefa_{{ tarefa.numero_tarefa }}'"
+            onclick="window.location.href='/modulo_{{ id_modulo }}/tarefa_{{ tarefa.id }}'"
           {% endif %}>
           
           {% if tarefa.status == 'concluida' %}
