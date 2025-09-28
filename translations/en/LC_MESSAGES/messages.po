@@ -367,10 +367,10 @@ msgid "Módulo 2"
 msgstr "Module 2"
 
 # Novos módulos adicionados
-msgid "Introdução ao Mundo Financeiro"
+msgid "modulo_intro_nome"
 msgstr "Introduction to Monetary World"
 
-msgid "Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples."
+msgid "modulo_intro_desc"
 msgstr "Learn the basic concepts about money and its importance."
 
 msgid "modulo_juros_nome"

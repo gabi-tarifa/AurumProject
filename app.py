@@ -457,8 +457,8 @@ def starting_page():
         # Adiciona ao progresso
         modulos_progresso.append({
             "id": modulo.id,
-            "nome": modulo.chave_nome,
-            "descricao": modulo.chave_descricao,
+            "nome": modulo.nome,
+            "descricao": modulo.descricao,
             "tarefas_feitas": tarefas_feitas,
             "tarefas_totais": tarefas_totais,
             "progresso": (tarefas_feitas / tarefas_totais * 100) if tarefas_totais > 0 else 0,
@@ -596,8 +596,8 @@ def ver_modulo(id_modulo):
         .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
-    
-    
+
+
     # Busca o registro UsuarioBloco do usuário logado
     usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
     usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
@@ -617,26 +617,26 @@ def ver_modulo(id_modulo):
     )
 
     ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
-    
+
     dias_completos = sum(1 for dia in ofen.dias_semana if dia)
     semana_completa = dias_completos == 7
-    
+
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     # todas as tarefas do módulo
-    tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.id_tarefa).all()
+    tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.numero_tarefa).all()
 
     modulo = Modulo.query.get_or_404(id_modulo)
-    
+
     # ids concluídos pelo usuário
-    concluidas = {t.id_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
+    concluidas = {t.numero_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
 
     tarefas_json = []
     desbloqueada = True  # só a primeira não concluída fica desbloqueada
 
     for tarefa in tarefas:
-        if tarefa.id_tarefa in concluidas:
+        if tarefa.numero_tarefa in concluidas:
             status = "concluida"
         elif desbloqueada:
             status = "desbloqueada"
@@ -644,13 +644,13 @@ def ver_modulo(id_modulo):
         else:
             status = "bloqueada"
         tarefas_json.append({
-            "id": tarefa.id_tarefa,
+            "numero_tarefa": tarefa.numero_tarefa,
             "descicao": tarefa.descricao,
             "status": status
         })
-            
+
     ofensiva = get_or_create_ofensiva(current_user.id)
-    
+
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
 
@@ -1433,6 +1433,6 @@ def enviar_ticket():
     return render_template("enviarticket.html")
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

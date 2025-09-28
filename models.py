@@ -134,7 +134,7 @@ class TarefaUsuario(db.Model):
     pontuacao = db.Column(db.Integer, nullable=False, default=0)
     repeticao = db.Column(db.Integer, nullable=False, default=0)
 
-    concluida = db.Column(db.String(20), default="pendente")
+    status = db.Column(db.String(20), default="pendente")
 
     __table_args__ = (
         ForeignKeyConstraint(
