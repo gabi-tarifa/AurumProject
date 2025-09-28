@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-24 21:50-0300\n"
-"PO-Revision-Date: 2025-08-24 22:17-0300\n"
+"POT-Creation-Date: 2025-09-27 20:30-0300\n"
+"PO-Revision-Date: 2025-09-27 20:30-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pt\n"
 "Language-Team: pt <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app.py:112
+#: app.py:299
 msgid "Idioma inválido."
 msgstr ""
 
-#: app.py:116
+#: app.py:303
 #, python-format
 msgid "Idioma atualizado para %(lang)s."
 msgstr ""
@@ -81,24 +81,45 @@ msgstr ""
 msgid "Revisar"
 msgstr ""
 
-#: templates/a.html:83 templates/ranking.html:114
+#: templates/a.html:83 templates/ranking.html:157
 msgid "Continuar"
 msgstr ""
 
-#: templates/a.html:102 templates/loja.html:99 templates/modulo.html:99
-#: templates/perfil.html:95 templates/quizes.html:97 templates/ranking.html:101
+#: templates/a.html:104 templates/loja.html:101 templates/modulo.html:101
+#: templates/perfil.html:97 templates/quizes.html:99 templates/ranking.html:107
+msgid "Dia consecutivo"
+msgstr ""
+
+#: templates/a.html:106 templates/loja.html:103 templates/modulo.html:103
+#: templates/perfil.html:99 templates/quizes.html:101
+#: templates/ranking.html:109
 msgid "Dias consecutivos"
 msgstr ""
 
-#: templates/a.html:107 templates/loja.html:104 templates/modulo.html:104
-#: templates/perfil.html:100 templates/quizes.html:102
-#: templates/ranking.html:106
+#: templates/a.html:116 templates/loja.html:113 templates/modulo.html:113
+#: templates/perfil.html:109 templates/quizes.html:111
+#: templates/ranking.html:119
+msgid "Recorde"
+msgstr ""
+
+#: templates/a.html:121 templates/loja.html:118 templates/modulo.html:118
+#: templates/perfil.html:114 templates/quizes.html:116
+#: templates/ranking.html:124
 msgid "Total de Aurum Points"
 msgstr ""
 
-#: templates/a.html:112 templates/loja.html:109 templates/modulo.html:109
-#: templates/perfil.html:105 templates/quizes.html:107
+#: templates/a.html:126 templates/loja.html:123 templates/modulo.html:123
+#: templates/perfil.html:119 templates/quizes.html:121
 msgid "Posição no Ranking"
+msgstr ""
+
+#: templates/ajuda.html:13 templates/licoes.html:90
+msgid "Voltar"
+msgstr ""
+
+#: templates/ajuda.html:20 templates/loja.html:53 templates/modulo.html:54
+#: templates/perfil.html:52 templates/quizes.html:53 templates/ranking.html:55
+msgid "Ajuda"
 msgstr ""
 
 #: templates/cadastro.html:14 templates/cadastro.html:20
@@ -119,66 +140,108 @@ msgstr ""
 msgid "← Voltar ao início"
 msgstr ""
 
-#: templates/configuracoes.html:15 templates/loja.html:54
+#: templates/configuracoes.html:13
+msgid " Voltar"
+msgstr ""
+
+#: templates/configuracoes.html:20 templates/loja.html:54
 #: templates/modulo.html:55 templates/perfil.html:53 templates/quizes.html:54
 #: templates/ranking.html:56
 msgid "Configurações"
 msgstr ""
 
-#: templates/configuracoes.html:21
+#: templates/configuracoes.html:26
 msgid "Preferências"
 msgstr ""
 
-#: templates/configuracoes.html:23
+#: templates/configuracoes.html:28
 msgid "Sons"
 msgstr ""
 
-#: templates/configuracoes.html:27
+#: templates/configuracoes.html:32
 msgid "Música de fundo"
 msgstr ""
 
-#: templates/configuracoes.html:31
-msgid "Notificações"
-msgstr ""
-
-#: templates/configuracoes.html:35
+#: templates/configuracoes.html:36
 msgid "Idioma"
 msgstr ""
 
-#: templates/configuracoes.html:50
+#: templates/configuracoes.html:51
 msgid "Conta"
 msgstr ""
 
-#: templates/configuracoes.html:52
+#: templates/configuracoes.html:54 templates/configuracoes.html:59
 msgid "Alterar Apelido"
 msgstr ""
 
-#: templates/configuracoes.html:53 templates/configuracoes.html:57
-#: templates/configuracoes.html:61
+#: templates/configuracoes.html:55 templates/configuracoes.html:72
+#: templates/configuracoes.html:89
 msgid "Editar"
 msgstr ""
 
-#: templates/configuracoes.html:56
-msgid "Alterar Foto de Perfil"
+#: templates/configuracoes.html:60 templates/perfil.html:176
+msgid "Novo Apelido:"
 msgstr ""
 
-#: templates/configuracoes.html:60
+#: templates/configuracoes.html:61
+msgid "Digite o novo apelido"
+msgstr ""
+
+#: templates/configuracoes.html:64 templates/configuracoes.html:81
+#: templates/configuracoes.html:106 templates/perfil.html:188
+msgid "Salvar"
+msgstr ""
+
+#: templates/configuracoes.html:65 templates/configuracoes.html:82
+#: templates/configuracoes.html:107 templates/perfil.html:189
+msgid "Cancelar"
+msgstr ""
+
+#: templates/configuracoes.html:71
+msgid "Alterar Email Cadastrado"
+msgstr ""
+
+#: templates/configuracoes.html:76
+msgid "Alterar Email"
+msgstr ""
+
+#: templates/configuracoes.html:77
+msgid "Novo Email:"
+msgstr ""
+
+#: templates/configuracoes.html:78
+msgid "Digite o novo email"
+msgstr ""
+
+#: templates/configuracoes.html:88 templates/configuracoes.html:93
 msgid "Alterar Senha"
 msgstr ""
 
-#: templates/configuracoes.html:66
+#: templates/configuracoes.html:94
+msgid "Senha Atual:"
+msgstr ""
+
+#: templates/configuracoes.html:97
+msgid "Nova Senha:"
+msgstr ""
+
+#: templates/configuracoes.html:100
+msgid "Confirmar Nova Senha:"
+msgstr ""
+
+#: templates/configuracoes.html:114
 msgid "Aplicativo"
 msgstr ""
 
-#: templates/configuracoes.html:68
+#: templates/configuracoes.html:116
 msgid "Versão do App"
 msgstr ""
 
-#: templates/configuracoes.html:72
+#: templates/configuracoes.html:120
 msgid "Redefinir configurações"
 msgstr ""
 
-#: templates/configuracoes.html:73
+#: templates/configuracoes.html:121
 msgid "Resetar"
 msgstr ""
 
@@ -194,10 +257,6 @@ msgstr ""
 
 #: templates/introducao.html:153
 msgid "Pular"
-msgstr ""
-
-#: templates/licoes.html:90
-msgid "Voltar"
 msgstr ""
 
 #: templates/licoes.html:91
@@ -230,11 +289,6 @@ msgid ""
 "Privacidade."
 msgstr ""
 
-#: templates/loja.html:53 templates/modulo.html:54 templates/perfil.html:52
-#: templates/quizes.html:53 templates/ranking.html:55
-msgid "Ajuda"
-msgstr ""
-
 #: templates/loja.html:55 templates/modulo.html:56 templates/perfil.html:54
 #: templates/quizes.html:55 templates/ranking.html:57
 msgid "Sair"
@@ -261,10 +315,10 @@ msgid "Módulo"
 msgstr ""
 
 #: templates/perfil.html:69
-msgid "Entrou na Aurum em Novembro de 2024"
+msgid "Entrou na Aurum em"
 msgstr ""
 
-#: templates/perfil.html:69 templates/perfil.html:136
+#: templates/perfil.html:69 templates/perfil.html:174
 msgid "Editar Perfil"
 msgstr ""
 
@@ -276,40 +330,24 @@ msgstr ""
 msgid "Nenhuma conquista desbloqueada ainda."
 msgstr ""
 
-#: templates/perfil.html:138
-msgid "Novo Apelido:"
-msgstr ""
-
-#: templates/perfil.html:141
+#: templates/perfil.html:179
 msgid "Nova Foto de Perfil:"
 msgstr ""
 
-#: templates/perfil.html:143
+#: templates/perfil.html:181
 msgid ""
 "Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará "
 "desproporcional ao seu gosto"
 msgstr ""
 
-#: templates/perfil.html:145
+#: templates/perfil.html:183
 msgid "Nova Foto de Fundo:"
 msgstr ""
 
-#: templates/perfil.html:147
+#: templates/perfil.html:185
 msgid ""
 "Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará "
 "desproporcional ao seu gosto"
-msgstr ""
-
-#: templates/perfil.html:150
-msgid "Salvar"
-msgstr ""
-
-#: templates/perfil.html:151
-msgid "Cancelar"
-msgstr ""
-
-#: templates/perguntasEntrada.html:24
-msgid "Teste sobre Conhecimento Financeiro"
 msgstr ""
 
 #: templates/preentrada.html:88
@@ -354,11 +392,32 @@ msgstr ""
 msgid "RANKING SEMANAL"
 msgstr ""
 
-#: templates/ranking.html:108
-msgid "Treinar agor"
+#: templates/ranking.html:127
+msgid "Registro Semanal"
 msgstr ""
 
-#: templates/ranking.html:110
+#: templates/ranking.html:143
+msgid "Recompensa: 50"
+msgstr ""
+
+#: templates/ranking.html:151
+msgid "Treinar agora"
+msgstr ""
+
+#: templates/ranking.html:153
 msgid "Módulo 2"
+msgstr ""
+
+# Novos módulos adicionados
+msgid "modulo_intro_nome"
+msgstr "Introdução ao Mundo Financeiro"
+
+msgid "modulo_intro_desc"
+msgstr "Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples.."
+
+msgid "modulo_juros_nome"
+msgstr ""
+
+msgid "modulo_juros_desc"
 msgstr ""
 
