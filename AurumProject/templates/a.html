@@ -68,8 +68,8 @@
     {% else %}
       <a href="/modulo_{{ modulo.id }}" class="modulo-link">
         <div class="modulo modulo{{modulo.id}} {% if modulo.concluido %}concluido{% endif %}">
-          <h3>{{ modulo.nome }}</h3><br>
-          <p>{{ modulo.descricao }}</p>
+          <h3>{{ _(modulo.nome) }}</h3><br>
+          <p>{{ _(modulo.descricao) }}</p>
 
           <div class="progress-bartp">
             <div class="progresstp" style="width: {{ modulo.progresso }}%;">

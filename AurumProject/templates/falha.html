@@ -13,7 +13,7 @@
       <p>Infelizmente você não atingiu o mínimo necessário para completar <strong>{{ tarefa.titulo if tarefa.titulo else "esta lição" }}</strong>.</p>
       <p>Tente novamente para avançar no módulo.</p>
       
-      <a onclick="window.location.href = `/modulo_${id_modulo}`" class="btn">Voltar ao módulo</a>
+      <a href="{{ url_for('ver_modulo', id_modulo=id_modulo) }}" class="btn">Voltar ao módulo</a>
     </div>
   </div>
 </body>

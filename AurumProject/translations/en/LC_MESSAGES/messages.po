@@ -368,7 +368,7 @@ msgstr "Module 2"
 
 # Novos módulos adicionados
 msgid "modulo_intro_nome"
-msgstr "Introduction to Money"
+msgstr "Introduction to Monetary World"
 
 msgid "modulo_intro_desc"
 msgstr "Learn the basic concepts about money and its importance."

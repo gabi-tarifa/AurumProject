@@ -35,10 +35,10 @@ login_manager.login_message_category = "info"
 
 #Quem for pegar o projeto, poe em comentario e faz a sua rota do bdd, e so troca quem fica comentado ou nao
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -59,47 +59,12 @@ app.config["BABEL_TRANSLATION_DIRECTORIES"] = "translations"
 db.init_app(app)
 
 with app.app_context():
-    # ← aqui, imediatamente após abrir o contexto
-    from app import db
-    from models import Modulo
-
-    db.create_all()
-
-
-    # Lista de módulos que você quer adicionar
-    modulos_para_adicionar = [
-        {"chave_nome": "modulo_intro_nome", "chave_descricao": "modulo_intro_desc"},
-        {"chave_nome": "modulo_juros_nome", "chave_descricao": "modulo_juros_desc"}
-    ]
-    
-    for mod in modulos_para_adicionar:
-        # Verifica se já existe no banco
-        existente = Modulo.query.filter_by(chave_nome=mod["chave_nome"]).first()
-        if not existente:
-            # Cria e adiciona ao banco
-            novo_modulo = Modulo(
-                chave_nome=mod["chave_nome"],
-                chave_descricao=mod["chave_descricao"]
-            )
-            db.session.add(novo_modulo)
-
-    # Salva todas as alterações de uma vez
-    db.session.commit()
-
-    print("Módulos adicionados (ou já existiam).")
-
-    @app.route('/modulo/<int:id_modulo>')
-    def modulo_page(id_modulo):
-        modulo = Modulo.query.get_or_404(id_modulo)
-        return render_template('modulo.html', modulo=modulo)
-
     db.create_all()
     criar_conquistas()
     criar_poderes()
     criar_modulos()
     criar_tarefas()
     criar_conteudo()
-
 
 def verificar_bonus_semana():
     with app.app_context():
@@ -311,10 +276,10 @@ def api_idioma():
 def ajuda():
     return render_template("ajuda.html")
 
-@app.route("/modulo_<int:id_modulo>/tarefa_<int:id_tarefa>")
+@app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
-def licoes(id_tarefa, id_modulo):
-    tarefa = Tarefa.query.filter_by(id_modulo=id_modulo, id_tarefa=id_tarefa).first()
+def licoes(numero_tarefa, id_modulo):
+    tarefa = Tarefa.query.filter_by(id_modulo=id_modulo, numero_tarefa=numero_tarefa).first()
     blocos = []
 
     for c in tarefa.conteudos:
@@ -338,7 +303,7 @@ def licoes(id_tarefa, id_modulo):
                 "alternativas": alternativas
             })
 
-    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, id_tarefa=tarefa.id_tarefa)
+    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, numero_tarefa=tarefa.numero_tarefa)
 
 # 🆕 Página de Cadastro
 @app.route("/cadastro")
@@ -468,11 +433,16 @@ def starting_page():
         tarefas_totais = len(tarefas)
 
         # Tarefas concluídas pelo usuário
-        tarefas_feitas = (TarefaUsuario.query
-            .filter(TarefaUsuario.id_usuario == current_user.id,
-                    TarefaUsuario.id_tarefa.in_([t.id_tarefa for t in tarefas]),
-                    TarefaUsuario.concluida == True)
-            .count())
+        tarefas_feitas = (
+            db.session.query(TarefaUsuario)
+            .join(Tarefa, (TarefaUsuario.id_modulo == Tarefa.id_modulo) & (TarefaUsuario.numero_tarefa == Tarefa.numero_tarefa))
+            .filter(
+                TarefaUsuario.id_usuario == current_user.id,
+                TarefaUsuario.id_modulo == modulo.id,
+                TarefaUsuario.status == "concluida"
+            )
+            .count()
+        )
 
         # Verifica se o módulo foi concluído
         concluido = tarefas_totais > 0 and tarefas_feitas == tarefas_totais
@@ -487,8 +457,8 @@ def starting_page():
         # Adiciona ao progresso
         modulos_progresso.append({
             "id": modulo.id,
-            "nome": modulo.chave_nome,
-            "descricao": modulo.chave_descricao,
+            "nome": modulo.nome,
+            "descricao": modulo.descricao,
             "tarefas_feitas": tarefas_feitas,
             "tarefas_totais": tarefas_totais,
             "progresso": (tarefas_feitas / tarefas_totais * 100) if tarefas_totais > 0 else 0,
@@ -626,8 +596,8 @@ def ver_modulo(id_modulo):
         .filter(UsuarioBloco.id_bloco == bloco_usuario.id_bloco)
         .order_by(Usuario.pontos_semanais.desc())
         .all())
-    
-    
+
+
     # Busca o registro UsuarioBloco do usuário logado
     usuario_blocos = UsuarioBloco.query.filter_by(id_usuario=current_user.id).all()
     usuario_bloco = usuario_blocos[-1] if usuario_blocos else None
@@ -647,26 +617,26 @@ def ver_modulo(id_modulo):
     )
 
     ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
-    
+
     dias_completos = sum(1 for dia in ofen.dias_semana if dia)
     semana_completa = dias_completos == 7
-    
+
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
     # todas as tarefas do módulo
-    tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.id_tarefa).all()
+    tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.numero_tarefa).all()
 
     modulo = Modulo.query.get_or_404(id_modulo)
-    
+
     # ids concluídos pelo usuário
-    concluidas = {t.id_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
+    concluidas = {t.numero_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
 
     tarefas_json = []
     desbloqueada = True  # só a primeira não concluída fica desbloqueada
 
     for tarefa in tarefas:
-        if tarefa.id_tarefa in concluidas:
+        if tarefa.numero_tarefa in concluidas:
             status = "concluida"
         elif desbloqueada:
             status = "desbloqueada"
@@ -674,13 +644,13 @@ def ver_modulo(id_modulo):
         else:
             status = "bloqueada"
         tarefas_json.append({
-            "id": tarefa.id_tarefa,
+            "numero_tarefa": tarefa.numero_tarefa,
             "descicao": tarefa.descricao,
             "status": status
         })
-            
+
     ofensiva = get_or_create_ofensiva(current_user.id)
-    
+
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
 
@@ -1205,24 +1175,29 @@ def inicio_semana():
     # Ajustar para segunda-feira
     return hoje - timedelta(days=hoje.weekday())
 
-@app.route("/concluir_tarefa/<int:id_tarefa>", methods=["POST"])
+@app.route("/concluir_tarefa/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>", methods=["POST"])
 @login_required
-def concluir_tarefa(id_tarefa):
-       # buscar a tarefa
-    tarefa = Tarefa.query.get_or_404(id_tarefa)
+def concluir_tarefa(id_modulo, numero_tarefa):
+    # buscar a tarefa com chave composta
+    tarefa = Tarefa.query.filter_by(
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
+    ).first_or_404()
 
     # pontuação base da tarefa
     pontuacao_base = tarefa.pontos if hasattr(tarefa, "pontos") else 10  
 
     # verificar se já existe um registro para esse usuário e tarefa
-    registro = TarefaUsuario.query.filter_by(
-        id_usuario=current_user.id, id_tarefa=id_tarefa
+    registro = TarefaUsuario.query.filter_by(   
+        id_usuario=current_user.id,
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
     ).first()
 
     if registro:
         # já existe → incrementar repetição
         registro.repeticao += 1
-        registro.concluida = True
+        registro.status = "concluida"
 
         # aplicar lógica do desconto
         descontador = min(math.ceil(registro.repeticao / 2), 5)
@@ -1231,8 +1206,9 @@ def concluir_tarefa(id_tarefa):
         # primeira vez concluindo
         registro = TarefaUsuario(
             id_usuario=current_user.id,
-            id_tarefa=id_tarefa,
-            concluida=True,
+            id_modulo=id_modulo,
+            numero_tarefa=numero_tarefa,
+            status="concluida",
             pontuacao=pontuacao_base,
             repeticao=1
         )
@@ -1254,8 +1230,19 @@ def concluir_tarefa(id_tarefa):
 
     # manter lógica da ofensiva
     ofensiva = get_or_create_ofensiva(current_user.id)
-    if not ofensiva:
-        return
+    if ofensiva:
+        dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
+
+        if not ofensiva.dia_hoje:
+            ofensiva.data_ultima_atividade = datetime.now()
+            if not ofensiva.dia_anterior:
+                if ofensiva.sequencia_atual > ofensiva.recorde:
+                    ofensiva.recorde = ofensiva.sequencia_atual
+                ofensiva.sequencia_atual = 1
+            else:
+                ofensiva.sequencia_atual += 1
+                if ofensiva.sequencia_atual > ofensiva.recorde:
+                    ofensiva.recorde = ofensiva.sequencia_atual
 
     dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
 
@@ -1292,6 +1279,28 @@ def concluir_tarefa(id_tarefa):
         "pontuacao": registro.pontuacao,
         "repeticao": registro.repeticao
         })
+
+@app.route("/licao_falha/<int:numero_tarefa>/<int:id_modulo>")
+@login_required
+def licao_falha(numero_tarefa, id_modulo):
+    # Busca tarefa só pra exibir nome/título se quiser
+    tarefa = Tarefa.query.filter_by(
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
+    ).first_or_404()
+
+    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo)
+
+@app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
+@login_required
+def licao_sucesso(numero_tarefa, id_modulo):
+    tarefa = Tarefa.query.filter_by(
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
+    ).first_or_404()
+
+    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo)
+
 
 reset_codes = {}
 

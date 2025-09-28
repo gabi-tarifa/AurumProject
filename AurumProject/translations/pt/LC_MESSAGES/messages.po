@@ -413,7 +413,7 @@ msgid "modulo_intro_nome"
 msgstr "Introdução ao Mundo Financeiro"
 
 msgid "modulo_intro_desc"
-msgstr "Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples.."
+msgstr "Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples."
 
 msgid "modulo_juros_nome"
 msgstr ""
