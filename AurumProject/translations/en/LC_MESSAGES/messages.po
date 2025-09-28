@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-24 21:50-0300\n"
-"PO-Revision-Date: 2025-08-24 21:52-0300\n"
+"POT-Creation-Date: 2025-09-27 20:30-0300\n"
+"PO-Revision-Date: 2025-09-27 20:30-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -359,9 +359,22 @@ msgid "RANKING SEMANAL"
 msgstr "WEEKLY RANKING"
 
 #: templates/ranking.html:108
-msgid "Treinar agor"
+msgid "Treinar agora"
 msgstr "Train now"
 
 #: templates/ranking.html:110
 msgid "Módulo 2"
 msgstr "Module 2"
+
+# Novos módulos adicionados
+msgid "modulo_intro_nome"
+msgstr "Introduction to Money"
+
+msgid "modulo_intro_desc"
+msgstr "Learn the basic concepts about money and its importance."
+
+msgid "modulo_juros_nome"
+msgstr ""
+
+msgid "modulo_juros_desc"
+msgstr ""
