@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, ForeignKeyConstraint
 from flask_login import UserMixin
-from sqlalchemy.dialects.mysql import JSON
 from sqlalchemy.ext.mutable import MutableList
 
 db = SQLAlchemy()
@@ -21,6 +20,8 @@ class Usuario(db.Model, UserMixin):
     ja_passou_intro = db.Column(db.Boolean, default=False)
     idioma = db.Column(db.String(20), nullable=False, default="pt")
     entrada = db.Column(db.Date)
+    vitorias = db.Column(db.Integer, nullable=False, default=0)
+    vitorias_consecutivas = db.Column(db.Integer, nullable=False, default=0)
 
     def to_dict(self):
         return {
@@ -32,7 +33,11 @@ class Usuario(db.Model, UserMixin):
             "moedas": self.moedas,
             "profilepicture": self.profilepicture,
             "backgroundpicture": self.backgroundpicture,
-            "ja_passou_intro": self.ja_passou_intro
+            "ja_passou_intro": self.ja_passou_intro,
+            "idioma": self.idioma,
+            "entrada": self.entrada,
+            "vitorias": self.vitorias,
+            "vitorias_consecutivas": self.vitorias_consecutivas
         }
 
 
@@ -56,37 +61,60 @@ class Modulo(db.Model):
 class Tarefa(db.Model):
     __tablename__ = 'Tarefa'
 
-    id_tarefa = db.Column(db.Integer, primary_key=True)
-    id_modulo = db.Column(db.Integer, ForeignKey(Modulo.id), nullable=False)
+    pontos = db.Column(db.Integer, nullable=False)    
+    id_modulo = db.Column(db.Integer,  ForeignKey("Modulo.id"), primary_key=True)
+    numero_tarefa = db.Column(db.Integer, primary_key=True)
+
     descricao = db.Column(db.String(255), nullable=False)
-    pontos = db.Column(db.Integer, nullable=False)
-    
-    conteudos = db.relationship("ConteudoTarefa", backref="tarefa", lazy=True)
+
+    __table_args__ = (
+        db.PrimaryKeyConstraint('id_modulo', 'numero_tarefa'),
+    )
+
+    # 🔹 RELAÇÃO COM ConteudoTarefa
+    conteudos = db.relationship(
+        "ConteudoTarefa",
+        backref="tarefa",
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
 
     def to_dict(self):
         return {
-            "id_tarefa": self.id_tarefa,
+
             "id_modulo": self.id_modulo,
+            "numero_tarefa": self.numero_tarefa,
             "descricao": self.descricao,
             "pontos": self.pontos,
             "conteudos": [c.to_dict() for c in self.conteudos]
         }
-    
+
 class ConteudoTarefa(db.Model):
     __tablename__ = 'ConteudoTarefa'
 
     id_conteudo = db.Column(db.Integer, primary_key=True)
-    id_tarefa = db.Column(db.Integer, ForeignKey(Tarefa.id_tarefa), nullable=False)
+
+    numero_tarefa = db.Column(db.Integer, nullable=False)
+    id_modulo = db.Column(db.Integer, nullable=False)
+
     tipo = db.Column(db.String(15))
     conteudo = db.Column(db.Text)
     pergunta = db.Column(db.Text)
     alternativas = db.Column(db.Text)
     correta = db.Column(db.Integer)
 
+    __table_args__ = (
+        db.ForeignKeyConstraint(
+            ['id_modulo', 'numero_tarefa'],
+            ['Tarefa.id_modulo', 'Tarefa.numero_tarefa']
+        ),
+    )
+
     def to_dict(self):
         return {
             "id_conteudo": self.id_conteudo,
-            "id_tarefa": self.id_tarefa,
+            "numero_tarefa": self.numero_tarefa,
+            "id_modulo": self.id_modulo,
             "tipo": self.tipo,
             "conteudo": self.conteudo,
             "pergunta": self.pergunta,
@@ -99,11 +127,21 @@ class TarefaUsuario(db.Model):
     __tablename__ = 'TarefaUsuario'
 
     id_tarefa_usuario = db.Column(db.Integer, primary_key=True)
-    id_tarefa = db.Column(db.Integer, ForeignKey(Tarefa.id_tarefa),nullable=False)
-    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
-    concluida = db.Column(db.Boolean, nullable=False, default=False)
-    pontuacao = db.Column(db.Integer, nullable=False)
-    repeticao = db.Column(db.Integer, nullable=False, default=1)
+    id_usuario = db.Column(db.Integer, ForeignKey("Usuario.id"), nullable=False)
+
+    id_modulo = db.Column(db.Integer, ForeignKey("Modulo.id"))
+    numero_tarefa = db.Column(db.Integer)
+    pontuacao = db.Column(db.Integer, nullable=False, default=0)
+    repeticao = db.Column(db.Integer, nullable=False, default=0)
+
+    concluida = db.Column(db.String(20), default="pendente")
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ['id_modulo', 'numero_tarefa'],
+            ['Tarefa.id_modulo', 'Tarefa.numero_tarefa']
+        ),
+    )
 
     def to_dict(self):
         return {
@@ -160,7 +198,7 @@ class Poderes(db.Model):
 
     def __repr__(self):
         return f"<Poder {self.nome}>"
-    
+
     def to_dict(self):
         return {
             "id_poder": self.id_poder,
@@ -169,7 +207,7 @@ class Poderes(db.Model):
             "preco": self.preco,
             "imagem": self.imagem
         }
-    
+
 class PoderesUsuario(db.Model):
     __tablename__ = "PoderesUsuario"
 
@@ -180,7 +218,7 @@ class PoderesUsuario(db.Model):
 
     def __repr__(self):
         return f"<PoderesUsuario usuario={self.id_usuario} poder={self.id_poder}>"
-    
+
     def to_dict(self):
         return {
             "id_poder_usuario": self.id_poder_usuario,
@@ -188,7 +226,7 @@ class PoderesUsuario(db.Model):
             "id_poder": self.id_poder,
             "quantidade": self.quantidade
         }
-    
+
 class Bloco(db.Model):
     __tablename__ = "Bloco"
 
@@ -205,8 +243,8 @@ class UsuarioBloco(db.Model):
     __tablename__ = "UsuarioBloco"
 
     id_usuario_bloco = db.Column(db.Integer, primary_key=True)
-    id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
-    id_bloco = db.Column(db.Integer, db.ForeignKey(Bloco.id_bloco), nullable=False)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False)
+    id_bloco = db.Column(db.Integer,  ForeignKey(Bloco.id_bloco), nullable=False)
 
     def to_dict(self):
         return {
@@ -214,12 +252,12 @@ class UsuarioBloco(db.Model):
             "id_usuario": self.id_usuario,
             "id_bloco": self.id_bloco
 }
-    
+
 class Ofensiva(db.Model):
     __tablename__ = "Ofensiva"
 
     id_ofensiva = db.Column(db.Integer, primary_key=True)
-    id_usuario = db.Column(db.Integer, db.ForeignKey(Usuario.id), nullable=False)
+    id_usuario = db.Column(db.Integer,  ForeignKey(Usuario.id), nullable=False)
 
     # Última vez que o usuário registrou atividade
     data_ultima_atividade = db.Column(db.Date)
@@ -231,6 +269,9 @@ class Ofensiva(db.Model):
     recorde = db.Column(db.Integer, default=0)
 
     dias_semana = db.Column(MutableList.as_mutable(db.JSON),default=lambda: [False]*7,nullable=False)
+
+    dia_hoje = db.Column(db.Boolean, default=False)
+    dia_anterior = db.Column(db.Boolean, default=False)
 
 class Configuracoes(db.Model):
     __tablename__ = "configuracoes"

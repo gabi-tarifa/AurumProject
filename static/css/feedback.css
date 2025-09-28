@@ -1,0 +1,73 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #1e1e2f, #2a2a3d);
+  color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 500px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+.card h1 {
+  margin-bottom: 1rem;
+}
+
+.card p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+/* Estilo sucesso */
+.card.sucesso {
+  background: #2f4430;
+  border: 2px solid #4CAF50;
+}
+.card.sucesso h1 {
+  color: #4CAF50;
+}
+.card.sucesso .btn {
+  background: #4CAF50;
+  color: #fff;
+}
+.card.sucesso .btn:hover {
+  background: #3a8b3a;
+}
+
+/* Estilo falha */
+.card.falha {
+  background: #442f2f;
+  border: 2px solid #ff4d4d;
+}
+.card.falha h1 {
+  color: #ff4d4d;
+}
+.card.falha .btn {
+  background: #ff4d4d;
+  color: #fff;
+}
+.card.falha .btn:hover {
+  background: #e63e3e;
+}

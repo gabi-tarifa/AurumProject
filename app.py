@@ -13,7 +13,7 @@ from flask_login import LoginManager, login_user, logout_user
 import secrets
 from setup_conquistas import criar_conquistas
 from setup_poderes import criar_poderes
-from datetime import datetime, timedelta, date, timezone
+from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc
 from flask_babel import Babel, _, format_datetime
@@ -37,8 +37,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -88,6 +88,60 @@ def verificar_bonus_semana():
             ofensiva.dias_semana = [False]*7
 
         db.session.commit()  # um único commit para todos
+
+def checar_ofensivas():
+    """
+    Checa todas as ofensivas dos usuários na virada do dia.
+    - Se já marcou atividade no dia atual -> não faz nada.
+    - Se ontem teve atividade (dia_anterior=True) -> mantém sequência.
+    - Se ontem não teve atividade -> zera sequência.
+    - Atualiza dia_hoje/dia_anterior.
+    """
+    with app.app_context():
+        hoje = date.today()
+        ontem = hoje - timedelta(days=1)
+
+        ofensivas = Ofensiva.query.all()
+
+        for ofensiva in ofensivas:
+            # Se já registrou atividade hoje, não mexe
+            if ofensiva.data_ultima_atividade == hoje:
+                # Move "dia_hoje" para "dia_anterior"
+                ofensiva.dia_anterior = ofensiva.dia_hoje
+                ofensiva.dia_hoje = False
+                continue
+
+                
+            # Move "dia_hoje" para "dia_anterior"
+            ofensiva.dia_anterior = ofensiva.dia_hoje
+            ofensiva.dia_hoje = False
+
+            # Se ontem teve atividade, mantém a sequência
+            if ofensiva.data_ultima_atividade == ontem and ofensiva.dia_anterior:
+                ofensiva.sequencia_atual += 1
+            else:
+                ofensiva.sequencia_atual = 0
+
+            # Atualiza recorde
+            if ofensiva.sequencia_atual > ofensiva.recorde:
+                ofensiva.recorde = ofensiva.sequencia_atual
+
+            # Atualiza a data da última checagem
+            ofensiva.data_ultima_atividade = hoje
+
+            if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
+                desbloquear_conquista(ofensiva.id_usuario, "Primeira Ofensiva")
+            if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
+                desbloquear_conquista(ofensiva.id_usuario, "Semana de Fogo")
+            if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
+                desbloquear_conquista(ofensiva.id_usuario, "Persistente")
+            if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
+                desbloquear_conquista(ofensiva.id_usuario, "Imparável")
+            if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
+                desbloquear_conquista(ofensiva.id_usuario, "Lenda da Consistência")
+
+        db.session.commit()
+    
 # Babel
 babel = Babel()
 def select_locale():
@@ -114,7 +168,17 @@ def distribuir_recompensas(usuarios):
 
            # Campeão (só o primeiro de cada bloco)
             if i == 0:
-                desbloquear_conquista(usuario.id, "Vencedor") 
+                usuario.vitorias += 1
+                usuario.vitorias_consecutivas += 1
+                desbloquear_conquista(usuario.id, "Vencedor")
+                if usuario.vitorias >= 10:
+                    desbloquear_conquista(usuario.id, "Veterano")
+                if usuario.vitorias >= 100:
+                    desbloquear_conquista(usuario.id, "Campeão")
+                if usuario.vitorias_consecutivas >= 30:
+                    desbloquear_conquista(usuario.id, "Campeão Invicto")
+            else:
+                usuario.vitorias_consecutivas = 0
 
 def processar_premiacoes():
     with app.app_context():
@@ -148,6 +212,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
+scheduler.add_job(checar_ofensivas, 'cron', hour=23, minute=59)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -211,10 +276,10 @@ def api_idioma():
 def ajuda():
     return render_template("ajuda.html")
 
-@app.route("/modulo_<int:id_modulo>/tarefa_<int:id_tarefa>")
+@app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
-def licoes(id_tarefa, id_modulo):
-    tarefa = Tarefa.query.filter_by(id_modulo=id_modulo, id_tarefa=id_tarefa).first()
+def licoes(numero_tarefa, id_modulo):
+    tarefa = Tarefa.query.filter_by(id_modulo=id_modulo, numero_tarefa=numero_tarefa).first()
     blocos = []
 
     for c in tarefa.conteudos:
@@ -238,7 +303,7 @@ def licoes(id_tarefa, id_modulo):
                 "alternativas": alternativas
             })
 
-    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, id_tarefa=tarefa.id_tarefa)
+    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, numero_tarefa=tarefa.numero_tarefa)
 
 # 🆕 Página de Cadastro
 @app.route("/cadastro")
@@ -261,7 +326,7 @@ def ranking_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -323,7 +388,7 @@ def starting_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -350,6 +415,8 @@ def starting_page():
             .limit(5)
             .all()
         )
+        
+    ofensiva = get_or_create_ofensiva(current_user.id)
 
     ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
     
@@ -366,11 +433,16 @@ def starting_page():
         tarefas_totais = len(tarefas)
 
         # Tarefas concluídas pelo usuário
-        tarefas_feitas = (TarefaUsuario.query
-            .filter(TarefaUsuario.id_usuario == current_user.id,
-                    TarefaUsuario.id_tarefa.in_([t.id_tarefa for t in tarefas]),
-                    TarefaUsuario.concluida == True)
-            .count())
+        tarefas_feitas = (
+            db.session.query(TarefaUsuario)
+            .join(Tarefa, (TarefaUsuario.id_modulo == Tarefa.id_modulo) & (TarefaUsuario.numero_tarefa == Tarefa.numero_tarefa))
+            .filter(
+                TarefaUsuario.id_usuario == current_user.id,
+                TarefaUsuario.id_modulo == modulo.id,
+                TarefaUsuario.status == "concluida"
+            )
+            .count()
+        )
 
         # Verifica se o módulo foi concluído
         concluido = tarefas_totais > 0 and tarefas_feitas == tarefas_totais
@@ -385,8 +457,8 @@ def starting_page():
         # Adiciona ao progresso
         modulos_progresso.append({
             "id": modulo.id,
-            "nome": modulo.nome,
-            "descricao": modulo.descricao,
+            "nome": modulo.chave_nome,
+            "descricao": modulo.chave_descricao,
             "tarefas_feitas": tarefas_feitas,
             "tarefas_totais": tarefas_totais,
             "progresso": (tarefas_feitas / tarefas_totais * 100) if tarefas_totais > 0 else 0,
@@ -395,7 +467,6 @@ def starting_page():
         })
 
         
-    ofensiva = get_or_create_ofensiva(current_user.id)
     
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
@@ -454,7 +525,7 @@ def perfil_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -518,7 +589,7 @@ def ver_modulo(id_modulo):
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -648,7 +719,7 @@ def quiz_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -724,7 +795,7 @@ def store_page():
 
     if not bloco_usuario:
         flash("Você ainda não está em um bloco esta semana.", "error")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("login_page"))
 
     ranking = (Usuario.query
         .join(UsuarioBloco)
@@ -944,25 +1015,6 @@ def efetuar_login():
                 db.session.add(conf)
                 db.session.commit()
 
-        # manter lógica da ofensiva
-        ofensiva = get_or_create_ofensiva(current_user.id)
-        if not ofensiva:
-            return
-
-        dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
-
-        
-        if not ofensiva.dias_semana[dia_semana]:
-            ofensiva.data_ultima_atividade = datetime.now()
-            ofensiva.sequencia_atual += 1
-            if not ofensiva.dias_semana[dia_semana-1]:
-                ofensiva.recorde = ofensiva.sequencia_atual
-                ofensiva.sequencia_atual = 0
-            else:
-                ofensiva.sequencia_atual += 1
-                if ofensiva.sequencia_atual > ofensiva.recorde:
-                    ofensiva.recorde = ofensiva.sequencia_atual
-
         semana_atual = inicio_semana()
         if not usuario.entrada:
             usuario.entrada = datetime.now()
@@ -1082,7 +1134,9 @@ def get_or_create_ofensiva(id_usuario):
             dias_semana=[False]*7,
             recorde=0,
             sequencia_atual=0,
-            data_ultima_atividade=diahoje
+            data_ultima_atividade=diahoje,
+            dia_hoje=False,
+            dia_anterior=False
         )
         db.session.add(ofensiva)
         db.session.commit()
@@ -1121,24 +1175,29 @@ def inicio_semana():
     # Ajustar para segunda-feira
     return hoje - timedelta(days=hoje.weekday())
 
-@app.route("/concluir_tarefa/<int:id_tarefa>", methods=["POST"])
+@app.route("/concluir_tarefa/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>", methods=["POST"])
 @login_required
-def concluir_tarefa(id_tarefa):
-       # buscar a tarefa
-    tarefa = Tarefa.query.get_or_404(id_tarefa)
+def concluir_tarefa(id_modulo, numero_tarefa):
+    # buscar a tarefa com chave composta
+    tarefa = Tarefa.query.filter_by(
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
+    ).first_or_404()
 
     # pontuação base da tarefa
     pontuacao_base = tarefa.pontos if hasattr(tarefa, "pontos") else 10  
 
     # verificar se já existe um registro para esse usuário e tarefa
-    registro = TarefaUsuario.query.filter_by(
-        id_usuario=current_user.id, id_tarefa=id_tarefa
+    registro = TarefaUsuario.query.filter_by(   
+        id_usuario=current_user.id,
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
     ).first()
 
     if registro:
         # já existe → incrementar repetição
         registro.repeticao += 1
-        registro.concluida = True
+        registro.status = "concluida"
 
         # aplicar lógica do desconto
         descontador = min(math.ceil(registro.repeticao / 2), 5)
@@ -1147,8 +1206,9 @@ def concluir_tarefa(id_tarefa):
         # primeira vez concluindo
         registro = TarefaUsuario(
             id_usuario=current_user.id,
-            id_tarefa=id_tarefa,
-            concluida=True,
+            id_modulo=id_modulo,
+            numero_tarefa=numero_tarefa,
+            status="concluida",
             pontuacao=pontuacao_base,
             repeticao=1
         )
@@ -1159,25 +1219,59 @@ def concluir_tarefa(id_tarefa):
     current_user.pontos_semanais += registro.pontuacao
     current_user.moedas += registro.pontuacao/2 
 
+    if current_user.pontos >= 100:
+        desbloquear_conquista(current_user.id, "Em crescimento")
+    if current_user.pontos >= 1000:
+        desbloquear_conquista(current_user.id, "Experiente")
+    if current_user.pontos >= 10000:
+        desbloquear_conquista(current_user.id, "O Guru")
+    if current_user.pontos >= 999999:
+        desbloquear_conquista(current_user.id, "Aurum Master")
+
     # manter lógica da ofensiva
     ofensiva = get_or_create_ofensiva(current_user.id)
-    if not ofensiva:
-        return
+    if ofensiva:
+        dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
+
+        if not ofensiva.dia_hoje:
+            ofensiva.data_ultima_atividade = datetime.now()
+            if not ofensiva.dia_anterior:
+                if ofensiva.sequencia_atual > ofensiva.recorde:
+                    ofensiva.recorde = ofensiva.sequencia_atual
+                ofensiva.sequencia_atual = 1
+            else:
+                ofensiva.sequencia_atual += 1
+                if ofensiva.sequencia_atual > ofensiva.recorde:
+                    ofensiva.recorde = ofensiva.sequencia_atual
 
     dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
 
-    if not ofensiva.dias_semana[dia_semana]:
+    if not ofensiva.dia_hoje:
         ofensiva.data_ultima_atividade = datetime.now()
-        ofensiva.sequencia_atual += 1
-        if not ofensiva.dias_semana[dia_semana-1]:
-            ofensiva.recorde = ofensiva.sequencia_atual
-            ofensiva.sequencia_atual = 0
+        if not ofensiva.dia_anterior:
+            if ofensiva.sequencia_atual > ofensiva.recorde:
+                ofensiva.recorde = ofensiva.sequencia_atual
+            ofensiva.sequencia_atual = 1
         else:
             ofensiva.sequencia_atual += 1
             if ofensiva.sequencia_atual > ofensiva.recorde:
                 ofensiva.recorde = ofensiva.sequencia_atual
 
+    
+    if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
+        desbloquear_conquista(current_user.id, "Primeira Ofensiva")
+    if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
+        desbloquear_conquista(current_user.id, "Semana de Fogo")
+    if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
+        desbloquear_conquista(current_user.id, "Persistente")
+    if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
+        desbloquear_conquista(current_user.id, "Imparável")
+    if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
+        desbloquear_conquista(current_user.id, "Lenda da Consistência")
+
+
     ofensiva.dias_semana[dia_semana] = True
+    ofensiva.dia_hoje = True
     db.session.commit()
 
     return jsonify({
@@ -1185,6 +1279,28 @@ def concluir_tarefa(id_tarefa):
         "pontuacao": registro.pontuacao,
         "repeticao": registro.repeticao
         })
+
+@app.route("/licao_falha/<int:numero_tarefa>/<int:id_modulo>")
+@login_required
+def licao_falha(numero_tarefa, id_modulo):
+    # Busca tarefa só pra exibir nome/título se quiser
+    tarefa = Tarefa.query.filter_by(
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
+    ).first_or_404()
+
+    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo)
+
+@app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
+@login_required
+def licao_sucesso(numero_tarefa, id_modulo):
+    tarefa = Tarefa.query.filter_by(
+        id_modulo=id_modulo,
+        numero_tarefa=numero_tarefa
+    ).first_or_404()
+
+    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo)
+
 
 reset_codes = {}
 

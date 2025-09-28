@@ -14,3 +14,4 @@ apscheduler>=3.11.0
 flask-mail>=0.10.0
 Babel>=2.17.0
 flask_babel>=4.0.0
+cryptography>=45.0.7
