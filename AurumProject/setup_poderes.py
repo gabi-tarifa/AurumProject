@@ -5,7 +5,7 @@ def criar_poderes():
         poderes_existentes = {c.nome for c in Poderes.query.all()}
 
         poderes_novos = [
-            {"nome":"Segunda Chance","descricao":"Mantenha a sua ofensiva sem medo de errar!","preco":200,"imagem":"imgpoderes/broken-heart.png"}
+            {"nome":"segunda_chance_nome","descricao":"segunda_chance_desc","preco":200,"imagem":"imgpoderes/broken-heart.png"}
         ]
 
         for poder in poderes_novos:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 20:30-0300\n"
+"POT-Creation-Date: 2025-09-29 19:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app.py:299
+#: app.py:133
+msgid "Primeira Ofensiva"
+msgstr ""
+
+#: app.py:135
+msgid "Semana de Fogo"
+msgstr ""
+
+#: app.py:137
+msgid "Persistente"
+msgstr ""
+
+#: app.py:139
+msgid "Imparável"
+msgstr ""
+
+#: app.py:141
+msgid "Lenda da Consistência"
+msgstr ""
+
+#: app.py:267
 msgid "Idioma inválido."
 msgstr ""
 
-#: app.py:303
+#: app.py:271
 #, python-format
 msgid "Idioma atualizado para %(lang)s."
 msgstr ""
@@ -262,14 +282,6 @@ msgstr ""
 msgid "Avançar"
 msgstr ""
 
-#: templates/licoes.html:157
-msgid "Aula concluída!"
-msgstr ""
-
-#: templates/licoes.html:161
-msgid "Erro ao concluir a aula."
-msgstr ""
-
 #: templates/login.html:15
 msgid "E-mail ou nome de usuário"
 msgstr ""
@@ -311,6 +323,18 @@ msgstr ""
 
 #: templates/modulo.html:62
 msgid "Módulo"
+msgstr ""
+
+#: templates/modulo.html:127 templates/ranking.html:127
+msgid "Registro Semanal"
+msgstr ""
+
+#: templates/modulo.html:143 templates/ranking.html:143
+msgid "Recompensa: 50"
+msgstr ""
+
+#: templates/modulo.html:147
+msgid "Semana concluída! Você receberá sua recompensa."
 msgstr ""
 
 #: templates/perfil.html:69
@@ -379,6 +403,10 @@ msgstr ""
 msgid "Começar"
 msgstr ""
 
+#: templates/quizes.html:62
+msgid "Concluído"
+msgstr ""
+
 #: templates/quizes.html:74
 msgid "Encerre o quiz 2 para prosseguir"
 msgstr ""
@@ -391,12 +419,16 @@ msgstr ""
 msgid "RANKING SEMANAL"
 msgstr ""
 
-#: templates/ranking.html:127
-msgid "Registro Semanal"
+#: templates/ranking.html:65
+msgid "Apelido"
 msgstr ""
 
-#: templates/ranking.html:143
-msgid "Recompensa: 50"
+#: templates/ranking.html:65
+msgid "Pontos"
+msgstr ""
+
+#: templates/ranking.html:65
+msgid "Recompensas"
 msgstr ""
 
 #: templates/ranking.html:151
