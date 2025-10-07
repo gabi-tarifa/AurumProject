@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 20:30-0300\n"
+"POT-Creation-Date: 2025-09-29 19:23-0300\n"
 "PO-Revision-Date: 2025-09-27 20:30-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,11 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app.py:112
+#: app.py:133
+msgid "Primeira Ofensiva"
+msgstr "First Offensive"
+
+#: app.py:135
+msgid "Semana de Fogo"
+msgstr "Week of Fire"
+
+#: app.py:137
+msgid "Persistente"
+msgstr "Persistent"
+
+#: app.py:139
+msgid "Imparável"
+msgstr "Unstoppable"
+
+#: app.py:141
+msgid "Lenda da Consistência"
+msgstr "Legend of Consistency"
+
+#: app.py:267
 msgid "Idioma inválido."
 msgstr "Invalid language."
 
-#: app.py:116
+#: app.py:271
 #, python-format
 msgid "Idioma atualizado para %(lang)s."
 msgstr "Language updated to %(lang)s."
@@ -81,25 +101,42 @@ msgstr "completed"
 msgid "Revisar"
 msgstr "Review"
 
-#: templates/a.html:83 templates/ranking.html:114
+#: templates/a.html:83 templates/ranking.html:157
 msgid "Continuar"
 msgstr "Continue"
 
-#: templates/a.html:102 templates/loja.html:99 templates/modulo.html:99
-#: templates/perfil.html:95 templates/quizes.html:97 templates/ranking.html:101
+
+#: templates/a.html:106 templates/loja.html:103 templates/modulo.html:103
+#: templates/perfil.html:99 templates/quizes.html:101
+#: templates/ranking.html:109
 msgid "Dias consecutivos"
 msgstr "Consecutive days"
 
-#: templates/a.html:107 templates/loja.html:104 templates/modulo.html:104
-#: templates/perfil.html:100 templates/quizes.html:102
-#: templates/ranking.html:106
+#: templates/a.html:116 templates/loja.html:113 templates/modulo.html:113
+#: templates/perfil.html:109 templates/quizes.html:111
+#: templates/ranking.html:119
+msgid "Recorde"
+msgstr "Record"
+
+#: templates/a.html:121 templates/loja.html:118 templates/modulo.html:118
+#: templates/perfil.html:114 templates/quizes.html:116
+#: templates/ranking.html:124
 msgid "Total de Aurum Points"
 msgstr "Total Aurum Points"
 
-#: templates/a.html:112 templates/loja.html:109 templates/modulo.html:109
-#: templates/perfil.html:105 templates/quizes.html:107
+#: templates/a.html:126 templates/loja.html:123 templates/modulo.html:123
+#: templates/perfil.html:119 templates/quizes.html:121
 msgid "Posição no Ranking"
 msgstr "Ranking Position"
+
+#: templates/ajuda.html:13 templates/licoes.html:90
+msgid "Voltar"
+msgstr "Back"
+
+#: templates/ajuda.html:20 templates/loja.html:53 templates/modulo.html:54
+#: templates/perfil.html:52 templates/quizes.html:53 templates/ranking.html:55
+msgid "Ajuda"
+msgstr "Help"
 
 #: templates/cadastro.html:14 templates/cadastro.html:20
 msgid "Criar conta"
@@ -119,70 +156,113 @@ msgstr "By registering, you agree to our Terms and Privacy Policy."
 msgid "← Voltar ao início"
 msgstr "← Back to start"
 
-#: templates/configuracoes.html:14
+#: templates/configuracoes.html:13
 msgid " Voltar"
 msgstr "Back"
 
-#: templates/configuracoes.html:15 templates/loja.html:54
+#: templates/configuracoes.html:20 templates/loja.html:54
 #: templates/modulo.html:55 templates/perfil.html:53 templates/quizes.html:54
 #: templates/ranking.html:56
 msgid "Configurações"
 msgstr "Settings"
 
-#: templates/configuracoes.html:21
+#: templates/configuracoes.html:26
 msgid "Preferências"
 msgstr "Preferences"
 
-#: templates/configuracoes.html:23
+#: templates/configuracoes.html:28
 msgid "Sons"
 msgstr "Sounds"
 
-#: templates/configuracoes.html:27
+#: templates/configuracoes.html:32
 msgid "Música de fundo"
 msgstr "Background music"
 
-#: templates/configuracoes.html:31
-msgid "Notificações"
-msgstr "Notifications"
-
-#: templates/configuracoes.html:35
+#: templates/configuracoes.html:36
 msgid "Idioma"
 msgstr "Language"
 
-#: templates/configuracoes.html:50
+#: templates/configuracoes.html:51
 msgid "Conta"
 msgstr "Account"
 
-#: templates/configuracoes.html:52
+#: templates/configuracoes.html:54 templates/configuracoes.html:59
 msgid "Alterar Apelido"
 msgstr "Change Nickname"
 
-#: templates/configuracoes.html:53 templates/configuracoes.html:57
-#: templates/configuracoes.html:61
+#: templates/configuracoes.html:55 templates/configuracoes.html:72
+#: templates/configuracoes.html:89
 msgid "Editar"
 msgstr "Edit"
 
-#: templates/configuracoes.html:56
-msgid "Alterar Foto de Perfil"
-msgstr "Change Profile Picture"
+#: templates/configuracoes.html:60 templates/perfil.html:176
+msgid "Novo Apelido:"
+msgstr "New Nickname:"
 
-#: templates/configuracoes.html:60
+#: templates/configuracoes.html:61
+#, fuzzy
+msgid "Digite o novo apelido"
+msgstr "New Nickname:"
+
+#: templates/configuracoes.html:64 templates/configuracoes.html:81
+#: templates/configuracoes.html:106 templates/perfil.html:188
+msgid "Salvar"
+msgstr "Save"
+
+#: templates/configuracoes.html:65 templates/configuracoes.html:82
+#: templates/configuracoes.html:107 templates/perfil.html:189
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: templates/configuracoes.html:71
+#, fuzzy
+msgid "Alterar Email Cadastrado"
+msgstr "Change Nickname"
+
+#: templates/configuracoes.html:76
+#, fuzzy
+msgid "Alterar Email"
+msgstr "Change Password"
+
+#: templates/configuracoes.html:77
+#, fuzzy
+msgid "Novo Email:"
+msgstr "New Nickname:"
+
+#: templates/configuracoes.html:78
+msgid "Digite o novo email"
+msgstr "Enter new email"
+
+#: templates/configuracoes.html:88 templates/configuracoes.html:93
 msgid "Alterar Senha"
 msgstr "Change Password"
 
-#: templates/configuracoes.html:66
+#: templates/configuracoes.html:94
+msgid "Senha Atual:"
+msgstr "Current Password"
+
+#: templates/configuracoes.html:97
+#, fuzzy
+msgid "Nova Senha:"
+msgstr "Password"
+
+#: templates/configuracoes.html:100
+msgid "Confirmar Nova Senha:"
+msgstr "Confirm New Password"
+
+#: templates/configuracoes.html:114
 msgid "Aplicativo"
 msgstr "App"
 
-#: templates/configuracoes.html:68
+#: templates/configuracoes.html:116
 msgid "Versão do App"
 msgstr "App Version"
 
-#: templates/configuracoes.html:72
+#: templates/configuracoes.html:120
 msgid "Redefinir configurações"
 msgstr "Reset Settings"
 
-#: templates/configuracoes.html:73
+#: templates/configuracoes.html:121
 msgid "Resetar"
 msgstr "Reset"
 
@@ -190,7 +270,9 @@ msgstr "Reset"
 msgid ""
 "Antes de começarmos com o pé direito precisamos que você responda algumas"
 " perguntas para entendermos seu nível de conhecimento sobre finanças"
-msgstr "Before we start on the right foot, we need you to answer a few questions to understand your financial knowledge level."
+msgstr ""
+"Before we start on the right foot, we need you to answer a few questions "
+"to understand your financial knowledge level."
 
 #: templates/introducao.html:153
 msgid "VAMOS NESSA!"
@@ -200,21 +282,9 @@ msgstr "LET'S GO!"
 msgid "Pular"
 msgstr "Skip"
 
-#: templates/licoes.html:90
-msgid "Voltar"
-msgstr "Back"
-
 #: templates/licoes.html:91
 msgid "Avançar"
 msgstr "Next"
-
-#: templates/licoes.html:157
-msgid "Aula concluída!"
-msgstr "Lesson completed!"
-
-#: templates/licoes.html:161
-msgid "Erro ao concluir a aula."
-msgstr "Error completing the lesson."
 
 #: templates/login.html:15
 msgid "E-mail ou nome de usuário"
@@ -233,11 +303,6 @@ msgid ""
 "Ao entrar na Aurum, você concorda com os nossos Termos e Política de "
 "Privacidade."
 msgstr "By logging into Aurum, you agree to our Terms and Privacy Policy."
-
-#: templates/loja.html:53 templates/modulo.html:54 templates/perfil.html:52
-#: templates/quizes.html:53 templates/ranking.html:55
-msgid "Ajuda"
-msgstr "Help"
 
 #: templates/loja.html:55 templates/modulo.html:56 templates/perfil.html:54
 #: templates/quizes.html:55 templates/ranking.html:57
@@ -264,11 +329,21 @@ msgstr "Aurum Points"
 msgid "Módulo"
 msgstr "Module"
 
-#: templates/perfil.html:69
-msgid "Entrou na Aurum em Novembro de 2024"
-msgstr "Joined Aurum in November 2024"
+#: templates/modulo.html:127 templates/ranking.html:127
+msgid "Registro Semanal"
+msgstr "Weekly Record"
 
-#: templates/perfil.html:69 templates/perfil.html:136
+#: templates/modulo.html:143 templates/ranking.html:143
+msgid "Recompensa: 50"
+msgstr "Reward: 50"
+
+#: templates/modulo.html:147
+msgid "Semana concluída! Você receberá sua recompensa."
+msgstr "Complet"
+
+
+
+#: templates/perfil.html:69 templates/perfil.html:174
 msgid "Editar Perfil"
 msgstr "Edit Profile"
 
@@ -280,41 +355,25 @@ msgstr "Achievements"
 msgid "Nenhuma conquista desbloqueada ainda."
 msgstr "No achievements unlocked yet."
 
-#: templates/perfil.html:138
-msgid "Novo Apelido:"
-msgstr "New Nickname:"
-
-#: templates/perfil.html:141
+#: templates/perfil.html:179
 msgid "Nova Foto de Perfil:"
 msgstr "New Profile Picture:"
 
-#: templates/perfil.html:143
+#: templates/perfil.html:181
 msgid ""
 "Obs: a resolução dessa imagem deve ser de 1x1 ou a imagem ficará "
 "desproporcional ao seu gosto"
 msgstr "Note: this image must be 1x1 resolution or it will look distorted."
 
-#: templates/perfil.html:145
+#: templates/perfil.html:183
 msgid "Nova Foto de Fundo:"
 msgstr "New Background Picture:"
 
-#: templates/perfil.html:147
+#: templates/perfil.html:185
 msgid ""
 "Obs: a resolução dessa imagem deve ser de 300X645 ou a imagem ficará "
 "desproporcional ao seu gosto"
 msgstr "Note: this image must be 300x645 resolution or it will look distorted."
-
-#: templates/perfil.html:150
-msgid "Salvar"
-msgstr "Save"
-
-#: templates/perfil.html:151
-msgid "Cancelar"
-msgstr "Cancel"
-
-#: templates/perguntasEntrada.html:24
-msgid "Teste sobre Conhecimento Financeiro"
-msgstr "Financial Knowledge Test"
 
 #: templates/preentrada.html:88
 msgid "MUITO OBRIGADO POR RESPONDER."
@@ -324,7 +383,9 @@ msgstr "THANK YOU VERY MUCH FOR ANSWERING."
 msgid ""
 "Vimos que você é iniciante nesta área de finanças, mas sem problemas! "
 "Estamos aqui para te ajudar."
-msgstr "We see that you are a beginner in finance, but no worries! We are here to help you."
+msgstr ""
+"We see that you are a beginner in finance, but no worries! We are here to"
+" help you."
 
 #: templates/preentrada.html:90
 msgid "VOCÊ IRÁ COMEÇAR NO:"
@@ -346,6 +407,10 @@ msgstr "Module 1"
 msgid "Começar"
 msgstr "Start"
 
+#: templates/quizes.html:62
+msgid "Concluído"
+msgstr "Completed"
+
 #: templates/quizes.html:74
 msgid "Encerre o quiz 2 para prosseguir"
 msgstr "Finish quiz 2 to continue"
@@ -358,11 +423,23 @@ msgstr "Finish quiz 3 to continue"
 msgid "RANKING SEMANAL"
 msgstr "WEEKLY RANKING"
 
-#: templates/ranking.html:108
+#: templates/ranking.html:65
+msgid "Apelido"
+msgstr "Nickname"
+
+#: templates/ranking.html:65
+msgid "Pontos"
+msgstr "Points"
+
+#: templates/ranking.html:65
+msgid "Recompensas"
+msgstr "Rewards"
+
+#: templates/ranking.html:151
 msgid "Treinar agora"
 msgstr "Train now"
 
-#: templates/ranking.html:110
+#: templates/ranking.html:153
 msgid "Módulo 2"
 msgstr "Module 2"
 
@@ -373,8 +450,539 @@ msgstr "Introduction to Monetary World"
 msgid "modulo_intro_desc"
 msgstr "Learn the basic concepts about money and its importance."
 
-msgid "modulo_juros_nome"
-msgstr ""
 
-msgid "modulo_juros_desc"
-msgstr ""
+msgid "Dia consecutivo"
+msgid_plural "Dias consecutivos"
+msgstr[0] "Consecutive day"
+msgstr[1] "Consecutive days"
+
+
+msgid "Registro Semanal"
+msgstr "Weekly Record"
+
+msgid "Apelido"
+msgstr "Nickname"
+
+msgid "Pontos"
+msgstr "Points"
+
+msgid "Recompensas"
+msgstr "Rewards"
+
+msgid "Entrou na Aurum em"
+msgstr "Joined Aurum in" 
+
+# Conquistas
+msgid "conquista_primeiro_acesso_nome"
+msgstr "First Access"
+
+msgid "conquista_primeiro_acesso_desc"
+msgstr "You accessed the system for the first time!"
+
+msgid "conquista_customizou_perfil_nome"
+msgstr "I Am Myself"
+
+msgid "conquista_customizou_perfil_desc"
+msgstr "You customized your profile."
+
+msgid "conquista_quiz_pensador_nome"
+msgstr "Quiz Thinker"
+
+msgid "conquista_quiz_pensador_desc"
+msgstr "Completed a quiz without making a mistake."
+
+msgid "conquista_og_nome"
+msgstr "I AM a OG"
+
+msgid "conquista_og_desc"
+msgstr "One of the first users of the platform."
+
+msgid "conquista_vencedor_nome"
+msgstr "Winner"
+
+msgid "conquista_vencedor_desc"
+msgstr "Won a match."
+
+msgid "conquista_veterano_nome"
+msgstr "Veteran"
+
+msgid "conquista_veterano_desc"
+msgstr "Played for 1 year."
+
+msgid "conquista_campeao_nome"
+msgstr "Champion"
+
+msgid "conquista_campeao_desc"
+msgstr "Reached the highest score in a season."
+
+msgid "conquista_invicto_nome"
+msgstr "Undefeated"
+
+msgid "conquista_invicto_desc"
+msgstr "Won 10 matches in a row."
+
+msgid "conquista_quizzer_nome"
+msgstr "Quizzer"
+
+msgid "conquista_quizzer_desc"
+msgstr "Played 50 quizzes."
+
+msgid "conquista_quizzeiro_nome"
+msgstr "Quiz Addict"
+
+msgid "conquista_quizzeiro_desc"
+msgstr "Played 200 quizzes."
+
+msgid "conquista_maluco_quiz_nome"
+msgstr "Quiz Maniac"
+
+msgid "conquista_maluco_quiz_desc"
+msgstr "Played 500 quizzes."
+
+msgid "conquista_fanatico_quiz_nome"
+msgstr "Quiz Fanatic"
+
+msgid "conquista_fanatico_quiz_desc"
+msgstr "Played 1000 quizzes."
+
+msgid "conquista_em_crescimento_nome"
+msgstr "Growing"
+
+msgid "conquista_em_crescimento_desc"
+msgstr "Reached level 10."
+
+msgid "conquista_experiente_nome"
+msgstr "Experienced"
+
+msgid "conquista_experiente_desc"
+msgstr "Reached level 50."
+
+msgid "conquista_guru_nome"
+msgstr "Guru"
+
+msgid "conquista_guru_desc"
+msgstr "Reached level 100."
+
+msgid "conquista_aurum_master_nome"
+msgstr "Aurum Master"
+
+msgid "conquista_aurum_master_desc"
+msgstr "Top 1 on the ranking."
+
+msgid "conquista_primeira_ofensiva_nome"
+msgstr "First Offensive"
+
+msgid "conquista_primeira_ofensiva_desc"
+msgstr "Started your first streak."
+
+msgid "conquista_semana_fogo_nome"
+msgstr "Week of Fire"
+
+msgid "conquista_semana_fogo_desc"
+msgstr "Maintained a 7-day streak."
+
+msgid "conquista_persistente_nome"
+msgstr "Persistent"
+
+msgid "conquista_persistente_desc"
+msgstr "Maintained a 30-day streak."
+
+msgid "conquista_imparavel_nome"
+msgstr "Unstoppable"
+
+msgid "conquista_imparavel_desc"
+msgstr "Maintained a 180-day streak."
+
+msgid "conquista_lenda_constancia_nome"
+msgstr "Consistency Legend"
+
+msgid "conquista_lenda_constancia_desc"
+msgstr "Maintained a 365-day streak."
+
+msgid "conquista_farinha_nome"
+msgstr "Flour from the same pack"
+
+msgid "conquista_farinha_desc"
+msgstr "Studied in the same Dev´s class and assisted him during its development ."
+
+# MINI-LESSON 1 — Income and Expense
+msgid "lesson1_text"
+msgstr "<h3>Income and Expense</h3><p><strong>Income</strong> is all the money that comes into your pocket (salary, allowance, bonus, product sales).</p><p><strong>Expense</strong> is all the money that goes out (fixed bills, leisure, shopping, transportation).</p><p><em>Tip:</em> Think of inflow and outflow. If the money comes in → income. If it goes out → expense.</p><p><strong>Example:</strong> You receive R$ 2,000 (income). You pay R$ 800 for rent, R$ 200 for electricity, and R$ 200 for transportation (expenses). You have R$ 800 left to save or spend on leisure.</p>"
+
+msgid "lesson1_q1"
+msgstr "What best defines income?"
+
+msgid "lesson1_q1_a1"
+msgstr "Amount spent on fixed bills"
+msgid "lesson1_q1_a2"
+msgstr "Money coming into the budget"
+msgid "lesson1_q1_a3"
+msgstr "Debt taken with the bank"
+msgid "lesson1_q1_a4"
+msgstr "Reduction of expenses in the month"
+
+msgid "lesson1_q2"
+msgstr "Which situation represents an expense?"
+
+msgid "lesson1_q2_a1"
+msgstr "Receiving sales commission"
+msgid "lesson1_q2_a2"
+msgstr "Paying a gym membership"
+msgid "lesson1_q2_a3"
+msgstr "Selling a used item"
+msgid "lesson1_q2_a4"
+msgstr "Saving money in a savings account"
+
+msgid "lesson1_q3"
+msgstr "When paying rent, what happens in the budget?"
+
+msgid "lesson1_q3_a1"
+msgstr "Income increases"
+msgid "lesson1_q3_a2"
+msgstr "A new debt arises"
+msgid "lesson1_q3_a3"
+msgstr "There is an outflow of money"
+msgid "lesson1_q3_a4"
+msgstr "The total balance does not change"
+
+msgid "lesson1_q4"
+msgstr "A person earns R$ 2,000 and spends R$ 1,800. Their final balance is:"
+
+msgid "lesson1_q4_a1"
+msgstr "Surplus of R$ 1,800"
+msgid "lesson1_q4_a2"
+msgstr "Deficit of R$ 200"
+msgid "lesson1_q4_a3"
+msgstr "Remaining R$ 200"
+msgid "lesson1_q4_a4"
+msgstr "No change in the budget"
+
+msgid "lesson1_q5"
+msgstr "Which option is an example of extra income?"
+
+msgid "lesson1_q5_a1"
+msgstr "Overdue electricity bill"
+msgid "lesson1_q5_a2"
+msgstr "Unexpected salary bonus"
+msgid "lesson1_q5_a3"
+msgstr "Installment purchase of an appliance"
+msgid "lesson1_q5_a4"
+msgstr "Credit card payment"
+
+
+# MINI-LESSON 2 — How to Record Expenses
+msgid "lesson2_text"
+msgstr "<h3>How to Record Expenses</h3><p>Recording expenses is like taking a snapshot of your finances. Without this control, you don’t know where your money goes.</p><p>This can be done on paper, in a spreadsheet, or using a free app.</p><p>It is important to record both income and expenses, even the small ones.</p><table><tr><th>Date</th><th>Description</th><th>Type</th><th>Amount</th></tr><tr><td>08/05</td><td>Electricity bill</td><td>Expense</td><td>$120</td></tr><tr><td>08/07</td><td>Salary</td><td>Income</td><td>$1500</td></tr><tr><td>08/09</td><td>Cinema</td><td>Expense</td><td>$40</td></tr></table>"
+
+msgid "lesson2_q1"
+msgstr "What is the main reason for recording expenses?"
+
+msgid "lesson2_q1_a1"
+msgstr "To find out where the money is going"
+msgid "lesson2_q1_a2"
+msgstr "To guarantee an automatic increase in income"
+msgid "lesson2_q1_a3"
+msgstr "To reduce the value of fixed expenses"
+msgid "lesson2_q1_a4"
+msgstr "To avoid having to pay taxes"
+
+msgid "lesson2_q2"
+msgstr "Where can expenses be recorded efficiently?"
+
+msgid "lesson2_q2_a1"
+msgstr "Only in paid apps"
+msgid "lesson2_q2_a2"
+msgstr "On paper, in a spreadsheet, or in free apps"
+msgid "lesson2_q2_a3"
+msgstr "Only in bank statements"
+msgid "lesson2_q2_a4"
+msgstr "By keeping everything in memory"
+
+msgid "lesson2_q3"
+msgstr "What risk arises from not recording your expenses?"
+
+msgid "lesson2_q3_a1"
+msgstr "Automatically increasing income"
+msgid "lesson2_q3_a2"
+msgstr "Always having a positive balance"
+msgid "lesson2_q3_a3"
+msgstr "Forgetting financial commitments"
+msgid "lesson2_q3_a4"
+msgstr "Reducing the number of expenses"
+
+msgid "lesson2_q4"
+msgstr "One clear advantage of writing down expenses is:"
+
+msgid "lesson2_q4_a1"
+msgstr "Knowing if the money is going to needs or wants"
+msgid "lesson2_q4_a2"
+msgstr "Making it easier to get bank credit approved"
+msgid "lesson2_q4_a3"
+msgstr "Avoiding receiving salary in cash"
+msgid "lesson2_q4_a4"
+msgstr "Artificially increasing monthly income"
+
+msgid "lesson2_q5"
+msgstr "If someone spends $50 on leisure and doesn’t record it, what may happen?"
+
+msgid "lesson2_q5_a1"
+msgstr "The amount is turned into income"
+msgid "lesson2_q5_a2"
+msgstr "The expense may be forgotten"
+msgid "lesson2_q5_a3"
+msgstr "The money goes back to the balance"
+msgid "lesson2_q5_a4"
+msgstr "The expense is automatically classified as fixed"
+
+# MINI-LESSON 3 — Difference between Wants and Needs
+msgid "lesson3_text"
+msgstr "<h3>Difference between Wants and Needs</h3><p>Knowing how to differentiate between <b>needs</b> and <b>wants</b> is essential to organize your finances.</p><p>Needs are essential expenses, such as housing, food, healthcare, and transportation.</p><p>Wants are expenses that bring pleasure or comfort, but are not indispensable, such as trips, brand-name clothes, or new electronics.</p><p>By identifying each expense, it becomes easier to control where your money is going.</p><table><tr><th>Example</th><th>Category</th></tr><tr><td>Rent</td><td>Need</td></tr><tr><td>Medicine</td><td>Need</td></tr><tr><td>Streaming subscription</td><td>Want</td></tr><tr><td>Expensive restaurant</td><td>Want</td></tr></table>"
+
+msgid "lesson3_q1"
+msgstr "What is the main difference between wants and needs?"
+
+msgid "lesson3_q1_a1"
+msgstr "Needs are essential, wants are non-essential"
+msgid "lesson3_q1_a2"
+msgstr "Wants are mandatory, needs are optional"
+msgid "lesson3_q1_a3"
+msgstr "Both are the same type of expense"
+msgid "lesson3_q1_a4"
+msgstr "Wants are always cheaper than needs"
+
+msgid "lesson3_q2"
+msgstr "Which example represents a need?"
+
+msgid "lesson3_q2_a1"
+msgstr "Streaming subscription"
+msgid "lesson3_q2_a2"
+msgstr "Buying brand-name clothes"
+msgid "lesson3_q2_a3"
+msgstr "Medicine"
+msgid "lesson3_q2_a4"
+msgstr "International trip"
+
+msgid "lesson3_q3"
+msgstr "Why is it important to identify whether an expense is a need or a want?"
+
+msgid "lesson3_q3_a1"
+msgstr "To better organize the budget"
+msgid "lesson3_q3_a2"
+msgstr "To receive a higher salary"
+msgid "lesson3_q3_a3"
+msgstr "To pay fewer taxes"
+msgid "lesson3_q3_a4"
+msgstr "To automatically increase income"
+
+msgid "lesson3_q4"
+msgstr "If a person spends most of their money on wants, what might happen?"
+
+msgid "lesson3_q4_a1"
+msgstr "They may lack money for needs"
+msgid "lesson3_q4_a2"
+msgstr "The money will never run out"
+msgid "lesson3_q4_a3"
+msgstr "The salary will increase automatically"
+msgid "lesson3_q4_a4"
+msgstr "The bank will forgive all debts"
+
+msgid "lesson3_q5"
+msgstr "A basic food expense is classified as:"
+
+msgid "lesson3_q5_a1"
+msgstr "Want"
+msgid "lesson3_q5_a2"
+msgstr "Need"
+msgid "lesson3_q5_a3"
+msgstr "Invisible expense"
+msgid "lesson3_q5_a4"
+msgstr "Superfluous pleasure"
+
+# LESSON 4 — Creating a Budget
+msgid "lesson4_text"
+msgstr "<h3>Creating a Budget</h3><p>A budget is like a map of your money.</p><p>First, list your <b>income</b>.</p><p>Then, record all your <b>expenses</b>.</p><p>Subtract expenses from income to see if you have a surplus or a deficit.</p><p>If there’s a surplus, save a portion.</p><p>If there’s a deficit, cut unnecessary expenses.</p><p><b>Example:</b><br>Income: $2,000<br>Expenses: $1,500<br>Balance: $500<br>Decision: save $200 and use $300 for leisure.</p>"
+
+msgid "lesson4_q1"
+msgstr "If your expenses exceed your income, what does it mean?"
+
+msgid "lesson4_q1_a1"
+msgstr "You have extra money"
+msgid "lesson4_q1_a2"
+msgstr "The budget is in deficit"
+msgid "lesson4_q1_a3"
+msgstr "The finances are balanced"
+msgid "lesson4_q1_a4"
+msgstr "There is no impact on the final balance"
+
+msgid "lesson4_q2"
+msgstr "Saving part of the surplus money is considered:"
+
+msgid "lesson4_q2_a1"
+msgstr "A healthy personal finance habit"
+msgid "lesson4_q2_a2"
+msgstr "A legal obligation"
+msgid "lesson4_q2_a3"
+msgstr "Future indebtedness"
+msgid "lesson4_q2_a4"
+msgstr "A waste of capital"
+
+msgid "lesson4_q3"
+msgstr "If someone earns $1,000 and spends exactly $1,000, the balance is:"
+
+msgid "lesson4_q3_a1"
+msgstr "Balanced, no surplus or deficit"
+msgid "lesson4_q3_a2"
+msgstr "Deficit of $1,000"
+msgid "lesson4_q3_a3"
+msgstr "Surplus of $1,000"
+msgid "lesson4_q3_a4"
+msgstr "Positive balance of $500"
+
+msgid "lesson4_q4"
+msgstr "What is the best action when money is left over at the end of the month?"
+
+msgid "lesson4_q4_a1"
+msgstr "Spend it all on immediate leisure"
+msgid "lesson4_q4_a2"
+msgstr "Set aside part for savings or investment"
+msgid "lesson4_q4_a3"
+msgstr "Take on new debts in advance"
+msgid "lesson4_q4_a4"
+msgstr "Buy impulsively"
+
+msgid "lesson4_q5"
+msgstr "What does 'cutting unnecessary expenses' mean?"
+
+msgid "lesson4_q5_a1"
+msgstr "Eliminating superfluous spending"
+msgid "lesson4_q5_a2"
+msgstr "Reducing income"
+msgid "lesson4_q5_a3"
+msgstr "Not paying fixed bills"
+msgid "lesson4_q5_a4"
+msgstr "Increasing the credit card limit"
+
+
+msgid "mini_lesson1"
+msgstr "Mini-lesson 1 — Income and Expenses"
+msgid "mini_lesson2"
+msgstr "Mini-lesson 2 — How to Record Expenses"
+msgid "mini_lesson3"
+msgstr "Mini-lesson 3 — Needs vs. Wants"
+msgid "mini_lesson4"
+msgstr "Mini-lesson 4 — Creating a Budget
+
+#PODERES
+
+msgid "segunda_chance_nome"
+msgstr "Second Chance"
+
+msgid "segunda_chance_desc"
+msgstr "Keep pushing forward without fear of making mistakes!"
+
+# CENTRAL DE AJUDA
+msgid "Central de Ajuda"
+msgstr "Help Center"
+
+msgid "Encontre aqui guias rápidos sobre o sistema."
+msgstr "Find quick guides about the system here."
+
+# PERFIL
+msgid "No perfil você pode alterar sua foto, apelido e visualizar seus dados."
+msgstr "In your profile, you can change your photo, nickname, and view your information."
+
+# RANKING
+msgid "O ranking mostra sua posição em relação aos outros usuários."
+msgstr "The ranking shows your position compared to other users."
+
+# MÓDULOS
+msgid "Módulos"
+msgstr "Modules"
+
+msgid "Nos módulos você encontra lições interativas para aprender cada tema."
+msgstr "In the modules, you’ll find interactive lessons to learn each topic."
+
+# LOJA
+msgid "Loja"
+msgstr "Shop"
+
+msgid "Na loja você pode trocar suas moedas por itens especiais."
+msgstr "In the shop, you can exchange your coins for special items."
+
+# SUPORTE
+msgid "Não encontrou o que procurava?"
+msgstr "Didn't find what you were looking for?"
+
+msgid "Entrar em contato com suporte"
+msgstr "Contact support"
+
+# LIÇÃO CONCLUÍDA
+msgid "Parabéns! "
+msgstr "Congratulations! "
+
+msgid "Você concluiu com sucesso a lição "
+msgstr "You have successfully completed lesson "
+
+msgid "Continue avançando para desbloquear mais conquistas!"
+msgstr "Keep progressing to unlock more achievements!"
+
+msgid "Voltar ao módulo"
+msgstr "Return to module"
+
+# LIÇÃO NÃO CONCLUÍDA
+msgid "Você não concluiu a lição"
+msgstr "You did not complete the lesson"
+
+msgid "Infelizmente você não atingiu o mínimo necessário para completar"
+msgstr "Unfortunately, you did not reach the minimum required to complete"
+
+msgid "Tente novamente para avançar no módulo."
+msgstr "Try again to advance in the module."
+
+# PÁGINA DE SUPORTE / ABRIR TICKET
+msgid "Abrir Ticket de Suporte"
+msgstr "Open Support Ticket"
+
+msgid "Descreva seu problema ou dúvida. Nossa equipe entrará em contato."
+msgstr "Describe your problem or question. Our team will get in touch."
+
+msgid "Seu Nome"
+msgstr "Your Name"
+
+msgid "Seu Email"
+msgstr "Your Email"
+
+msgid "Assunto"
+msgstr "Subject"
+
+msgid "Descrição"
+msgstr "Description"
+
+msgid "Enviar Ticket"
+msgstr "Submit Ticket"
+
+# ESQUECI Senha
+
+msgid "Recuperar Senha"
+msgstr "Recover Password"
+
+msgid "Digite seu e-mail:"
+msgstr "Type your email"
+
+msgid "Enviar código"
+msgstr "Submit Code"
+
+msgid "Redefinir Senha"
+msgstr "Reset Password"
+
+msgid "Código recebido"
+msgstr "Received code"
+
+msgid "Nova senha:"
+msgstr "New password:"
+
+msgid "Confirmar senha:"
+msgstr "Confirm password:"
+
+msgid "A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial"
+msgstr "The password must contain at least 6 characters and a maximum of 16, including at least one uppercase letter, one lowercase letter, one number, and one special character."
