@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 20:30-0300\n"
+"POT-Creation-Date: 2025-09-29 19:23-0300\n"
 "PO-Revision-Date: 2025-09-27 20:30-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pt\n"
@@ -18,11 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app.py:299
+#: app.py:133
+msgid "Primeira Ofensiva"
+msgstr ""
+
+#: app.py:135
+msgid "Semana de Fogo"
+msgstr ""
+
+#: app.py:137
+msgid "Persistente"
+msgstr ""
+
+#: app.py:139
+msgid "Imparável"
+msgstr ""
+
+#: app.py:141
+msgid "Lenda da Consistência"
+msgstr ""
+
+#: app.py:267
 msgid "Idioma inválido."
 msgstr ""
 
-#: app.py:303
+#: app.py:271
 #, python-format
 msgid "Idioma atualizado para %(lang)s."
 msgstr ""
@@ -263,14 +283,6 @@ msgstr ""
 msgid "Avançar"
 msgstr ""
 
-#: templates/licoes.html:157
-msgid "Aula concluída!"
-msgstr ""
-
-#: templates/licoes.html:161
-msgid "Erro ao concluir a aula."
-msgstr ""
-
 #: templates/login.html:15
 msgid "E-mail ou nome de usuário"
 msgstr ""
@@ -312,6 +324,18 @@ msgstr ""
 
 #: templates/modulo.html:62
 msgid "Módulo"
+msgstr ""
+
+#: templates/modulo.html:127 templates/ranking.html:127
+msgid "Registro Semanal"
+msgstr ""
+
+#: templates/modulo.html:143 templates/ranking.html:143
+msgid "Recompensa: 50"
+msgstr ""
+
+#: templates/modulo.html:147
+msgid "Semana concluída! Você receberá sua recompensa."
 msgstr ""
 
 #: templates/perfil.html:69
@@ -380,6 +404,10 @@ msgstr ""
 msgid "Começar"
 msgstr ""
 
+#: templates/quizes.html:62
+msgid "Concluído"
+msgstr ""
+
 #: templates/quizes.html:74
 msgid "Encerre o quiz 2 para prosseguir"
 msgstr ""
@@ -392,12 +420,16 @@ msgstr ""
 msgid "RANKING SEMANAL"
 msgstr ""
 
-#: templates/ranking.html:127
-msgid "Registro Semanal"
+#: templates/ranking.html:65
+msgid "Apelido"
 msgstr ""
 
-#: templates/ranking.html:143
-msgid "Recompensa: 50"
+#: templates/ranking.html:65
+msgid "Pontos"
+msgstr ""
+
+#: templates/ranking.html:65
+msgid "Recompensas"
 msgstr ""
 
 #: templates/ranking.html:151
@@ -408,6 +440,13 @@ msgstr ""
 msgid "Módulo 2"
 msgstr ""
 
+
+msgid "Aula concluída!"
+msgstr ""
+
+msgid "Erro ao concluir a aula."
+msgstr ""
+
 # Novos módulos adicionados
 msgid "modulo_intro_nome"
 msgstr "Introdução ao Mundo Financeiro"
@@ -415,9 +454,417 @@ msgstr "Introdução ao Mundo Financeiro"
 msgid "modulo_intro_desc"
 msgstr "Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples."
 
-msgid "modulo_juros_nome"
-msgstr ""
+#~ msgid "modulo_juros_nome"
+#~ msgstr ""
 
-msgid "modulo_juros_desc"
-msgstr ""
+#~ msgid "modulo_juros_desc"
+#~ msgstr ""
 
+# Conquistas (Português original)
+
+msgid "conquista_primeiro_acesso_nome"
+msgstr "Primeiro Acesso"
+
+msgid "conquista_primeiro_acesso_desc"
+msgstr "Você acessou o sistema pela primeira vez!"
+
+msgid "conquista_customizou_perfil_nome"
+msgstr "Eu sou eu mesmo"
+
+msgid "conquista_customizou_perfil_desc"
+msgstr "Customizou seu perfil"
+
+msgid "conquista_quiz_pensador_nome"
+msgstr "\"Quiz\" Pensador"
+
+msgid "conquista_quiz_pensador_desc"
+msgstr "Completou um quiz sem errar nenhuma questão."
+
+msgid "conquista_og_nome"
+msgstr "Eu SOU um OG"
+
+msgid "conquista_og_desc"
+msgstr "Criou sua conta e fez login em até um mês depois do nosso lancamento."
+
+msgid "conquista_vencedor_nome"
+msgstr "Vencedor"
+
+msgid "conquista_vencedor_desc"
+msgstr "Terminou em primeiro lugar no ranking"
+
+msgid "conquista_veterano_nome"
+msgstr "Veterano"
+
+msgid "conquista_veterano_desc"
+msgstr "Terminou em primeiro lugar no ranking 10 vezes"
+
+msgid "conquista_campeao_nome"
+msgstr "Campeão"
+
+msgid "conquista_campeao_desc"
+msgstr "Terminou em primeiro lugar no ranking 100 vezes"
+
+msgid "conquista_invicto_nome"
+msgstr "Campeão Invicto"
+
+msgid "conquista_invicto_desc"
+msgstr "Terminou em primeiro lugar no ranking 30 vezes consecutivas"
+
+msgid "conquista_quizzer_nome"
+msgstr "Quizzer"
+
+msgid "conquista_quizzer_desc"
+msgstr "Completou seu primeiro quiz"
+
+msgid "conquista_quizzeiro_nome"
+msgstr "Quizzeiro"
+
+msgid "conquista_quizzeiro_desc"
+msgstr "Completou 10 quizes"
+
+msgid "conquista_maluco_quiz_nome"
+msgstr "Maluco por quiz"
+
+msgid "conquista_maluco_quiz_desc"
+msgstr "Completou 50 quizes"
+
+msgid "conquista_fanatico_quiz_nome"
+msgstr "Fanático por quiz"
+
+msgid "conquista_fanatico_quiz_desc"
+msgstr "Completou 100 quizes"
+
+msgid "conquista_em_crescimento_nome"
+msgstr "Em crescimento"
+
+msgid "conquista_em_crescimento_desc"
+msgstr "Alcançou 100 pontos"
+
+msgid "conquista_experiente_nome"
+msgstr "Experiente"
+
+msgid "conquista_experiente_desc"
+msgstr "Alcançou 1.000 pontos"
+
+msgid "conquista_guru_nome"
+msgstr "O Guru"
+
+msgid "conquista_guru_desc"
+msgstr "Alcançou 10.000 pontos"
+
+msgid "conquista_aurum_master_nome"
+msgstr "Aurum Master"
+
+msgid "conquista_aurum_master_desc"
+msgstr "Alcançou 99.999 pontos"
+
+msgid "conquista_primeira_ofensiva_nome"
+msgstr "Primeira Ofensiva"
+
+msgid "conquista_primeira_ofensiva_desc"
+msgstr "Completou atividades em 1 dia seguido"
+
+msgid "conquista_semana_fogo_nome"
+msgstr "Semana de Fogo"
+
+msgid "conquista_semana_fogo_desc"
+msgstr "Completou atividades em 7 dias seguido"
+
+msgid "conquista_persistente_nome"
+msgstr "Persistente"
+
+msgid "conquista_persistente_desc"
+msgstr "Completou atividades por 30 dias seguidos"
+
+msgid "conquista_imparavel_nome"
+msgstr "Imparável"
+
+msgid "conquista_imparavel_desc"
+msgstr "Completou atividades por 180 dias seguidos"
+
+msgid "conquista_lenda_constancia_nome"
+msgstr "Lenda da Constância"
+
+msgid "conquista_lenda_constancia_desc"
+msgstr "Completou atividades por 365 dias seguidos"
+
+msgid "conquista_farinha_nome"
+msgstr "Farinha do Mesmo Saco"
+
+msgid "conquista_farinha_desc"
+msgstr "Estudou na mesma turma que o dev e o assistiu durante o desenvolvimento"
+
+# MINI-AULA 1 — Receita e Despesa
+msgid "lesson1_text"
+msgstr "<h3>Receita e Despesa</h3><p><strong>Receita</strong> é todo dinheiro que entra no seu bolso (salário, mesada, bônus, venda de produtos).</p><p><strong>Despesa</strong> é todo dinheiro que sai (contas fixas, lazer, compras, transporte).</p><p><em>Dica:</em> Pense em entrada e saída. Se o dinheiro entra → receita. Se sai → despesa.</p><p><strong>Exemplo:</strong> Você recebe R$ 2.000 (receita). Paga R$ 800 de aluguel, R$ 200 de luz e R$ 200 de transporte (despesas). Sobra R$ 800 para poupar ou gastar com lazer.</p>"
+
+msgid "lesson1_q1"
+msgstr "O que melhor define uma receita?"
+
+msgid "lesson1_q1_a1"
+msgstr "Valor gasto em contas fixas"
+msgid "lesson1_q1_a2"
+msgstr "Entrada de dinheiro no orçamento"
+msgid "lesson1_q1_a3"
+msgstr "Dívida contraída com o banco"
+msgid "lesson1_q1_a4"
+msgstr "Redução de despesas no mês"
+
+msgid "lesson1_q2"
+msgstr "Qual das situações representa uma despesa?"
+
+msgid "lesson1_q2_a1"
+msgstr "Receber comissão de vendas"
+msgid "lesson1_q2_a2"
+msgstr "Pagar mensalidade da academia"
+msgid "lesson1_q2_a3"
+msgstr "Vender um objeto usado"
+msgid "lesson1_q2_a4"
+msgstr "Guardar dinheiro na poupança"
+
+msgid "lesson1_q3"
+msgstr "Ao pagar o aluguel, o que ocorre no orçamento?"
+
+msgid "lesson1_q3_a1"
+msgstr "Aumenta a receita"
+msgid "lesson1_q3_a2"
+msgstr "Surge uma nova dívida"
+msgid "lesson1_q3_a3"
+msgstr "Há uma saída de dinheiro"
+msgid "lesson1_q3_a4"
+msgstr "O saldo total não se altera"
+
+msgid "lesson1_q4"
+msgstr "Uma pessoa recebe R$ 2.000 e gasta R$ 1.800. Seu saldo final é:"
+
+msgid "lesson1_q4_a1"
+msgstr "Superávit de R$ 1.800"
+msgid "lesson1_q4_a2"
+msgstr "Déficit de R$ 200"
+msgid "lesson1_q4_a3"
+msgstr "Sobra de R$ 200"
+msgid "lesson1_q4_a4"
+msgstr "Nenhuma alteração no orçamento"
+
+msgid "lesson1_q5"
+msgstr "Qual opção é um exemplo de receita extra?"
+
+msgid "lesson1_q5_a1"
+msgstr "Conta de energia atrasada"
+msgid "lesson1_q5_a2"
+msgstr "Bônus salarial inesperado"
+msgid "lesson1_q5_a3"
+msgstr "Compra parcelada de eletrodoméstico"
+msgid "lesson1_q5_a4"
+msgstr "Pagamento do cartão de crédito"
+
+
+# MINI-AULA 2 — Como Registrar Gastos
+msgid "lesson2_text"
+msgstr "<h3>Como Registrar Gastos</h3><p>Registrar gastos é como tirar uma foto das suas finanças. Sem esse controle, você não sabe para onde seu dinheiro vai.</p><p>Pode ser feito em papel, planilha ou aplicativo gratuito.</p><p>É importante registrar tanto receitas quanto despesas, até as pequenas.</p><table><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Valor</th></tr><tr><td>05/08</td><td>Conta de luz</td><td>Despesa</td><td>R$120</td></tr><tr><td>07/08</td><td>Salário</td><td>Receita</td><td>R$1500</td></tr><tr><td>09/08</td><td>Cinema</td><td>Despesa</td><td>R$40</td></tr></table>"
+
+msgid "lesson2_q1"
+msgstr "Qual é o principal motivo para registrar gastos?"
+
+msgid "lesson2_q1_a1"
+msgstr "Descobrir para onde o dinheiro está indo"
+msgid "lesson2_q1_a2"
+msgstr "Garantir aumento automático da receita"
+msgid "lesson2_q1_a3"
+msgstr "Reduzir o valor das despesas fixas"
+msgid "lesson2_q1_a4"
+msgstr "Evitar ter de pagar impostos"
+
+msgid "lesson2_q2"
+msgstr "Onde é possível registrar gastos de forma eficiente?"
+
+msgid "lesson2_q2_a1"
+msgstr "Somente em aplicativos pagos"
+msgid "lesson2_q2_a2"
+msgstr "Em papel, planilha ou aplicativos gratuitos"
+msgid "lesson2_q2_a3"
+msgstr "Apenas em relatórios bancários"
+msgid "lesson2_q2_a4"
+msgstr "Guardando tudo de memória"
+
+msgid "lesson2_q3"
+msgstr "Qual risco surge ao não registrar seus gastos?"
+
+msgid "lesson2_q3_a1"
+msgstr "Aumentar automaticamente a receita"
+msgid "lesson2_q3_a2"
+msgstr "Ter sempre saldo positivo"
+msgid "lesson2_q3_a3"
+msgstr "Esquecer compromissos financeiros"
+msgid "lesson2_q3_a4"
+msgstr "Reduzir o número de despesas"
+
+msgid "lesson2_q4"
+msgstr "Uma vantagem clara de anotar despesas é:"
+
+msgid "lesson2_q4_a1"
+msgstr "Saber se o dinheiro está indo para necessidades ou desejos"
+msgid "lesson2_q4_a2"
+msgstr "Facilitar a aprovação de crédito no banco"
+msgid "lesson2_q4_a3"
+msgstr "Evitar receber salário em espécie"
+msgid "lesson2_q4_a4"
+msgstr "Aumentar artificialmente a renda mensal"
+
+msgid "lesson2_q5"
+msgstr "Se alguém gasta R$ 50 em lazer e não registra, o que pode acontecer?"
+
+msgid "lesson2_q5_a1"
+msgstr "O valor é transformado em receita"
+msgid "lesson2_q5_a2"
+msgstr "O gasto pode ser esquecido"
+msgid "lesson2_q5_a3"
+msgstr "O dinheiro retorna ao saldo"
+msgid "lesson2_q5_a4"
+msgstr "O gasto é automaticamente classificado como fixo"
+
+# MINI-LESSON 3 — Diferença entre Desejos e Necessidades
+msgid "lesson3_text"
+msgstr "<h3>Diferença entre Desejos e Necessidades</h3><p>Saber diferenciar o que é <b>necessidade</b> e o que é <b>desejo</b> é fundamental para organizar suas finanças.</p><p>Necessidades são gastos essenciais, como moradia, alimentação, saúde e transporte.</p><p>Desejos são gastos que trazem prazer ou conforto, mas que não são indispensáveis, como viagens, roupas de marca ou eletrônicos novos.</p><p>Ao identificar cada gasto, fica mais fácil controlar para onde seu dinheiro está indo.</p><table><tr><th>Exemplo</th><th>Categoria</th></tr><tr><td>Aluguel</td><td>Necessidade</td></tr><tr><td>Medicamentos</td><td>Necessidade</td></tr><tr><td>Streaming</td><td>Desejo</td></tr><tr><td>Restaurante caro</td><td>Desejo</td></tr></table>"
+
+msgid "lesson3_q1"
+msgstr "Qual é a principal diferença entre desejos e necessidades?"
+
+msgid "lesson3_q1_a1"
+msgstr "Necessidades são essenciais, desejos são supérfluos"
+msgid "lesson3_q1_a2"
+msgstr "Desejos são obrigatórios, necessidades são opcionais"
+msgid "lesson3_q1_a3"
+msgstr "Ambos são gastos iguais"
+msgid "lesson3_q1_a4"
+msgstr "Desejos são mais baratos que necessidades"
+
+msgid "lesson3_q2"
+msgstr "Qual exemplo é de uma necessidade?"
+
+msgid "lesson3_q2_a1"
+msgstr "Assinatura de streaming"
+msgid "lesson3_q2_a2"
+msgstr "Compra de roupas de marca"
+msgid "lesson3_q2_a3"
+msgstr "Medicamentos"
+msgid "lesson3_q2_a4"
+msgstr "Viagem internacional"
+
+msgid "lesson3_q3"
+msgstr "Por que é importante identificar se um gasto é necessidade ou desejo?"
+
+msgid "lesson3_q3_a1"
+msgstr "Para organizar melhor o orçamento"
+msgid "lesson3_q3_a2"
+msgstr "Para receber mais salário"
+msgid "lesson3_q3_a3"
+msgstr "Para pagar menos impostos"
+msgid "lesson3_q3_a4"
+msgstr "Para aumentar automaticamente os ganhos"
+
+msgid "lesson3_q4"
+msgstr "Se uma pessoa gastar a maior parte do dinheiro com desejos, o que pode acontecer?"
+
+msgid "lesson3_q4_a1"
+msgstr "Faltará dinheiro para necessidades"
+msgid "lesson3_q4_a2"
+msgstr "O dinheiro nunca acabará"
+msgid "lesson3_q4_a3"
+msgstr "O salário aumentará sozinho"
+msgid "lesson3_q4_a4"
+msgstr "O banco perdoará todas as dívidas"
+
+msgid "lesson3_q5"
+msgstr "Um gasto com alimentação básica é classificado como:"
+
+msgid "lesson3_q5_a1"
+msgstr "Desejo"
+msgid "lesson3_q5_a2"
+msgstr "Necessidade"
+msgid "lesson3_q5_a3"
+msgstr "Gasto invisível"
+msgid "lesson3_q5_a4"
+msgstr "Prazer supérfluo"
+
+# MINI-AULA 4 — Criando um Orçamento
+msgid "lesson4_text"
+msgstr "<h3>Criando um Orçamento</h3><p>Um orçamento é como um mapa do seu dinheiro.</p><p>Primeiro, anote suas <b>receitas</b>.</p><p>Depois, registre todas as <b>despesas</b>.</p><p>Subtraia despesas das receitas para ver se sobra ou falta.</p><p>Se sobrar, guarde uma parte.</p><p>Se faltar, corte gastos desnecessários.</p><p><b>Exemplo:</b><br>Receita: R$ 2.000<br>Despesas: R$ 1.500<br>Saldo: R$ 500<br>Decisão: guardar R$ 200 e usar R$ 300 para lazer.</p>"
+
+msgid "lesson4_q1"
+msgstr "Se suas despesas superam suas receitas, o que significa?"
+
+msgid "lesson4_q1_a1"
+msgstr "Você tem sobra de dinheiro"
+msgid "lesson4_q1_a2"
+msgstr "O orçamento está em déficit"
+msgid "lesson4_q1_a3"
+msgstr "As finanças estão equilibradas"
+msgid "lesson4_q1_a4"
+msgstr "Não há impacto no saldo final"
+
+msgid "lesson4_q2"
+msgstr "Guardar parte do dinheiro que sobra é considerado:"
+
+msgid "lesson4_q2_a1"
+msgstr "Uma prática saudável de finanças pessoais"
+msgid "lesson4_q2_a2"
+msgstr "Obrigação legal"
+msgid "lesson4_q2_a3"
+msgstr "Endividamento futuro"
+msgid "lesson4_q2_a4"
+msgstr "Desperdício de capital"
+
+msgid "lesson4_q3"
+msgstr "Se alguém ganha R$ 1.000 e gasta exatamente R$ 1.000, o saldo é:"
+
+msgid "lesson4_q3_a1"
+msgstr "Equilíbrio, sem sobra nem déficit"
+msgid "lesson4_q3_a2"
+msgstr "Déficit de R$ 1.000"
+msgid "lesson4_q3_a3"
+msgstr "Superávit de R$ 1.000"
+msgid "lesson4_q3_a4"
+msgstr "Saldo positivo de R$ 500"
+
+msgid "lesson4_q4"
+msgstr "Qual é a melhor atitude quando sobra dinheiro no mês?"
+
+msgid "lesson4_q4_a1"
+msgstr "Usar tudo para lazer imediato"
+msgid "lesson4_q4_a2"
+msgstr "Reservar uma parte para poupança ou investimento"
+msgid "lesson4_q4_a3"
+msgstr "Antecipar novas dívidas"
+msgid "lesson4_q4_a4"
+msgstr "Adquirir bens por impulso"
+
+msgid "lesson4_q5"
+msgstr "O que significa 'cortar despesas desnecessárias'?"
+
+msgid "lesson4_q5_a1"
+msgstr "Eliminar gastos supérfluos"
+msgid "lesson4_q5_a2"
+msgstr "Reduzir a receita"
+msgid "lesson4_q5_a3"
+msgstr "Deixar de pagar contas fixas"
+msgid "lesson4_q5_a4"
+msgstr "Aumentar o limite do cartão de crédito"
+
+msgid "mini_lesson1"
+msgstr "Mini-aula 1 — Receita e Despesa"
+msgid "mini_lesson2"
+msgstr "Mini-aula 2 — Como Registrar Gastos"
+msgid "mini_lesson3"
+msgstr "Mini-aula 3 — Necessidade vs. Desejo"
+msgid "mini_lesson4"
+msgstr "Mini-aula 4 — Criando um Orçamento"
+
+
+#PODERES
+
+msgid "segunda_chance_nome"
+msgstr "Segunda Chance"
+
+msgid "segunda_chance_desc"
+msgstr "Mantenha a sua ofensiva sem medo de errar!"
