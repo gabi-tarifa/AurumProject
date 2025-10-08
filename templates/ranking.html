@@ -62,7 +62,7 @@
       <section class="ranking-box">
         <h1>{{ _('RANKING SEMANAL') }}</h1>
         <ul class="ranking-list">
-          <span class="cabecalho"><span></span><span>Apelido</span> <span>Pontos</span> <span>Recompensas</span></span>
+          <span class="cabecalho"><span></span><span>{{ _('Apelido') }}</span> <span>{{ _('Pontos') }}</span> <span>{{ _('Recompensas') }}</span></span>
           {% for usuario in ranking %}
             {% set classes = [] %}
           {% if loop.index == 1 %}

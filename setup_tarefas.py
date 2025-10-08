@@ -5,10 +5,10 @@ def criar_tarefas():
         tarefas_existentes = {t.descricao for t in Tarefa.query.all()}
 
         tarefas_novas = [
-            {"id_modulo":1, "descricao":"Mini-aula 1 — Receita e Despesa", "pontos":10, "numero_tarefa": 1},
-            {"id_modulo":1, "descricao":"Mini-aula 2 — Como Registrar Gastos", "pontos":20, "numero_tarefa": 2},
-            {"id_modulo":1, "descricao":"Mini-aula 3 — Necessidade vs. Desejo", "pontos":20, "numero_tarefa": 3},
-            {"id_modulo":1, "descricao":"Mini-aula 4 — Criando um Orçamento", "pontos":25, "numero_tarefa": 4}
+            {"id_modulo":1, "descricao":"mini_lesson1", "pontos":10, "numero_tarefa": 1},
+            {"id_modulo":1, "descricao":"mini_lesson2", "pontos":20, "numero_tarefa": 2},
+            {"id_modulo":1, "descricao":"mini_lesson3", "pontos":20, "numero_tarefa": 3},
+            {"id_modulo":1, "descricao":"mini_lesson4", "pontos":25, "numero_tarefa": 4}
             #,{"id_modulo":1, "descricao":"Avaliação Final — Módulo 1", "pontos":90, "numero_tarefa": 5}
         ]
 

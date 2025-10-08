@@ -37,8 +37,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -130,15 +130,15 @@ def checar_ofensivas():
             ofensiva.data_ultima_atividade = hoje
 
             if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
-                desbloquear_conquista(ofensiva.id_usuario, "Primeira Ofensiva")
+                desbloquear_conquista(ofensiva.id_usuario, _("conquista_primeira_ofensiva_nome"))
             if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
-                desbloquear_conquista(ofensiva.id_usuario, "Semana de Fogo")
+                desbloquear_conquista(ofensiva.id_usuario, _("conquista_semana_fogo_nome"))
             if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
-                desbloquear_conquista(ofensiva.id_usuario, "Persistente")
+                desbloquear_conquista(ofensiva.id_usuario, _("conquista_persistente_nome"))
             if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
-                desbloquear_conquista(ofensiva.id_usuario, "Imparável")
+                desbloquear_conquista(ofensiva.id_usuario, _("conquista_imparavel_nome"))
             if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
-                desbloquear_conquista(ofensiva.id_usuario, "Lenda da Consistência")
+                desbloquear_conquista(ofensiva.id_usuario, _("conquista_lenda_constancia_nome"))
 
         db.session.commit()
     
@@ -170,13 +170,13 @@ def distribuir_recompensas(usuarios):
             if i == 0:
                 usuario.vitorias += 1
                 usuario.vitorias_consecutivas += 1
-                desbloquear_conquista(usuario.id, "Vencedor")
+                desbloquear_conquista(usuario.id, "conquista_vencedor_nome")
                 if usuario.vitorias >= 10:
-                    desbloquear_conquista(usuario.id, "Veterano")
+                    desbloquear_conquista(usuario.id, "conquista_veterano_nome")
                 if usuario.vitorias >= 100:
-                    desbloquear_conquista(usuario.id, "Campeão")
+                    desbloquear_conquista(usuario.id, "conquista_campeao_nome")
                 if usuario.vitorias_consecutivas >= 30:
-                    desbloquear_conquista(usuario.id, "Campeão Invicto")
+                    desbloquear_conquista(usuario.id, "conquista_invicto_nome")
             else:
                 usuario.vitorias_consecutivas = 0
 
@@ -286,7 +286,8 @@ def licoes(numero_tarefa, id_modulo):
         if c.tipo == "texto":
             blocos.append({
                 "tipo": "texto",
-                "conteudo": c.conteudo
+                # Traduz a chave armazenada no banco
+                "conteudo": _(c.conteudo)
             })
         elif c.tipo == "quiz":
             alternativas = []
@@ -294,16 +295,23 @@ def licoes(numero_tarefa, id_modulo):
                 opcoes = c.alternativas.split("||")
                 for idx, opcao in enumerate(opcoes, start=1):
                     alternativas.append({
-                        "texto": opcao.strip(),
+                        # Traduz cada chave de alternativa
+                        "texto": _(opcao.strip()),
                         "correta": (idx == c.correta)
                     })
             blocos.append({
                 "tipo": "quiz",
-                "pergunta": c.pergunta,
+                # Traduz a pergunta
+                "pergunta": _(c.pergunta),
                 "alternativas": alternativas
             })
 
-    return render_template("licoes.html", tarefa=tarefa, blocos_json=blocos, numero_tarefa=tarefa.numero_tarefa)
+    return render_template(
+        "licoes.html",
+        tarefa=tarefa,
+        blocos_json=blocos,
+        numero_tarefa=tarefa.numero_tarefa
+    )
 
 # 🆕 Página de Cadastro
 @app.route("/cadastro")
@@ -616,10 +624,12 @@ def ver_modulo(id_modulo):
         .all()
     )
 
-    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    if ofensiva:
+        ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
 
-    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
-    semana_completa = dias_completos == 7
+        dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+        semana_completa = dias_completos == 7
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -649,7 +659,6 @@ def ver_modulo(id_modulo):
             "status": status
         })
 
-    ofensiva = get_or_create_ofensiva(current_user.id)
 
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
@@ -1054,7 +1063,7 @@ def efetuar_login():
 @app.route("/eusouOG")
 @login_required
 def eusouOG():
-    conquistas_a_dar = ["Eu SOU um OG"]
+    conquistas_a_dar = ["conquista_og_nome"]
     
     for nome in conquistas_a_dar:
         conquista = Conquistas.query.filter_by(nome=nome).first()
@@ -1066,7 +1075,7 @@ def eusouOG():
 @app.route("/ifsp413")
 @login_required
 def ifiano413():
-    conquistas_a_dar = ["Farinha do Mesmo Saco"]
+    conquistas_a_dar = ["conquista_farinha_nome"]
     
     for nome in conquistas_a_dar:
         conquista = Conquistas.query.filter_by(nome=nome).first()
@@ -1115,7 +1124,7 @@ def atualizar_perfil():
 
     usuario.nome = nome
 
-    desbloquear_conquista(current_user.id, "Eu sou eu mesmo")
+    desbloquear_conquista(current_user.id, "conquista_customizou_perfil_nome")
 
     salvar_usuario(usuario)  # Atualiza o banco com os dados
 
@@ -1220,13 +1229,13 @@ def concluir_tarefa(id_modulo, numero_tarefa):
     current_user.moedas += registro.pontuacao/2 
 
     if current_user.pontos >= 100:
-        desbloquear_conquista(current_user.id, "Em crescimento")
+        desbloquear_conquista(current_user.id, "conquista_em_crescimento_nome")
     if current_user.pontos >= 1000:
-        desbloquear_conquista(current_user.id, "Experiente")
+        desbloquear_conquista(current_user.id, "conquista_experiente_nome")
     if current_user.pontos >= 10000:
-        desbloquear_conquista(current_user.id, "O Guru")
+        desbloquear_conquista(current_user.id, "conquista_guru_nome")
     if current_user.pontos >= 999999:
-        desbloquear_conquista(current_user.id, "Aurum Master")
+        desbloquear_conquista(current_user.id, "conquista_aurum_master_nome")
 
     # manter lógica da ofensiva
     ofensiva = get_or_create_ofensiva(current_user.id)
@@ -1259,15 +1268,15 @@ def concluir_tarefa(id_modulo, numero_tarefa):
 
     
     if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
-        desbloquear_conquista(current_user.id, "Primeira Ofensiva")
+        desbloquear_conquista(current_user.id, "conquista_primeira_ofensiva_nome")
     if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
-        desbloquear_conquista(current_user.id, "Semana de Fogo")
+        desbloquear_conquista(current_user.id, "conquista_semana_fogo_nome")
     if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
-        desbloquear_conquista(current_user.id, "Persistente")
+        desbloquear_conquista(current_user.id, "conquista_persistente_nome")
     if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
-        desbloquear_conquista(current_user.id, "Imparável")
+        desbloquear_conquista(current_user.id, "conquista_imparavel_nome")
     if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
-        desbloquear_conquista(current_user.id, "Lenda da Consistência")
+        desbloquear_conquista(current_user.id, "conquista_lenda_constancia_nome")
 
 
     ofensiva.dias_semana[dia_semana] = True
@@ -1433,6 +1442,6 @@ def enviar_ticket():
     return render_template("enviarticket.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    #port = int(os.environ.get("PORT", 5000))
-    #app.run(host="0.0.0.0", port=port)
+    #app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

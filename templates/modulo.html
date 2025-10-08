@@ -94,16 +94,13 @@
       </div>
 
       <div class="info">
-        <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+          <img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon">
           <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
           <span class="darkgolden">
-            {% if ofensiva.sequencia_atual == 1 %}
-              {{ _('Dia consecutivo') }}
-            {% else %}
-              {{ _('Dias consecutivos') }}
-            {% endif %}
+              {{ ngettext('Dia consecutivo', 'Dias consecutivos', ofensiva.sequencia_atual) }}
           </span>
       </div>
+
 
       <div class="info">
         <img src="{{ url_for('static', filename='img//award.png') }}" alt="Trofeu" class="icon">
@@ -124,7 +121,7 @@
       </div>
 
       <div class="info">
-  <span style="color: goldenrod;">Registro Semanal</span>
+  <span style="color: goldenrod;">{{_('Registro Semanal')}}</span>
   <div class="registro-semanal">
     {% for concluido in ofensiva.dias_semana %}
       {% set index = loop.index0 %}
@@ -140,11 +137,11 @@
       {% endif %}
     {% endfor %}
   </div>
-  <span class="darkgolden">Recompensa: 50 </span>
+  <span class="darkgolden">{{_('Recompensa: 50')}} </span>
   <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
           {% if semana_completa %}
     <div class="bonus-confirmado">
-      ✅ Semana concluída! Você receberá sua recompensa.
+      ✅ {{_('Semana concluída! Você receberá sua recompensa.')}}'
     </div>
   {% endif %}
 </div>

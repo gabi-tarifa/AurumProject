@@ -22,34 +22,34 @@ function voltarRecarregando() {
     </header>
 
 <div class="help">
-  <h1>Central de Ajuda</h1>
-  <p class="intro">Encontre aqui guias rápidos sobre o sistema.</p>
+  <h1>{{ _('Central de Ajuda') }}</h1>
+  <p class="intro">{{ _('Encontre aqui guias rápidos sobre o sistema.') }}</p>
 
   <div class="faq">
     <button class="faq-question">Perfil</button>
     <div class="faq-answer">
-      <p>No perfil você pode alterar sua foto, apelido e visualizar seus dados.</p>
+      <p>{{ _('No perfil você pode alterar sua foto, apelido e visualizar seus dados.') }}</p>
     </div>
 
     <button class="faq-question">Ranking</button>
     <div class="faq-answer">
-      <p>O ranking mostra sua posição em relação aos outros usuários.</p>
+      <p>{{ _('O ranking mostra sua posição em relação aos outros usuários.') }}p>
     </div>
 
-    <button class="faq-question">Módulos</button>
+    <button class="faq-question">{{ _('Módulos') }}</button>
     <div class="faq-answer">
-      <p>Nos módulos você encontra lições interativas para aprender cada tema.</p>
+      <p>{{ _('Nos módulos você encontra lições interativas para aprender cada tema.') }}</p>
     </div>
 
-    <button class="faq-question">Loja</button>
+    <button class="faq-question">{{ _('Loja') }}</button>
     <div class="faq-answer">
-      <p>Na loja você pode trocar suas moedas por itens especiais.</p>
+      <p>{{ _('Na loja você pode trocar suas moedas por itens especiais.') }}</p>
     </div>
   </div>
 
   <div class="support">
-    <p>Não encontrou o que procurava?</p>
-    <button onclick="contatoSuporte()" class="support-btn">Entrar em contato com suporte</button>
+    <p>{{ _('Não encontrou o que procurava?') }}</p>
+    <button onclick="contatoSuporte()" class="support-btn">{{ _('Entrar em contato com suporte') }}</button>
   <script>
     function contatoSuporte() {
       window.location.href = "/suporte";
