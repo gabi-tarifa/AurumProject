@@ -624,10 +624,12 @@ def ver_modulo(id_modulo):
         .all()
     )
 
-    ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    if ofensiva:
+        ofen = Ofensiva.query.filter_by(id_usuario=current_user.id).first()
 
-    dias_completos = sum(1 for dia in ofen.dias_semana if dia)
-    semana_completa = dias_completos == 7
+        dias_completos = sum(1 for dia in ofen.dias_semana if dia)
+        semana_completa = dias_completos == 7
 
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
@@ -657,7 +659,6 @@ def ver_modulo(id_modulo):
             "status": status
         })
 
-    ofensiva = get_or_create_ofensiva(current_user.id)
 
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
