@@ -8,22 +8,22 @@
 </head>
 <body>
     <div class="container">
-    <h2>Redefinir Senha</h2>
+    <h2>{{ _('Redefinir Senha') }}</h2>
 <form method="POST" id="reset-form">
-    <label for="codigo">Código recebido:</label><br>
+    <label for="codigo">{{ _('Código recebido') }}:</label><br>
     <input type="text" name="codigo" required><br><br>
 
-    <label for="nova_senha">Nova senha:</label><br>
+    <label for="nova_senha">{{ _('Nova senha:') }}</label><br>
     <input type="password" id="nova_senha" name="nova_senha" required><br>
     
-    <label for="confirmar_senha">Confirmar senha:</label><br>
+    <label for="confirmar_senha">{{ _('Confirmar senha:') }}</label><br>
     <input type="password" id="confirmar_senha" name="confirmar_senha" required><br>
     <span style="font-size: small;">
-        A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial
+        {{ _('A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial') }}
     </span> <br>
         <span id="textoerro" style="color: red; font-size: small;"></span><br><br>
 
-    <button type="submit">Atualizar Senha</button>
+    <button type="submit">{{ _('Atualizar Senha') }}</button>
 </form>
     </div>
 <script>

@@ -49,9 +49,9 @@
     <!-- Submenu do botão "Mais" -->
     <div class="submenu-mais oculto" id="submenuMais">
       <ul>
-        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">Ajuda</span></a></li>
-        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">Configurações</span></a></li>
-        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">Sair</span></a></li>
+        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">{{_('Ajuda')}}</span></a></li>
+        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">{{_('Configurações')}}</span></a></li>
+        <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">{{_('Sair')}}</span></a></li>
       </ul>
     </div>
 
@@ -61,8 +61,8 @@
   {% for modulo in modulos %}
     {% if modulo.bloqueado %}
       <div class="modulo modulo{{modulo.id}}">
-        <h3>{{ modulo.nome }}</h3>
-        <p>{{ modulo.descricao }}</p>
+        <h3>{{ _(modulo.nome) }}</h3>
+        <p>{{ _(modulo.descricao) }}</p>
         <p class="aviso">{{ _('Conclua o módulo anterior para desbloquear este.') }}</p>
       </div>
     {% else %}
@@ -97,16 +97,13 @@
       </div>
 
       <div class="info">
-        <img src="{{ url_for('static', filename='img//calendar.png') }}" class="icon">
+          <img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon">
           <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
           <span class="darkgolden">
-            {% if ofensiva.sequencia_atual == 1 %}
-              {{ _('Dia consecutivo') }}
-            {% else %}
-              {{ _('Dias consecutivos') }}
-            {% endif %}
+              {{ ngettext('Dia consecutivo', 'Dias consecutivos', ofensiva.sequencia_atual) }}
           </span>
       </div>
+
 
       <div class="info">
         <img src="{{ url_for('static', filename='img//award.png') }}" alt="Trofeu" class="icon">
@@ -127,7 +124,7 @@
       </div>
 
       <div class="info">
-  <span style="color: goldenrod;">Registro Semanal</span>
+  <span style="color: goldenrod;">{{_('Registro Semanal')}}</span>
   <div class="registro-semanal">
     {% for concluido in ofensiva.dias_semana %}
       {% set index = loop.index0 %}
@@ -143,11 +140,11 @@
       {% endif %}
     {% endfor %}
   </div>
-  <span class="darkgolden">Recompensa: 50 </span>
+  <span class="darkgolden">{{_('Recompensa: 50')}} </span>
   <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
           {% if semana_completa %}
     <div class="bonus-confirmado">
-      ✅ Semana concluída! Você receberá sua recompensa.
+      ✅ {{_('Semana concluída! Você receberá sua recompensa.')}}'
     </div>
   {% endif %}
 </div>

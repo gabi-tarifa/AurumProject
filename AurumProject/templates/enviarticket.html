@@ -10,23 +10,23 @@
 </head>
 <body>
     <div class="support-page">
-  <h1>Abrir Ticket de Suporte</h1>
-  <p class="intro">Descreva seu problema ou dúvida. Nossa equipe entrará em contato.</p>
+  <h1>{{ _('Abrir Ticket de Suporte') }}</h1>
+  <p class="intro">{{ _('Descreva seu problema ou dúvida. Nossa equipe entrará em contato.') }}</p>
 
   <form class="ticket-form" method="post">
-    <label for="nome">Seu Nome</label>
+    <label for="nome">{{ _('Seu Nome') }}/label>
     <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
 
-    <label for="email">Seu Email</label>
+    <label for="email">{{ _('Seu Email') }}</label>
     <input type="email" id="email" name="email" placeholder="Digite seu email" required>
 
-    <label for="assunto">Assunto</label>
+    <label for="assunto">{{ _('Assunto') }}</label>
     <input type="text" id="assunto" name="assunto" placeholder="Ex: Problema ao acessar o ranking" required>
 
-    <label for="mensagem">Descrição</label>
+    <label for="mensagem">{{ _('Descrição') }}</label>
     <textarea id="mensagem" name="mensagem" rows="6" placeholder="Explique com detalhes o que aconteceu..." required></textarea>
 
-    <button type="submit" class="btn-enviar">Enviar Ticket</button>
+    <button type="submit" class="btn-enviar">{{ _('Enviar Ticket') }}</button>
   </form>
 </div>
 </body>

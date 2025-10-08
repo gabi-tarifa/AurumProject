@@ -9,11 +9,11 @@
 <body>
   <div class="container">
     <div class="card sucesso">
-      <h1>Parabéns! 🎉</h1>
-      <p>Você concluiu com sucesso a lição <strong>{{ tarefa.numero_tarefa if tarefa.numero_tarefa else "atual" }}</strong>.</p>
-      <p>Continue avançando para desbloquear mais conquistas!</p>
+      <h1>{{ _('Parabéns! ') }}🎉</h1>
+      <p>{{ _('Você concluiu com sucesso a lição ') }}<strong>{{ tarefa.numero_tarefa if tarefa.numero_tarefa else "atual" }}</strong>.</p>
+      <p>{{ _('Continue avançando para desbloquear mais conquistas!') }}</p>
       
-      <a href="{{ url_for('ver_modulo', id_modulo=id_modulo) }}" class="btn">Voltar ao módulo</a>
+      <a href="{{ url_for('ver_modulo', id_modulo=id_modulo) }}" class="btn">{{ _('Voltar ao módulo') }}</a>
     </div>
   </div>
 </body>
