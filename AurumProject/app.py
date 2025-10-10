@@ -1399,8 +1399,8 @@ def send_email_via_api(destinatario, assunto, conteudo):
     )
 
     try:
-        #sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
-        sg = SendGridAPIClient("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") #Local
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
+        #sg = SendGridAPIClient("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") #Local
         response = sg.send(message)
         print(f"[SendGrid] Status: {response.status_code}")
         return response.status_code
