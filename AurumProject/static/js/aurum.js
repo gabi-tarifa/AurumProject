@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnLogin = document.getElementById("login-btn");
 
     btnLogin.addEventListener("click", async () => {
-        const emailOuNome = document.querySelector('#login-screen input[placeholder="E-mail ou nome de usuário"]').value;
+        const emailOuNome = (document.querySelector('#login-screen input[placeholder="E-mail ou nome de usuário"]').value).toLowerCase();
         const senha = document.querySelector('#login-screen input[placeholder="Senha"]').value;
 
         if (!emailOuNome || !senha) {

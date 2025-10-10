@@ -1,3 +1,7 @@
+import ssl
+import certifi
+ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())
+
 import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
@@ -23,6 +27,8 @@ from setup_conteudo import criar_conteudo
 from flask_mail import Mail, Message
 import random, string
 import re
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail as sgMail
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -43,12 +49,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "grupomoneto2025@gmail.com"
-app.config['MAIL_PASSWORD'] = "nzstkfupqrjdyoun"
-app.config['MAIL_DEFAULT_SENDER'] = ("Suporte Aurum", "grupomoneto2025@gmail.com")
+app.config['MAIL_USERNAME'] = "apikey"
+app.config['MAIL_PASSWORD'] = "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"
+app.config['MAIL_DEFAULT_SENDER'] = ('Suporte Aurum', 'grupomoneto2025@gmail.com')
 mail = Mail(app)
 
 
@@ -110,35 +116,11 @@ def checar_ofensivas():
                 ofensiva.dia_anterior = ofensiva.dia_hoje
                 ofensiva.dia_hoje = False
                 continue
-
-                
-            # Move "dia_hoje" para "dia_anterior"
-            ofensiva.dia_anterior = ofensiva.dia_hoje
-            ofensiva.dia_hoje = False
-
-            # Se ontem teve atividade, mantém a sequência
-            if ofensiva.data_ultima_atividade == ontem and ofensiva.dia_anterior:
-                ofensiva.sequencia_atual += 1
             else:
+                ofensiva.dia_anterior = ofensiva.dia_hoje
+                ofensiva.dia_hoje = False
                 ofensiva.sequencia_atual = 0
 
-            # Atualiza recorde
-            if ofensiva.sequencia_atual > ofensiva.recorde:
-                ofensiva.recorde = ofensiva.sequencia_atual
-
-            # Atualiza a data da última checagem
-            ofensiva.data_ultima_atividade = hoje
-
-            if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
-                desbloquear_conquista(ofensiva.id_usuario, _("conquista_primeira_ofensiva_nome"))
-            if ofensiva.sequencia_atual >= 7 or ofensiva.recorde >= 7:
-                desbloquear_conquista(ofensiva.id_usuario, _("conquista_semana_fogo_nome"))
-            if ofensiva.sequencia_atual >= 30 or ofensiva.recorde >= 30:
-                desbloquear_conquista(ofensiva.id_usuario, _("conquista_persistente_nome"))
-            if ofensiva.sequencia_atual >= 180 or ofensiva.recorde >= 180:
-                desbloquear_conquista(ofensiva.id_usuario, _("conquista_imparavel_nome"))
-            if ofensiva.sequencia_atual >= 365 or ofensiva.recorde >= 365:
-                desbloquear_conquista(ofensiva.id_usuario, _("conquista_lenda_constancia_nome"))
 
         db.session.commit()
     
@@ -223,10 +205,6 @@ def login_page():
 @login_manager.user_loader
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
-    
-@app.route("/debug-db")
-def debug_db():
-    return f"Usando URI: {app.config['SQLALCHEMY_DATABASE_URI']}"
 
 # Página do questionário de entrada
 @app.route("/questionario")
@@ -1244,27 +1222,10 @@ def concluir_tarefa(id_modulo, numero_tarefa):
 
         if not ofensiva.dia_hoje:
             ofensiva.data_ultima_atividade = datetime.now()
-            if not ofensiva.dia_anterior:
-                if ofensiva.sequencia_atual > ofensiva.recorde:
-                    ofensiva.recorde = ofensiva.sequencia_atual
-                ofensiva.sequencia_atual = 1
-            else:
-                ofensiva.sequencia_atual += 1
-                if ofensiva.sequencia_atual > ofensiva.recorde:
-                    ofensiva.recorde = ofensiva.sequencia_atual
-
-    dia_semana = datetime.now().weekday()  # 0 = segunda, 6 = domingo
-
-    if not ofensiva.dia_hoje:
-        ofensiva.data_ultima_atividade = datetime.now()
-        if not ofensiva.dia_anterior:
-            if ofensiva.sequencia_atual > ofensiva.recorde:
-                ofensiva.recorde = ofensiva.sequencia_atual
             ofensiva.sequencia_atual = 1
-        else:
-            ofensiva.sequencia_atual += 1
             if ofensiva.sequencia_atual > ofensiva.recorde:
-                ofensiva.recorde = ofensiva.sequencia_atual
+                ofensiva.recorde = ofensiva.s
+
 
     
     if ofensiva.sequencia_atual >= 1 or ofensiva.recorde >= 1:
@@ -1310,7 +1271,6 @@ def licao_sucesso(numero_tarefa, id_modulo):
 
     return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo)
 
-
 reset_codes = {}
 
 @app.route("/esqueci_senha", methods=["GET", "POST"])
@@ -1324,12 +1284,8 @@ def esqueci_senha():
             codigo = ''.join(random.choices(string.digits, k=6))
             reset_codes[email] = codigo
 
-            msg = Message(
-                subject="Recuperação de Senha - Aurum",
-                recipients=[email],
-                body=f"Olá {usuario.nome}!\n\nSeu código de recuperação de senha é: {codigo}\n\nUse-o para redefinir sua senha no Aurum."
-            )
-            mail.send(msg)
+            corpo = f"Olá {usuario.nome}!<br><br>Seu código de recuperação de senha é: {codigo}<br><br>Use-o para redefinir sua senha no Aurum."
+            send_email_via_api(email, "Recuperação de Senha - Aurum", corpo)
 
             flash("Um código de verificação foi enviado para seu e-mail.")
             return redirect(url_for("resetar_senha", email=email))
@@ -1397,50 +1353,62 @@ def enviar_ticket():
         ticket_id = random.randint(10000000, 99999999)
 
         # email para o suporte
-        msg_suporte = Message(
-            subject=f"[SUPORTE] Ticket {ticket_id} - {assunto}",
-            sender=("Aurum Suporte", email_usuario),
-            recipients=["grupomoneto2025@gmail.com"]  # altere para o email real do suporte
-        )
-        msg_suporte.body = f"""
-        Novo ticket recebido:
+        # suporte
+        corpo_suporte = f"""
+            Novo ticket recebido:<br><br>
 
-        ID do Ticket: {ticket_id}
-        Nome: {nome}
-        Email: {email_usuario}
-        Assunto: {assunto}
-        Mensagem:
-        {mensagem}
+            ID do Ticket: {ticket_id}<br>
+            Nome: {nome}<br>
+            Email: {email_usuario}<br>
+            Assunto: {assunto}<br>
+            Mensagem:<br>
+            {mensagem}
         """
-        mail.send(msg_suporte)
+        send_email_via_api("grupomoneto2025@gmail.com", f"[SUPORTE] Ticket {ticket_id} - {assunto}", corpo_suporte)
 
-        # email de confirmação para o usuário
-        msg_usuario = Message(
-            subject=f"[Aurum] Recebemos seu ticket #{ticket_id}",
-            sender=("Aurum Suporte", "seu_email@gmail.com"),
-            recipients=[email_usuario]
-        )
-        msg_usuario.body = f"""
-        Olá {nome},
+        corpo_usuario = f"""
+            Olá {nome},<br><br>
 
-        Recebemos sua solicitação de suporte. Nosso time entrará em contato em breve.
-        
-        ID do seu ticket: {ticket_id}
-        Assunto: {assunto}
+            Recebemos sua solicitação de suporte. Nosso time entrará em contato em breve.<br><br>
 
-        Descrição:
-        {mensagem}
+            ID do seu ticket: {ticket_id}<br>
+            Assunto: {assunto}<br><br>
 
-        Obrigado por nos contatar,
-        Equipe Aurum
-        """
-        mail.send(msg_usuario)
+            Descrição:<br>
+            {mensagem}
+            <br><br>
+            Obrigado por nos contatar,<br>
+            Equipe Aurum
+            """
+        send_email_via_api(email_usuario, f"[Aurum] Recebemos seu ticket #{ticket_id}", corpo_usuario)
 
         flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
         return redirect(url_for("starting_page"))
 
     return render_template("enviarticket.html")
 
+def send_email_via_api(destinatario, assunto, conteudo):
+    # Garante que o destinatário seja string e não tupla
+    if isinstance(destinatario, (tuple, list)):
+        destinatario = destinatario[0]  # pega só o e-mail, se vier em tupla
+
+    message = sgMail(
+        from_email='grupomoneto2025@gmail.com',
+        to_emails=destinatario,  # aqui deve ser string tipo "exemplo@gmail.com"
+        subject=assunto,
+        html_content=conteudo
+    )
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
+        #sg = SendGridAPIClient(app.config['MAIL_PASSWORD']) #Local
+        response = sg.send(message)
+        print(f"[SendGrid] Status: {response.status_code}")
+        return response.status_code
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")
+        return "ERRO"
+    
 if __name__ == "__main__":
     #app.run(debug=True)
     port = int(os.environ.get("PORT", 5000))
