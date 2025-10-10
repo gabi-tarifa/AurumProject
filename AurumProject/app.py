@@ -1,6 +1,6 @@
-import ssl
+"""import ssl
 import certifi
-ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())
+ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())"""
 
 import math
 from flask import Flask, request, jsonify, render_template
@@ -42,8 +42,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 app.config["BABEL_DEFAULT_LOCALE"] = "pt"
@@ -1398,6 +1398,6 @@ def send_email_via_api(destinatario, assunto, conteudo):
         return "ERRO"
     
 if __name__ == "__main__":
-    app.run(debug=True)
-    #port = int(os.environ.get("PORT", 5000))
-    #app.run(host="0.0.0.0", port=port)
+    #app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
