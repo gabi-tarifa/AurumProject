@@ -24,7 +24,6 @@ from flask_babel import Babel, _, format_datetime
 from setup_modulos import criar_modulos
 from setup_tarefas import criar_tarefas
 from setup_conteudo import criar_conteudo
-from flask_mail import Mail, Message
 import random, string
 import re
 from sendgrid import SendGridAPIClient
@@ -46,16 +45,6 @@ login_manager.login_message_category = "info"
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-#print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
-
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "apikey"
-app.config['MAIL_PASSWORD'] = os.environ.get("SENDGRID_API_KEY")
-app.config['MAIL_DEFAULT_SENDER'] = ('Suporte Aurum', 'grupomoneto2025@gmail.com')
-mail = Mail(app)
-
 
 app.config["BABEL_DEFAULT_LOCALE"] = "pt"
 app.config["BABEL_SUPPORTED_LOCALES"] = ["pt", "en"]
