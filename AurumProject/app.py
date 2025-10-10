@@ -1,6 +1,6 @@
-"""import ssl
+import ssl
 import certifi
-ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())"""
+ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())
 
 import math
 from flask import Flask, request, jsonify, render_template
@@ -24,6 +24,7 @@ from flask_babel import Babel, _, format_datetime
 from setup_modulos import criar_modulos
 from setup_tarefas import criar_tarefas
 from setup_conteudo import criar_conteudo
+from flask_mail import Mail, Message
 import random, string
 import re
 from sendgrid import SendGridAPIClient
@@ -45,6 +46,16 @@ login_manager.login_message_category = "info"
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+#print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
+
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = "apikey"
+app.config['MAIL_PASSWORD'] = "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"
+app.config['MAIL_DEFAULT_SENDER'] = ('Suporte Aurum', 'grupomoneto2025@gmail.com')
+mail = Mail(app)
+
 
 app.config["BABEL_DEFAULT_LOCALE"] = "pt"
 app.config["BABEL_SUPPORTED_LOCALES"] = ["pt", "en"]
@@ -1355,17 +1366,17 @@ def enviar_ticket():
         send_email_via_api("grupomoneto2025@gmail.com", f"[SUPORTE] Ticket {ticket_id} - {assunto}", corpo_suporte)
 
         corpo_usuario = f"""
-            Olá {nome}, <br><br>
+            Olá {nome},<br><br>
 
             Recebemos sua solicitação de suporte. Nosso time entrará em contato em breve.<br><br>
 
-            ID do seu ticket: {ticket_id} <br>
-            Assunto: {assunto} <br><br>
+            ID do seu ticket: {ticket_id}<br>
+            Assunto: {assunto}<br><br>
 
-            Descrição: <br>
+            Descrição:<br>
             {mensagem}
             <br><br>
-            Obrigado por nos contatar, <br>
+            Obrigado por nos contatar,<br>
             Equipe Aurum
             """
         send_email_via_api(email_usuario, f"[Aurum] Recebemos seu ticket #{ticket_id}", corpo_usuario)
@@ -1388,14 +1399,14 @@ def send_email_via_api(destinatario, assunto, conteudo):
     )
 
     try:
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
+        #sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
+        sg = SendGridAPIClient("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") #Local
         response = sg.send(message)
         print(f"[SendGrid] Status: {response.status_code}")
         return response.status_code
     except Exception as e:
         print(f"Erro ao enviar e-mail: {e}")
         return "ERRO"
-    
 if __name__ == "__main__":
     #app.run(debug=True)
     port = int(os.environ.get("PORT", 5000))
