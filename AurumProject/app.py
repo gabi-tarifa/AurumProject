@@ -24,7 +24,6 @@ from flask_babel import Babel, _, format_datetime
 from setup_modulos import criar_modulos
 from setup_tarefas import criar_tarefas
 from setup_conteudo import criar_conteudo
-from flask_mail import Mail, Message
 import random, string
 import re
 from sendgrid import SendGridAPIClient
@@ -48,15 +47,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco De
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
-
-app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "apikey"
-app.config['MAIL_PASSWORD'] = "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"
-app.config['MAIL_DEFAULT_SENDER'] = ('Suporte Aurum', 'grupomoneto2025@gmail.com')
-mail = Mail(app)
-
 
 app.config["BABEL_DEFAULT_LOCALE"] = "pt"
 app.config["BABEL_SUPPORTED_LOCALES"] = ["pt", "en"]
@@ -1400,8 +1390,7 @@ def send_email_via_api(destinatario, assunto, conteudo):
     )
 
     try:
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
-        #sg = SendGridAPIClient(app.config['MAIL_PASSWORD']) #Local
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         print(f"[SendGrid] Status: {response.status_code}")
         return response.status_code
