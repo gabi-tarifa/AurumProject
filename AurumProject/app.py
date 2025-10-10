@@ -42,8 +42,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 app.config["BABEL_DEFAULT_LOCALE"] = "pt"
@@ -1355,17 +1355,17 @@ def enviar_ticket():
         send_email_via_api("grupomoneto2025@gmail.com", f"[SUPORTE] Ticket {ticket_id} - {assunto}", corpo_suporte)
 
         corpo_usuario = f"""
-            Olá {nome},<br><br>
+            Olá {nome}, <br><br>
 
             Recebemos sua solicitação de suporte. Nosso time entrará em contato em breve.<br><br>
 
-            ID do seu ticket: {ticket_id}<br>
-            Assunto: {assunto}<br><br>
+            ID do seu ticket: {ticket_id} <br>
+            Assunto: {assunto} <br><br>
 
-            Descrição:<br>
+            Descrição: <br>
             {mensagem}
             <br><br>
-            Obrigado por nos contatar,<br>
+            Obrigado por nos contatar, <br>
             Equipe Aurum
             """
         send_email_via_api(email_usuario, f"[Aurum] Recebemos seu ticket #{ticket_id}", corpo_usuario)
@@ -1389,7 +1389,7 @@ def send_email_via_api(destinatario, assunto, conteudo):
 
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
-        #sg = SendGridAPIClient(app.config['MAIL_PASSWORD']) #Local
+        g = SendGridAPIClient("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") #Local
         response = sg.send(message)
         print(f"[SendGrid] Status: {response.status_code}")
         return response.status_code
@@ -1398,6 +1398,6 @@ def send_email_via_api(destinatario, assunto, conteudo):
         return "ERRO"
     
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
