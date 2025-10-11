@@ -43,19 +43,19 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "apikey"
-app.config['MAIL_PASSWORD'] = "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"
-app.config['MAIL_DEFAULT_SENDER'] = ('Suporte Aurum', 'grupomoneto2025@gmail.com')
+app.config['MAIL_USERNAME'] = "grupomoneto2025@gmail.com"
+app.config['MAIL_PASSWORD'] = "nzstkfupqrjdyoun"
+app.config['MAIL_DEFAULT_SENDER'] = ("Suporte Aurum", "grupomoneto2025@gmail.com")
 mail = Mail(app)
-
 
 app.config["BABEL_DEFAULT_LOCALE"] = "pt"
 app.config["BABEL_SUPPORTED_LOCALES"] = ["pt", "en"]
@@ -1350,6 +1350,10 @@ def enviar_ticket():
 
         # gerar um ID de oito digitos para o ticket
         ticket_id = random.randint(10000000, 99999999)
+        
+        titulo_suporte = f"[SUPORTE] Ticket {ticket_id} - {assunto}"
+
+        email_suporte = "grupomoneto2025@gmail.com"
 
         # email para o suporte
         # suporte
@@ -1363,7 +1367,9 @@ def enviar_ticket():
             Mensagem:<br>
             {mensagem}
         """
-        send_email_via_api("grupomoneto2025@gmail.com", f"[SUPORTE] Ticket {ticket_id} - {assunto}", corpo_suporte)
+        send_email_via_api(email_suporte, titulo_suporte, corpo_suporte)
+
+        titulo_suporte_usuario = f"[Aurum] Recebemos seu ticket #{ticket_id}"
 
         corpo_usuario = f"""
             Olá {nome},<br><br>
@@ -1379,7 +1385,7 @@ def enviar_ticket():
             Obrigado por nos contatar,<br>
             Equipe Aurum
             """
-        send_email_via_api(email_usuario, f"[Aurum] Recebemos seu ticket #{ticket_id}", corpo_usuario)
+        send_email_via_api(email_usuario, titulo_suporte, corpo_usuario)
 
         flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
         return redirect(url_for("starting_page"))
@@ -1398,16 +1404,38 @@ def send_email_via_api(destinatario, assunto, conteudo):
         html_content=conteudo
     )
 
+    print(os.environ.get('SENDGRID_API_KEY'))
+
+    if os.environ.get('SENDGRID_API_KEY') == None:
+        sucesso = send_email_flask_mail(destinatario, assunto, conteudo)
+        print(sucesso)
+        if sucesso:
+            return
+
     try:
-        #sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) #Deploy
-        sg = SendGridAPIClient("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") #Local
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         print(f"[SendGrid] Status: {response.status_code}")
         return response.status_code
     except Exception as e:
         print(f"Erro ao enviar e-mail: {e}")
         return "ERRO"
+    
+def send_email_flask_mail(destinatario, assunto, conteudo)->bool:
+    message = Message(
+        subject=assunto,
+        sender=("Aurum Suporte", "grupomoneto2025@gmail.com"),
+        recipients=[destinatario],
+        body=conteudo
+    )
+    try:
+        mail.send(message)
+        return True
+    except Exception as e:
+        print(f"Erro ao enviar o email via Flask Mail: {e}")
+        return False
+
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

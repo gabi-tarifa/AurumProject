@@ -87,10 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (response.ok) {
-                alert(data.mensagem);
                 window.location.href = "/introducao";  // Redireciona para a página de perguntas
             } else {
-                alert(data.mensagem);
+                getElementById("textoerro").textContent = "Usuário ou senha incorreta"
             }
 
         } catch (error) {
