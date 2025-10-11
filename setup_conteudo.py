@@ -23,10 +23,10 @@ def criar_conteudo():
 
             # MINI-AULA 3 — Necessidade vs. Desejo
             {"numero_tarefa": 3, "id_modulo": 1, "tipo": "texto", "conteudo": "lesson3_text"},
-            {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q1", "alternativas": "lesson3_q1_a1||lesson3_q1_a2||lesson3_q1_a3||lesson3_q1_a4", "correta": 2},
-            {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q2", "alternativas": "lesson3_q2_a1||lesson3_q2_a2||lesson3_q2_a3||lesson3_q2_a4", "correta": 2},
+            {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q1", "alternativas": "lesson3_q1_a1||lesson3_q1_a2||lesson3_q1_a3||lesson3_q1_a4", "correta": 1},
+            {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q2", "alternativas": "lesson3_q2_a1||lesson3_q2_a2||lesson3_q2_a3||lesson3_q2_a4", "correta": 3},
             {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q3", "alternativas": "lesson3_q3_a1||lesson3_q3_a2||lesson3_q3_a3||lesson3_q3_a4", "correta": 1},
-            {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q4", "alternativas": "lesson3_q4_a1||lesson3_q4_a2||lesson3_q4_a3||lesson3_q4_a4", "correta": 2},
+            {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q4", "alternativas": "lesson3_q4_a1||lesson3_q4_a2||lesson3_q4_a3||lesson3_q4_a4", "correta": 1},
             {"numero_tarefa": 3, "id_modulo": 1, "tipo": "quiz", "pergunta": "lesson3_q5", "alternativas": "lesson3_q5_a1||lesson3_q5_a2||lesson3_q5_a3||lesson3_q5_a4", "correta": 2},
 
             # MINI-AULA 4 — Criando um Orçamento

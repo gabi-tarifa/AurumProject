@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnLogin = document.getElementById("login-btn");
 
     btnLogin.addEventListener("click", async () => {
-        const emailOuNome = document.querySelector('#login-screen input[placeholder="E-mail ou nome de usuário"]').value;
+        const emailOuNome = (document.querySelector('#login-screen input[placeholder="E-mail ou nome de usuário"]').value).toLowerCase();
         const senha = document.querySelector('#login-screen input[placeholder="Senha"]').value;
 
         if (!emailOuNome || !senha) {
@@ -87,10 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (response.ok) {
-                alert(data.mensagem);
                 window.location.href = "/introducao";  // Redireciona para a página de perguntas
             } else {
-                alert(data.mensagem);
+                getElementById("textoerro").textContent = "Usuário ou senha incorreta"
             }
 
         } catch (error) {
