@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnLogin.addEventListener("click", async () => {
         const emailOuNome = (document.querySelector('#login-screen input[placeholder="E-mail ou nome de usuário"]').value).toLowerCase();
         const senha = document.querySelector('#login-screen input[placeholder="Senha"]').value;
+        const textoerro = document.getElementById("textoerro");
 
         if (!emailOuNome || !senha) {
             alert("Por favor, preencha todos os campos.");
@@ -129,12 +130,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.ok) {
                 window.location.href = "/introducao";  // Redireciona para a página de perguntas
             } else {
-                getElementById("textoerro").textContent = "Usuário ou senha incorreta";
+                textoerro.textContent = "Usuário ou senha incorreta";
             }
 
         } catch (error) {
             console.error("Erro ao fazer login:", error);
-            getElementById("textoerro").textContent = "Usuário ou senha incorreta";
+            textoerro.textContent = "Usuário ou senha incorreta";
         }
     });
 });
