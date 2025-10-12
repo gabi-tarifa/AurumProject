@@ -37,7 +37,7 @@ body {
   color: #f4d160;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
@@ -943,7 +943,6 @@ label{
 /* jogador próprio - gradiente entre posição e amarelo */
 .ownplayer {
     font-weight: bold;
-    color: black;
     background: linear-gradient(90deg, #253b71 50%, rgb(227, 227, 0) 100%);
     box-shadow: 0 0 20px rgb(153, 153, 4);
     border-radius: 8px;
@@ -953,15 +952,12 @@ label{
 /* combinações com posição */
 .first.ownplayer {
     background: linear-gradient(90deg, goldenrod 50%, rgb(227, 227, 0) 100%);
-    color: #000;
 }
 .second.ownplayer {
     background: linear-gradient(90deg, silver 50%, rgb(227, 227, 0) 100%);
-    color: #000;
 }
 .third.ownplayer {
     background: linear-gradient(90deg, #cd7f32 50%, rgb(227, 227, 0) 100%);
-    color: #000;
 }
 
 /* destaque dos 3 primeiros */
