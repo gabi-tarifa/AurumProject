@@ -89,14 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await response.json();
             if (response.ok) {
-                alert(data.mensagem);
                 window.location.href = "/login"; // Redireciona após cadastro
             } else {
-                alert(data.mensagem);
+                texto.textContent = "Opa, algo deu errado. Tente novamente mais tarde"
             }
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
-            alert("Erro ao cadastrar. Verifique sua conexão.");
+            texto.textContent = "Erro ao cadastrar. Verifique sua conexão.";
         }
     });
 });
