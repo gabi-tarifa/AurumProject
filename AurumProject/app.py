@@ -104,7 +104,6 @@ def checar_ofensivas():
     """
     with app.app_context():
         hoje = date.today()
-        ontem = hoje - timedelta(days=1)
 
         ofensivas = Ofensiva.query.all()
 
@@ -293,7 +292,14 @@ def licoes(numero_tarefa, id_modulo):
 # 🆕 Página de Cadastro
 @app.route("/cadastro")
 def cadastro_page():
-    return render_template("cadastro.html")
+    idiomas = [
+        {"code": "pt", "name": "Português"},
+        {"code": "en", "name": "English"}
+    ]
+    return render_template(
+        "cadastro.html",
+        idiomas=idiomas
+    )
 
 # 🏆 Página de Ranking
 @app.route("/ranking")
@@ -673,7 +679,8 @@ def cadastro():
     nome = dados.get("nome")
     email = dados.get("email")
     senha = dados.get("senha")
-    print(nome, email, senha)
+    idioma = dados.get("idioma")
+    print(nome, email, senha, idioma)
     if not nome or not email or not senha:
         return jsonify({"mensagem": "Por favor, preencha todos os campos."}), 400
 
@@ -682,7 +689,7 @@ def cadastro():
 
     senha_hash = generate_password_hash(senha)
 
-    novo_usuario = Usuario(nome=nome, email=email, senha=senha_hash)
+    novo_usuario = Usuario(nome=nome, email=email, senha=senha_hash, idioma=idioma)
     db.session.add(novo_usuario)
     db.session.commit()
 
@@ -1385,7 +1392,7 @@ def enviar_ticket():
             Obrigado por nos contatar,<br>
             Equipe Aurum
             """
-        send_email_via_api(email_usuario, titulo_suporte, corpo_usuario)
+        send_email_via_api(email_usuario, titulo_suporte_usuario, corpo_usuario)
 
         flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
         return redirect(url_for("starting_page"))

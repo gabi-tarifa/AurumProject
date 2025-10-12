@@ -16,15 +16,19 @@
   <input type="email" placeholder="Email" />
   <input type="password" placeholder="Senha" />
   <input type="password" placeholder="Confirmar Senha" />
-  <span id="textoerro" class="textoerro"></span><br>
+  <input type="date" id="data_nascimento" required />
+  <select id="idioma" data-url="{{ url_for('api_idioma') }}">
+    {% for lang in idiomas %}
+    {% set sel = 'selected' if lang.code == idioma else '' %}
+        <option value="{{ lang.code }}" {{ sel }}>
+          {{ lang.name }}
+        </option>
+    {% endfor %}
+  </select>
+  <span id="textoerro" class="textoerro"><br></span>
   <button class="btn" id="signup-btn">{{ _('Criar conta') }}</button>
-  <div class="divider">{{ _('OU') }}</div>
-  <div class="social">
-    <button><img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="G" /> GOOGLE</button>
-    <button><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="F" /> FACEBOOK</button>
-  </div>
   <div class="terms">
-    {{ _('Ao se cadastrar, você concorda com os nossos Termos e Política de Privacidade.') }}
+    {{ _('Ao se cadastrar, você concorda com os nossos Termos e Política de Privacidade.') }} <br>
   </div>
   <button type="button" class="btn" id="btnVoltar" onclick="window.location.href='/'" >{{ _('← Voltar ao início') }}</button>
 </div>
