@@ -29,6 +29,9 @@ import random, string
 import re
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail as sgMail
+import cloudinary
+import cloudinary.uploader
+
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -1075,6 +1078,12 @@ def logout():
     flash("Você saiu da sua conta.", "info")
     return redirect(url_for("login_page"))    
 
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
+)
+
 UPLOAD_FOLDER = 'static/uploads/'
 UPLOADBG_FOLDER = 'static/uploadsBG/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -1092,28 +1101,51 @@ def atualizar_perfil():
     fundo = request.files['foto_fundo']
     usuario = get_usuario_atual()
 
-    if foto and allowed_file(foto.filename):
-        filename = secure_filename(f"{usuario.id}_{foto.filename}")
-        caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        filepath = caminho.removeprefix("static/")
-        foto.save(caminho)
-        usuario.profilepicture = filepath  # Salva no banco o caminho do arquivo
-    
-    if fundo and allowed_file(fundo.filename):
-        filename_fundo = secure_filename(f"{usuario.id}_fundo_{fundo.filename}")
-        caminho_fundo = os.path.join(app.config['UPLOADBG_FOLDER'], filename_fundo)
-        filepathbg = caminho_fundo.removeprefix("static/")
-        fundo.save(caminho_fundo)
-        usuario.backgroundpicture = filepathbg  # ← nova coluna
+    use_cloudinary = all([
+        os.getenv("CLOUDINARY_CLOUD_NAME"),
+        os.getenv("CLOUDINARY_API_KEY"),
+        os.getenv("CLOUDINARY_API_SECRET")
+    ])
 
-    usuario.nome = nome
+    try:
+        # Upload da foto de perfil
+        if foto and allowed_file(foto.filename):
+            filename = secure_filename(f"{usuario.id}_{foto.filename}")
 
-    desbloquear_conquista(current_user.id, "conquista_customizou_perfil_nome")
+            if use_cloudinary:
+                # Envia pro Cloudinary
+                upload_result = cloudinary.uploader.upload(foto, folder="aurum/perfis")
+                usuario.profilepicture = upload_result['secure_url']
+            else:
+                # Upload local (fallback)
+                caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                filepath = caminho.removeprefix("static/")
+                foto.save(caminho)
+                usuario.profilepicture = filepath
 
-    salvar_usuario(usuario)  # Atualiza o banco com os dados
+        # Upload da imagem de fundo
+        if fundo and allowed_file(fundo.filename):
+            filename_fundo = secure_filename(f"{usuario.id}_fundo_{fundo.filename}")
 
-    flash('Perfil atualizado com sucesso!')
-    return redirect(url_for('perfil_page'))
+            if use_cloudinary:
+                upload_result_bg = cloudinary.uploader.upload(fundo, folder="aurum/fundos")
+                usuario.backgroundpicture = upload_result_bg['secure_url']
+            else:
+                caminho_fundo = os.path.join(app.config['UPLOADBG_FOLDER'], filename_fundo)
+                filepathbg = caminho_fundo.removeprefix("static/")
+                fundo.save(caminho_fundo)
+                usuario.backgroundpicture = filepathbg
+
+        usuario.nome = nome
+        desbloquear_conquista(current_user.id, "conquista_customizou_perfil_nome")
+        salvar_usuario(usuario)
+
+        flash('Perfil atualizado com sucesso!')
+        return redirect(url_for('perfil_page'))
+
+    except Exception as e:
+        print("Erro ao atualizar perfil:", e)
+        return jsonify({"erro": str(e)}), 500
 
 def get_usuario_atual():
     return current_user
