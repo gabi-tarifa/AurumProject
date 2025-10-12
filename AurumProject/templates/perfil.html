@@ -58,8 +58,17 @@
     <main class="main-content">
       <!-- Cabeçalho com imagem -->
       <div class="perfil-cabecalho">
-        <img src="{{ url_for('static', filename=usuario.backgroundpicture) }}" alt="Foto de Fundo" class="imagem-topo">
-        <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto de Perfil" class="avatar">
+        {% if "http" in usuario.backgroundpicture %}
+          <img src="{{ usuario.backgroundpicture }}" alt="Foto de Fundo" class="imagem-topo">
+        {% else %}
+          <img src="{{ url_for('static', filename=usuario.backgroundpicture) }}" alt="Foto de Fundo" class="imagem-topo">
+        {% endif %}
+
+        {% if "http" in usuario.profilepicture %}
+          <img src="{{ usuario.profilepicture }}" alt="Foto de Perfil" class="avatar">
+        {% else %}
+          <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto de Perfil" class="avatar">
+        {% endif %}
       </div>
 
       <!-- Dados do usuário -->
