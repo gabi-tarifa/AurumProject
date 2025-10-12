@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade - Aurum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+    <style>
+        .container {
+            max-width: 800px;
+            width: 80%;
+            padding: 40px;
+        }
+        .content-box {
+            max-height: 75vh;
+            overflow-y: auto;
+            padding: 25px;
+            background-color: #1b2a4a;
+            border-radius: 15px;
+            margin-top: 20px;
+            color: #ccc;
+            line-height: 1.7;
+        }
+        .content-box h3 {
+            color: #f4d160;
+            margin-top: 20px;
+        }
+        .content-box ul {
+            list-style-type: disc;
+            margin-left: 25px;
+        }
+        .content-box li {
+            margin-bottom: 12px;
+        }
+        .content-box p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container active">
+        <div class="header-with-back">
+            <button class="back-btn" onclick="history.back()">← {{ _('Voltar') }}</button>
+            <div class="logo">Aurum</div>
+        </div>
+
+        <h2>{{ _('Política de Privacidade') }}</h2>
+
+        <div class="content-box">
+            <p>{{ _('A Aurum valoriza a privacidade de seus usuários e se compromete a proteger os dados coletados na plataforma. Leia atentamente esta política.') }}</p>
+
+            <h3>1. {{ _('Informações Coletadas') }}</h3>
+            <ul>
+                <li>{{ _('Dados fornecidos pelo usuário durante o cadastro (nome, e-mail, idade, etc.).') }}</li>
+                <li>{{ _('Informações de uso da plataforma, como progresso em quizzes, atividades concluídas e interações com outros usuários.') }}</li>
+                <li>{{ _('Dados de cookies e tecnologias similares para melhorar a experiência de navegação.') }}</li>
+            </ul>
+
+            <h3>2. {{ _('Finalidade do Uso') }}</h3>
+            <ul>
+                <li>{{ _('Personalizar a experiência educacional do usuário.') }}</li>
+                <li>{{ _('Gerar relatórios internos para análise de desempenho e melhorias na plataforma.') }}</li>
+                <li>{{ _('Enviar notificações e informações relacionadas ao uso da Aurum, caso o usuário tenha consentido.') }}</li>
+            </ul>
+
+            <h3>3. {{ _('Compartilhamento de Dados') }}</h3>
+            <ul>
+                <li>{{ _('Não compartilhamos informações pessoais com terceiros sem consentimento, exceto por obrigação legal.') }}</li>
+                <li>{{ _('Dados agregados e anonimizados podem ser usados para pesquisas acadêmicas ou relatórios internos.') }}</li>
+            </ul>
+
+            <h3>4. {{ _('Segurança dos Dados') }}</h3>
+            <ul>
+                <li>{{ _('Implementamos medidas técnicas para proteger informações contra acessos não autorizados, alterações ou perda.') }}</li>
+                <li>{{ _('Apesar dos esforços, nenhum sistema é totalmente seguro; recomendamos que o usuário mantenha a segurança de suas credenciais.') }}</li>
+            </ul>
+
+            <h3>5. {{ _('Direitos do Usuário') }}</h3>
+            <ul>
+                <li>{{ _('Acessar, corrigir ou excluir seus dados pessoais.') }}</li>
+                <li>{{ _('Revogar consentimento para uso de dados a qualquer momento') }}.</li>
+                <li>{{ _('Solicitar esclarecimentos sobre o tratamento das suas informações.') }}</li>
+            </ul>
+
+            <h3>6. {{ _('Retenção de Dados') }}</h3>
+            <ul>
+                <li>{{ _('Dados pessoais são mantidos enquanto a conta estiver ativa ou conforme exigido por lei.') }}</li>
+                <li>{{ _('Após solicitação de exclusão, os dados são removidos de nossos servidores, exceto quando legalmente necessário.') }}</li>
+            </ul>
+
+            <h3>7. {{ _('Alterações na Política') }}</h3>
+            <ul>
+                <li>{{ _('Esta política pode ser atualizada periodicamente para refletir mudanças legais ou melhorias na plataforma.') }}</li>
+                <li>{{ _('O uso contínuo da Aurum após alterações constitui aceitação das novas condições.') }}</li>
+            </ul>
+
+            <h3>8. {{ _('Contato') }}</h3>
+            <p>{{ _('Para dúvidas ou solicitações relacionadas à privacidade, entre em contato pelo e-mail: ') }}<span class="email">privacidade@aurum.edu.br</span>.</p>
+        </div>
+
+        <div class="terms">
+            {{ _('Ao entrar na Aurum, você concorda com os nossos') }}
+            <a href="/termos" class="terms-link">{{ _('Termos de Uso') }}</a>
+            {{ _('e') }}
+            <a href="/privacidade" class="terms-link">{{ _('Política de Privacidade') }}</a>.
+        </div>
+    </div>
+
+</body>
+</html>

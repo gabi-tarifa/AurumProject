@@ -47,15 +47,29 @@ function voltarRecarregando() {
     </div>
   </div>
 
-  <div class="support">
-    <p>{{ _('Não encontrou o que procurava?') }}</p>
-    <button onclick="contatoSuporte()" class="support-btn">{{ _('Entrar em contato com suporte') }}</button>
+<div class="support">
+  <p>{{ _('Não encontrou o que procurava?') }}</p>
+  <button onclick="contatoSuporte()" class="support-btn">{{ _('Entrar em contato com suporte') }}</button>
+
+  <!-- Novos botões -->
+  <div class="policy-buttons">
+    <button onclick="abrirTermos()" class="support-btn">{{ _('Termos de Uso') }}</button>
+    <button onclick="abrirPrivacidade()" class="support-btn">{{ _('Política de Privacidade') }}</button>
+  </div>
+
   <script>
     function contatoSuporte() {
       window.location.href = "/suporte";
     }
+    function abrirTermos() {
+      window.location.href = "/termos";
+    }
+    function abrirPrivacidade() {
+      window.location.href = "/privacidade";
+    }
   </script>
-  </div>
+</div>
+
 </div>
 <script>
   document.querySelectorAll(".faq-question").forEach(button => {

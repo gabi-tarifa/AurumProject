@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranking de Amigos</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+    <link
+      rel="shortcut icon"
+      href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png"
+      type="image/x-icon"
+    />
+  </head>
+
+  <body>
+    <div class="containerTP" id="rank-screen">
+      <!-- MENU LATERAL -->
+      <nav class="sidebar">
+        <a href="{{ url_for('starting_page') }}">
+          <div class="menu-item">
+            <img
+              src="{{ url_for('static', filename='img/open-book.png') }}"
+              class="icon"
+              alt="Aprender"
+            />
+            <span style="color: white;">{{ _('Aprender') }}</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('quiz_page') }}">
+          <div class="menu-item">
+            <img
+              src="{{ url_for('static', filename='img/working-hours.png') }}"
+              class="icon"
+              alt="Quiz"
+            />
+            <span style="color: white;">{{ _('Quiz') }}</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('ranking_page') }}">
+          <div class="menu-item">
+            <img
+              src="{{ url_for('static', filename='img/trophy.png') }}"
+              class="icon"
+              alt="Ranking"
+            />
+            <span style="color: white;">{{ _('Ranking') }}</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('ranking_amigos_page') }}">
+          <div class="menu-item active">
+            <img 
+            src="{{ url_for('static', filename='img/friends.png') }}" 
+            class="icon" 
+            alt="Amigos" />
+            <span style="color: white;">{{ _('Amigos') }}</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('perfil_page') }}">
+          <div class="menu-item">
+            <img
+              src="{{ url_for('static', filename='img/profile.png') }}"
+              class="icon"
+              alt="Perfil"
+            />
+            <span style="color: white;">{{ _('Perfil') }}</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('store_page') }}">
+          <div class="menu-item">
+            <img
+              src="{{ url_for('static', filename='img/store.png') }}"
+              class="icon"
+              alt="Loja"
+            />
+            <span style="color: white;">{{ _('Loja') }}</span>
+          </div>
+        </a>
+
+        <div class="menu-item" id="openMais">
+          <img
+            src="{{ url_for('static', filename='img/info.png') }}"
+            class="icon"
+            alt="Mais"
+          />
+          {{ _('Mais') }}
+        </div>
+      </nav>
+
+      <!-- Submenu do botão "Mais" -->
+      <div class="submenu-mais oculto" id="submenuMais">
+        <ul>
+          <li>
+            <a href="/ajuda">
+              <img
+                src="{{ url_for('static', filename='img/help.png') }}"
+                class="smallimage"
+                alt="Ajuda"
+              />
+              <span class="ajuda">{{ _('Ajuda') }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="/config">
+              <img
+                src="{{ url_for('static', filename='img/gear.png') }}"
+                class="smallimage"
+                alt="Configurações"
+              />
+              <span class="config">{{ _('Configurações') }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="/logout">
+              <img
+                src="{{ url_for('static', filename='img/exit.png') }}"
+                class="smallimage"
+                alt="Sair"
+              />
+              <span class="sair">{{ _('Sair') }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- CONTEÚDO PRINCIPAL -->
+      <main class="main-content">
+        <section class="ranking-box">
+          
+          <h1>{{ _('RANKING DE AMIGOS') }}</h1>
+
+          <ul class="ranking-list">
+            <span class="cabecalho">
+              <span></span>
+              <span>{{ _('Apelido') }}</span>
+              <span>{{ _('Pontos') }}</span>
+              <span>{{ _('Tempo de Amizade') }}</span>
+            </span>
+
+            {% for usuario in ranking %}
+              {% set classes = [] %}
+              {% if loop.index == 1 %}
+                {% set _ = classes.append('first') %}
+              {% elif loop.index == 2 %}
+                {% set _ = classes.append('second') %}
+              {% elif loop.index == 3 %}
+                {% set _ = classes.append('third') %}
+              {% endif %}
+
+              {% if usuario.id == current_user.id %}
+                {% set _ = classes.append('ownplayer') %}
+              {% endif %}
+
+              <li class="{{ ' '.join(classes) }}">
+                <span>#{{ loop.index }}</span>
+
+                <span class="icon">
+                  <div class="profile-hover-container" data-user-id="{{ usuario.id }}">
+                    <img
+                      src="{{ url_for('static', filename=usuario.profilepicture) }}"
+                      class="profile-picture"
+                    />
+
+                    {% if usuario.id != current_user.id %}
+                      {% set id1, id2 = (current_user.id, usuario.id) | sort %}
+                      {% set amizade = amizades.get((id1, id2)) %}
+                      <div class="friend-status">👥</div>
+                    {% endif %}
+
+                    <div class="profile-hover-box" role="dialog" aria-hidden="true">
+                      <img
+                        src="{{ url_for('static', filename=usuario.profilepicture) }}"
+                        class="hover-picture"
+                      />
+                      <div class="hover-info">
+                        <span class="hover-name">{{ usuario.nome }}</span>
+                        {% if usuario.id != current_user.id %}
+                          <button class="friend-btn" disabled>
+                            👥 {{ gettext('Amigos') }}
+                          </button>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </span>
+
+                <span class="name">{{ usuario.nome }}</span>
+                <span>{{ usuario.pontos_semanais }}</span>
+
+                {% if usuario.id == current_user.id %}
+                  <span>-</span>
+                {% else %}
+                  <span>{{ tempos_amizade[usuario.id] }} {{ gettext('dias') }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      </main>
+
+      <!-- BARRA LATERAL DIREITA -->
+      <aside class="info-box">
+        <div class="info">
+          <span class="golden">{{ coins }}</span>
+          <img src="{{ url_for('static', filename='img/stack-of-coins.png') }}" class="icon" />
+        </div>
+
+        <div class="info">
+          <img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon" />
+          <span class="golden">{{ ofensiva.sequencia_atual }}</span>
+          <br />
+          <span class="darkgolden">
+            {% if ofensiva.sequencia_atual == 1 %}
+              {{ _('Dia consecutivo') }}
+            {% else %}
+              {{ _('Dias consecutivos') }}
+            {% endif %}
+          </span>
+        </div>
+
+        <div class="info">
+          <img
+            src="{{ url_for('static', filename='img/award.png') }}"
+            alt="Trofeu"
+            class="icon"
+          />
+          <span class="golden">{{ ofensiva.recorde }}</span>
+          <br />
+          <span class="darkgolden">{{ _('Recorde') }}</span>
+        </div>
+
+        <div class="info">
+          <span class="golden">{{ pontos }}</span>
+          <br />
+          <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
+        </div>
+
+        <div class="info">
+          <span style="color: goldenrod;">{{ _('Registro Semanal') }}</span>
+          <div class="registro-semanal">
+            {% for concluido in ofensiva.dias_semana %}
+              {% set index = loop.index0 %}
+              {% if concluido %}
+                <div class="dia concluido"></div>
+              {% elif index == dia_semana %}
+                <div class="dia atual"></div>
+              {% else %}
+                <div class="dia futuro"></div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <span class="darkgolden">{{ _('Recompensa: 50') }}</span>
+          <img
+            src="{{ url_for('static', filename='img/stack-of-coins.png') }}"
+            class="smallimage"
+            alt="moedas"
+          />
+
+          {% if semana_completa %}
+            <div class="bonus-confirmado">
+              ✅ {{ _('Semana concluída! Você receberá sua recompensa.') }}
+            </div>
+          {% endif %}
+        </div>
+
+        <button class="quiz-btn info">
+          Quiz
+          <br />
+          <span class="up">{{ _('Treinar agora') }}</span>
+        </button>
+
+        <div class="modulo modulo2 info">
+          <p>{{ _('Módulo 2') }}</p>
+          <div class="progress-bar" style="align-content: center;">
+            <div class="progress" style="width: 21%"></div>
+          </div>
+          <button class="continue-btn">{{ _('Continuar') }}</button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+      const maisBtn = document.getElementById('openMais');
+      const submenuMais = document.getElementById('submenuMais');
+
+      // Alternar visibilidade ao clicar
+      maisBtn.addEventListener('click', () => {
+        submenuMais.classList.toggle('oculto');
+      });
+
+      // Ocultar submenu ao clicar fora
+      document.addEventListener('click', (event) => {
+        if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
+          submenuMais.classList.add('oculto');
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- Solicitar amizade ---
+        document.querySelectorAll(".friend-request-btn").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const id = btn.dataset.userId;
+            const res = await fetch("/solicitar_amizade", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id_destinatario: parseInt(id) })
+            });
+            const data = await res.json();
+            if (res.ok) {
+              btn.outerHTML = `<button class="waiting-btn" disabled>⏳ Aguardando resposta</button>`;
+            }
+          });
+        });
+
+        // --- Aceitar amizade ---
+        document.querySelectorAll(".accept-btn").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const id = btn.dataset.userId;
+            const res = await fetch("/aceitar_amizade", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id_solicitante: parseInt(id) })
+            });
+            if (res.ok) {
+              btn.parentElement.outerHTML = `<button class="friend-btn" disabled>👥 Amigos</button>`;
+            }
+          });
+        });
+
+        // --- Recusar amizade ---
+        document.querySelectorAll(".reject-btn").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const id = btn.dataset.userId;
+            const res = await fetch("/recusar_amizade", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id_solicitante: parseInt(id) })
+            });
+            if (res.ok) {
+              btn.parentElement.outerHTML = `<button class="friend-request-btn" data-user-id="${id}">🤝 Solicitar amizade</button>`;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

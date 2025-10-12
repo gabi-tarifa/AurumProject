@@ -18,7 +18,13 @@
   <span id="textoerro" class="textoerro"></span><br>
   <button class="btn" id="login-btn">{{ _('Entrar') }}</button>
   <div class="terms">
-    {{ _('Ao entrar na Aurum, você concorda com os nossos Termos e Política de Privacidade.') }}
+    <div class="terms">
+  {{ _('Ao entrar na Aurum, você concorda com os nossos') }}
+  <a href="/termos" class="terms-link">{{ _('Termos de Uso') }}</a>
+  {{ _('e') }}
+  <a href="/privacidade" class="terms-link">{{ _('Política de Privacidade') }}</a>.
+</div>
+
   </div><br>
   <button type="button" class="btn" id="btnVoltar" onclick="window.location.href='/'" >{{ _('← Voltar ao início') }}</button>
 </div>
