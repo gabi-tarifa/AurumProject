@@ -986,3 +986,192 @@ msgstr "Confirm password:"
 
 msgid "A senha deve conter pelo menos 6 caracteres, máximo de 16, contendo pelo menos uma letra maiúscula, uma minúscula, um número e um caracter especial"
 msgstr "The password must contain at least 6 characters and a maximum of 16, including at least one uppercase letter, one lowercase letter, one number, and one special character."
+
+msgid "Solicitar amizade"
+msgstr "Request Friend"
+
+msgid "Aceitar"
+msgstr "Accept"
+
+msgid "Solicitar amizade"
+msgstr "Reject"
+
+msgid "Aguardando resposta"
+msgstr "waiting Answer"
+
+msgid "Amigos"
+msgstr "Friends"
+
+msgid "RANKING DE AMIGOS"
+msgstr "FRIENDS RANKING"
+
+msgid "Tempo de Amizade"
+msgstr "Friendship Time"
+
+msgid "dias"
+msgstr "days"
+
+msgid "Termos de Uso"
+msgstr "Terms of Use"
+
+msgid "Política de Privacidade"
+msgstr "Privacy Policy"
+
+msgid "Ao entrar na Aurum, você concorda com os nossos"
+msgstr "By entering Aurum, you agree to our"
+
+msgid "Ao se cadastrar, você concorda com os nossos"
+msgstr "By registering, you agree to our"
+
+msgid "Termos de Uso"
+msgstr "Terms of Use"
+
+msgid "Estes Termos de Uso regem a utilização da plataforma Aurum. Ao acessar ou usar a plataforma, você concorda em cumprir estes termos. Leia atentamente."
+msgstr "These Terms of Use govern the use of the Aurum platform. By accessing or using the platform, you agree to comply with these terms. Please read carefully."
+
+msgid "Aceitação dos Termos"
+msgstr "Acceptance of Terms"
+
+msgid "Ao se cadastrar e utilizar a Aurum, você concorda com todas as condições presentes neste documento, incluindo quaisquer alterações futuras."
+msgstr "By registering and using Aurum, you agree to all conditions in this document, including any future amendments."
+
+msgid "Cadastro e Segurança"
+msgstr "Registration and Security"
+
+msgid "É obrigatório fornecer informações corretas e atualizadas."
+msgstr "It is mandatory to provide accurate and up-to-date information."
+
+msgid "O usuário é responsável pela segurança da conta e credenciais."
+msgstr "The user is responsible for the security of their account and credentials."
+
+msgid "Não é permitido criar contas falsas ou múltiplas com fins de manipulação do sistema."
+msgstr "Creating fake or multiple accounts to manipulate the system is not allowed."
+
+msgid "Uso Permitido"
+msgstr "Permitted Use"
+
+msgid "Uso da plataforma exclusivamente para fins educacionais e acadêmicos."
+msgstr "Use of the platform exclusively for educational and academic purposes."
+
+msgid "Não compartilhar conteúdos ofensivos, ilegais ou que violem direitos de terceiros."
+msgstr "Do not share offensive, illegal, or third-party rights violating content."
+
+msgid "Não tentar acessar recursos ou dados de outros usuários sem autorização."
+msgstr "Do not attempt to access other users' resources or data without authorization."
+
+msgid "Propriedade Intelectual"
+msgstr "Intellectual Property"
+
+msgid "Todos os conteúdos, imagens, textos e funcionalidades da plataforma são protegidos por direitos autorais."
+msgstr "All contents, images, texts, and platform functionalities are protected by copyright."
+
+msgid "É proibida a reprodução, distribuição ou venda sem autorização expressa."
+msgstr "Reproduction, distribution, or sale without express permission is prohibited."
+
+msgid "Limitação de Responsabilidade"
+msgstr "Limitation of Liability"
+
+msgid "A plataforma é fornecida \"como está\", sem garantias implícitas ou expressas."
+msgstr "The platform is provided \"as is\", without any implied or express warranties."
+
+msgid "A Aurum não se responsabiliza por danos diretos ou indiretos resultantes do uso."
+msgstr "Aurum is not responsible for direct or indirect damages resulting from its use."
+
+msgid "Alterações nos Termos"
+msgstr "Changes to the Terms"
+
+msgid "Os termos podem ser atualizados periodicamente."
+msgstr "The terms may be updated periodically."
+
+msgid "O uso contínuo da plataforma após alterações constitui aceitação dos novos termos."
+msgstr "Continued use of the platform after changes constitutes acceptance of the new terms."
+
+msgid "Rescisão de Uso"
+msgstr "Termination of Use"
+
+msgid "A Aurum pode suspender ou encerrar contas em caso de violação destes termos."
+msgstr "Aurum may suspend or terminate accounts in case of violations of these terms."
+
+msgid "Usuários podem solicitar exclusão da conta a qualquer momento."
+msgstr "Users may request account deletion at any time."
+
+msgid "A Aurum valoriza a privacidade de seus usuários e se compromete a proteger os dados coletados na plataforma. Leia atentamente esta política."
+msgstr "Aurum values the privacy of its users and is committed to protecting the data collected on the platform. Please read this policy carefully."
+
+msgid "Informações Coletadas"
+msgstr "Information Collected"
+
+msgid "Dados fornecidos pelo usuário durante o cadastro (nome, e-mail, idade, etc.)."
+msgstr "Data provided by the user during registration (name, email, age, etc.)."
+
+msgid "Informações de uso da plataforma, como progresso em quizzes, atividades concluídas e interações com outros usuários."
+msgstr "Platform usage information, such as quiz progress, completed activities, and interactions with other users."
+
+msgid "Dados de cookies e tecnologias similares para melhorar a experiência de navegação."
+msgstr "Data from cookies and similar technologies to enhance browsing experience."
+
+msgid "Finalidade do Uso"
+msgstr "Purpose of Use"
+
+msgid "Personalizar a experiência educacional do usuário."
+msgstr "Personalize the user's educational experience."
+
+msgid "Gerar relatórios internos para análise de desempenho e melhorias na plataforma."
+msgstr "Generate internal reports for performance analysis and platform improvements."
+
+msgid "Enviar notificações e informações relacionadas ao uso da Aurum, caso o usuário tenha consentido."
+msgstr "Send notifications and information related to Aurum usage, if the user has consented."
+
+msgid "Compartilhamento de Dados"
+msgstr "Data Sharing"
+
+msgid "Não compartilhamos informações pessoais com terceiros sem consentimento, exceto por obrigação legal."
+msgstr "We do not share personal information with third parties without consent, except as required by law."
+
+msgid "Dados agregados e anonimizados podem ser usados para pesquisas acadêmicas ou relatórios internos."
+msgstr "Aggregated and anonymized data may be used for academic research or internal reports."
+
+msgid "Segurança dos Dados"
+msgstr "Data Security"
+
+msgid "Implementamos medidas técnicas para proteger informações contra acessos não autorizados, alterações ou perda."
+msgstr "We implement technical measures to protect information against unauthorized access, alterations, or loss."
+
+msgid "Apesar dos esforços, nenhum sistema é totalmente seguro; recomendamos que o usuário mantenha a segurança de suas credenciais."
+msgstr "Despite our efforts, no system is completely secure; we recommend that users maintain the security of their credentials."
+
+msgid "Direitos do Usuário"
+msgstr "User Rights"
+
+msgid "Acessar, corrigir ou excluir seus dados pessoais."
+msgstr "Access, correct, or delete your personal data."
+
+msgid "Revogar consentimento para uso de dados a qualquer momento."
+msgstr "Revoke consent for data usage at any time."
+
+msgid "Solicitar esclarecimentos sobre o tratamento das suas informações."
+msgstr "Request clarifications regarding the processing of your information."
+
+msgid "Retenção de Dados"
+msgstr "Data Retention"
+
+msgid "Dados pessoais são mantidos enquanto a conta estiver ativa ou conforme exigido por lei."
+msgstr "Personal data is retained while the account is active or as required by law."
+
+msgid "Após solicitação de exclusão, os dados são removidos de nossos servidores, exceto quando legalmente necessário."
+msgstr "After a deletion request, data is removed from our servers, except when legally required."
+
+msgid "Alterações na Política"
+msgstr "Policy Changes"
+
+msgid "Esta política pode ser atualizada periodicamente para refletir mudanças legais ou melhorias na plataforma."
+msgstr "This policy may be updated periodically to reflect legal changes or platform improvements."
+
+msgid "O uso contínuo da Aurum após alterações constitui aceitação das novas condições."
+msgstr "Continued use of Aurum after changes constitutes acceptance of the new terms."
+
+msgid "Contato"
+msgstr "Contact"
+
+msgid "Para dúvidas ou solicitações relacionadas à privacidade, entre em contato pelo e-mail: "
+msgstr "For questions or requests related to privacy, please contact us at: "
