@@ -63,7 +63,13 @@
 \usepackage{titlesec}
 \usepackage{tikz}               % para ticks
 \usepackage{longtable}          % para quebra de tabela por página
-\usepackage{tabularray}         % formatação da coluna e linha da tabela
+\usepackage{tabularray}         
+\usepackage{titlesec}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+% outros pacotes...
+\usepackage[hidelinks]{hyperref} % carregue por último
 
 % Deixa o \subsubsection igual ao \subsection: negrito, tamanho igual, sem itálico, com espaçamento igual
 \titleformat{\subsubsection}[hang]{\normalfont\bfseries}{\thesubsubsection}{1em}{}
@@ -237,6 +243,12 @@ Dessa forma, por meio de módulos interativos e desafios diários, a plataforma 
 
 Em suma, a missão deste projeto é expandir o acesso à educação financeira, oferecendo uma ferramenta simples, envolvente e eficaz, capaz de transformar a realidade financeira de milhares de pessoas. Ao buscar isso, utilizamos uma linguagem acessível e evitamos jargões técnicos que costumam afastar o público geral. O objetivo final é empoderar os cidadãos, oferecendo-lhes as ferramentas necessárias para melhorar sua qualidade de vida, reduzir as desigualdades sociais e promover um crescimento econômico mais sustentável para todos.
 
+
+
+
+
+    
+
 \subsection{Objetivos}
     Levando em consideração a necessidade de detalhes da aplicação, os objetivos foram divididos em: geral e específico.
 \subsubsection{Objetivo Geral}
@@ -248,6 +260,13 @@ Em suma, a missão deste projeto é expandir o acesso à educação financeira, 
             \item Incentivar o planejamento financeiro
             \item Apresentar princípios financeiros básicos 
         \end{enumerate}
+
+
+
+
+
+    
+    
        
 \section{Justificativa}    
     A educação financeira é um elemento essencial para a construção de uma sociedade mais equilibrada e justa. Entretanto, no Brasil, muitas pessoas ainda enfrentam dificuldades para lidar com o próprio dinheiro, seja por falta de conhecimento, seja por influências do consumo excessivo. De acordo com o Instituto Brasileiro de Geografia e Estatística (IBGE), mesmo com a redução do índice de pobreza nos últimos anos, milhões de brasileiros ainda vivem em situação de vulnerabilidade econômica, muitas vezes agravada pelo endividamento descontrolado.
@@ -274,7 +293,44 @@ Em suma, a missão deste projeto é expandir o acesso à educação financeira, 
 
     Portanto, a implementação dessa plataforma se mostra uma solução inovadora e necessária, pois busca preencher uma lacuna existente no ensino tradicional e promover um futuro financeiro mais seguro para todos.
 
+\subsection{Pesquisas Realizadas}
+\label{subsec:pesquisas}
+
+
+Neste tópico, incluiremos os links do Apêndice A e do Anexo A, que apresentam os dados das pesquisas que realizamos sobre o tema de finanças e modos de aprendizado, informações relevantes para a criação do AURUM.
+
+\noindent\hyperref[chap:apendiceA]{Clique para acessar Apêndice A} \\ 
+\hyperref[chap:anexoA]{Clique para acessar Anexo A}
+
+
+
+\subsection{Empresa B3 e educação financeira}
+
+
+A B3 mantém um portal educacional com cursos, conteúdos e materiais gratuitos voltados a ensinar desde noções básicas de finanças pessoais até temas avançados sobre mercados e produtos financeiros
+
+Além dos cursos próprios, a B3 desenvolve iniciativas em parceria com instituições e formadores para ampliar o alcance da educação financeira, oferecendo conteúdos cocriados e programas de capacitação para estudantes, professores e o público em geral
+
+Em 2025, a B3 lançou ações conjuntas com empresas como a Creditas para levar formatos mais acessíveis e dinâmicos ao público, por exemplo o programa “Papo de Grana”, com episódios e aulas focadas em organização financeira, saída do endividamento e primeiros investimentos, buscando desmistificar o mercado para quem está começando
+
+
+A estratégia da B3 também articula instrumentos institucionais, como parcerias com reguladores e programas de formação de professores, concursos e premiações acadêmicas, alinhando suas iniciativas à Estratégia Nacional de Educação Financeira e ao fortalecimento de competências financeiras na escola e na sociedade
+
+
+\subsection{Problema a ser solucionado}
+
+O principal problema identificado é a falta de acesso da população brasileira a conhecimentos básicos de educação financeira, o que limita a capacidade de tomar decisões econômicas conscientes. A ausência de ferramentas educativas interativas e adaptativas torna difícil que indivíduos de diferentes faixas etárias e níveis de conhecimento adquiram competências financeiras essenciais, como controle de gastos, planejamento e compreensão de investimentos.  
+
+Essa lacuna evidencia a necessidade de soluções digitais que combinem acessibilidade, interatividade, proporcionando aprendizado progressivo.
+
+
+
+
+
 \section{Referencial Teórico}
+
+O referencial teórico desta pesquisa articula a evolução histórica e as políticas públicas da educação financeira no Brasil — da sua concentração nas elites até a expansão após o Plano Real e a institucionalização pela ENEF —, incorpora a influência de organismos internacionais (OCDE/INFE) e a inserção do tema na BNCC, problematiza críticas sobre a captura por uma lógica mercadológica e a fraca participação democrática na formulação das ações, e destaca abordagens pedagógicas e recursos tecnológicos (simuladores, planilhas, jogos, HQs e plataformas gamificadas) como estratégias para concretizar conceitos financeiros; orienta ainda o desenvolvimento de soluções digitais alinhadas ao currículo, contextualizadas, transparentes, participativas e capazes de promover personalização crítica e avaliação contínua, com vistas à formação de sujeitos autônomos e reflexivos diante do consumo, da dívida e das desigualdades.
+
 \subsection{A Educação Financeira no Brasil e suas Implicações para o Desenvolvimento de Soluções Digitais}
     A educação financeira é muito mais do que aprender a guardar dinheiro ou fazer contas. Ela é essencial para que as pessoas consigam organizar suas vidas, tomar decisões conscientes sobre o uso do dinheiro e melhorar sua qualidade de vida. No Brasil, ela tem se tornado cada vez mais importante, especialmente depois de mudanças na economia, como a queda da inflação e o aumento do acesso ao crédito.
 
@@ -316,6 +372,7 @@ Por isso, investir em educação financeira nas escolas é investir no futuro de
     Segundo \citeonline{cunha2020mercado}, a política atual articula instituições nacionais e internacionais sem um diálogo significativo com a comunidade escolar, resultando na inserção de conteúdos técnicos sem participação democrática.
 
 \subsection{Abordagens, Evolução e Impacto no Ensino Escolar}
+
     A educação financeira desempenha um papel essencial na formação de cidadãos conscientes e autônomos, sendo um tema cada vez mais presente no contexto escolar. De acordo com \citeonline{cordeiro2019uso}, sua relevância tem sido fortalecida por iniciativas como a Estratégia Nacional de Educação Financeira (ENEF), que busca estruturar e disseminar práticas de ensino voltadas à gestão financeira pessoal. No Brasil, esse movimento ganhou força com a inserção da temática na Base Nacional Comum Curricular (BNCC), promovendo habilidades financeiras desde o ciclo de alfabetização.
 
     Considerando o impacto da tecnologia no ensino, softwares de educação financeira podem atuar como facilitadores na construção do conhecimento sobre planejamento econômico. Segundo \citeonline{cordeiro2019uso}, as crianças estão expostas ao consumo desde cedo, sendo influenciadas por propagandas e estímulos mercadológicos, o que reforça a necessidade de uma abordagem pedagógica direcionada. A integração de ferramentas tecnológicas nesse processo pode ampliar a compreensão de conceitos financeiros, permitindo que os alunos vivenciem práticas simuladas de gestão de recursos.
@@ -330,21 +387,42 @@ Por isso, investir em educação financeira nas escolas é investir no futuro de
 
 \section{Materiais e Métodos}
 Para o desenvolvimento da plataforma Aurum, foram utilizadas ferramentas tecnológicas modernas, com o objetivo de garantir uma estrutura escalável e de fácil manutenção. Os materiais empregados abrangem desde linguagens de programação e banco de dados até ambientes de modelagem e controle de versões. No que diz respeito aos métodos, adotou-se uma abordagem com foco em prototipação rápida e validação contínua, permitindo ajustes ágeis durante todo o processo de construção do sistema.
+
+\subsection{Arquitetura de software}
+\begin{figure}[H]  % força a posição exata
+    \centering
+    \begin{adjustbox}{width=0.70\paperwidth,center}
+        \includegraphics{overarqui.png}
+    \end{adjustbox}
+    \fonte{overarqui.pgn}
+    \label{gra_logo2}
+
+    \vspace{2mm}
+    {\fontsize{13pt}{15pt}\selectfont
+    
+\end{figure}
+
+
+
+
+
 \subsection{Equipe}
 
-    \caption{\label{quadro_integrantes}Integrantes da equipe}\\
-        \begin{tabular}{|c|c|c|c|c|c|c|}
-        \hline
-            Papéis         & Arthur                    & Francine                  & Gabriel                  & Gustavo                  & Rafael                     & Thomas                    \\ \hline
-            Back-end       &  \checkmark                         &                           &      \checkmark           &                           &                 &                 \\ \hline
-            Front-end      &   \checkmark              &                 &                           &                 &                           &            \checkmark               \\ \hline
-            Banco de Dados &      \checkmark                     &                           & \checkmark                &                           &                 &                           \\ \hline
-	    Testes 	   &			       & 		\checkmark		   & 	       & 			   & 		\checkmark	       &		\checkmark	   \\ \hline
-            Documentação   &                 & \checkmark                &                 & \checkmark                &                 &                 \\ \hline
-            Design         &                           &                           &                &                 &                           &                 \checkmark          \\ \hline
-            Gestão         &                           &          \checkmark                  &                &                           &                 &              \checkmark             \\ \hline
-        \end{tabular}
-    \fonte{Autores.}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+        Papéis         & Arthur & Francine & Gabriel & Gustavo & Rafael & Thomas \\ \hline
+        Back-end       & X      &          & X       &         &        &        \\ \hline
+        Front-end      & X      &          &         &         &        & X      \\ \hline
+        Banco de Dados & X      &          & X       &         &        &        \\ \hline
+        Testes         &        &          &         &         & X      &        \\ \hline
+        Documentação   &        & X        &         & X       &        &        \\ \hline
+        Design         &        &          &         &         &        & X      \\ \hline
+        Gestão         &        & X        &         &         &        & X      \\ \hline
+    \end{tabular}
+\fonte{Autores.}
+
+
+    
 
 \subsection{Materiais}
 O desenvolvimento da plataforma Aurum contou com o uso de diversas ferramentas tecnológicas para garantir eficiência e escalabilidade. A seguir, listam-se as principais:
@@ -361,25 +439,42 @@ Versionamento: GitHub foi utilizado para controle de versões e colaboração.
 
 
 \subsection{Métodos}
-A metodologia Scrum foi escolhida para o desenvolvimento do sistema, pois ela foca em entregas rápidas e constantes, com validação dos requisitos ao longo do processo. O desenvolvimento foi organizado em sprints curtos, o que permitiu ajustes rápidos conforme o feedback dos usuários e stakeholders.\\
-Etapas do Desenvolvimento:\\
-Levantamento de Requisitos: O Product Owner (PO) foi responsável por definir e priorizar os requisitos funcionais e não funcionais no Product Backlog, que foi atualizado constantemente durante o projeto.\\
-Modelagem de Dados: A equipe de desenvolvimento trabalhou na criação e ajuste das estruturas de banco de dados em cada sprint, garantindo que o banco de dados estivesse sempre alinhado com os requisitos do sistema.\\
-Implementação de Banco de Dados (SQL): As estruturas de banco de dados foram implementadas e testadas durante os sprints, sempre com a integração contínua ao sistema.\\
-Criação da Interface Web (HTML + CSS): A interface foi construída de forma incremental, com protótipos rápidos que eram ajustados conforme o feedback da equipe e dos usuários.\\
-Funcionalidades Básicas (Login, Cadastro, Tarefas): As funcionalidades essenciais, como login, cadastro e visualização de tarefas, foram desenvolvidas em sprints curtos, sendo testadas e validadas ao final de cada ciclo.\\
-Lógica de Premiação (SQL): A lógica de premiação foi desenvolvida usando procedimentos SQL, gatilhos e consultas temporais, sendo ajustada durante os sprints com base nos testes realizados.\\
-Processo Scrum:\\
-Sprint Planning: Planejamento das tarefas a serem feitas no próximo sprint.\\
-Daily Scrum: Reuniões diárias para verificar o andamento do trabalho e resolver problemas.\\
-Sprint Review: Ao final de cada sprint, as funcionalidades implementadas eram apresentadas aos stakeholders para validação.\\
-Sprint Retrospective: Reflexão sobre o trabalho feito para identificar melhorias no processo.\\
 
+A metodologia Scrum foi escolhida para o desenvolvimento do sistema, pois foca em entregas rápidas e constantes, com validação contínua dos requisitos ao longo do processo. O desenvolvimento foi organizado em sprints curtos, o que permitiu ajustes rápidos conforme o feedback de usuários e stakeholders.
 
+\textbf{Etapas do Desenvolvimento:}
+\begin{itemize}
+    \item \textbf{Levantamento de Requisitos:} O Product Owner (PO) foi responsável por definir e priorizar os requisitos funcionais e não funcionais no Product Backlog, que foi atualizado constantemente durante o projeto.
+    \item \textbf{Modelagem de Dados:} A equipe de desenvolvimento trabalhou na criação e ajuste das estruturas de banco de dados em cada sprint, garantindo que o banco estivesse sempre alinhado aos requisitos do sistema.
+    \item \textbf{Implementação de Banco de Dados (SQL):} As estruturas de banco de dados foram implementadas e testadas durante os sprints, sempre integradas de forma contínua ao sistema.
+    \item \textbf{Criação da Interface Web (HTML + CSS):} A interface foi construída de forma incremental, com protótipos rápidos que eram ajustados conforme o feedback da equipe e dos usuários.
+    \item \textbf{Funcionalidades Básicas (Login, Cadastro, Tarefas):} Funcionalidades essenciais, como login, cadastro e visualização de tarefas, foram desenvolvidas em sprints curtos e testadas ao final de cada ciclo.
+    \item \textbf{Lógica de Premiação (SQL):} A lógica de premiação foi implementada usando procedimentos SQL, gatilhos e consultas temporais, sendo ajustada durante os sprints conforme os testes realizados.
+\end{itemize}
+
+\textbf{Processo Scrum:}
+\begin{itemize}
+    \item \textbf{Sprint Planning:} Planejamento das tarefas a serem realizadas no próximo sprint.
+    \item \textbf{Daily Scrum:} Reuniões diárias para verificar o andamento do trabalho e resolver problemas.
+    \item \textbf{Sprint Review:} Ao final de cada sprint, as funcionalidades implementadas eram apresentadas aos stakeholders para validação.
+    \item \textbf{Sprint Retrospective:} Reflexão sobre o trabalho realizado, com o objetivo de identificar melhorias no processo.
+\end{itemize}
 
 \section{Desenvolvimento}
 
-Esta seção é destinada às definiçôes do sistema, àquilo que deve ser atentido, seja funcionamento, seja desempenho do algoritmo. 
+Esta seção é destinada às definições do sistema, abrangendo aquilo que deve ser atendido, seja em termos de funcionamento, seja em termos de desempenho do algoritmo.
+
+\subsection{Protocolos}
+
+Os protocolos utilizados no sistema incluem:
+
+\begin{itemize}
+    \item \textbf{TCP/IP:} Protocolo de comunicação responsável pelo envio e recebimento de pacotes de dados entre dispositivos na rede, garantindo a conectividade básica.
+    \item \textbf{HTTPS:} Protocolo de transferência segura de hipertexto, utilizado para proteger a comunicação entre o cliente e o servidor, garantindo confidencialidade e integridade dos dados.
+    \item \textbf{MySQL Protocol:} Protocolo utilizado para comunicação entre o sistema e o banco de dados MySQL, permitindo consultas, inserções e atualizações de forma estruturada.
+\end{itemize}
+
+
 
 \subsection{Requisitos}
 Serão apresentados os requisitos que dierecionam o desenvolvimento do sistema. Os requisitos foram divididos em duas categorias: funcionais, que descrevem os comportamentos e funcionalidades esperadas do sistema; e não funcionais, que estabelecem restrições e qualidades que o sistema deve possuir. Esses requisitos foram definidos com base nos objetivos do projeto e nas necessidades dos usuários finais.
@@ -396,7 +491,7 @@ RF01 & Cadastrar usuário & O usuário deve ser capaz de se cadastrar na platafo
 \hline
 RF02 & Teste de nível & O usuário deve fazer um teste de até 12 questões para recomendar as tarefas de acordo com o nível.\\
 \hline
-RF03 & Disponibilização de tarefas & As tarefas devem ser disponibilizadas para o usuário de acordo com sua aptidão. \\
+RF03 & Disponibilização de tarefa & As tarefas devem ser disponibilizadas para o usuário de acordo com sua aptidão. \\
 \hline
 RF04 & Sistema de pontuação & O sistema deve contabilizar os pontos do usuário em cada tarefa realizada de acordo com o desempenho. \\
 \hline
@@ -478,39 +573,42 @@ RN14 & Idiomas & O usuário poderá selecionar em qual língua poderá ler o doc
 
 
 \subsection{Modelagem}
-\begin{center}
- %colocar casos de uso%
-\begin{figure}[H]
+\hypertarget{sec:modelagem}{}  % cria destino para o link de volta
+\begin{figure}[H]  % força a posição exata
     \centering
-    \begin{adjustbox}{max width=0.95\paperwidth,center}
-        \includegraphics{graficos/bdd.png}
+    \begin{adjustbox}{width=0.70\paperwidth,center}
+        \includegraphics{graficos/overleafbdd.jpg}
     \end{adjustbox}
-    \fonte{bdd}
+    \fonte{overleafbdd}
     \label{gra_logo}
+
+    \vspace{2mm}
+    {\fontsize{13pt}{15pt}\selectfont
+    OBS: Mais informações Clique em \hyperlink{apendiceB}{Apêndice B}}
 \end{figure}
-\end{center}
 
-
-
-
+\hypertarget{sec:prot}{} % cria o alvo do link
 \subsection{Prototipagem}
+A prototipagem do design da aplicação foi feita pelo aplicativo Canva. Em
+anexo, há as telas feitas na plataforma, no \hyperlink{apendiceC}{Apêndice C}, além da tela de início a seguir.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]  % força a posição exata
     \centering
-    \includegraphics[width=0.95\linewidth]{AURUM.png}
-    \label{fig:enter-label}
+    \begin{adjustbox}{width=0.70\paperwidth,center}
+        \includegraphics{AURUM.png}
+    \end{adjustbox}
+    \fonte{AURUM.png}
+    \label{gra_logo2}
+
+    \vspace{2mm}
+    {\fontsize{13pt}{15pt}\selectfont ...}
 \end{figure}
 
 
 
 
 
-% (Aqui vanios colocaria o conteúdo da seção Prototipagem)
-
-
-
-
-\subsection{Testes}
+\section{Plano de Testes}
 
 \begin{center}
 \begin{tabular}{|c|p{5.5cm}|p{6.5cm}|}
@@ -542,16 +640,77 @@ Quiz & Ao ser completado com sucesso, permite avanço imediato para o próximo m
 \end{tabular}
 \end{center}
 
-\section{Resultados e discussões}
+
+\vspace{1cm} 
+
+\section{Links Úteis}
+\subsection{Vídeo Gource}
+
+https://youtu.be/spYiAlmVfAo?si=OsCPnC6-O-OKxRZQ
+
+\subsection{Aplicação Online}
+
+https://aurumproject-production-a18f.up.railway.app
+
+
+\subsection{Repositório Github}
+
+https://github.com/gabi-tarifa/AurumProject/blob/main/Documentacao/main.tex
 
 
 
-\section{Considerações finais}
+
+\section{Problemas Enfrentados}
+
+Durante os testes do sistema, foram identificados problemas funcionais e estruturais, incluindo:  
+- Cadastro sem validação adequada de senhas e botões de login inoperantes;  
+- Falhas na jogabilidade, como impossibilidade de avançar módulos ou realizar quizzes, contagem incorreta de dias consecutivos e ausência de recompensas;  
+- Tela de configurações incompleta e internacionalização pendente;  
+- Funcionalidades auxiliares, como ajuda e rankings, apresentando ordenação incorreta;  
+- Loja com risco de itens não aparecerem.  
+
+Todos os problemas acima foram solucionados nas versões finais do sistema.
+
+\section{Resultados e Discussão}
+
+\subsection{Contexto dos Testes}
+
+Os testes focaram nas principais funcionalidades, conforme detalhado na seção de Testes, incluindo cadastro, jogabilidade, rankings, configurações, internacionalização e usabilidade geral.
+
+\subsection{Principais Resultados}
+
+As funcionalidades previstas estão operando corretamente:  
+- \textbf{Cadastro}: recuperação de senha funcional e critérios de segurança respeitados.  
+- \textbf{Teste de nível e jogabilidade}: quizzes e módulos operam conforme o progresso do usuário, com avanço imediato após conclusão e contagem de dias consecutivos corrigida.  
+- \textbf{Configurações}: edição de perfil, senha e foto implementadas; internacionalização concluída.  
+- \textbf{Ajuda e rankings}: integrados e corretos, incluindo pontuação e ordenação.  
+- \textbf{Funcionalidades adicionais}: loja, login via Google/Facebook, sistema de som e música de fundo funcionando plenamente.
+
+\subsection{Discussão}
+
+O sistema alcançou maturidade funcional completa, com todas as funcionalidades operando de forma estável e intuitiva. A abordagem iterativa permitiu ajustes rápidos e eficazes, e as melhorias implementadas proporcionam uma experiência imersiva e confiável. O Aurum está pronto para uso em ambiente real, oferecendo suporte efetivo ao ensino de educação financeira.
+
+\section{Considerações Finais}
 
 
 
+A plataforma Aurum propõe uma solução digital gamificada para suprir lacunas significativas em educação financeira no Brasil, direcionada especialmente a públicos com baixa formação financeira e adultos da faixa a partir dos 14 anos. A proposta integra objetivos pedagógicos micro-módulos. Utilizamos metodologias de desenvolvimento ágeis (Scrum, prototipação rápida) e uma arquitetura técnica viável (MySQL, Flask/Python, front-end em HTML5/CSS3/JavaScript), buscando acessibilidade, personalização e impacto comportamental.
 
+Recapitulação dos principais pontos
 
+    Problema: déficit de acesso e compreensão em educação financeira, com consequente uso inadequado do crédito e baixa prática de planejamento.
+
+    Objetivo: desenvolver uma plataforma web que ensine finanças de forma simples, prática e avaliativa, com testes e desafios.
+
+    Metodologia e materiais: Scrum com sprints curtos; MER modelado em Draw.io; stack MySQL, Flask/Python, HTML5/CSS3/JavaScript; versionamento em GitHub.
+
+    Público e validação: pesquisa com 217 participantes indicou forte demanda por formato interativo e preferência por aprendizados visuais e práticos.
+
+    Recursos pedagógicos: aprendizagem adaptativa, gamificação, HQs e simuladores para contextualizar conceitos e promover mudança de hábitos.
+
+O projeto Aurum atingiu um estágio funcional consolidado, com todas as funcionalidades previstas implementadas e testadas com sucesso. A plataforma garante navegação fluida, quizzes funcionais, recompensas integradas, edição completa de perfil e recursos adicionais como loja, rankings, sistema de som e login via redes sociais.  
+
+A abordagem iterativa adotada pela equipe permitiu ajustes rápidos, garantindo que o sistema atendesse às expectativas técnicas e pedagógicas. Com isso, o Aurum oferece uma solução gamificada, acessível e personalizada para promover autonomia e planejamento financeiro entre os usuários.
 
 
 
@@ -583,10 +742,17 @@ Quiz & Ao ser completado com sucesso, permite avanço imediato para o próximo m
 % ---
 \newpage
 \begin{apendicesenv}
-
+ {\Large
+\begin{center}
+    \bigskip
+\noindent\hyperref[subsec:pesquisas]{Clique aqui para voltar à Seção 2.1 Pesquisas Realizadas}
+\end{center}
+}
 % ----------------------------------------------------------
 \chapter{Pesquisa realizada}
+\label{chap:apendiceA}
 % ----------------------------------------------------------
+  {\Large
     A maioria das idades entre todos os participantes do formulário foi de 35 a 54 anos.\\ 
     32,7\%  dos participantes possuem Ensino Superior completo e 30,4\% Pós Graduação. \\
     53,9\%  Já tiveram contato com Educação Financeira. \\
@@ -597,157 +763,248 @@ Quiz & Ao ser completado com sucesso, permite avanço imediato para o próximo m
     37,8\% Não conseguem economizar, 39,46\% Não consegue controlar os gastos, 37,3\% Não sabe como funciona investimentos, 24,9\% Não sabe organizar o orçamento mensal,  19,4\% Diz se endividar com freqüência \\
     87,1\% Querem Simulações práticas com exemplos reais e fáceis. \\
     Exposição: 
-    Os dados revelam um público majoritariamente entre 35 e 54 anos, com bom nível de  escolaridade (63,1\% têm Ensino Superior completo ou Pós-graduação), mas que ainda apresenta lacunas importantes no domínio das finanças pessoais. Apesar da maioria já ter tido algum contato com educação financeira (53,9\%), mais da metade sabe apenas o básico ou nada. Isso se reflete em hábitos financeiros frágeis: apenas 26,7\% sempre fazem planejamento financeiro, e 29,5\% nunca poupam. 
+    Os dados revelam um público majoritariamente entre 35 e 54 anos, com bom nível de  escolaridade (63,1\% têm Ensino Superior completo ou Pós-graduação), mas que ainda apresenta lacunas importantes no domínio das finanças pessoais. Apesar da maioria já ter tido algum contato com educação financeira (53,9\%), mais da metade sabe apenas o básico ou nada. Isso se reflete em hábitos financeiros frágeis: apenas 26,7\% sempre fazem planejamento financeiro, e 29,5\% nunca poupam.
+    
+\begin{center}
+    \bigskip
+\noindent\hyperref[subsec:pesquisas]{Clique aqui para voltar à Seção 2.1 Pesquisas Realizadas}
+\end{center}
+
+}
+    
 \newpage
 \chapter{Modelagem do Banco de Dados}
+\phantomsection
+\hypertarget{apendiceB}{}  % destino correto para o link do OBS
+\vspace*{-10mm}
+
+{\fontsize{17pt}{19pt}\selectfont
 A modelagem seguiu o padrão Entidade-Relacionamento, representando as seguintes entidades principais:
 
-Usuário: Armazena informações de acesso e pontuação do usuário.
-
-Módulos: Agrupam aulas e desafios relacionados a temas específicos.
-
-Aulas: Unidades de conteúdo em vídeo.
-
-Desafios: Atividades com pontuação, associadas a módulos.
-
-Notificações: Enviadas aos usuários com base em regras de negócio.
-
-Relacionamentos: Foram criadas entidades associativas como “Realiza”, “Assiste” e “Desenvolve” para registrar interações entre usuários e o conteúdo.
+\begin{itemize}[leftmargin=0pt,labelsep=5pt]
+    \item \textbf{Usuário}: Armazena informações de acesso e pontuação do usuário.
+    \item \textbf{Módulos}: Agrupam aulas e desafios relacionados a temas específicos.
+    \item \textbf{Aulas}: Unidades de conteúdo em vídeo.
+    \item \textbf{Desafios}: Atividades com pontuação, associadas a módulos.
+    \item \textbf{Notificações}: Enviadas aos usuários com base nos critérios definidos.
+    \item \textbf{Relacionamentos}: Foram criadas entidades associativas para registrar interações entre usuários e conteúdo.
+\end{itemize}
 
 A versão final do modelo relacional foi refinada com base nos testes do script SQL e pode ser encontrada no apêndice da documentação.
+
+\vspace{10mm} 
+\begin{center}
+    {\fontsize{20pt}{22pt}\selectfont Click em \hyperlink{sec:modelagem}{5.4. Modelagem} para voltar}
+\end{center}
+}
+
 \newpage
 \chapter{Páginas da prototipagem}
-
+\hypertarget{apendiceC}{} % destino do link usado em 
+\vspace*{-5mm} 
+  {\Large \centering PARA VOLTAR CLICK EM \hyperlink{sec:prot}{5.5. PROTOTIPAGEM}. \par}
+  
+% Linha 1: Prototipagem 2 e 3
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/2.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+
+    % Primeira imagem (Login)
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de log in}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/2.png}
+        \caption{Página de log in}
+        \label{fig:prototipagem2}
+    \end{minipage}
+
+
+    % Texto do link centralizado
+   
+
+    \vspace{3mm} % espaço entre o link e a segunda imagem
+
+    % Segunda imagem (Cadastro)
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de cadastro}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/3.png}
+        \caption{Página de cadastro}
+        \label{fig:prototipagem3}
+    \end{minipage}
+
 \end{figure}
 
-\begin{figure}
+
+% Linha 2: Prototipagem 4 e 5
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/3.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de início do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/4.png}
+        \caption{Caption}
+        \label{fig:prototipagem4}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 1 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/5.png}
+        \caption{Caption}
+        \label{fig:prototipagem5}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 3: Prototipagem 6 e 7
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/4.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 2 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/6.png}
+        \caption{Caption}
+        \label{fig:prototipagem6}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 3 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/7.png}
+        \caption{Caption}
+        \label{fig:prototipagem7}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 4: Prototipagem 8 e 9
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/5.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 4 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/8.png}
+        \caption{Caption}
+        \label{fig:prototipagem8}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 5 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/9.png}
+        \caption{Caption}
+        \label{fig:prototipagem9}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 5: Prototipagem 10 e 11
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/6.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 6 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/10.png}
+        \caption{Caption}
+        \label{fig:prototipagem10}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Questão 7 do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/11.png}
+        \caption{Caption}
+        \label{fig:prototipagem11}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 6: Prototipagem 12 e 13
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/7.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de finalização do teste de nível}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/12.png}
+        \caption{Caption}
+        \label{fig:prototipagem12}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página principal de exibição dos módulos}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/13.png}
+        \caption{Caption}
+        \label{fig:prototipagem13}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 7: Prototipagem 14 e 15
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/8.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de exibição das lições}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/14.png}
+        \caption{Caption}
+        \label{fig:prototipagem14}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de exibição dos quizes}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/15.png}
+        \caption{Caption}
+        \label{fig:prototipagem15}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 8: Prototipagem 16 e 17
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/9.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de exibição do ranking semanal}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/16.png}
+        \caption{Caption}
+        \label{fig:prototipagem16}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página de informações do usuário}}\\[2mm]
+        \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{prototipagem/17.png}
+        \caption{Caption}
+        \label{fig:prototipagem17}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}
+% Linha 9: Prototipagem 18 e 19
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/10.png}
-    \caption{Caption}
-    \label{fig:enter-label}
+
+    % Primeira imagem
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página da loja}}\\[1mm] % menos espaço acima da imagem
+        \includegraphics[width=\linewidth,height=0.32\textheight,keepaspectratio]{prototipagem/18.png}
+        \caption{Página da loja}
+        \label{fig:prototipagem18}
+    \end{minipage}
+
+    \vspace{2mm} % pequeno espaço entre imagens
+
+    % Segunda imagem
+    \begin{minipage}{1\linewidth}
+        \centering
+        {\textbf{Página do ranking semanal exibindo as funções do botão "mais"}}\\[1mm]
+        \includegraphics[width=\linewidth,height=0.32\textheight,keepaspectratio]{prototipagem/19.png}
+        \caption{Página do ranking semanal}
+        \label{fig:prototipagem19}
+    \end{minipage}
+
+    \vspace{2mm} % espaço antes do link
+
+    % Link centralizado
+    {\Large \centering \hyperlink{sec:prot}{CLICK PARA VOLTAR A 5.5. PROTOTIPAGEM} \par}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/11.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/12.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/13.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/14.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/15.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/16.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/17.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/18.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{prototipagem/19.png}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
-
-
-\end{apendicesenv}
-% ---
 
 % ----------------------------------------------------------
 % Anexos
@@ -761,12 +1018,18 @@ A versão final do modelo relacional foi refinada com base nos testes do script 
 \begin{anexosenv}
 
 % ---
+
+\begin{center}
+{\large
+\hyperref[subsec:pesquisas]{Clique aqui para voltar à Seção 2.1 Pesquisas Realizadas}
+\end{center}
+}
 \chapter{Amostra dos gráficos produzidos pela pesquisa}
-% ---
+\label{chap:anexoA}
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico1.png} % Substitua pelo nome do arquivo da imagem
-\caption{gráfico etário}
+\caption{grafico1}
 \label{fig:grafico}
 \end{figure}
 
@@ -774,68 +1037,71 @@ A versão final do modelo relacional foi refinada com base nos testes do script 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico2.png}
-\caption{gráfico escolaridade}
+\caption{grafico2}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico3.png}
-\caption{gráfico contato}
+\caption{grafico3}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico4.png}
-\caption{gráfico }
+\caption{grafico4}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico5.png}
-\caption{gráfico }
+\caption{grafico5}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico6.png}
-\caption{gráfico }
+\caption{grafico6}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico7.png}
-\caption{gráfico }
+\caption{grafico7}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico8.png}
-\caption{gráfico }
+\caption{grafico8}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico9.png}
-\caption{gráfico }
+\caption{grafico9}
 \label{fig:grafico}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{graficos/grafico10.png}
-\caption{gráfico }
+\caption{grafico10}
 \label{fig:grafico}
 \end{figure}
 
 
 \end{anexosenv}
 
+
 \end{document}
+
+
     
