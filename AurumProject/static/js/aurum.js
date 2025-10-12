@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const textoerro = document.getElementById("textoerro");
 
         if (!emailOuNome || !senha) {
-            alert("Por favor, preencha todos os campos.");
+            textoerro.textContent = "Por favor, preencha todos os campos.";
             return;
         }
 
