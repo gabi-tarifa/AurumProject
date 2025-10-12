@@ -115,3 +115,22 @@ header button {
 .support-btn:hover {
   background: #d4ac0d;
 }
+
+.policy-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.policy-buttons .support-btn {
+  background: #f1c40f;
+  color: #111;
+  padding: 10px 18px;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.policy-buttons .support-btn:hover {
+  background: #d4ac0d;
+}
