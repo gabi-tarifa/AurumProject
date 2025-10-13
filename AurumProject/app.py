@@ -116,7 +116,6 @@ def checar_ofensivas():
                 # Move "dia_hoje" para "dia_anterior"
                 ofensiva.dia_anterior = ofensiva.dia_hoje
                 ofensiva.dia_hoje = False
-                continue
             else:
                 ofensiva.dia_anterior = ofensiva.dia_hoje
                 ofensiva.dia_hoje = False
@@ -1416,8 +1415,7 @@ def concluir_tarefa(id_modulo, numero_tarefa):
 
 
     ofensiva.dias_semana[dia_semana] = True
-    ofensiva.dia_anterior = ofensiva.dia_hoje
-    ofensiva.dia_hoje = False
+    ofensiva.dia_hoje = True
     db.session.commit()
 
     return jsonify({
