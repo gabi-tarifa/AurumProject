@@ -165,10 +165,12 @@
 
                 <span class="icon">
                   <div class="profile-hover-container" data-user-id="{{ usuario.id }}">
-                    <img
-                      src="{{ url_for('static', filename=usuario.profilepicture) }}"
-                      class="profile-picture"
-                    />
+                    
+        {% if "http" in usuario.profilepicture %}
+          <img src="{{ usuario.profilepicture }}" alt="Foto" class="profile-picture">
+        {% else %}
+          <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto" class="profile-picture">
+        {% endif %}
 
                     {% if usuario.id != current_user.id %}
                       {% set id1, id2 = (current_user.id, usuario.id) | sort %}
