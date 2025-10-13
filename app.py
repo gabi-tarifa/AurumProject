@@ -5,7 +5,7 @@ ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=ce
 import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, Amizade
 from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa, Configuracoes
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -29,6 +29,9 @@ import random, string
 import re
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail as sgMail
+import cloudinary
+import cloudinary.uploader
+
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)   # → gera uma chave segura
@@ -43,8 +46,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -301,6 +304,137 @@ def cadastro_page():
         idiomas=idiomas
     )
 
+# Termos de Uso
+@app.route("/termos")
+def termos_page():
+    return render_template("termos.html")
+
+# Política de Privacidae
+@app.route("/privacidade")
+def privacidade_page():
+    return render_template("privacidade.html")
+
+# Solicitar amizade
+@app.route('/solicitar_amizade', methods=['POST'])
+@login_required
+def solicitar_amizade():
+    data = request.get_json()
+    id_destinatario = data.get('id_destinatario')
+    if not id_destinatario:
+        return jsonify({"erro": "ID do destinatário não fornecido"}), 400
+    if id_destinatario == current_user.id:
+        return jsonify({"erro": "Não é possível adicionar a si mesmo"}), 400
+
+    id1, id2 = sorted([current_user.id, id_destinatario])
+    amizade_existente = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2).first()
+    if amizade_existente:
+        return jsonify({"erro": "Solicitação já enviada ou já são amigos"}), 400
+
+    nova_solicitacao = Amizade(id_usuario1=id1, id_usuario2=id2, status="pendente")
+    db.session.add(nova_solicitacao)
+    db.session.commit()
+    return jsonify({"sucesso": "Solicitação de amizade enviada!"})
+
+# Aceitar amizade
+@app.route('/aceitar_amizade', methods=['POST'])
+@login_required
+def aceitar_amizade():
+    data = request.get_json()
+    id_solicitante = data.get('id_solicitante')
+    if not id_solicitante:
+        return jsonify({'erro': 'ID do solicitante não fornecido'}), 400
+
+    id1, id2 = sorted([current_user.id, id_solicitante])
+    amizade = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2, status='pendente').first()
+    if not amizade or amizade.id_usuario2 != current_user.id:
+        return jsonify({'erro': 'Solicitação inválida'}), 403
+
+    amizade.status = 'aceita'
+    db.session.commit()
+    return jsonify({'sucesso': 'Amizade aceita!'})
+
+# Recusar amizade
+@app.route('/recusar_amizade', methods=['POST'])
+@login_required
+def recusar_amizade():
+    data = request.get_json()
+    id_solicitante = data.get('id_solicitante')
+    if not id_solicitante:
+        return jsonify({"erro": "ID do usuário não informado"}), 400
+
+    id1, id2 = sorted([current_user.id, id_solicitante])
+    amizade = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2, status='pendente').first()
+    if not amizade or amizade.id_usuario2 != current_user.id:
+        return jsonify({"erro": "Solicitação inválida"}), 403
+
+    db.session.delete(amizade)
+    db.session.commit()
+    return jsonify({"sucesso": "Solicitação recusada!"})
+
+# Ranking de Amigos
+
+# 🏆 Página de Ranking de Amigos
+@app.route("/amigos")
+@login_required
+def ranking_amigos_page():
+    # Pegar todas as amizades aceitas do usuário logado
+    amizades_aceitas = Amizade.query.filter(
+        ((Amizade.id_usuario1 == current_user.id) | (Amizade.id_usuario2 == current_user.id)) &
+        (Amizade.status == 'aceita')
+    ).all()
+
+    ids_amigos = set()
+    amizades_dict = {}  # Para guardar o objeto de amizade para cada amigo
+    for a in amizades_aceitas:
+        if a.id_usuario1 != current_user.id:
+            ids_amigos.add(a.id_usuario1)
+            amizades_dict[a.id_usuario1] = a
+        if a.id_usuario2 != current_user.id:
+            ids_amigos.add(a.id_usuario2)
+            amizades_dict[a.id_usuario2] = a
+
+    # Incluir o próprio usuário
+    ids_amigos.add(current_user.id)
+
+    # Ranking baseado nos pontos semanais
+    ranking = Usuario.query.filter(Usuario.id.in_(ids_amigos)) \
+                .order_by(Usuario.pontos_semanais.desc()) \
+                .all()
+
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
+
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    dia_semana = datetime.now().weekday()
+
+    # Calcular tempo de amizade em dias
+    hoje = datetime.now().date()
+    tempos_amizade = {}
+    for u in ranking:
+        if u.id == current_user.id:
+            tempos_amizade[u.id] = None
+        else:
+            amizade = amizades_dict.get(u.id)
+            if amizade:
+                delta = hoje - amizade.data_criacao.date()
+                tempos_amizade[u.id] = delta.days
+            else:
+                tempos_amizade[u.id] = 0
+
+    return render_template(
+        "amigos.html",
+        amizades=amizades_dict,
+        usuario=current_user,
+        ranking=ranking,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
+        tempos_amizade=tempos_amizade,
+        semana_completa=sum(ofensiva.dias_semana) == 7,
+        coins=current_user.moedas
+    )
+
 # 🏆 Página de Ranking
 @app.route("/ranking")
 @login_required
@@ -345,9 +479,16 @@ def ranking_page():
     dias_completos = sum(1 for dia in ofen.dias_semana if dia)
     semana_completa = dias_completos == 7
 
+    amizades = {}
+    for a in Amizade.query.filter(
+        (Amizade.id_usuario1 == current_user.id) | 
+        (Amizade.id_usuario2 == current_user.id)
+    ).all():
+        amizades[(a.id_usuario1, a.id_usuario2)] = a
 
     return render_template(
         "ranking.html",
+        amizades=amizades,
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
@@ -360,7 +501,6 @@ def ranking_page():
         semana_completa=semana_completa,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
-
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
 @login_required
@@ -1075,6 +1215,12 @@ def logout():
     flash("Você saiu da sua conta.", "info")
     return redirect(url_for("login_page"))    
 
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
+)
+
 UPLOAD_FOLDER = 'static/uploads/'
 UPLOADBG_FOLDER = 'static/uploadsBG/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -1092,28 +1238,51 @@ def atualizar_perfil():
     fundo = request.files['foto_fundo']
     usuario = get_usuario_atual()
 
-    if foto and allowed_file(foto.filename):
-        filename = secure_filename(f"{usuario.id}_{foto.filename}")
-        caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        filepath = caminho.removeprefix("static/")
-        foto.save(caminho)
-        usuario.profilepicture = filepath  # Salva no banco o caminho do arquivo
-    
-    if fundo and allowed_file(fundo.filename):
-        filename_fundo = secure_filename(f"{usuario.id}_fundo_{fundo.filename}")
-        caminho_fundo = os.path.join(app.config['UPLOADBG_FOLDER'], filename_fundo)
-        filepathbg = caminho_fundo.removeprefix("static/")
-        fundo.save(caminho_fundo)
-        usuario.backgroundpicture = filepathbg  # ← nova coluna
+    use_cloudinary = all([
+        os.getenv("CLOUDINARY_CLOUD_NAME"),
+        os.getenv("CLOUDINARY_API_KEY"),
+        os.getenv("CLOUDINARY_API_SECRET")
+    ])
 
-    usuario.nome = nome
+    try:
+        # Upload da foto de perfil
+        if foto and allowed_file(foto.filename):
+            filename = secure_filename(f"{usuario.id}_{foto.filename}")
 
-    desbloquear_conquista(current_user.id, "conquista_customizou_perfil_nome")
+            if use_cloudinary:
+                # Envia pro Cloudinary
+                upload_result = cloudinary.uploader.upload(foto, folder="aurum/perfis")
+                usuario.profilepicture = upload_result['secure_url']
+            else:
+                # Upload local (fallback)
+                caminho = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                filepath = caminho.removeprefix("static/")
+                foto.save(caminho)
+                usuario.profilepicture = filepath
 
-    salvar_usuario(usuario)  # Atualiza o banco com os dados
+        # Upload da imagem de fundo
+        if fundo and allowed_file(fundo.filename):
+            filename_fundo = secure_filename(f"{usuario.id}_fundo_{fundo.filename}")
 
-    flash('Perfil atualizado com sucesso!')
-    return redirect(url_for('perfil_page'))
+            if use_cloudinary:
+                upload_result_bg = cloudinary.uploader.upload(fundo, folder="aurum/fundos")
+                usuario.backgroundpicture = upload_result_bg['secure_url']
+            else:
+                caminho_fundo = os.path.join(app.config['UPLOADBG_FOLDER'], filename_fundo)
+                filepathbg = caminho_fundo.removeprefix("static/")
+                fundo.save(caminho_fundo)
+                usuario.backgroundpicture = filepathbg
+
+        usuario.nome = nome
+        desbloquear_conquista(current_user.id, "conquista_customizou_perfil_nome")
+        salvar_usuario(usuario)
+
+        flash('Perfil atualizado com sucesso!')
+        return redirect(url_for('perfil_page'))
+
+    except Exception as e:
+        print("Erro ao atualizar perfil:", e)
+        return jsonify({"erro": str(e)}), 500
 
 def get_usuario_atual():
     return current_user
@@ -1443,6 +1612,6 @@ def send_email_flask_mail(destinatario, assunto, conteudo)->bool:
         return False
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    #port = int(os.environ.get("PORT", 5000))
-    #app.run(host="0.0.0.0", port=port)
+    #app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

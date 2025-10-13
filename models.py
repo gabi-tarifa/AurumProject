@@ -281,3 +281,29 @@ class Configuracoes(db.Model):
 
     sons = db.Column(db.Boolean, default=True)
     musica = db.Column(db.Boolean, default=True)
+
+class Amizade(db.Model):
+    __tablename__ = "Amizade"
+
+    id_usuario1 = db.Column(db.Integer, db.ForeignKey("Usuario.id"), primary_key=True, nullable=False)
+    id_usuario2 = db.Column(db.Integer, db.ForeignKey("Usuario.id"), primary_key=True, nullable=False)
+    status = db.Column(db.String(20), default="pendente")
+    data_criacao = db.Column(db.DateTime, server_default=db.func.now())
+
+    __table_args__ = (
+        db.CheckConstraint('id_usuario1 <> id_usuario2', name='chk_diferentes'),
+        db.CheckConstraint('id_usuario1 < id_usuario2', name='chk_ordem'),  # evita duplicações invertidas
+    )
+
+    usuario1 = db.relationship("Usuario", foreign_keys=[id_usuario1], backref="amizades_enviadas")
+    usuario2 = db.relationship("Usuario", foreign_keys=[id_usuario2], backref="amizades_recebidas")
+
+    def to_dict(self):
+        return {
+            "id_usuario1": self.id_usuario1,
+            "id_usuario2": self.id_usuario2,
+            "data_criacao": self.data_criacao.isoformat() if self.data_criacao else None
+        }
+
+    def __repr__(self):
+        return f"<Amizade {self.id_usuario1} ↔ {self.id_usuario2}>"
