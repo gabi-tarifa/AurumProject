@@ -1271,3 +1271,32 @@ label{
 .friend-status {
   animation: fadeIn 0.3s ease;
 }
+.modulo-inexistente {
+  text-align: center;
+  color: white;
+  margin-top: 90px;
+  background: rgba(119, 104, 24, 0.862);
+  border: 2px solid goldenrod;
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 500px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  align-items: center;
+}
+.modulo-inexistente p {
+  color: #ccc;
+  font-size: 1.2em;
+}
+.botao-voltar {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: goldenrod;
+  color: black;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.botao-voltar:hover {
+  background-color: #e0b300;
+}

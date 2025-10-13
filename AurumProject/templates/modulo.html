@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Módulo 1 - Aurum</title>
+  <title>Módulo {{id_modulo}} - Aurum</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/modulo.css') }}">
   <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
@@ -65,12 +65,25 @@
         <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a></li>      </ul>
     </div>
 
-
+{% if not modulo %}
+  <main class="main-content mapa-modulo">
+<div class="modulo-inexistente">
+    <h2>{{ _('Módulo') }} {{ id_modulo }}</h2>
+    <p>{{ _('Este módulo ainda não está disponível. Volte mais tarde!') }}</p>
+    <a href="{{ url_for('starting_page') }}" class="botao-voltar">{{ _('Voltar à página inicial') }}</a>
+  </div>
+    <div class="thought-bubble">
+      <span class="bubble bubble1"></span>
+      <span class="bubble bubble2"></span>
+      <span class="bubble bubble3"></span>
+    </div>
+    <img src="{{ url_for('static', filename='img/sad-lion.png') }}" alt="Mascote triste" class="mascotetriste">
+</main>
+{% else %}
     <!-- Caminho do módulo -->
     <main class="main-content mapa-modulo">
       <h2 style="text-align: center;">{{ _('Módulo') }} {{ id_modulo }} - {{ _(modulo.nome) }}</h2>
       <h3 style="text-align: center;">{{ _(modulo.descricao) }}</h3>
-      <!--<img src="{{ url_for('static', filename='img//lion.png') }}" class="mascote" alt="Mascote Aurum" />-->
     {% for tarefa in tarefas_json %}
       <div class="etapa-wrapper">
         <div class="etapa 
@@ -94,7 +107,7 @@
     {% endfor %}
     <img src="{{ url_for('static', filename='img/lion.png') }}" alt="Mascote Aurum" class="mascote">
     </main>
-
+{% endif %}
     <!-- PAINEL LATERAL DIREITO -->
     <aside class="info-box">
       <div class="info">

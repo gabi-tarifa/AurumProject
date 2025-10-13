@@ -760,7 +760,7 @@ def ver_modulo(id_modulo):
     # todas as tarefas do módulo
     tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.numero_tarefa).all()
 
-    modulo = Modulo.query.get_or_404(id_modulo)
+    modulo = Modulo.query.get(id_modulo)
 
     # ids concluídos pelo usuário
     concluidas = {t.numero_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
@@ -1399,7 +1399,7 @@ def concluir_tarefa(id_modulo, numero_tarefa):
             ofensiva.data_ultima_atividade = datetime.now()
             ofensiva.sequencia_atual = 1
             if ofensiva.sequencia_atual > ofensiva.recorde:
-                ofensiva.recorde = ofensiva.s
+                ofensiva.recorde = ofensiva.sequencia_atual
 
 
     
@@ -1416,7 +1416,8 @@ def concluir_tarefa(id_modulo, numero_tarefa):
 
 
     ofensiva.dias_semana[dia_semana] = True
-    ofensiva.dia_hoje = True
+    ofensiva.dia_anterior = ofensiva.dia_hoje
+    ofensiva.dia_hoje = False
     db.session.commit()
 
     return jsonify({
