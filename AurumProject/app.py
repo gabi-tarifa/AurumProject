@@ -5,7 +5,7 @@ ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=ce
 import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, Amizade
 from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa, Configuracoes
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -304,6 +304,137 @@ def cadastro_page():
         idiomas=idiomas
     )
 
+# Termos de Uso
+@app.route("/termos")
+def termos_page():
+    return render_template("termos.html")
+
+# Política de Privacidae
+@app.route("/privacidade")
+def privacidade_page():
+    return render_template("privacidade.html")
+
+# Solicitar amizade
+@app.route('/solicitar_amizade', methods=['POST'])
+@login_required
+def solicitar_amizade():
+    data = request.get_json()
+    id_destinatario = data.get('id_destinatario')
+    if not id_destinatario:
+        return jsonify({"erro": "ID do destinatário não fornecido"}), 400
+    if id_destinatario == current_user.id:
+        return jsonify({"erro": "Não é possível adicionar a si mesmo"}), 400
+
+    id1, id2 = sorted([current_user.id, id_destinatario])
+    amizade_existente = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2).first()
+    if amizade_existente:
+        return jsonify({"erro": "Solicitação já enviada ou já são amigos"}), 400
+
+    nova_solicitacao = Amizade(id_usuario1=id1, id_usuario2=id2, status="pendente")
+    db.session.add(nova_solicitacao)
+    db.session.commit()
+    return jsonify({"sucesso": "Solicitação de amizade enviada!"})
+
+# Aceitar amizade
+@app.route('/aceitar_amizade', methods=['POST'])
+@login_required
+def aceitar_amizade():
+    data = request.get_json()
+    id_solicitante = data.get('id_solicitante')
+    if not id_solicitante:
+        return jsonify({'erro': 'ID do solicitante não fornecido'}), 400
+
+    id1, id2 = sorted([current_user.id, id_solicitante])
+    amizade = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2, status='pendente').first()
+    if not amizade or amizade.id_usuario2 != current_user.id:
+        return jsonify({'erro': 'Solicitação inválida'}), 403
+
+    amizade.status = 'aceita'
+    db.session.commit()
+    return jsonify({'sucesso': 'Amizade aceita!'})
+
+# Recusar amizade
+@app.route('/recusar_amizade', methods=['POST'])
+@login_required
+def recusar_amizade():
+    data = request.get_json()
+    id_solicitante = data.get('id_solicitante')
+    if not id_solicitante:
+        return jsonify({"erro": "ID do usuário não informado"}), 400
+
+    id1, id2 = sorted([current_user.id, id_solicitante])
+    amizade = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2, status='pendente').first()
+    if not amizade or amizade.id_usuario2 != current_user.id:
+        return jsonify({"erro": "Solicitação inválida"}), 403
+
+    db.session.delete(amizade)
+    db.session.commit()
+    return jsonify({"sucesso": "Solicitação recusada!"})
+
+# Ranking de Amigos
+
+# 🏆 Página de Ranking de Amigos
+@app.route("/amigos")
+@login_required
+def ranking_amigos_page():
+    # Pegar todas as amizades aceitas do usuário logado
+    amizades_aceitas = Amizade.query.filter(
+        ((Amizade.id_usuario1 == current_user.id) | (Amizade.id_usuario2 == current_user.id)) &
+        (Amizade.status == 'aceita')
+    ).all()
+
+    ids_amigos = set()
+    amizades_dict = {}  # Para guardar o objeto de amizade para cada amigo
+    for a in amizades_aceitas:
+        if a.id_usuario1 != current_user.id:
+            ids_amigos.add(a.id_usuario1)
+            amizades_dict[a.id_usuario1] = a
+        if a.id_usuario2 != current_user.id:
+            ids_amigos.add(a.id_usuario2)
+            amizades_dict[a.id_usuario2] = a
+
+    # Incluir o próprio usuário
+    ids_amigos.add(current_user.id)
+
+    # Ranking baseado nos pontos semanais
+    ranking = Usuario.query.filter(Usuario.id.in_(ids_amigos)) \
+                .order_by(Usuario.pontos_semanais.desc()) \
+                .all()
+
+    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
+
+    ofensiva = get_or_create_ofensiva(current_user.id)
+    dia_semana = datetime.now().weekday()
+
+    # Calcular tempo de amizade em dias
+    hoje = datetime.now().date()
+    tempos_amizade = {}
+    for u in ranking:
+        if u.id == current_user.id:
+            tempos_amizade[u.id] = None
+        else:
+            amizade = amizades_dict.get(u.id)
+            if amizade:
+                delta = hoje - amizade.data_criacao.date()
+                tempos_amizade[u.id] = delta.days
+            else:
+                tempos_amizade[u.id] = 0
+
+    return render_template(
+        "amigos.html",
+        amizades=amizades_dict,
+        usuario=current_user,
+        ranking=ranking,
+        posicao_ranking=posicao_ranking,
+        pontos=current_user.pontos,
+        pontos_semanais=current_user.pontos_semanais,
+        ofensiva=ofensiva,
+        dia_semana=dia_semana,
+        tempos_amizade=tempos_amizade,
+        semana_completa=sum(ofensiva.dias_semana) == 7,
+        coins=current_user.moedas
+    )
+
 # 🏆 Página de Ranking
 @app.route("/ranking")
 @login_required
@@ -348,9 +479,16 @@ def ranking_page():
     dias_completos = sum(1 for dia in ofen.dias_semana if dia)
     semana_completa = dias_completos == 7
 
+    amizades = {}
+    for a in Amizade.query.filter(
+        (Amizade.id_usuario1 == current_user.id) | 
+        (Amizade.id_usuario2 == current_user.id)
+    ).all():
+        amizades[(a.id_usuario1, a.id_usuario2)] = a
 
     return render_template(
         "ranking.html",
+        amizades=amizades,
         usuario=current_user,
         usuarios=usuarios,
         posicao_ranking=posicao_ranking,
@@ -363,7 +501,6 @@ def ranking_page():
         semana_completa=semana_completa,
         coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
     )
-
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
 @login_required

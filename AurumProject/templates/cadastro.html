@@ -28,7 +28,10 @@
   <span id="textoerro" class="textoerro"><br></span>
   <button class="btn" id="signup-btn">{{ _('Criar conta') }}</button>
   <div class="terms">
-    {{ _('Ao se cadastrar, você concorda com os nossos Termos e Política de Privacidade.') }} <br>
+      {{ _('Ao se cadastrar, você concorda com os nossos') }} <br>
+  <a href="/termos" class="terms-link">{{ _('Termos de Uso') }}</a>
+  {{ _('e') }}
+  <a href="/privacidade" class="terms-link">{{ _('Política de Privacidade') }}</a>. <br>
   </div>
   <button type="button" class="btn" id="btnVoltar" onclick="window.location.href='/'" >{{ _('← Voltar ao início') }}</button>
 </div>

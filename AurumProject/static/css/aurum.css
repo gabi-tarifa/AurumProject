@@ -579,15 +579,6 @@ a:visited {
   display: block;
 }
 
-.profile-picture {
-  width: 40px;             /* ou qualquer tamanho desejado */
-  height: 40px;            /* mantenha igual à largura para ficar redondo */
-  border-radius: 50%;       /* deixa a imagem totalmente redonda */
-}
-
-
-
-
 .avatar {
   width: 120px;
   height: 120px;
@@ -1029,4 +1020,254 @@ label{
   font-weight: bold;
   text-align: center;
   font-size: smaller;
+}
+
+.subtle-button {
+    position: fixed; /* fixo na tela, sempre clicável */
+    top: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    z-index: 9999; /* garante que fique acima de todos os elementos */
+}
+.subtle-button:hover {
+    opacity: 1;
+}
+
+.terms-link {
+  color: #f4d160;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.terms-link:hover {
+  color: #ffd966;
+}
+
+.header-with-back {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* mantém o logo centralizado */
+    margin-bottom: 20px;
+}
+
+.header-with-back .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #f4d160;
+}
+
+.header-with-back .back-btn {
+    position: absolute;  
+    left: 0;            
+    top: 50%;           
+    transform: translateY(-50%);
+    margin-left: -310px; /* <-- compensa o padding do container */
+    background-color: #273a64;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.header-with-back .back-btn:hover {
+    background-color: #3d528a;
+    transform: translateY(-50%) scale(1.02);
+}
+
+
+
+.profile-picture {
+  width: 40px;             /* ou qualquer tamanho desejado */
+  height: 40px;            /* mantenha igual à largura para ficar redondo */
+  border-radius: 50%;       /* deixa a imagem totalmente redonda */
+  cursor: pointer;
+}
+
+
+/* --- Hover de Perfil no Ranking --- */
+.profile-hover-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Caixa inicialmente invisível, usar opacity+visibility para transições suaves */
+.profile-hover-box {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #253b71; /* Azul do título da caixa principal */
+  border: 2px solid goldenrod; /* contorno sutil */
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 10;
+}
+
+.profile-hover-container:hover .profile-hover-box {
+  display: block;
+}
+
+.profile-hover-box img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.profile-hover-container:hover .profile-hover-box,
+.profile-hover-box:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto; /* permite clicar nos botões dentro da caixa */
+}
+
+.profile-hover-container::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 8px;  /* área invisível entre a imagem e a caixa */
+}
+
+
+.hover-picture {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+  object-fit: cover;
+}
+
+.hover-name {
+  font-weight: 600;
+  color: whitesmoke;
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.friend-request-btn,
+.accept-btn,
+.reject-btn,
+.waiting-btn,
+.friend-btn {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Solicitar amizade */
+.friend-request-btn {
+  background: #ffd966;
+  color: #3b3b3b;
+}
+.friend-request-btn:hover {
+  background: #f1c232;
+}
+
+.accept-btn {
+  background: #6aa84f;
+  color: white;
+  width: 105px;
+}
+.accept-btn:hover {
+  background: #38761d;
+}
+
+.reject-btn {
+  background: #e06666;
+  color: white;
+  width: 105px;
+
+}
+.reject-btn:hover {
+  background: #cc0000;
+}
+
+.waiting-btn {
+  background: #b7b7b7;
+  color: white;
+  cursor: default;
+}
+
+.friend-btn {
+  background: #3d85c6;
+  color: white;
+  cursor: default;
+}
+
+/* Aguardando */
+.waiting-btn {
+  background-color: #777;
+  cursor: default;
+}
+
+/* Amigos */
+.friend-btn {
+  background-color: #444c70;
+  cursor: default;
+}
+
+/* pequenos ajustes responsivos */
+@media (max-width: 480px) {
+  .profile-hover-box { left: 10%; transform: none; width: 180px; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ícone de status de amizade sobre a foto */
+.friend-status {
+  position: absolute;
+  bottom: -4px;       /* levemente para fora da foto */
+  right: -4px;
+  background-color: #253b71;
+  border: 2px solid goldenrod;
+  border-radius: 50%;
+  font-size: 14px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: default;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+  transition: opacity 0.2s ease;
+}
+
+/* Ícone some quando o hover estiver ativo */
+.profile-hover-container:hover .friend-status {
+  opacity: 0;
+}
+
+/* Ajuste da posição da foto de perfil */
+.profile-hover-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Deixa a transição mais suave */
+.friend-status {
+  animation: fadeIn 0.3s ease;
 }
