@@ -46,8 +46,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -116,7 +116,6 @@ def checar_ofensivas():
                 # Move "dia_hoje" para "dia_anterior"
                 ofensiva.dia_anterior = ofensiva.dia_hoje
                 ofensiva.dia_hoje = False
-                continue
             else:
                 ofensiva.dia_anterior = ofensiva.dia_hoje
                 ofensiva.dia_hoje = False
@@ -222,6 +221,11 @@ def configuracoes():
         {"code": "en", "name": "English"}
     ]
 
+    temas = [
+        {"code": "esc", "name": "Escuro"},
+        {"code": "cla", "name": "Claro"}
+    ]
+
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
     if not conf:
         conf = Configuracoes(id_usuario=current_user.id, sons=True, musica=False)
@@ -234,7 +238,9 @@ def configuracoes():
         idioma=current_user.idioma,
         sons=conf.sons,
         musica=conf.musica,
-        usuario=current_user
+        usuario=current_user,
+        temas=temas,
+        tema_atual=conf.tema
     )
 
 @app.route("/api/idioma", methods=["POST"])
@@ -249,11 +255,23 @@ def api_idioma():
     # Dica: poderíamos retornar JSON e o front recarregar a página
     return jsonify({"ok": True, "msg": _("Idioma atualizado para %(lang)s.", lang=novo)})
 
+@app.route("/api/tema", methods=["POST"])
+@login_required
+def api_tema():
+    data = request.get_json(silent=True) or request.form
+    novo = (data.get("tema") or "").strip()
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    conf.tema = novo
+    db.session.commit()
+    # Dica: poderíamos retornar JSON e o front recarregar a página
+    return jsonify({"ok": True, "msg": _("Tema atualizado para %(tema)s.", tema=novo)})
+
 # Pagina de Ajuda
 @app.route("/ajuda")
 @login_required
 def ajuda():
-    return render_template("ajuda.html")
+    conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
+    return render_template("ajuda.html", tema=conf.tema)
 
 @app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
@@ -285,11 +303,14 @@ def licoes(numero_tarefa, id_modulo):
                 "alternativas": alternativas
             })
 
+    conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
+
     return render_template(
         "licoes.html",
         tarefa=tarefa,
         blocos_json=blocos,
-        numero_tarefa=tarefa.numero_tarefa
+        numero_tarefa=tarefa.numero_tarefa,
+        tema = conf.tema
     )
 
 # 🆕 Página de Cadastro
@@ -307,11 +328,17 @@ def cadastro_page():
 # Termos de Uso
 @app.route("/termos")
 def termos_page():
+    if current_user.is_authenticated:
+        conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+        return render_template("termos.html", tema=conf.tema)
     return render_template("termos.html")
 
 # Política de Privacidae
 @app.route("/privacidade")
 def privacidade_page():
+    if current_user.is_authenticated:
+        conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+        return render_template("privacidade.html", tema=conf.tema)
     return render_template("privacidade.html")
 
 # Solicitar amizade
@@ -420,6 +447,8 @@ def ranking_amigos_page():
             else:
                 tempos_amizade[u.id] = 0
 
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     return render_template(
         "amigos.html",
         amizades=amizades_dict,
@@ -432,7 +461,8 @@ def ranking_amigos_page():
         dia_semana=dia_semana,
         tempos_amizade=tempos_amizade,
         semana_completa=sum(ofensiva.dias_semana) == 7,
-        coins=current_user.moedas
+        coins=current_user.moedas,
+        tema = conf.tema
     )
 
 # 🏆 Página de Ranking
@@ -486,6 +516,8 @@ def ranking_page():
     ).all():
         amizades[(a.id_usuario1, a.id_usuario2)] = a
 
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     return render_template(
         "ranking.html",
         amizades=amizades,
@@ -499,7 +531,8 @@ def ranking_page():
         recompensas=recompensas,
         ranking=ranking,
         semana_completa=semana_completa,
-        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+        coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
+        tema = conf.tema
     )
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
@@ -508,6 +541,8 @@ def starting_page():
     current_user.ja_passou_intro = True
     db.session.commit()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
+
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
 
     semana_atual = inicio_semana()
 
@@ -619,7 +654,8 @@ def starting_page():
         semana_completa=semana_completa,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
-        modulos=modulos_progresso
+        modulos=modulos_progresso,
+        tema=conf.tema
     )
 
 # 🏆 Página de Quando Inicia o Sistema
@@ -691,6 +727,8 @@ def perfil_page():
     # Encontrar a posição do usuário no ranking
     posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
 
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     return render_template(
         "perfil.html",
         usuario=current_user,
@@ -704,11 +742,14 @@ def perfil_page():
         ofensiva=ofensiva,
         semana_completa=semana_completa,
         dia_semana=dia_semana,
-        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+        coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
+        tema=conf.tema
     )
 @app.route("/modulo_<int:id_modulo>")
 @login_required
 def ver_modulo(id_modulo):
+
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
 
     semana_atual = inicio_semana()
 
@@ -760,7 +801,7 @@ def ver_modulo(id_modulo):
     # todas as tarefas do módulo
     tarefas = Tarefa.query.filter_by(id_modulo=id_modulo).order_by(Tarefa.numero_tarefa).all()
 
-    modulo = Modulo.query.get_or_404(id_modulo)
+    modulo = Modulo.query.get(id_modulo)
 
     # ids concluídos pelo usuário
     concluidas = {t.numero_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
@@ -803,7 +844,8 @@ def ver_modulo(id_modulo):
         semana_completa=semana_completa,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
-        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+        coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
+        tema = conf.tema
     )
 
 @app.route("/introducao")
@@ -839,6 +881,8 @@ def cadastro():
 @app.route("/quiz")
 @login_required
 def quiz_page():
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
 
@@ -907,12 +951,15 @@ def quiz_page():
         ofensiva=ofensiva,
         dia_semana=dia_semana,
         semana_completa=semana_completa,
-        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+        coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
+        tema = conf.tema
     )
 
 @app.route("/loja")
 @login_required
 def store_page():
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
     
     poderes = Poderes.query.all()
@@ -991,7 +1038,8 @@ def store_page():
         quantidades=quantidades,
         ofensiva=ofensiva,
         dia_semana=dia_semana,
-        coins=current_user.moedas  # Ou current_user.coins, se esse for o nome
+        coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
+        tema = conf.tema
     )
 
 @app.route("/comprar_poder", methods=["POST"])
@@ -1399,7 +1447,7 @@ def concluir_tarefa(id_modulo, numero_tarefa):
             ofensiva.data_ultima_atividade = datetime.now()
             ofensiva.sequencia_atual = 1
             if ofensiva.sequencia_atual > ofensiva.recorde:
-                ofensiva.recorde = ofensiva.s
+                ofensiva.recorde = ofensiva.sequencia_atual
 
 
     
@@ -1428,23 +1476,26 @@ def concluir_tarefa(id_modulo, numero_tarefa):
 @app.route("/licao_falha/<int:numero_tarefa>/<int:id_modulo>")
 @login_required
 def licao_falha(numero_tarefa, id_modulo):
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
     # Busca tarefa só pra exibir nome/título se quiser
     tarefa = Tarefa.query.filter_by(
         id_modulo=id_modulo,
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo)
+    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema)
 
 @app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
 @login_required
 def licao_sucesso(numero_tarefa, id_modulo):
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     tarefa = Tarefa.query.filter_by(
         id_modulo=id_modulo,
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo)
+    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema)
 
 reset_codes = {}
 
@@ -1518,6 +1569,8 @@ def resetar_senha(email):
 @app.route('/suporte', methods=['GET', 'POST'])
 @login_required
 def enviar_ticket():
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+
     if request.method == 'POST':
         nome = request.form['nome']
         email_usuario = request.form['email']
@@ -1566,7 +1619,7 @@ def enviar_ticket():
         flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
         return redirect(url_for("starting_page"))
 
-    return render_template("enviarticket.html")
+    return render_template("enviarticket.html", tema = conf.tema)
 
 def send_email_via_api(destinatario, assunto, conteudo):
     # Garante que o destinatário seja string e não tupla
@@ -1579,8 +1632,6 @@ def send_email_via_api(destinatario, assunto, conteudo):
         subject=assunto,
         html_content=conteudo
     )
-
-    print(os.environ.get('SENDGRID_API_KEY'))
 
     if os.environ.get('SENDGRID_API_KEY') == None:
         sucesso = send_email_flask_mail(destinatario, assunto, conteudo)
@@ -1612,6 +1663,6 @@ def send_email_flask_mail(destinatario, assunto, conteudo)->bool:
         return False
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

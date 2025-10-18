@@ -5,16 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lição não concluída</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+    <link
+      rel="shortcut icon"
+      href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png"
+      type="image/x-icon"
+    />
 </head>
-<body>
-  <div class="container">
-    <div class="card">
-      <h1>{{ _('Você não concluiu a lição') }}😥</h1>
-      <p>{{ _('Infelizmente você não atingiu o mínimo necessário para completar') }} <strong>{{ tarefa.titulo if tarefa.titulo else "esta lição" }}</strong>.</p>
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
+  <div class="container {%if tema == 'cla'%} claro {%endif%}">
+    <div class="card falha">
+      <h1>{{ _('Você não concluiu a lição') }}</h1>
+      <p>{{ _('Infelizmente você não atingiu o mínimo necessário para completar') }} <strong> {{ _(tarefa.descricao) if tarefa.descricao else _('esta lição') }}</strong>.</p>
       <p>{{ _('Tente novamente para avançar no módulo.') }}</p>
       
       <a href="{{ url_for('ver_modulo', id_modulo=id_modulo) }}" class="btn">{{ _('Voltar ao módulo') }}</a>
     </div>
-  </div>
+    <div class="thought-bubble">
+      <span class="bubble bubble1 falha"></span>
+      <span class="bubble bubble2 falha"></span>
+      <span class="bubble bubble3 falha"></span>
+    </div>
+        <img src="{{ url_for('static', filename='img/sad-lion.png') }}" alt="leão" class="lion" />
+    </div>
+
+    <script>
+    setInterval(() => {
+      document.querySelectorAll('.bubble').forEach((el) => {
+        el.classList.remove('animate');
+        el.classList.add('animate');
+    });
+  }, 3000); // intervalo de 3s
+  </script>
 </body>
 </html>

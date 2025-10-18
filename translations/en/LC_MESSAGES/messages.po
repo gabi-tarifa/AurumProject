@@ -1175,3 +1175,9 @@ msgstr "Contact"
 
 msgid "Para dúvidas ou solicitações relacionadas à privacidade, entre em contato pelo e-mail: "
 msgstr "For questions or requests related to privacy, please contact us at: "
+
+msgid "Voltar à página inicial"
+msgstr "Return to main screen"
+
+msgid "Este módulo ainda não está disponível. Volte mais tarde!"
+msgstr "This module isn't available yet. Come back later!"

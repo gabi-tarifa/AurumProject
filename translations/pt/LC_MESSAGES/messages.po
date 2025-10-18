@@ -868,3 +868,6 @@ msgstr "Segunda Chance"
 
 msgid "segunda_chance_desc"
 msgstr "Mantenha a sua ofensiva sem medo de errar!"
+
+msgid "Alterar Email Cadastrado"
+msgstr ""

@@ -126,6 +126,30 @@ sel.addEventListener('change', async (e) => {
   }
 });
 
+
+const tem = document.getElementById('tema');
+const apiUrltem = tem.dataset.url; // agora deve ter o valor correto
+
+tem.addEventListener('change', async (e) => {
+  e.preventDefault(); // se estiver dentro de um form
+  const tema = e.target.value;
+
+  try {
+    const r = await fetch(apiUrltem, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tema })
+    });
+
+    if (r.ok) {
+  console.log("tema alterado:", tema);
+  window.location.reload(); // força recarregar com o novo idioma
+}
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 async function carregarConfig() {
     const r = await fetch("/api/config");
     if (!r.ok) {

@@ -21,6 +21,16 @@
             color: #ccc;
             line-height: 1.7;
         }
+        .content-box.claro {
+            max-height: 75vh;
+            overflow-y: auto;
+            padding: 25px;
+            background-color: #0033a0;
+            border-radius: 15px;
+            margin-top: 20px;
+            color: #ccc;
+            line-height: 1.7;
+        }
         .content-box h3 {
             color: #f4d160;
             margin-top: 20px;
@@ -37,10 +47,10 @@
         }
     </style>
 </head>
-<body>
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
 
 
-    <div class="container active">
+    <div class="container active {%if tema == 'cla'%} claro {%endif%}">
 
 
         <div class="header-with-back">
@@ -49,7 +59,7 @@
         </div>
         <h2>{{_('Termos de Uso')}}</h2>
 
-        <div class="content-box">
+        <div class="content-box {%if tema == 'cla'%} claro {%endif%}">
             <p>{{_('Estes Termos de Uso regem a utilização da plataforma Aurum. Ao acessar ou usar a plataforma, você concorda em cumprir estes termos. Leia atentamente.')}}</p>
 
             <h3>1. {{_('Aceitação dos Termos')}}</h3>

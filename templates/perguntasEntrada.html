@@ -43,137 +43,139 @@
                             [[ opcao ]]
                         </button>
                         </div>
-                        <h3 id="progessaoPerguntas">0/12</h3>
+                        <h3 id="progessaoPerguntas">0/12 respondidas</h3>
                     </main>
                 </div>
             `,
             data() {
                 return {
                     perguntas: [
-                        { numero_pergunta: 1, desc_pergunta: "Quando ocorre inflação, significa que:", resposta_pergunta: 0 },
-                        { numero_pergunta: 2, desc_pergunta: "Ao optar pelo uso do cartão de débito em vez do crédito, a principal vantagem:", resposta_pergunta: 0 },
-                        { numero_pergunta: 3, desc_pergunta: "Quando os gastos de uma família são maiores do que sua renda mensal, o resultado mais provável é:", resposta_pergunta: 0 },
-                        { numero_pergunta: 4, desc_pergunta: "Uma reserva de emergência bem estruturada deve ser:", resposta_pergunta: 0 },
-                        { numero_pergunta: 5, desc_pergunta: "O uso frequente do cheque especial pode indicar que:", resposta_pergunta: 0 },
-                        { numero_pergunta: 6, desc_pergunta: "Qual das opções abaixo é considerada uma despesa recorrente e previsível, independentemente do consumo variável?", resposta_pergunta: 0 },
-                        { numero_pergunta: 7, desc_pergunta: "O princípio de diversificação de investimentos está relacionado a:", resposta_pergunta: 0 },
-                        { numero_pergunta: 8, desc_pergunta: "Quando uma pessoa recebe seu pagamento no fim do mês, o valor disponível para gastar depois dos descontos obrigatórios corresponde a:", resposta_pergunta: 0 },
-                        { numero_pergunta: 9, desc_pergunta: "Entre as opções abaixo, qual apresenta melhor potencial de rendimento a longo prazo em comparação à poupança?", resposta_pergunta: 0 },
-                        { numero_pergunta: 10, desc_pergunta: "Um gasto pode ser classificado como supérfluo quando:", resposta_pergunta: 0 },
-                        { numero_pergunta: 11, desc_pergunta: "Quando uma dívida é cobrada com juros compostos, isso significa que:", resposta_pergunta: 0 },
-                        { numero_pergunta: 12, desc_pergunta: "Manter um orçamento pessoal atualizado serve, principalmente, para:", resposta_pergunta: 0 }
-                    ],
-                    respostas: [
-                        {
-                        numero_resposta: 1,
-                            desc_respostas: [
-                                "O poder de compra do dinheiro aumenta",
-                                "Há um aumento generalizado e contínuo dos preços", // correta (posição 2)
-                                "Os preços de alguns produtos caem de forma isolada",
-                                "Os bancos elevam as taxas de empréstimo por decisão própria"
-                            ]
-                        },
-                        {
-                            numero_resposta: 2,
-                            desc_respostas: [
-                                "Permitir realizar compras mesmo sem saldo disponível",
-                                "Evitar dívidas, já que o pagamento ocorre no momento da transação", // correta (posição 2)
-                                "Garantir programas de pontos mais vantajosos",
-                                "Ampliar o limite de crédito oferecido pelo banco"
-                            ]
-                        },
-                        {
-                            numero_resposta: 3,
-                            desc_respostas: [
-                                "Formação de patrimônio",
-                                "Endividamento progressivo", // correta (posição 2)
-                                "Maior capacidade de poupança",
-                                "Estabilidade financeira"
-                            ]
-                        },
-                        {
-                            numero_resposta: 4,
-                            desc_respostas: [
-                                "Um valor equivalente ao salário líquido do mês",
-                                "Um montante de fácil acesso que cubra de 3 a 6 meses das despesas essenciais", // correta (posição 2)
-                                "O limite do cheque especial oferecido pelo banco",
-                                "O valor que sobra após todas as despesas de lazer"
-                            ]
-                        },
-                        {
-                            numero_resposta: 5,
-                            desc_respostas: [
-                                "O consumidor está utilizando uma das linhas de crédito com juros mais altos do mercado", // correta (posição 1)
-                                "O cliente encontrou uma forma de manter sempre saldo positivo",
-                                "Trata-se de uma estratégia de investimento de baixo risco",
-                                "É um método eficiente de construir reserva de emergência"
-                            ]
-                        },
-                        {
-                            numero_resposta: 6,
-                            desc_respostas: [
-                                "Aluguel da casa", // correta (posição 1)
-                                "Conta de supermercado",
-                                "Passeios de fim de semana",
-                                "Compras de roupas"
-                            ]
-                        },
-                        {
-                            numero_resposta: 7,
-                            desc_respostas: [
-                                "Concentrar todo o capital em uma única aplicação para aumentar ganhos",
-                                "Distribuir os recursos em diferentes opções, reduzindo riscos", // correta (posição 2)
-                                "Guardar todo o dinheiro em um único banco para maior controle",
-                                "Manter apenas aplicações de renda fixa para evitar perdas"
-                            ]
-                        },
-                        {
-                            numero_resposta: 8,
-                            desc_respostas: [
-                                "Salário bruto",
-                                "Salário líquido", // correta (posição 2)
-                                "Benefícios adicionais",
-                                "Fundo de garantia"
-                            ]
-                        },
-                        {
-                            numero_resposta: 9,
-                            desc_respostas: [
-                                "Guardar em espécie em casa",
-                                "Tesouro Direto ou CDB", // correta (posição 2)
-                                "Conta corrente sem movimentação",
-                                "Compra eventual de moedas estrangeiras"
-                            ]
-                        },
-                        {
-                            numero_resposta: 10,
-                            desc_respostas: [
-                                "É essencial para manter necessidades básicas",
-                                "Está ligado a compromissos fixos, como moradia",
-                                "Está associado a consumo de lazer ou luxo sem planejamento", // correta (posição 3)
-                                "Não pode ser evitado de forma alguma"
-                           ]
-                       },
-                       {
-                           numero_resposta: 11,
-                           desc_respostas: [
-                               "O valor cresce somente sobre o montante inicial",
-                               "Os juros incidem sobre o valor original e também sobre os juros acumulados anteriormente", // correta (posição 2)
-                               "O valor total da dívida permanece inalterado, mesmo com o tempo",
-                               "O pagamento dos juros é opcional, podendo ser adiado indefinidamente"
-                           ]
-                       },
-                       {
-                            numero_resposta: 12,
-                            desc_respostas: [
-                                "Monitorar entradas e saídas de dinheiro, evitando desequilíbrios financeiros", // correta (posição 1)
-                                "Aumentar automaticamente o saldo bancário ao final do mês",
-                                "Impedir cobranças de impostos anuais",
-                                "Substituir a necessidade de uma reserva de emergência"
-                            ]
-                        }
-                    ],
-                    respostasCorretas: [2,2,2,2,1,1,2,2,2,3,2,1],
+    { numero_pergunta: 1, desc_pergunta: "Quando a taxa Selic é reduzida pelo Banco Central, qual tende a ser o principal impacto sobre o câmbio e os investimentos?", resposta_pergunta: 0 },
+    { numero_pergunta: 2, desc_pergunta: "Um título de renda fixa pós-fixado atrelado ao CDI é mais indicado em qual cenário econômico?", resposta_pergunta: 0 },
+    { numero_pergunta: 3, desc_pergunta: "Quando os gastos de uma família são maiores do que sua renda mensal, o resultado mais provável é:", resposta_pergunta: 0 },
+    { numero_pergunta: 4, desc_pergunta: "A alíquota mínima do Imposto de Renda sobre fundos de investimento de longo prazo é aplicada após:", resposta_pergunta: 0 },
+    { numero_pergunta: 5, desc_pergunta: "Sobre ações, qual alternativa está correta?", resposta_pergunta: 0 },
+    { numero_pergunta: 6, desc_pergunta: "A sigla EBITDA representa:", resposta_pergunta: 0 },
+    { numero_pergunta: 7, desc_pergunta: "O princípio de diversificação de investimentos está relacionado a:", resposta_pergunta: 0 },
+    { numero_pergunta: 8, desc_pergunta: "O conceito de “Mark-to-Market” significa:", resposta_pergunta: 0 },
+    { numero_pergunta: 9, desc_pergunta: "O índice Sharpe mede:", resposta_pergunta: 0 },
+    { numero_pergunta: 10, desc_pergunta: "Um gasto pode ser classificado como supérfluo quando:", resposta_pergunta: 0 },
+    { numero_pergunta: 11, desc_pergunta: "O que diferencia o Tesouro IPCA+ do Tesouro Prefixado?", resposta_pergunta: 0 },
+    { numero_pergunta: 12, desc_pergunta: "Qual é o principal risco de um fundo imobiliário de tijolo (FIIs)?", resposta_pergunta: 0 }
+],
+
+respostas: [
+    {
+        numero_resposta: 1,
+        desc_respostas: [
+            "A moeda nacional tende a se valorizar, e os investimentos em renda fixa se tornam mais atrativos.",
+            "A moeda nacional tende a se desvalorizar, e há migração para ativos de maior risco.", // correta (posição 2)
+            "O câmbio permanece estável, e a bolsa tende a cair.",
+            "A inflação tende a diminuir imediatamente."
+        ]
+    },
+    {
+        numero_resposta: 2,
+        desc_respostas: [
+            "Quando a taxa Selic está em tendência de alta.", // correta (posição 1)
+            "Quando a inflação está caindo e a Selic estável.",
+            "Quando o dólar está se valorizando.",
+            "Quando há deflação persistente."
+        ]
+    },
+    {
+        numero_resposta: 3,
+        desc_respostas: [
+            "Formação de patrimônio",
+            "Endividamento progressivo", // correta (posição 2)
+            "Maior capacidade de poupança",
+            "Estabilidade financeira"
+        ]
+    },
+    {
+        numero_resposta: 4,
+        desc_respostas: [
+            "180 dias",
+            "360 dias",
+            "720 dias", // correta (posição 3)
+            "1.080 dias"
+        ]
+    },
+    {
+        numero_resposta: 5,
+        desc_respostas: [
+            "Dividendos pagos reduzem o preço da ação, mas não o valor da empresa", // correta (posição 1)
+            "O pagamento de dividendos aumenta o valor da empresa.",
+            "Juros sobre capital próprio são isentos de imposto de renda para o investidor.",
+            "O fracionamento (split) reduz o valor de mercado da companhia."
+        ]
+    },
+    {
+        numero_resposta: 6,
+        desc_respostas: [
+            "Lucro líquido após impostos.",
+            "Lucro antes de juros, impostos, depreciação e amortização.", // correta (posição 2)
+            "Retorno sobre o investimento total.",
+            "Receita líquida antes dos custos operacionais."
+        ]
+    },
+    {
+        numero_resposta: 7,
+        desc_respostas: [
+            "Concentrar todo o capital em uma única aplicação para aumentar ganhos",
+            "Distribuir os recursos em diferentes opções, reduzindo riscos", // correta (posição 2)
+            "Guardar todo o dinheiro em um único banco para maior controle",
+            "Manter apenas aplicações de renda fixa para evitar perdas"
+        ]
+    },
+    {
+        numero_resposta: 8,
+        desc_respostas: [
+            "Avaliar os ativos pelo custo histórico.",
+            "Avaliar os ativos pelo valor de mercado atual.", // correta (posição 2)
+            "Ajustar o lucro líquido para eliminar efeitos contábeis.",
+            "Calcular o valor presente líquido de um título."
+        ]
+    },
+    {
+        numero_resposta: 9,
+        desc_respostas: [
+            "O risco de crédito de um título.",
+            "A rentabilidade líquida após impostos.",
+            "O retorno excedente de um investimento em relação ao seu risco.", // correta (posição 3)
+            "A correlação entre dois ativos"
+        ]
+    },
+    {
+        numero_resposta: 10,
+        desc_respostas: [
+            "É essencial para manter necessidades básicas",
+            "Está ligado a compromissos fixos, como moradia",
+            "Está associado a consumo de lazer ou luxo sem planejamento", // correta (posição 3)
+            "Não pode ser evitado de forma alguma"
+        ]
+    },
+    {
+        numero_resposta: 11,
+        desc_respostas: [
+            "O primeiro paga juros fixos, o segundo varia conforme a inflação.",
+            "O Tesouro IPCA+ tem rentabilidade atrelada à inflação mais juros reais.", // correta (posição 2)
+            "O Tesouro Prefixado protege contra a perda do poder de compra.",
+            "O IPCA+ é isento de imposto de renda para PF."
+        ]
+    },
+    {
+        numero_resposta: 12,
+        desc_respostas: [
+            "Variação cambial.",
+            "Aumento da taxa de juros, que reduz o valor das cotas.", // correta (posição 2)
+            "Inflação baixa demais.",
+            "Aumento no número de investidores."
+        ]
+    }
+],
+
+respostasCorretas: [2,1,2,3,1,2,2,2,3,3,2,2],
                     i_pergunta_atual: 0
                 }
             },
@@ -214,7 +216,7 @@
                     sessionStorage.setItem('acertos', acertos);
                     window.location.href = "/pre-entrada";
                 }
-                    document.getElementById("progessaoPerguntas").textContent = perguntasRespondidas + "/" + totalPerguntas; 
+                    document.getElementById("progessaoPerguntas").textContent = perguntasRespondidas + "/" + totalPerguntas + "respondidas"; 
                 },getOptionDescription(value) {
                     const perguntaIndex = this.i_pergunta_atual;
                     const respostas = this.respostas[perguntaIndex].desc_respostas;

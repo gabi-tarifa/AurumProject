@@ -5,16 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lição concluída</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+    <link
+      rel="shortcut icon"
+      href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png"
+      type="image/x-icon"
+    />
 </head>
-<body>
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
   <div class="container">
-    <div class="card sucesso">
-      <h1>{{ _('Parabéns! ') }}🎉</h1>
-      <p>{{ _('Você concluiu com sucesso a lição ') }}<strong>{{ tarefa.numero_tarefa if tarefa.numero_tarefa else "atual" }}</strong>.</p>
+    <div class="card sucesso {%if tema == 'cla'%} claro {%endif%}>"
+      <h1>{{ _('Parabéns! ') }}</h1>
+      <p>{{ _('Você concluiu com sucesso a lição ') }}<strong>{{ tarefa.numero_tarefa if tarefa.numero_tarefa else "{{ _('atual') }}" }}</strong>.</p>
       <p>{{ _('Continue avançando para desbloquear mais conquistas!') }}</p>
       
       <a href="{{ url_for('ver_modulo', id_modulo=id_modulo) }}" class="btn">{{ _('Voltar ao módulo') }}</a>
     </div>
+    <div class="thought-bubble">
+      <span class="bubble bubble1"></span>
+      <span class="bubble bubble2"></span>
+      <span class="bubble bubble3"></span>
+    </div>
+        <img src="{{ url_for('static', filename='img/lion.png') }}" alt="leão" class="lion" />
+  </div>
+    <script>
+    setInterval(() => {
+      document.querySelectorAll('.bubble').forEach((el) => {
+        el.classList.remove('animate');
+        el.classList.add('animate');
+    });
+  }, 3000); // intervalo de 3s
+  </script>
   </div>
 </body>
 </html>

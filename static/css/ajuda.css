@@ -4,6 +4,13 @@ body {
     background-color: #0f1b3d;
     color: #fff;
 }
+body.claro {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #8097d4;
+    color: #fff;
+}
+
 
 
 header {
@@ -11,6 +18,14 @@ header {
     align-items: center;
     justify-content: space-between;
     background-color: #14234f;
+    padding: 10px 20px;
+    border-bottom: 2px solid #c9af1b;
+}
+header.claro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #003cf1;
     padding: 10px 20px;
     border-bottom: 2px solid #c9af1b;
 }
@@ -34,6 +49,15 @@ header button {
   margin: 40px 20px;
   padding: 20px;
   background: #10214e;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  font-family: Arial, sans-serif;
+}
+.help.claro {
+  margin: 40px 20px;
+  padding: 20px;
+  background: #7c87a3;
   color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -68,15 +92,41 @@ header button {
   transition: background 0.3s;
   box-shadow: 0 4px 10px rgba(17, 17, 17, 0.6);
 }
+.faq-question.claro {
+  width: 100%;
+  background: #3963d6;
+  color: #f1c40f;
+  padding: 14px;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  transition: background 0.3s;
+  box-shadow: 0 4px 10px rgba(17, 17, 17, 0.6);
+}
 
 .faq-question:hover {
   background: #112355;
+}
+.faq-question.claro:hover {
+  background: #0044ff;
 }
 
 .faq-answer {
   max-height: 0;
   overflow: hidden;
   background: #0e1d46;
+  padding: 0 15px;
+  border-radius: 0 0 8px 8px;
+  transition: max-height 0.4s ease, padding 0.3s;
+}
+.faq-answer.claro {
+  max-height: 0;
+  overflow: hidden;
+  background: #4f586e;
   padding: 0 15px;
   border-radius: 0 0 8px 8px;
   transition: max-height 0.4s ease, padding 0.3s;
