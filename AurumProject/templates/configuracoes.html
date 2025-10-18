@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/configuracoes.css') }}">
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
 </head>
-<body>
+<body {%if tema_atual == 'cla'%} class="claro" {%endif%}>
 
-    <header>
+    <header {%if tema_atual == 'cla'%} class="claro" {%endif%}>
 <button onclick="voltarRecarregando()">← {{ _(' Voltar') }}</button>
 
 <script>
@@ -22,39 +22,50 @@ function voltarRecarregando() {
     </header>
 
     <main>
-        <section class="config-section">
+        <section class="config-section {%if tema_atual == 'cla'%} claro {%endif%}">
             <h2>{{ _('Preferências') }}</h2>
-            <div class="config-item">
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label for="sound">{{ _('Sons') }}</label>
                 <input type="checkbox" id="sound" {% if sons %} checked {% endif %}>
             </div>
-            <div class="config-item">
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label for="music">{{ _('Música de fundo') }}</label>
                 <input type="checkbox" id="music" {% if musica %} checked {% endif %}>
             </div>
-            <div class="config-item">
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
     <label for="idioma">{{ _('Idioma') }}</label>
-    <select id="idioma" data-url="{{ url_for('api_idioma') }}">
+    <select {%if tema_atual == 'cla'%} class="claro" {%endif%} id="idioma" data-url="{{ url_for('api_idioma') }}">
         {% for lang in idiomas %}
         {% set sel = 'selected' if lang.code == idioma else '' %}
-            <option value="{{ lang.code }}" {{ sel }}>
+            <option {%if tema_atual == 'cla'%} class="claro" {%endif%} value="{{ lang.code }}" {{ sel }}>
                 {{ lang.name }}
             </option>
         {% endfor %}
 
     </select>
+    </div>
+    <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">    
+    <label for="tema">{{ _('Tema') }}</label>
+    <select {%if tema_atual == 'cla'%} class="claro" {%endif%} id="tema" data-url="{{ url_for('api_tema') }}">
+        {% for tema in temas %}
+        {% set tem = 'selected' if tema.code == tema_atual else '' %}
+            <option {%if tema_atual == 'cla'%} class="claro" {%endif%} value="{{ tema.code }}" {{ tem }}>
+                {{ tema.name }}
+            </option>
+        {% endfor %}
 
-            </div>
+    </select>
+    </div>
         </section>
 
-<section class="config-section">
+<section class="config-section {%if tema_atual == 'cla'%} claro {%endif%}">
     <h2>{{ _('Conta') }}</h2>
 
-    <div class="config-item">
+    <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
         <label>{{ _('Alterar Apelido') }}</label>
         <button onclick="abrirDiv('painel-apelido')">{{ _('Editar') }}</button>
     </div>
-    <div id="painel-apelido" class="painel-edicao oculto">
+    <div id="painel-apelido {%if tema_atual == 'cla'%} claro {%endif%}" class="painel-edicao oculto">
         <form onsubmit="salvarApelido(); return false;">
             <h2>{{ _('Alterar Apelido') }}</h2>
             <label for="novo-apelido">{{ _('Novo Apelido:') }}</label>
@@ -67,11 +78,11 @@ function voltarRecarregando() {
         </form>
     </div>
 
-    <div class="config-item">
+    <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
         <label>{{ _('Alterar Email Cadastrado') }}</label>
         <button onclick="abrirDiv('painel-email')">{{ _('Editar') }}</button>
     </div>
-    <div id="painel-email" class="painel-edicao oculto">
+    <div id="painel-email {%if tema_atual == 'cla'%} claro {%endif%}" class="painel-edicao oculto">
         <form onsubmit="salvarEmail(); return false;">
             <h2>{{ _('Alterar Email') }}</h2>
             <label for="novo-email">{{ _('Novo Email:') }}</label>
@@ -84,11 +95,11 @@ function voltarRecarregando() {
         </form>
     </div>
 
-    <div class="config-item">
+    <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
         <label>{{ _('Alterar Senha') }}</label>
         <button onclick="abrirDiv('painel-senha')">{{ _('Editar') }}</button>
     </div>
-    <div id="painel-senha" class="painel-edicao oculto">
+    <div id="painel-senha {%if tema_atual == 'cla'%} claro {%endif%}" class="painel-edicao oculto">
         <form onsubmit="salvarSenha(); return false;">
             <h2>{{ _('Alterar Senha') }}</h2>
             <label for="senha-atual">{{ _('Senha Atual:') }}</label>
@@ -110,13 +121,13 @@ function voltarRecarregando() {
     </div>
 </section>
 
-        <section class="config-section">
+        <section class="config-section {%if tema_atual == 'cla'%} claro {%endif%}">
             <h2>{{ _('Aplicativo') }}</h2>
-            <div class="config-item">
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label>{{ _('Versão do App') }}</label>
                 <span>0.3.2 Beta</span>
             </div>
-            <div class="config-item">
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label>{{ _('Redefinir configurações') }}</label>
                 <button onclick="resetarConfig()">{{ _('Resetar') }}</button>
             </div>

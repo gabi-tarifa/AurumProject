@@ -13,12 +13,30 @@ body {
   justify-content: center;
   align-items: center;
 }
+body.claro {
+  background-color: #1b4fdd;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .support-page {
   max-width: 600px;
   margin: 40px auto;
   padding: 25px;
   background: #152238;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  font-family: 'Segoe UI', sans-serif;
+}
+.support-page.claro {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #526fa1;
   color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -62,15 +80,38 @@ body {
   transition: background 0.3s;
   resize: none;
 }
+.ticket-form.claro input,
+.ticket-form.claro textarea {
+  padding: 12px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #a3bdf5;
+  color: #fff;
+  outline: none;
+  transition: background 0.3s;
+  resize: none;
+}
 
 .ticket-form input:focus,
 .ticket-form textarea:focus {
   background: #2f4677;
 }
+.ticket-form.claro input:focus,
+.ticket-form.claro textarea:focus {
+  background: #5c6068;
+}
 
 .ticket-form input:-webkit-autofill,
 .ticket-form textarea:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #273a64 inset !important; /* cor de fundo */
+  -webkit-text-fill-color: whitesmoke !important; /* cor do texto */
+  transition: background-color 5000s ease-in-out 0s;
+}
+.ticket-form.claro input:-webkit-autofill,
+.ticket-form.claro textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #a3bdf5 inset !important; /* cor de fundo */
   -webkit-text-fill-color: whitesmoke !important; /* cor do texto */
   transition: background-color 5000s ease-in-out 0s;
 }
@@ -88,4 +129,19 @@ body {
 
 .btn-enviar:hover {
   background: #3d528a;
+}
+.btn-enviar.claro {
+  background: #5681de;
+  color: #ffffff;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-enviar.claro:hover {
+  background: #c1d1ff;
 }

@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/ajuda.css') }}">
     <title>Ajuda</title>
 </head>
-<body>
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
 
-      <header>
+      <header {%if tema == 'cla'%} class="claro" {%endif%}>
 <button onclick="voltarRecarregando()">← {{ _('Voltar') }}</button>
 
 <script>
@@ -21,28 +21,28 @@ function voltarRecarregando() {
         <div></div>
     </header>
 
-<div class="help">
+<div class="help {%if tema == 'cla'%} claro {%endif%}">
   <h1>{{ _('Central de Ajuda') }}</h1>
   <p class="intro">{{ _('Encontre aqui guias rápidos sobre o sistema.') }}</p>
 
   <div class="faq">
-    <button class="faq-question">Perfil</button>
-    <div class="faq-answer">
+    <button class="faq-question {%if tema == 'cla'%} claro {%endif%}">Perfil</button>
+    <div class="faq-answer {%if tema == 'cla'%} claro {%endif%}">
       <p>{{ _('No perfil você pode alterar sua foto, apelido e visualizar seus dados.') }}</p>
     </div>
 
-    <button class="faq-question">Ranking</button>
-    <div class="faq-answer">
+    <button class="faq-question {%if tema == 'cla'%} claro {%endif%}">Ranking</button>
+    <div class="faq-answer {%if tema == 'cla'%} claro {%endif%}">
       <p>{{ _('O ranking mostra sua posição em relação aos outros usuários.') }}p>
     </div>
 
-    <button class="faq-question">{{ _('Módulos') }}</button>
-    <div class="faq-answer">
+    <button class="faq-question {%if tema == 'cla'%} claro {%endif%}">{{ _('Módulos') }}</button>
+    <div class="faq-answer {%if tema == 'cla'%} claro {%endif%}">
       <p>{{ _('Nos módulos você encontra lições interativas para aprender cada tema.') }}</p>
     </div>
 
-    <button class="faq-question">{{ _('Loja') }}</button>
-    <div class="faq-answer">
+    <button class="faq-question {%if tema == 'cla'%} claro {%endif%}">{{ _('Loja') }}</button>
+    <div class="faq-answer {%if tema == 'cla'%} claro {%endif%}">
       <p>{{ _('Na loja você pode trocar suas moedas por itens especiais.') }}</p>
     </div>
   </div>

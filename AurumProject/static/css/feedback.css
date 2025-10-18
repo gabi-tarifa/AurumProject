@@ -10,6 +10,19 @@ body {
   align-items: center;
 }
 
+body.claro {
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #798496, #0d39b4);
+  color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .container {
   text-align: center;
 }

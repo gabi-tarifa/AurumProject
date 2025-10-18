@@ -16,10 +16,32 @@ body {
     margin: 0;
     padding: 20px; /* respiro extra */
 }
+body.claro {
+    background: #b9d5ff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px; /* respiro extra */
+}
 #aula-container {
     width: 600px;
     margin: auto;
     background: #0f1b3d;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+
+    box-shadow: 
+        0 4px 12px rgba(54, 53, 53, 0.666),   /* sombra padrão */
+        0 0 20px rgba(218, 164, 26, 0.588); /* brilho dourado */
+}
+#aula-container.claro {
+    width: 600px;
+    margin: auto;
+    background: #254190;
     color: white;
     padding: 20px;
     border-radius: 20px;
@@ -77,8 +99,8 @@ body {
 }
 </style>
 </head>
-<body>
-    <div id="aula-container">
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
+    <div id="aula-container" {%if tema == 'cla'%} class="claro" {%endif%}>
   <h2 id="aula-titulo">{{ _(tarefa.descricao) }}</h2>
   <div id="progresso">
     <div id="barra-progresso"></div>

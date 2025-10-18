@@ -282,6 +282,8 @@ class Configuracoes(db.Model):
     sons = db.Column(db.Boolean, default=True)
     musica = db.Column(db.Boolean, default=True)
 
+    tema = db.Column(db.String(6), nullable=False, default="esc")
+
 class Amizade(db.Model):
     __tablename__ = "Amizade"
 

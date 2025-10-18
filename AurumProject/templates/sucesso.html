@@ -11,9 +11,9 @@
       type="image/x-icon"
     />
 </head>
-<body>
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
   <div class="container">
-    <div class="card sucesso">
+    <div class="card sucesso {%if tema == 'cla'%} claro {%endif%}>"
       <h1>{{ _('Parabéns! ') }}</h1>
       <p>{{ _('Você concluiu com sucesso a lição ') }}<strong>{{ tarefa.numero_tarefa if tarefa.numero_tarefa else "{{ _('atual') }}" }}</strong>.</p>
       <p>{{ _('Continue avançando para desbloquear mais conquistas!') }}</p>

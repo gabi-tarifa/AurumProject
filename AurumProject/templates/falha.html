@@ -11,8 +11,8 @@
       type="image/x-icon"
     />
 </head>
-<body>
-  <div class="container">
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
+  <div class="container {%if tema == 'cla'%} claro {%endif%}">
     <div class="card falha">
       <h1>{{ _('Você não concluiu a lição') }}</h1>
       <p>{{ _('Infelizmente você não atingiu o mínimo necessário para completar') }} <strong> {{ _(tarefa.descricao) if tarefa.descricao else _('esta lição') }}</strong>.</p>

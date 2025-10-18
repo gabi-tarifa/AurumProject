@@ -8,12 +8,12 @@
     <title>Enviar Ticket</title>
 
 </head>
-<body>
-    <div class="support-page">
+<body {% if tema == 'cla' %} class="claro" {% endif %}>
+    <div class="support-page {% if tema == 'cla' %} claro {% endif %}">
   <h1>{{ _('Abrir Ticket de Suporte') }}</h1>
   <p class="intro">{{ _('Descreva seu problema ou dúvida. Nossa equipe entrará em contato.') }}</p>
 
-  <form class="ticket-form" method="post">
+  <form class="ticket-form {% if tema == 'cla' %} claro {% endif %}" method="post">
     <label for="nome">{{ _('Seu Nome') }}</label>
     <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
 
@@ -26,7 +26,7 @@
     <label for="mensagem">{{ _('Descrição') }}</label>
     <textarea id="mensagem" name="mensagem" rows="6" placeholder="Explique com detalhes o que aconteceu..." required></textarea>
 
-    <button type="submit" class="btn-enviar">{{ _('Enviar Ticket') }}</button>
+    <button type="submit" class="btn-enviar {% if tema == 'cla' %} claro {% endif %}">{{ _('Enviar Ticket') }}</button>
   </form>
 </div>
 </body>

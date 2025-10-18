@@ -21,6 +21,16 @@
             color: #ccc;
             line-height: 1.7;
         }
+        .content-box.claro {
+            max-height: 75vh;
+            overflow-y: auto;
+            padding: 25px;
+            background-color: #00236e;
+            border-radius: 15px;
+            margin-top: 20px;
+            color: #ccc;
+            line-height: 1.7;
+        }
         .content-box h3 {
             color: #f4d160;
             margin-top: 20px;
@@ -37,9 +47,9 @@
         }
     </style>
 </head>
-<body>
+<body {%if tema == 'cla'%} class="claro" {%endif%}>
 
-    <div class="container active">
+    <div class="container active {%if tema == 'cla'%} claro {%endif%}">
         <div class="header-with-back">
             <button class="back-btn" onclick="history.back()">← {{ _('Voltar') }}</button>
             <div class="logo">Aurum</div>
@@ -47,7 +57,7 @@
 
         <h2>{{ _('Política de Privacidade') }}</h2>
 
-        <div class="content-box">
+        <div class="content-box {%if tema == 'cla'%} claro {%endif%}">
             <p>{{ _('A Aurum valoriza a privacidade de seus usuários e se compromete a proteger os dados coletados na plataforma. Leia atentamente esta política.') }}</p>
 
             <h3>1. {{ _('Informações Coletadas') }}</h3>

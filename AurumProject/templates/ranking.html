@@ -19,10 +19,10 @@
     />
   </head>
 
-  <body>
+  <body {%if tema == 'cla'%} class="claro" {%endif%}>
     <div class="containerTP" id="rank-screen">
       <!-- MENU LATERAL -->
-      <nav class="sidebar">
+      <nav class="sidebar {%if tema == 'cla'%} claro {%endif%}">
         <a href="{{ url_for('starting_page') }}">
           <div class="menu-item">
             <img
