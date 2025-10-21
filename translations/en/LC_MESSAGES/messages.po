@@ -1181,3 +1181,9 @@ msgstr "Return to main screen"
 
 msgid "Este módulo ainda não está disponível. Volte mais tarde!"
 msgstr "This module isn't available yet. Come back later!"
+
+msgid "Claro"
+msgstr "Light"
+
+msgid "Escuro"
+msgstr "Dark"

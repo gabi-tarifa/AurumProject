@@ -28,13 +28,21 @@ header.claro {
     border-bottom: 2px solid #958944;
 }
 
+a {
+  text-decoration: none; /* Remove o sublinhado */
+}
+
+a:visited {
+  text-decoration: none;  /* Garante que não volte o sublinhado */
+}
+
 header h1 {
     font-size: 1.5rem;
     margin: 0;
     color: #c7af28;
 }
 
-header button {
+header button, header a {
     background: none;
     border: none;
     cursor: pointer;
@@ -167,7 +175,7 @@ main {
   transform: translate(-50%, -50%);
 }
 .painel-edicao.claro form {
-  background: #0f1e34;
+  background: #37609d;
   border-radius: 12px;
   width: 45%;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);

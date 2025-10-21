@@ -293,6 +293,8 @@
     </div>
 
     <!-- SCRIPT -->
+    <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
     <script>
       const maisBtn = document.getElementById('openMais');
       const submenuMais = document.getElementById('submenuMais');

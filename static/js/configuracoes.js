@@ -158,8 +158,8 @@ async function carregarConfig() {
     }
     const data = await r.json();
 
-    document.getElementById("sons").checked = data.sons;
-    document.getElementById("musica").checked = data.musica;
+    document.getElementById("sound").checked = data.sons;
+    document.getElementById("music").checked = data.musica;
 }
 carregarConfig();
 
@@ -183,4 +183,13 @@ document.addEventListener("DOMContentLoaded", () => {
     sons.addEventListener("change", salvarConfig);
     musica.addEventListener("change", salvarConfig);
     idioma.addEventListener("change", salvarConfig);
+    document.getElementById("sound").addEventListener("change", (e) => {
+    if (e.target.checked) {
+        ativarSons();
+        window.reload();
+    } else {
+        desativarSons();
+        window.reload();
+    }
+    })
 });
