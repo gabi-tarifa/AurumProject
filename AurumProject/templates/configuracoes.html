@@ -10,13 +10,8 @@
 <body {%if tema_atual == 'cla'%} class="claro" {%endif%}>
 
     <header {%if tema_atual == 'cla'%} class="claro" {%endif%}>
-<button onclick="voltarRecarregando()">← {{ _(' Voltar') }}</button>
+<a href = "{{ url_for('starting_page') }}">← {{ _(' Voltar') }}</a>
 
-<script>
-function voltarRecarregando() {
-    window.location.href = "/inicial";
-}
-</script>
         <h1>{{ _('Configurações') }}</h1>
         <div></div>
     </header>
@@ -65,7 +60,7 @@ function voltarRecarregando() {
         <label>{{ _('Alterar Apelido') }}</label>
         <button onclick="abrirDiv('painel-apelido')">{{ _('Editar') }}</button>
     </div>
-    <div id="painel-apelido {%if tema_atual == 'cla'%} claro {%endif%}" class="painel-edicao oculto">
+    <div id="painel-apelido" class="painel-edicao oculto {%if tema_atual == 'cla'%} claro {%endif%}">
         <form onsubmit="salvarApelido(); return false;">
             <h2>{{ _('Alterar Apelido') }}</h2>
             <label for="novo-apelido">{{ _('Novo Apelido:') }}</label>
@@ -82,7 +77,7 @@ function voltarRecarregando() {
         <label>{{ _('Alterar Email Cadastrado') }}</label>
         <button onclick="abrirDiv('painel-email')">{{ _('Editar') }}</button>
     </div>
-    <div id="painel-email {%if tema_atual == 'cla'%} claro {%endif%}" class="painel-edicao oculto">
+    <div id="painel-email" class="painel-edicao oculto {%if tema_atual == 'cla'%} claro {%endif%}">
         <form onsubmit="salvarEmail(); return false;">
             <h2>{{ _('Alterar Email') }}</h2>
             <label for="novo-email">{{ _('Novo Email:') }}</label>
@@ -99,7 +94,7 @@ function voltarRecarregando() {
         <label>{{ _('Alterar Senha') }}</label>
         <button onclick="abrirDiv('painel-senha')">{{ _('Editar') }}</button>
     </div>
-    <div id="painel-senha {%if tema_atual == 'cla'%} claro {%endif%}" class="painel-edicao oculto">
+    <div id="painel-senha" class="painel-edicao oculto {%if tema_atual == 'cla'%} claro {%endif%}">
         <form onsubmit="salvarSenha(); return false;">
             <h2>{{ _('Alterar Senha') }}</h2>
             <label for="senha-atual">{{ _('Senha Atual:') }}</label>
@@ -125,18 +120,24 @@ function voltarRecarregando() {
             <h2>{{ _('Aplicativo') }}</h2>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label>{{ _('Versão do App') }}</label>
-                <span>0.3.2 Beta</span>
+                <span>0.3.3.1.1 Beta</span>
             </div>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label>{{ _('Redefinir configurações') }}</label>
                 <button onclick="resetarConfig()">{{ _('Resetar') }}</button>
             </div>
         </section>
-    </main>
-
-    <script src="{{ url_for('static', filename='js/configuracoes.js') }}">
-        
-    </script>
+    </main><script>
+  // valor inicial vindo do backend, só na primeira vez
+  const sonsIniciais = {{ 'true' if sons_ativos else 'false' }};
+  // se já tiver no localStorage, usa ele; senão, define o inicial
+  if (localStorage.getItem('sons_ativos') === null) {
+    localStorage.setItem('sons_ativos', sonsIniciais ? 'true' : 'false');
+  }
+  window.SONS_ATIVOS = localStorage.getItem('sons_ativos') == 'true';
+</script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/configuracoes.js') }}"></script>
 
 </body>
 </html>

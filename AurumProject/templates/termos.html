@@ -112,5 +112,7 @@
         </div>
     </div>
 
+    <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
 </body>
 </html>

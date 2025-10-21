@@ -28,6 +28,8 @@
         <img src="{{ url_for('static', filename='img/sad-lion.png') }}" alt="leão" class="lion" />
     </div>
 
+    <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
     <script>
     setInterval(() => {
       document.querySelectorAll('.bubble').forEach((el) => {

@@ -114,6 +114,8 @@ body.claro {
   </div>
 </div>
 
+    <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
 <script>
 const blocos = {{ blocos_json|tojson }};
 const tarefaId = {{ tarefa.numero_tarefa }};

@@ -71,7 +71,9 @@ function voltarRecarregando() {
 </div>
 
 </div>
-<script>
+    <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+    <script>
   document.querySelectorAll(".faq-question").forEach(button => {
   button.addEventListener("click", () => {
     button.classList.toggle("active");

@@ -15,15 +15,15 @@ from flask_login import current_user, login_required
 from app import db
 from flask_login import LoginManager, login_user, logout_user
 import secrets
-from setup_conquistas import criar_conquistas
-from setup_poderes import criar_poderes
+from setup.setup_conquistas import criar_conquistas
+from setup.setup_poderes import criar_poderes
 from datetime import datetime, timedelta, date
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc
 from flask_babel import Babel, _, format_datetime
-from setup_modulos import criar_modulos
-from setup_tarefas import criar_tarefas
-from setup_conteudo import criar_conteudo
+from setup.setup_modulos import criar_modulos
+from setup.setup_tarefas import criar_tarefas
+from setup.setup_conteudo import criar_conteudo
 from flask_mail import Mail, Message
 import random, string
 import re
@@ -222,8 +222,8 @@ def configuracoes():
     ]
 
     temas = [
-        {"code": "esc", "name": "Escuro"},
-        {"code": "cla", "name": "Claro"}
+        {"code": "esc", "name": _('Escuro')},
+        {"code": "cla", "name": _('Claro')}
     ]
 
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
@@ -240,7 +240,8 @@ def configuracoes():
         musica=conf.musica,
         usuario=current_user,
         temas=temas,
-        tema_atual=conf.tema
+        tema_atual=conf.tema,
+        sons_ativos = conf.sons
     )
 
 @app.route("/api/idioma", methods=["POST"])
@@ -271,7 +272,7 @@ def api_tema():
 @login_required
 def ajuda():
     conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
-    return render_template("ajuda.html", tema=conf.tema)
+    return render_template("ajuda.html", tema=conf.tema, sons_ativos=conf.sons)
 
 @app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
@@ -310,7 +311,8 @@ def licoes(numero_tarefa, id_modulo):
         tarefa=tarefa,
         blocos_json=blocos,
         numero_tarefa=tarefa.numero_tarefa,
-        tema = conf.tema
+        tema = conf.tema,
+        sons_ativos=conf.sons
     )
 
 # 🆕 Página de Cadastro
@@ -330,7 +332,7 @@ def cadastro_page():
 def termos_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-        return render_template("termos.html", tema=conf.tema)
+        return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons)
     return render_template("termos.html")
 
 # Política de Privacidae
@@ -338,7 +340,7 @@ def termos_page():
 def privacidade_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-        return render_template("privacidade.html", tema=conf.tema)
+        return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons)
     return render_template("privacidade.html")
 
 # Solicitar amizade
@@ -462,7 +464,8 @@ def ranking_amigos_page():
         tempos_amizade=tempos_amizade,
         semana_completa=sum(ofensiva.dias_semana) == 7,
         coins=current_user.moedas,
-        tema = conf.tema
+        tema = conf.tema,
+        sons_ativos=conf.sons
     )
 
 # 🏆 Página de Ranking
@@ -532,7 +535,8 @@ def ranking_page():
         ranking=ranking,
         semana_completa=semana_completa,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
-        tema = conf.tema
+        tema = conf.tema,
+        sons_ativos=conf.sons
     )
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
@@ -655,7 +659,8 @@ def starting_page():
         ofensiva=ofensiva,
         dia_semana=dia_semana,
         modulos=modulos_progresso,
-        tema=conf.tema
+        tema=conf.tema,
+        sons_ativos=conf.sons
     )
 
 # 🏆 Página de Quando Inicia o Sistema
@@ -743,7 +748,8 @@ def perfil_page():
         semana_completa=semana_completa,
         dia_semana=dia_semana,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
-        tema=conf.tema
+        tema=conf.tema,
+        sons_ativos=conf.sons
     )
 @app.route("/modulo_<int:id_modulo>")
 @login_required
@@ -845,7 +851,8 @@ def ver_modulo(id_modulo):
         ofensiva=ofensiva,
         dia_semana=dia_semana,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
-        tema = conf.tema
+        tema = conf.tema,
+        sons_ativos=conf.sons
     )
 
 @app.route("/introducao")
@@ -952,7 +959,8 @@ def quiz_page():
         dia_semana=dia_semana,
         semana_completa=semana_completa,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
-        tema = conf.tema
+        tema = conf.tema,
+        sons_ativos=conf.sons
     )
 
 @app.route("/loja")
@@ -1039,7 +1047,8 @@ def store_page():
         ofensiva=ofensiva,
         dia_semana=dia_semana,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
-        tema = conf.tema
+        tema = conf.tema,
+        sons_ativos=conf.sons
     )
 
 @app.route("/comprar_poder", methods=["POST"])
@@ -1483,7 +1492,7 @@ def licao_falha(numero_tarefa, id_modulo):
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema)
+    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons)
 
 @app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
 @login_required
@@ -1495,7 +1504,7 @@ def licao_sucesso(numero_tarefa, id_modulo):
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema)
+    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons)
 
 reset_codes = {}
 
@@ -1619,7 +1628,7 @@ def enviar_ticket():
         flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
         return redirect(url_for("starting_page"))
 
-    return render_template("enviarticket.html", tema = conf.tema)
+    return render_template("enviarticket.html", tema = conf.tema, sons_ativos=conf.sons)
 
 def send_email_via_api(destinatario, assunto, conteudo):
     # Garante que o destinatário seja string e não tupla
