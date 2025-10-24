@@ -38,5 +38,11 @@
     });
   }, 3000); // intervalo de 3s
   </script>
+<script>
+  // Valor dinâmico vindo do backend
+  window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+</script>
+<script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+
 </body>
 </html>

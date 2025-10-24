@@ -6,6 +6,14 @@ function fecharDiv(id) {
     document.getElementById(id).classList.add("oculto");
 }
 
+document.getElementById("musica").addEventListener("change", function () {
+  if (this.value === "adicionar") {
+    document.getElementById("painel-musica").classList.remove("oculto");
+    this.value = ""; // reseta o select
+  }
+});
+
+
 function salvarApelido() {
     const apelido = document.getElementById("novo-apelido").value;
     fetch("/api/config/apelido", {
@@ -180,16 +188,130 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    sons.addEventListener("change", salvarConfig);
-    musica.addEventListener("change", salvarConfig);
+    sons.addEventListener("change", salvarConfig);musica.addEventListener("change", (e) => {
+    salvarConfig();
+    alternarMusica(e.target.checked); // ativa/desativa instantaneamente
+});
     idioma.addEventListener("change", salvarConfig);
     document.getElementById("sound").addEventListener("change", (e) => {
     if (e.target.checked) {
         ativarSons();
-        window.reload();
     } else {
         desativarSons();
-        window.reload();
     }
     })
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lista = document.getElementById("musica");
+  const btnExcluir = document.getElementById("btn-excluir-musica");
+
+  // 1️⃣ Adiciona as músicas do sistema (que já estão no JS)
+  for (const [nome, caminho] of Object.entries(musicas)) {
+    const opt = document.createElement("option");
+    opt.value = caminho;
+    opt.textContent = nome.charAt(0).toUpperCase() + nome.slice(1);
+    opt.dataset.tipo = "sistema";
+    lista.appendChild(opt);
+  }
+
+  // 2️⃣ Adiciona as músicas do usuário (vindas via Jinja)
+  if (Array.isArray(musicasUsuario)) {
+    for (const musica of musicasUsuario) {
+      const opt = document.createElement("option");
+      opt.value = musica.caminho;
+      opt.textContent = `${musica.nome}`;
+      opt.dataset.tipo = "usuario";
+      lista.appendChild(opt);
+    }
+  }
+
+  const add = document.createElement("option");
+  add.value = "adicionar";
+  add.textContent = '+ Adicionar nova música:';
+  lista.appendChild(add);
+
+  const ultimaMusica = localStorage.getItem("musicaSelecionada");
+  if (ultimaMusica) {
+    lista.value = ultimaMusica;
+    iniciarMusicaFundo(ultimaMusica);
+  }
+
+  function atualizarVisibilidadeBotao() {
+    const selectedOption = lista.options[lista.selectedIndex];
+    if (selectedOption && selectedOption.dataset.tipo === "usuario") {
+      btnExcluir.style.display = "inline-block";
+    } else {
+      btnExcluir.style.display = "none";
+    }
+  }
+
+
+  // Quando o usuário trocar a música no select
+  lista.addEventListener("change", (e) => {
+    const caminho = e.target.value;
+
+    // 🔹 Se o usuário escolheu "Adicionar nova música"
+    if (caminho != "adicionar" && caminho != "") {
+        localStorage.setItem("musicaSelecionada", caminho);
+        iniciarMusicaFundo(caminho);
+        window.location.reload();
+    }
+    atualizarVisibilidadeBotao();
+  });
+
+  // 🔹 Clique no botão de exclusão
+  btnExcluir.addEventListener("click", () => {
+  const selectedOption = lista.options[lista.selectedIndex];
+  if (!selectedOption || selectedOption.dataset.tipo !== "usuario") return;
+
+  const nomeMusica = selectedOption.textContent;
+
+  // Exibe o modal personalizado
+  const modal = document.getElementById("modal-excluir");
+  const modalTexto = document.getElementById("modal-texto");
+  const btnConfirmar = document.getElementById("btn-confirmar-exclusao");
+  const btnCancelar = document.getElementById("btn-cancelar-exclusao");
+
+  modalTexto.textContent = `Deseja realmente excluir "${nomeMusica}"?`;
+  modal.style.display = "flex";
+
+  // Evita duplicar listeners
+  const limparEventos = () => {
+    btnConfirmar.replaceWith(btnConfirmar.cloneNode(true));
+    btnCancelar.replaceWith(btnCancelar.cloneNode(true));
+  };
+
+  limparEventos();
+
+  // Confirma exclusão
+  document.getElementById("btn-confirmar-exclusao").addEventListener("click", () => {
+    fetch(`/deletar_musica`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ caminho: selectedOption.value }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.sucesso) {
+          selectedOption.remove();
+          localStorage.removeItem("musicaSelecionada");
+          iniciarMusicaFundo(musicas.taswell);
+        }
+      })
+      .catch(err => {
+        console.error("Erro ao excluir:", err);
+      })
+      .finally(() => {
+        modal.style.display = "none";
+      });
+  });
+
+  // Cancela exclusão
+  document.getElementById("btn-cancelar-exclusao").addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+});
+
+  atualizarVisibilidadeBotao();
 });

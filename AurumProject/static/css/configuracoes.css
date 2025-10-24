@@ -140,20 +140,6 @@ main {
   z-index: 999;
 }
 
-
-.painel-edicao.claro {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* escurece o fundo */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
 .textoerro{
   font-size: x-small;
   color: #e53935;
@@ -285,4 +271,89 @@ option.claro {
 
 input[type="checkbox"] {
     accent-color: #c7af28; /* Cor do preenchimento quando marcado */
+}
+
+.popup-musica {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--fundo, #0f1e34);
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+.modal-excluir {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-conteudo {
+  background: #0f1b3d;
+  color: goldenrod;
+  border-radius: 12px;
+  padding: 20px 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  min-width: 280px;
+  animation: scaleIn 0.2s ease-in-out;
+}
+
+.modal-conteudo.claro {
+  background: #01499b;
+  color: white;
+  border-radius: 12px;
+  padding: 20px 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  min-width: 280px;
+  animation: scaleIn 0.2s ease-in-out;
+}
+
+.botoes-modal {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.btn-confirmar {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-confirmar:hover {
+  background-color: #c62828;
+}
+
+.btn-cancelar {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-cancelar:hover {
+  background-color: #666;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; }
 }
