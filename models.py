@@ -284,6 +284,8 @@ class Configuracoes(db.Model):
 
     tema = db.Column(db.String(6), nullable=False, default="esc")
 
+    #musica_tocada = db.Column(db.Text, nullable=False, default="/static/sounds/music/taswell.mp3")
+
 class Amizade(db.Model):
     __tablename__ = "Amizade"
 
@@ -309,3 +311,19 @@ class Amizade(db.Model):
 
     def __repr__(self):
         return f"<Amizade {self.id_usuario1} ↔ {self.id_usuario2}>"
+
+class MusicasUsuario(db.Model):
+    __tablename__ = "MusicasUsuario"
+
+    id_musicas_usuario = db.Column(db.Integer, primary_key=True, nullable=False)
+    id_usuario = db.Column(db.Integer, ForeignKey(Usuario.id), nullable=False )
+    nome_musica = db.Column(db.String(25), nullable=False)
+    caminho = db.Column(db.String(255), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id_musicas_usuario,
+            "id_usuario": self.id_usuario,
+            "nome": self.nome_musica,
+            "caminho": self.caminho
+        }

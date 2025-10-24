@@ -31,5 +31,11 @@
 </div>
     <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
     <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+<script>
+  // Valor dinâmico vindo do backend
+  window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+</script>
+<script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+
 </body>
 </html>

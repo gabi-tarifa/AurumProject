@@ -5,7 +5,7 @@ ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=ce
 import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, Amizade
+from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, Amizade, MusicasUsuario
 from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa, Configuracoes
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -232,6 +232,10 @@ def configuracoes():
         db.session.add(conf)
         db.session.commit()
 
+    musicas = MusicasUsuario.query.filter_by(id_usuario=current_user.id).all()
+    
+    musicas_serializadas = [m.to_dict() for m in musicas] if musicas else []
+
     return render_template(
         "configuracoes.html",
         idiomas=idiomas,
@@ -241,7 +245,9 @@ def configuracoes():
         usuario=current_user,
         temas=temas,
         tema_atual=conf.tema,
-        sons_ativos = conf.sons
+        sons_ativos = conf.sons,
+        musica_ativa = conf.musica,
+        musicas_usuario=musicas_serializadas
     )
 
 @app.route("/api/idioma", methods=["POST"])
@@ -272,7 +278,7 @@ def api_tema():
 @login_required
 def ajuda():
     conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
-    return render_template("ajuda.html", tema=conf.tema, sons_ativos=conf.sons)
+    return render_template("ajuda.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica)
 
 @app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
@@ -312,7 +318,8 @@ def licoes(numero_tarefa, id_modulo):
         blocos_json=blocos,
         numero_tarefa=tarefa.numero_tarefa,
         tema = conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 
 # 🆕 Página de Cadastro
@@ -332,7 +339,7 @@ def cadastro_page():
 def termos_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-        return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons)
+        return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica)
     return render_template("termos.html")
 
 # Política de Privacidae
@@ -340,7 +347,7 @@ def termos_page():
 def privacidade_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-        return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons)
+        return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica)
     return render_template("privacidade.html")
 
 # Solicitar amizade
@@ -465,7 +472,8 @@ def ranking_amigos_page():
         semana_completa=sum(ofensiva.dias_semana) == 7,
         coins=current_user.moedas,
         tema = conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 
 # 🏆 Página de Ranking
@@ -536,7 +544,8 @@ def ranking_page():
         semana_completa=semana_completa,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
@@ -660,7 +669,8 @@ def starting_page():
         dia_semana=dia_semana,
         modulos=modulos_progresso,
         tema=conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 
 # 🏆 Página de Quando Inicia o Sistema
@@ -749,7 +759,8 @@ def perfil_page():
         dia_semana=dia_semana,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema=conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 @app.route("/modulo_<int:id_modulo>")
 @login_required
@@ -852,7 +863,8 @@ def ver_modulo(id_modulo):
         dia_semana=dia_semana,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 
 @app.route("/introducao")
@@ -960,7 +972,8 @@ def quiz_page():
         semana_completa=semana_completa,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 
 @app.route("/loja")
@@ -1048,7 +1061,8 @@ def store_page():
         dia_semana=dia_semana,
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
-        sons_ativos=conf.sons
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica
     )
 
 @app.route("/comprar_poder", methods=["POST"])
@@ -1285,7 +1299,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOADBG_FOLDER'] = UPLOADBG_FOLDER
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.')[-1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/atualizar_perfil', methods=['POST'])
 @login_required
@@ -1294,6 +1308,8 @@ def atualizar_perfil():
     foto = request.files['foto_perfil']
     fundo = request.files['foto_fundo']
     usuario = get_usuario_atual()
+
+    print(nome, foto, fundo)
 
     use_cloudinary = all([
         os.getenv("CLOUDINARY_CLOUD_NAME"),
@@ -1492,7 +1508,7 @@ def licao_falha(numero_tarefa, id_modulo):
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons)
+    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica)
 
 @app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
 @login_required
@@ -1504,7 +1520,7 @@ def licao_sucesso(numero_tarefa, id_modulo):
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons)
+    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica)
 
 reset_codes = {}
 
@@ -1671,6 +1687,96 @@ def send_email_flask_mail(destinatario, assunto, conteudo)->bool:
         print(f"Erro ao enviar o email via Flask Mail: {e}")
         return False
 
+UPLOAD_FOLDER_MSC = 'static/sounds/uploads/'
+ALLOWED_EXTENSIONS_MSC = {"mp3", "wav", "ogg", "m4a", "aac", "flac"}
+app.config['UPLOAD_FOLDER_MSC'] = UPLOAD_FOLDER_MSC
+
+
+def allowed_archive(filename):
+    print(filename)
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_MSC
+
+@app.route("/upload_musica", methods=["POST"])
+@login_required
+def upload_musica():
+    arquivo = request.files["arquivo"]
+    nome = request.form["nomemusica"]
+    try:
+
+        if not arquivo or not nome:
+            return jsonify({"erro": "Nome e arquivo são obrigatórios"}), 400
+        
+        print(arquivo, nome)
+
+        if not allowed_archive(arquivo.filename):
+            return jsonify({"erro": "Formato inválido (somente .mp3 ou .wav são permitidos)."}), 400
+
+        use_cloudinary = all([
+            os.getenv("CLOUDINARY_CLOUD_NAME"),
+            os.getenv("CLOUDINARY_API_KEY"),
+            os.getenv("CLOUDINARY_API_SECRET")
+        ])
+
+        nome_seguro = secure_filename(f"{current_user.id}_{arquivo.filename}")
+
+        if use_cloudinary:
+            import cloudinary.uploader
+            upload_result = cloudinary.uploader.upload(
+                arquivo,
+                folder="aurum/musicas",
+                resource_type="video"
+            )
+            caminho_musica = upload_result["secure_url"]
+        else:
+            os.makedirs(UPLOAD_FOLDER_MSC, exist_ok=True)
+            caminho_arquivo = os.path.join(UPLOAD_FOLDER_MSC, nome_seguro)
+            arquivo.save(caminho_arquivo)
+            caminho_musica = f"/{caminho_arquivo.replace(os.sep, '/')}"
+
+        nova_musica = MusicasUsuario(
+            id_usuario=current_user.id,
+            nome_musica=nome,
+            caminho=caminho_musica
+        )
+        db.session.add(nova_musica)
+        db.session.commit()
+
+        return redirect(url_for('configuracoes'))
+
+    except Exception as e:
+        print("Erro ao adicionar música:", e)
+        return jsonify({"erro": str(e)}), 500
+    
+@app.route("/deletar_musica", methods=["DELETE"])
+@login_required
+def deletar_musica():
+    dados = request.get_json()
+    caminho = dados.get("caminho")
+
+    if not caminho:
+        return jsonify({"erro": "Caminho não informado"}), 400
+
+    musica = MusicasUsuario.query.filter_by(id_usuario=current_user.id, caminho=caminho).first()
+    if not musica:
+        return jsonify({"erro": "Música não encontrada"}), 404
+    
+    
+    caminho_relativo = musica.caminho.lstrip('/')  # remove a barra inicial
+
+    try:
+        # Exclui o arquivo local se existir
+        if os.path.exists(caminho_relativo):
+            os.remove(caminho_relativo)
+
+        db.session.delete(musica)
+        db.session.commit()
+
+        return jsonify({"sucesso": True})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"erro": str(e)}), 500
+    
+    
 if __name__ == "__main__":
     app.run(debug=True)
     #port = int(os.environ.get("PORT", 5000))

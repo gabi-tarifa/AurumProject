@@ -28,6 +28,13 @@
                 <input type="checkbox" id="music" {% if musica %} checked {% endif %}>
             </div>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
+    <label for="musica">{{ _('Músicas') }}</label>
+    <select {%if tema_atual == 'cla'%} class="claro" {%endif%} id="musica">
+    </select>
+      <img id="btn-excluir-musica" src="{{ url_for('static', filename='img/bin.png') }}" alt="Excluir" title="Excluir música"
+       style="width: 22px; height: 22px; cursor: pointer; display: none;">
+    </div>
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
     <label for="idioma">{{ _('Idioma') }}</label>
     <select {%if tema_atual == 'cla'%} class="claro" {%endif%} id="idioma" data-url="{{ url_for('api_idioma') }}">
         {% for lang in idiomas %}
@@ -39,6 +46,20 @@
 
     </select>
     </div>
+<div id="painel-musica" class="painel-edicao oculto {%if tema_atual == 'cla'%} claro {%endif%}" >
+    <form action="{{ url_for('upload_musica') }}" enctype="multipart/form-data" method="post">
+  <h3>Adicionar Música</h3>
+  <label for="nomemusica">Nome:</label>
+  <input type="text" name="nomemusica" placeholder="Nome da música"><br><br>
+  
+  <label for="arquivo">Arquivo (.mp3 ou .wav):</label>
+  <input type="file" name="arquivo" accept=".mp3, .wav"><br><br>
+  <div class="botoes">
+  <button id="salvarMusicaUser" type="submit" class="selecionar">Adicionar</button>
+  <button id="cancelarMusicaUser" type="button" class="selecionar", onclick="fecharDiv('painel-musica')">Cancelar</button>
+</div>
+</form>
+</div>
     <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">    
     <label for="tema">{{ _('Tema') }}</label>
     <select {%if tema_atual == 'cla'%} class="claro" {%endif%} id="tema" data-url="{{ url_for('api_tema') }}">
@@ -127,7 +148,19 @@
                 <button onclick="resetarConfig()">{{ _('Resetar') }}</button>
             </div>
         </section>
-    </main><script>
+    </main>
+    <!-- 🔸 Modal de confirmação de exclusão -->
+<div id="modal-excluir" class="modal-excluir" style="display: none;">
+  <div class="modal-conteudo {%if tema_atual == 'cla'%} claro {%endif%}">
+    <p id="modal-texto">Tem certeza que deseja excluir esta música?</p>
+    <div class="botoes-modal">
+      <button id="btn-confirmar-exclusao" class="btn-confirmar">Excluir</button>
+      <button id="btn-cancelar-exclusao" class="btn-cancelar">Cancelar</button>
+    </div>
+  </div>
+</div>
+    
+    <script>
   // valor inicial vindo do backend, só na primeira vez
   const sonsIniciais = {{ 'true' if sons_ativos else 'false' }};
   // se já tiver no localStorage, usa ele; senão, define o inicial
@@ -138,6 +171,12 @@
 </script>
     <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
     <script src="{{ url_for('static', filename='js/configuracoes.js') }}"></script>
+    <script>
+  // Valor dinâmico vindo do backend
+  window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+  const musicasUsuario = {{ musicas_usuario | tojson | safe }};
+</script>
+<script src="{{ url_for('static', filename='js/musics.js') }}"></script>
 
 </body>
 </html>
