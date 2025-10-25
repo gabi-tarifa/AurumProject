@@ -247,7 +247,8 @@ def configuracoes():
         tema_atual=conf.tema,
         sons_ativos = conf.sons,
         musica_ativa = conf.musica,
-        musicas_usuario=musicas_serializadas
+        musicas_usuario=musicas_serializadas,
+        musica_tocada=conf.musica_tocada,
     )
 
 @app.route("/api/idioma", methods=["POST"])
@@ -278,7 +279,8 @@ def api_tema():
 @login_required
 def ajuda():
     conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
-    return render_template("ajuda.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica)
+    return render_template("ajuda.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,)
 
 @app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
@@ -319,7 +321,8 @@ def licoes(numero_tarefa, id_modulo):
         numero_tarefa=tarefa.numero_tarefa,
         tema = conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 
 # 🆕 Página de Cadastro
@@ -339,7 +342,8 @@ def cadastro_page():
 def termos_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-        return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica)
+        return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,)
     return render_template("termos.html")
 
 # Política de Privacidae
@@ -347,7 +351,8 @@ def termos_page():
 def privacidade_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-        return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica)
+        return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,)
     return render_template("privacidade.html")
 
 # Solicitar amizade
@@ -473,7 +478,8 @@ def ranking_amigos_page():
         coins=current_user.moedas,
         tema = conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 
 # 🏆 Página de Ranking
@@ -545,7 +551,8 @@ def ranking_page():
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
@@ -670,7 +677,8 @@ def starting_page():
         modulos=modulos_progresso,
         tema=conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 
 # 🏆 Página de Quando Inicia o Sistema
@@ -760,7 +768,8 @@ def perfil_page():
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema=conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 @app.route("/modulo_<int:id_modulo>")
 @login_required
@@ -864,7 +873,8 @@ def ver_modulo(id_modulo):
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 
 @app.route("/introducao")
@@ -973,7 +983,8 @@ def quiz_page():
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 
 @app.route("/loja")
@@ -1062,7 +1073,8 @@ def store_page():
         coins=current_user.moedas,  # Ou current_user.coins, se esse for o nome
         tema = conf.tema,
         sons_ativos=conf.sons,
-        musica_ativa = conf.musica
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
     )
 
 @app.route("/comprar_poder", methods=["POST"])
@@ -1508,7 +1520,8 @@ def licao_falha(numero_tarefa, id_modulo):
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica)
+    return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,)
 
 @app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
 @login_required
@@ -1520,7 +1533,8 @@ def licao_sucesso(numero_tarefa, id_modulo):
         numero_tarefa=numero_tarefa
     ).first_or_404()
 
-    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica)
+    return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,)
 
 reset_codes = {}
 
@@ -1688,7 +1702,7 @@ def send_email_flask_mail(destinatario, assunto, conteudo)->bool:
         return False
 
 UPLOAD_FOLDER_MSC = 'static/sounds/uploads/'
-ALLOWED_EXTENSIONS_MSC = {"mp3", "wav", "ogg", "m4a", "aac", "flac"}
+ALLOWED_EXTENSIONS_MSC = {"mp3", "wav"}
 app.config['UPLOAD_FOLDER_MSC'] = UPLOAD_FOLDER_MSC
 
 
@@ -1775,6 +1789,21 @@ def deletar_musica():
     except Exception as e:
         db.session.rollback()
         return jsonify({"erro": str(e)}), 500
+    
+@app.route("/atualizar_musica_tocada", methods=["POST"])
+@login_required
+def atualizar_musica_tocada():
+    data = request.get_json()
+    nova_musica = data.get("musica")
+
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    if not conf:
+        return jsonify({"sucesso": False, "erro": "Configurações não encontradas"}), 404
+
+    conf.musica_tocada = nova_musica
+    db.session.commit()
+
+    return jsonify({"sucesso": True})
     
     
 if __name__ == "__main__":

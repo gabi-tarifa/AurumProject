@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   add.textContent = '+ Adicionar nova música:';
   lista.appendChild(add);
 
-  const ultimaMusica = localStorage.getItem("musicaSelecionada");
+  const ultimaMusica = musicaSession;
   if (ultimaMusica) {
     lista.value = ultimaMusica;
     iniciarMusicaFundo(ultimaMusica);
@@ -252,11 +252,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const caminho = e.target.value;
 
     // 🔹 Se o usuário escolheu "Adicionar nova música"
-    if (caminho != "adicionar" && caminho != "") {
-        localStorage.setItem("musicaSelecionada", caminho);
+    if (caminho != "adicionar" && caminho != "") {  // 🔹 Atualiza a música no banco de dados (sem reload)
+      fetch("/atualizar_musica_tocada", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ musica: caminho }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.sucesso) {
+          console.log("Música salva no banco:", caminho);
+        } else {
+          console.error("Erro ao salvar música:", data.erro);
+        }
+      })
+      .catch(err => console.log("Erro ao enviar requisição:", err));
+
         iniciarMusicaFundo(caminho);
-        window.location.reload();
-    }
+      }
     atualizarVisibilidadeBotao();
   });
 

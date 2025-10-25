@@ -1,7 +1,10 @@
 // 🎵 Controle global de música de fundo
 let musicaFundo;
 
-musicaSession = localStorage.getItem("musicaSelecionada");
+// Caminho da música atual vinda do backend 
+const musicaSession = musicadasessao;
+
+musicaFundo = new Audio(musicaSession)
 
 // Caminhos das músicas do sistema
 const musicas = {
@@ -17,20 +20,25 @@ const musicas = {
 
 // Função principal para iniciar ou retomar a música
 function iniciarMusicaFundo(caminho) {
-  // só ativa se música estiver permitida
+  // Só toca se música estiver habilitada
   if (!window.MUSICA_ATIVA) return;
 
+  // Se já houver música tocando, troca para a nova
+  if (musicaFundo) {
+    musicaFundo.pause();
+  }
 
-  if (!caminho || caminho === "adicionar") return;
-  // cria se ainda não existir
-  if (!musicaFundo) {
-    musicaFundo = new Audio(caminho);
-    musicaFundo.loop = true;
-    musicaFundo.volume = 0.3;
+  // Cria o player de áudio
+  musicaFundo = new Audio(caminho);
+  musicaFundo.loop = true;
+  musicaFundo.volume = 0.3;
 
-    // retoma o tempo salvo
-    const tempoSalvo = sessionStorage.getItem("tempoMusica");
-    if (tempoSalvo) musicaFundo.currentTime = parseFloat(tempoSalvo);
+  // retoma o tempo salvo
+  const tempoSalvo = parseFloat(localStorage.getItem("tempo_musica"));
+  if (isNaN(tempoSalvo)){
+    musicaFundo.currentTime = 0;
+  } else{
+    musicaFundo.currentTime = tempoSalvo;
   }
 
   musicaFundo.play().catch(() => {});
@@ -43,24 +51,31 @@ function pausarMusicaFundo() {
   }
 }
 
-// Salva tempo atual antes de sair da página
+// 🔹 Salva o tempo atual ao sair da página
 window.addEventListener("beforeunload", () => {
-  if (musicaFundo) {
-    sessionStorage.setItem("tempoMusica", musicaFundo.currentTime);
-  }
+      localStorage.setItem("tempo_musica", musicaFundo.currentTime);
 });
 
-// Retoma quando entra
+window.addEventListener("timeupdate", () => {
+      localStorage.setItem("tempo_musica", musicaFundo.currentTime);
+
+});
+
+// 🔹 Retoma a música quando a página carrega
 window.addEventListener("load", () => {
   iniciarMusicaFundo(musicaSession);
 });
 
-// Permite alternar dinamicamente
+// 🔹 Permite alternar dinamicamente (ligar/desligar som)
 function alternarMusica(ativar) {
   window.MUSICA_ATIVA = ativar;
   if (ativar) {
-    iniciarMusicaFundo(musicaSession);
+    retomarMusica();
   } else {
     pausarMusicaFundo();
   }
+}
+
+function retomarMusica(){
+  musicaFundo.play().catch(() => {});
 }

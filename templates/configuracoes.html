@@ -50,10 +50,10 @@
     <form action="{{ url_for('upload_musica') }}" enctype="multipart/form-data" method="post">
   <h3>Adicionar Música</h3>
   <label for="nomemusica">Nome:</label>
-  <input type="text" name="nomemusica" placeholder="Nome da música"><br><br>
+  <input type="text" name="nomemusica" placeholder="Nome da música" required><br><br>
   
-  <label for="arquivo">Arquivo (.mp3 ou .wav):</label>
-  <input type="file" name="arquivo" accept=".mp3, .wav"><br><br>
+  <label for="arquivo">Arquivo:</label>
+  <input type="file" name="arquivo" accept=".mp3, .wav" required><br><br>
   <div class="botoes">
   <button id="salvarMusicaUser" type="submit" class="selecionar">Adicionar</button>
   <button id="cancelarMusicaUser" type="button" class="selecionar", onclick="fecharDiv('painel-musica')">Cancelar</button>
@@ -168,15 +168,15 @@
     localStorage.setItem('sons_ativos', sonsIniciais ? 'true' : 'false');
   }
   window.SONS_ATIVOS = localStorage.getItem('sons_ativos') == 'true';
-</script>
-    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/configuracoes.js') }}"></script>
-    <script>
   // Valor dinâmico vindo do backend
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
   const musicasUsuario = {{ musicas_usuario | tojson | safe }};
+  const musicadasessao = {{ musica_tocada | tojson }};
+  
 </script>
-<script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/configuracoes.js') }}"></script>
 
 </body>
 </html>

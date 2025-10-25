@@ -284,7 +284,7 @@ class Configuracoes(db.Model):
 
     tema = db.Column(db.String(6), nullable=False, default="esc")
 
-    #musica_tocada = db.Column(db.Text, nullable=False, default="/static/sounds/music/taswell.mp3")
+    musica_tocada = db.Column(db.Text, nullable=False, default="/static/sounds/music/taswell.mp3")
 
 class Amizade(db.Model):
     __tablename__ = "Amizade"
