@@ -41,6 +41,7 @@
 <script>
   // Valor dinâmico vindo do backend
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+  const musicadasessao = {{ musica_tocada | tojson }};
 </script>
 <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
 
