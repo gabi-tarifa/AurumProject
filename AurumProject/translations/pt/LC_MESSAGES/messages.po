@@ -217,10 +217,6 @@ msgstr ""
 msgid "Cancelar"
 msgstr ""
 
-#: templates/configuracoes.html:71
-msgid "Alterar Email Cadastrado"
-msgstr ""
-
 #: templates/configuracoes.html:76
 msgid "Alterar Email"
 msgstr ""
@@ -871,3 +867,616 @@ msgstr "Mantenha a sua ofensiva sem medo de errar!"
 
 msgid "Alterar Email Cadastrado"
 msgstr ""
+
+msgid "modulo_pri_passos_nome"
+msgstr "Primeiros Passos no Mundo Financeiro"
+
+msgid "modulo_pri_passos_desc"
+msgstr "Aprenda como o dinheiro cresce, se multiplica e pode trabalhar a seu favor. Neste módulo, você vai entender como funcionam os juros, o crédito e as formas de investimento mais simples, dando os primeiros passos rumo à independência financeira."
+
+msgid "mini_lesson2_1"
+msgstr "Mini-aula 1 — Juros Simples"
+
+msgid "mini_lesson2_2"
+msgstr "Mini-aula 2 — Crédito e Empréstimos"
+
+msgid "mini_lesson2_3"
+msgstr "Mini-aula 3 — Poupança x Investimento"
+
+msgid "mini_lesson2_4"
+msgstr "Mini-aula 4 — Juros no Cartão de Crédito"
+
+msgid "mini_lesson2_5"
+msgstr "Mini-aula 5 — Taxas e Cálculos Básicos"
+
+msgid "mini_lesson2_6"
+msgstr "Avaliação Final — Módulo 2"
+
+# M2 - licao_1 — Juros Simples
+msgid "lesson_2_1_text"
+msgstr "<h3>Juros Simples</h3><p><b>Conceito:</b> Juros simples são calculados apenas sobre o valor inicial (capital).</p><p><b>Fórmula:</b> J = C × i × t</p><ul><li><b>C</b> = capital (valor inicial)</li><li><b>i</b> = taxa de juros</li><li><b>t</b> = tempo</li></ul><p><b>Exemplo:</b></p><p>Se você empresta R$ 1.000 a 2% ao mês por 3 meses:</p><p>J = 1000 × 0,02 × 3 = <b>R$ 60 de juros</b>.</p>"
+
+# M2 - licao_2 — Crédito e Empréstimos
+msgid "lesson_2_2_text"
+msgstr "<h3>Crédito e Empréstimos</h3><p><b>Conceito:</b> Crédito é usar dinheiro emprestado de um banco ou financeira, que deve ser devolvido com juros.</p><p><b>Exemplo:</b></p><p>Se você pega R$ 1.000 emprestados com juros de 5% ao mês, vai pagar R$ 50 só de juros por mês, além do valor emprestado.</p>"
+
+# M2 - licao_3 — Poupança x Investimento
+msgid "lesson_2_3_text"
+msgstr "<h3>Poupança x Investimento</h3><p><b>Poupança:</b> forma simples de guardar dinheiro, mas com baixa rentabilidade.</p><p><b>Investimento:</b> aplicar dinheiro para ter retorno maior, assumindo algum risco.</p><p><b>Exemplo:</b></p><p>Guardar R$ 1000 na poupança pode render menos de R$ 10 por mês.</p><p>Investir em Tesouro Direto pode render mais, dependendo da taxa de juros.</p>"
+
+# M2 - licao_4 — Juros no Cartão de Crédito
+msgid "lesson_2_4_text"
+msgstr "<h3>Juros no Cartão de Crédito</h3><p><b>Conceito:</b> O cartão de crédito cobra juros compostos altíssimos quando a fatura não é paga integralmente.</p><p><b>Exemplo:</b></p><p>Se você deixa de pagar R$ 1.000, em poucos meses a dívida pode mais que dobrar devido aos <b>juros sobre juros</b>.</p>"
+
+# M2 - licao_5 — Taxas e Cálculos Básicos
+msgid "lesson_2_5_text"
+msgstr "<h3>Taxas e Cálculos Básicos</h3><p><b>Conceito:</b> Taxa é um percentual aplicado sobre um valor. Pode ser mensal, anual, etc.</p><p><b>Exemplo:</b></p><p>Um empréstimo de R$ 1.000 a 3% ao mês → R$ 30 de juros ao mês.</p>"
+
+# M2 - licao_1 — Juros Simples
+
+# Pergunta 1
+msgid "lesson_2_1_q1"
+msgstr "O que são juros simples?"
+
+msgid "lesson_2_1_q1_a1"
+msgstr "Juros que crescem sobre o valor inicial"
+
+msgid "lesson_2_1_q1_a2"
+msgstr "Juros que crescem sobre juros"
+
+msgid "lesson_2_1_q1_a3"
+msgstr "Juros infinitos"
+
+msgid "lesson_2_1_q1_a4"
+msgstr "Juros só em cartões"
+
+
+# Pergunta 2
+msgid "lesson_2_1_q2"
+msgstr "Se você aplica R$ 500 a 2% ao mês por 2 meses, quanto de juros terá?"
+
+msgid "lesson_2_1_q2_a1"
+msgstr "R$ 10"
+
+msgid "lesson_2_1_q2_a2"
+msgstr "R$ 20"
+
+msgid "lesson_2_1_q2_a3"
+msgstr "R$ 50"
+
+msgid "lesson_2_1_q2_a4"
+msgstr "R$ 5"
+
+
+# Pergunta 3
+msgid "lesson_2_1_q3"
+msgstr "Qual é a fórmula dos juros simples?"
+
+msgid "lesson_2_1_q3_a1"
+msgstr "J = C + i + t"
+
+msgid "lesson_2_1_q3_a2"
+msgstr "J = C × i × t"
+
+msgid "lesson_2_1_q3_a3"
+msgstr "J = i ÷ C × t"
+
+msgid "lesson_2_1_q3_a4"
+msgstr "J = C ÷ i"
+
+
+# Pergunta 4
+msgid "lesson_2_1_q4"
+msgstr "Em juros simples, o cálculo sempre considera:"
+
+msgid "lesson_2_1_q4_a1"
+msgstr "Apenas o valor inicial"
+
+msgid "lesson_2_1_q4_a2"
+msgstr "O valor acumulado"
+
+msgid "lesson_2_1_q4_a3"
+msgstr "Apenas a taxa"
+
+msgid "lesson_2_1_q4_a4"
+msgstr "Apenas o tempo"
+
+
+# Pergunta 5
+msgid "lesson_2_1_q5"
+msgstr "Se um empréstimo de R$ 1000 cobra R$ 200 de juros simples em 10 meses, a taxa mensal é:"
+
+msgid "lesson_2_1_q5_a1"
+msgstr "1%"
+
+msgid "lesson_2_1_q5_a2"
+msgstr "2%"
+
+msgid "lesson_2_1_q5_a3"
+msgstr "10%"
+
+msgid "lesson_2_1_q5_a4"
+msgstr "20%"
+
+# M2 - licao_2 - Crédito e Empréstimos
+msgid "lesson_2_2_text"
+msgstr "<h3>Crédito e Empréstimos</h3><p><b>Conceito:</b> Crédito é usar dinheiro emprestado de um banco ou financeira, que deve ser devolvido com juros.</p><p><b>Exemplo:</b> Se você pega R$ 1.000 emprestados com juros de 5% ao mês, vai pagar R$ 50 só de juros por mês, além do valor emprestado.</p>"
+
+msgid "lesson_2_2_q1"
+msgstr "O que é crédito?"
+
+msgid "lesson_2_2_q1_a1"
+msgstr "Dinheiro que você dá para o banco"
+
+msgid "lesson_2_2_q1_a2"
+msgstr "Dinheiro emprestado que deve ser devolvido com juros"
+
+msgid "lesson_2_2_q1_a3"
+msgstr "Dinheiro extra sem custo"
+
+msgid "lesson_2_2_q1_a4"
+msgstr "Salário"
+
+
+msgid "lesson_2_2_q2"
+msgstr "Qual a principal desvantagem de pegar empréstimos?"
+
+msgid "lesson_2_2_q2_a1"
+msgstr "Juros altos"
+
+msgid "lesson_2_2_q2_a2"
+msgstr "Ganhar mais"
+
+msgid "lesson_2_2_q2_a3"
+msgstr "Não precisar pagar"
+
+msgid "lesson_2_2_q2_a4"
+msgstr "Aumentar salário"
+
+
+msgid "lesson_2_2_q3"
+msgstr "Se você pega R$ 200 com juros de 10%, quanto paga de juros?"
+
+msgid "lesson_2_2_q3_a1"
+msgstr "R$ 2"
+
+msgid "lesson_2_2_q3_a2"
+msgstr "R$ 10"
+
+msgid "lesson_2_2_q3_a3"
+msgstr "R$ 20"
+
+msgid "lesson_2_2_q3_a4"
+msgstr "R$ 200"
+
+
+msgid "lesson_2_2_q4"
+msgstr "Usar crédito sem planejamento pode levar a:"
+
+msgid "lesson_2_2_q4_a1"
+msgstr "Riqueza"
+
+msgid "lesson_2_2_q4_a2"
+msgstr "Dívidas"
+
+msgid "lesson_2_2_q4_a3"
+msgstr "Mais renda"
+
+msgid "lesson_2_2_q4_a4"
+msgstr "Investimentos"
+
+
+msgid "lesson_2_2_q5"
+msgstr "Cartão de crédito é um exemplo de:"
+
+msgid "lesson_2_2_q5_a1"
+msgstr "Receita"
+
+msgid "lesson_2_2_q5_a2"
+msgstr "Despesa"
+
+msgid "lesson_2_2_q5_a3"
+msgstr "Crédito"
+
+msgid "lesson_2_2_q5_a4"
+msgstr "Investimento"
+
+msgid "lesson_2_3_q1"
+msgstr "O que é poupança?"
+
+msgid "lesson_2_3_q1_a1"
+msgstr "Investimento de risco"
+
+msgid "lesson_2_3_q1_a2"
+msgstr "Forma simples de guardar dinheiro"
+
+msgid "lesson_2_3_q1_a3"
+msgstr "Gastos mensais"
+
+msgid "lesson_2_3_q1_a4"
+msgstr "Empréstimo"
+
+
+msgid "lesson_2_3_q2"
+msgstr "Qual é a principal desvantagem da poupança?"
+
+msgid "lesson_2_3_q2_a1"
+msgstr "Risco alto"
+
+msgid "lesson_2_3_q2_a2"
+msgstr "Baixa rentabilidade"
+
+msgid "lesson_2_3_q2_a3"
+msgstr "Alta inflação"
+
+msgid "lesson_2_3_q2_a4"
+msgstr "Juros compostos"
+
+
+msgid "lesson_2_3_q3"
+msgstr "Investir em renda fixa significa:"
+
+msgid "lesson_2_3_q3_a1"
+msgstr "Rentabilidade previsível"
+
+msgid "lesson_2_3_q3_a2"
+msgstr "Rentabilidade aleatória"
+
+msgid "lesson_2_3_q3_a3"
+msgstr "Perder dinheiro sempre"
+
+msgid "lesson_2_3_q3_a4"
+msgstr "Não ter retorno"
+
+
+msgid "lesson_2_3_q4"
+msgstr "Qual destes é um investimento de baixo risco?"
+
+msgid "lesson_2_3_q4_a1"
+msgstr "Tesouro Direto"
+
+msgid "lesson_2_3_q4_a2"
+msgstr "Ações de empresas novas"
+
+msgid "lesson_2_3_q4_a3"
+msgstr "Criptomoedas"
+
+msgid "lesson_2_3_q4_a4"
+msgstr "Jogar na loteria"
+
+
+msgid "lesson_2_3_q5"
+msgstr "Poupança é considerada mais segura porque:"
+
+msgid "lesson_2_3_q5_a1"
+msgstr "Sempre rende muito"
+
+msgid "lesson_2_3_q5_a2"
+msgstr "Tem garantia do governo"
+
+msgid "lesson_2_3_q5_a3"
+msgstr "Nunca perde valor real"
+
+msgid "lesson_2_3_q5_a4"
+msgstr "Dá prêmios"
+
+# M2 - licao_4 - Juros no Cartão de Crédito
+msgid "lesson_2_4_text"
+msgstr "<h3>Juros no Cartão de Crédito</h3><p>O cartão de crédito cobra <b>juros compostos altíssimos</b> quando a fatura não é paga integralmente.</p><p><b>Juros compostos:</b> juros sobre juros, que fazem a dívida crescer rapidamente.</p><p><b>Exemplo:</b> Se você deixa de pagar R$ 1.000, em poucos meses a dívida pode mais que dobrar devido aos juros sobre juros.</p>"
+
+msgid "lesson_2_4_q1"
+msgstr "Qual é o risco de não pagar a fatura do cartão?"
+
+msgid "lesson_2_4_q1_a1"
+msgstr "Ganhar descontos"
+
+msgid "lesson_2_4_q1_a2"
+msgstr "Pagar juros muito altos"
+
+msgid "lesson_2_4_q1_a3"
+msgstr "Cancelar dívida"
+
+msgid "lesson_2_4_q1_a4"
+msgstr "Aumentar limite"
+
+
+msgid "lesson_2_4_q2"
+msgstr "Os juros do cartão de crédito geralmente são:"
+
+msgid "lesson_2_4_q2_a1"
+msgstr "Simples"
+
+msgid "lesson_2_4_q2_a2"
+msgstr "Compostos"
+
+msgid "lesson_2_4_q2_a3"
+msgstr "Fixos"
+
+msgid "lesson_2_4_q2_a4"
+msgstr "Gratuitos"
+
+
+msgid "lesson_2_4_q3"
+msgstr "Se uma pessoa deve R$ 1000 no cartão e os juros são 10% ao mês, no próximo mês deve:"
+
+msgid "lesson_2_4_q3_a1"
+msgstr "R$ 1000"
+
+msgid "lesson_2_4_q3_a2"
+msgstr "R$ 1100"
+
+msgid "lesson_2_4_q3_a3"
+msgstr "R$ 1200"
+
+msgid "lesson_2_4_q3_a4"
+msgstr "R$ 900"
+
+
+msgid "lesson_2_4_q4"
+msgstr "Parcelar sem juros é diferente de:"
+
+msgid "lesson_2_4_q4_a1"
+msgstr "Parcelar com juros"
+
+msgid "lesson_2_4_q4_a2"
+msgstr "Pagar à vista"
+
+msgid "lesson_2_4_q4_a3"
+msgstr "Ganhar desconto"
+
+msgid "lesson_2_4_q4_a4"
+msgstr "Não pagar nada"
+
+
+msgid "lesson_2_4_q5"
+msgstr "Usar cartão de crédito de forma responsável significa:"
+
+msgid "lesson_2_4_q5_a1"
+msgstr "Pagar a fatura inteira"
+
+msgid "lesson_2_4_q5_a2"
+msgstr "Pagar só o mínimo"
+
+msgid "lesson_2_4_q5_a3"
+msgstr "Nunca pagar"
+
+msgid "lesson_2_4_q5_a4"
+msgstr "Gastar além da renda"
+
+msgid "lesson_2_5_q1"
+msgstr "Uma taxa de 5% sobre R$ 200 equivale a:"
+
+msgid "lesson_2_5_q1_a1"
+msgstr "R$ 5"
+
+msgid "lesson_2_5_q1_a2"
+msgstr "R$ 10"
+
+msgid "lesson_2_5_q1_a3"
+msgstr "R$ 20"
+
+msgid "lesson_2_5_q1_a4"
+msgstr "R$ 50"
+
+
+msgid "lesson_2_5_q2"
+msgstr "Se a taxa de juros é de 2% ao mês, qual é a taxa em um ano (12 meses), sem considerar juros compostos?"
+
+msgid "lesson_2_5_q2_a1"
+msgstr "12%"
+
+msgid "lesson_2_5_q2_a2"
+msgstr "24%"
+
+msgid "lesson_2_5_q2_a3"
+msgstr "2%"
+
+msgid "lesson_2_5_q2_a4"
+msgstr "200%"
+
+
+msgid "lesson_2_5_q3"
+msgstr "Uma taxa é sempre calculada em:"
+
+msgid "lesson_2_5_q3_a1"
+msgstr "Porcentagem"
+
+msgid "lesson_2_5_q3_a2"
+msgstr "Reais fixos"
+
+msgid "lesson_2_5_q3_a3"
+msgstr "Anos"
+
+msgid "lesson_2_5_q3_a4"
+msgstr "Parcelas"
+
+
+msgid "lesson_2_5_q4"
+msgstr "Se um produto custa R$ 1000 e tem um desconto de 10%, o valor final é:"
+
+msgid "lesson_2_5_q4_a1"
+msgstr "R$ 1000"
+
+msgid "lesson_2_5_q4_a2"
+msgstr "R$ 900"
+
+msgid "lesson_2_5_q4_a3"
+msgstr "R$ 950"
+
+msgid "lesson_2_5_q4_a4"
+msgstr "R$ 800"
+
+
+msgid "lesson_2_5_q5"
+msgstr "Em um financiamento, a taxa de juros indica:"
+
+msgid "lesson_2_5_q5_a1"
+msgstr "O valor total"
+
+msgid "lesson_2_5_q5_a2"
+msgstr "O percentual cobrado sobre o valor devido"
+
+msgid "lesson_2_5_q5_a3"
+msgstr "O desconto"
+
+msgid "lesson_2_5_q5_a4"
+msgstr "A renda mensal"
+
+# M2 - lesson_2_6 - Avaliação Final
+msgid "lesson_2_6_q1"
+msgstr "Juros simples incidem sobre:"
+
+msgid "lesson_2_6_q1_a1"
+msgstr "Valor inicial"
+
+msgid "lesson_2_6_q1_a2"
+msgstr "Juros acumulados"
+
+msgid "lesson_2_6_q1_a3"
+msgstr "Inflação"
+
+msgid "lesson_2_6_q1_a4"
+msgstr "Receita"
+
+
+msgid "lesson_2_6_q2"
+msgstr "Se você empresta R$ 500 a 2% ao mês por 4 meses, os juros são:"
+
+msgid "lesson_2_6_q2_a1"
+msgstr "R$ 20"
+
+msgid "lesson_2_6_q2_a2"
+msgstr "R$ 40"
+
+msgid "lesson_2_6_q2_a3"
+msgstr "R$ 50"
+
+msgid "lesson_2_6_q2_a4"
+msgstr "R$ 10"
+
+
+msgid "lesson_2_6_q3"
+msgstr "A maior desvantagem do cartão de crédito é:"
+
+msgid "lesson_2_6_q3_a1"
+msgstr "Pagar tudo à vista"
+
+msgid "lesson_2_6_q3_a2"
+msgstr "Juros compostos altos"
+
+msgid "lesson_2_6_q3_a3"
+msgstr "Não poder parcelar"
+
+msgid "lesson_2_6_q3_a4"
+msgstr "Não ganhar pontos"
+
+
+msgid "lesson_2_6_q4"
+msgstr "Poupança tem como principal desvantagem:"
+
+msgid "lesson_2_6_q4_a1"
+msgstr "Alto risco"
+
+msgid "lesson_2_6_q4_a2"
+msgstr "Baixa rentabilidade"
+
+msgid "lesson_2_6_q4_a3"
+msgstr "Falta de segurança"
+
+msgid "lesson_2_6_q4_a4"
+msgstr "Não ser aceita em bancos"
+
+
+msgid "lesson_2_6_q5"
+msgstr "Crédito é:"
+
+msgid "lesson_2_6_q5_a1"
+msgstr "Dinheiro que você recebe sem pagar"
+
+msgid "lesson_2_6_q5_a2"
+msgstr "Dinheiro emprestado que deve ser devolvido"
+
+msgid "lesson_2_6_q5_a3"
+msgstr "Apenas um desconto"
+
+msgid "lesson_2_6_q5_a4"
+msgstr "Um salário extra"
+
+
+msgid "lesson_2_6_q6"
+msgstr "Se uma dívida de R$ 1000 cresce 10% ao mês, no mês seguinte será:"
+
+msgid "lesson_2_6_q6_a1"
+msgstr "R$ 1000"
+
+msgid "lesson_2_6_q6_a2"
+msgstr "R$ 1100"
+
+msgid "lesson_2_6_q6_a3"
+msgstr "R$ 1200"
+
+msgid "lesson_2_6_q6_a4"
+msgstr "R$ 900"
+
+
+msgid "lesson_2_6_q7"
+msgstr "Qual destes é um investimento de baixo risco?"
+
+msgid "lesson_2_6_q7_a1"
+msgstr "Ações novas"
+
+msgid "lesson_2_6_q7_a2"
+msgstr "Tesouro Direto"
+
+msgid "lesson_2_6_q7_a3"
+msgstr "Criptomoedas"
+
+msgid "lesson_2_6_q7_a4"
+msgstr "Loteria"
+
+
+msgid "lesson_2_6_q8"
+msgstr "Uma taxa de 20% em R$ 200 representa:"
+
+msgid "lesson_2_6_q8_a1"
+msgstr "R$ 20"
+
+msgid "lesson_2_6_q8_a2"
+msgstr "R$ 40"
+
+msgid "lesson_2_6_q8_a3"
+msgstr "R$ 200"
+
+msgid "lesson_2_6_q8_a4"
+msgstr "R$ 220"
+
+
+msgid "lesson_2_6_q9"
+msgstr "Se a receita é de R$ 2000 e a despesa é de R$ 2500, a pessoa está:"
+
+msgid "lesson_2_6_q9_a1"
+msgstr "Equilibrada"
+
+msgid "lesson_2_6_q9_a2"
+msgstr "Endividada"
+
+msgid "lesson_2_6_q9_a3"
+msgstr "Poupando"
+
+msgid "lesson_2_6_q9_a4"
+msgstr "Investindo"
+
+msgid "lesson_2_6_q10"
+msgstr "A forma mais segura de usar cartão de crédito é:"
+
+msgid "lesson_2_6_q10_a1"
+msgstr "Pagar a fatura integralmente"
+
+msgid "lesson_2_6_q10_a2"
+msgstr "Pagar só o mínimo"
+
+msgid "lesson_2_6_q10_a3"
+msgstr "Nunca pagar"
+
+msgid "lesson_2_6_q10_a4"
+msgstr "Gastar além da renda"

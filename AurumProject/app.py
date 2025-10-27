@@ -210,7 +210,13 @@ def load_user(user_id):
 @app.route("/questionario")
 @login_required
 def questionario_page():
-    return render_template("perguntasEntrada.html")
+    musicas_usuario = MusicasUsuario.query.filter_by(id_usuario=current_user.id).first()
+    conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
+    return render_template("perguntasEntrada.html",
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
+        musicas_usuario=musicas_usuario)
 
 #Pagina de Configuracoes
 @app.route("/config")
@@ -340,20 +346,22 @@ def cadastro_page():
 # Termos de Uso
 @app.route("/termos")
 def termos_page():
+    musicas_usuario = []  # ou algum valor padrão
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
         return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,)
-    return render_template("termos.html")
+    return render_template("termos.html", musicas_usuario=musicas_usuario)
 
 # Política de Privacidae
 @app.route("/privacidade")
 def privacidade_page():
+    musicas_usuario = []  # ou algum valor padrão
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
         return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,)
-    return render_template("privacidade.html")
+    return render_template("privacidade.html", musicas_usuario=musicas_usuario)
 
 # Solicitar amizade
 @app.route('/solicitar_amizade', methods=['POST'])
@@ -647,7 +655,7 @@ def starting_page():
             "descricao": modulo.descricao,
             "tarefas_feitas": tarefas_feitas,
             "tarefas_totais": tarefas_totais,
-            "progresso": (tarefas_feitas / tarefas_totais * 100) if tarefas_totais > 0 else 0,
+            "progresso": round((tarefas_feitas / tarefas_totais * 100),2) if tarefas_totais > 0 else 0,
             "concluido": concluido,
             "bloqueado": bloqueado
         })
@@ -689,7 +697,14 @@ def presentation_page():
 @app.route("/pre-entrada")
 @login_required
 def pre_entrada():
-    return render_template("preentrada.html")
+    musicas_usuario = MusicasUsuario.query.filter_by(id_usuario=current_user.id).first()
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    return render_template(
+        "preentrada.html",
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
+        musicas_usuario=musicas_usuario)
 
 @app.route("/perfil")
 @login_required
@@ -830,7 +845,7 @@ def ver_modulo(id_modulo):
     modulo = Modulo.query.get(id_modulo)
 
     # ids concluídos pelo usuário
-    concluidas = {t.numero_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id).all()}
+    concluidas = {t.numero_tarefa for t in TarefaUsuario.query.filter_by(id_usuario=current_user.id, id_modulo=id_modulo).all()}
 
     tarefas_json = []
     desbloqueada = True  # só a primeira não concluída fica desbloqueada
@@ -880,9 +895,15 @@ def ver_modulo(id_modulo):
 @app.route("/introducao")
 @login_required
 def intro_page():
+    musicas_usuario = MusicasUsuario.query.filter_by(id_usuario=current_user.id).first()
     if current_user.ja_passou_intro:
         return redirect(url_for("starting_page"))
-    return render_template("introducao.html")
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
+    return render_template("introducao.html",
+        sons_ativos=conf.sons,
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
+        musicas_usuario=musicas_usuario)
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro():

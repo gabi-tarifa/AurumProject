@@ -176,5 +176,21 @@
     });
   }, 3000); // intervalo de 3s
   </script>
+      <script>
+  // valor inicial vindo do backend, só na primeira vez
+  const sonsIniciais = {{ 'true' if sons_ativos else 'false' }};
+  // se já tiver no localStorage, usa ele; senão, define o inicial
+  if (localStorage.getItem('sons_ativos') === null) {
+    localStorage.setItem('sons_ativos', sonsIniciais ? 'true' : 'false');
+  }
+  window.SONS_ATIVOS = localStorage.getItem('sons_ativos') == 'true';
+  // Valor dinâmico vindo do backend
+  window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+  const musicasUsuario = {{ musicas_usuario | tojson | safe }};
+  const musicadasessao = {{ musica_tocada | tojson }};
+  
+</script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
 </body>
 </html>

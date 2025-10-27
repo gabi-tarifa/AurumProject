@@ -480,16 +480,12 @@ a:visited {
   color: #222;
   font-weight: bold;
   height: 270px;
+  margin-bottom: 20px;
 }
 
 .modulo1 {
   background: linear-gradient(75deg, #45cad8, #49f5aa);
   color: whitesmoke;
-}
-
-.concluido {
-  background: linear-gradient(135deg, #ffd54f, #ffca28);
-  color: #333;
 }
 
 .modulo2 {
@@ -516,6 +512,11 @@ a:visited {
 .modulo6 {
   background: linear-gradient(to right, #ff3131, #ff914d);
   color: white;
+}
+
+.concluido {
+  background: linear-gradient(135deg, #ffd54f, #ffca28);
+  color: #333;
 }
 
 .revisar-btn, .continuar-btn {

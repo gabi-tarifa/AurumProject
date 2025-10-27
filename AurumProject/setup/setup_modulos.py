@@ -5,8 +5,8 @@ def criar_modulos():
         modulo_existentes = {m.nome for m in Modulo.query.all()}
 
         modulos_novos = [
-            {"nome": "modulo_intro_nome", "descricao":"modulo_intro_desc"}
-            #,{"nome": "", "descricao":""}
+            {"nome": "modulo_intro_nome", "descricao":"modulo_intro_desc"},
+            {"nome": "modulo_pri_passos_nome", "descricao":"modulo_pri_passos_desc"}
         ]
 
         for modulo in modulos_novos:

@@ -214,11 +214,6 @@ msgstr "Save"
 msgid "Cancelar"
 msgstr "Cancel"
 
-#: templates/configuracoes.html:71
-#, fuzzy
-msgid "Alterar Email Cadastrado"
-msgstr "Change Nickname"
-
 #: templates/configuracoes.html:76
 #, fuzzy
 msgid "Alterar Email"
@@ -1187,3 +1182,625 @@ msgstr "Light"
 
 msgid "Escuro"
 msgstr "Dark"
+
+
+msgid "modulo_pri_passos_nome"
+msgstr "First Steps on Monetary World"
+
+msgid "modulo_pri_passos_desc"
+msgstr "Learn how money grows, multiplies and may work on your favor. In this module, you'll learn how interest rates, credit, and the simplest forms of investment work , giving you the firsts steps for money independency"
+
+msgid "Alterar Email Cadastrado"
+msgstr "Change Logged Email"
+
+
+msgid "mini_lesson2_1"
+msgstr "Mini-lesson 1 — Simple Interest Rates"
+
+msgid "mini_lesson2_2"
+msgstr "Mini-aula 2 — Credit and loans"
+
+msgid "mini_lesson2_3"
+msgstr "Mini-aula 3 — Savings x Investments"
+
+msgid "mini_lesson2_4"
+msgstr "Mini-aula 4 — Interest Rates on Credit Card"
+
+msgid "mini_lesson2_5"
+msgstr "Mini-aula 5 — Taxes e Basic Calculations"
+
+msgid "mini_lesson2_6"
+msgstr "Final Text — Module 2"
+
+# M2 - licao_1 — Simple Interest
+msgid "lesson_2_1_text"
+msgstr "<h3>Simple Interest</h3><p><b>Concept:</b> Simple interest is calculated only on the initial amount (principal).</p><p><b>Formula:</b> J = C × i × t</p><ul><li><b>C</b> = capital (initial value)</li><li><b>i</b> = interest rate</li><li><b>t</b> = time</li></ul><p><b>Example:</b></p><p>If you lend R$ 1,000 at 2% per month for 3 months:</p><p>J = 1000 × 0.02 × 3 = <b>R$ 60 in interest</b>.</p>"
+
+# M2 - licao_2 — Credit and Loans
+msgid "lesson_2_2_text"
+msgstr "<h3>Credit and Loans</h3><p><b>Concept:</b> Credit means using borrowed money from a bank or financial institution, which must be repaid with interest.</p><p><b>Example:</b></p><p>If you borrow R$ 1,000 at 5% interest per month, you will pay R$ 50 in interest each month, in addition to the borrowed amount.</p>"
+
+# M2 - licao_3 — Savings vs Investment
+msgid "lesson_2_3_text"
+msgstr "<h3>Savings vs Investment</h3><p><b>Savings:</b> a simple way to save money, but with low profitability.</p><p><b>Investment:</b> investing money to earn higher returns, assuming some level of risk.</p><p><b>Example:</b></p><p>Saving R$ 1,000 in a savings account may yield less than R$ 10 per month.</p><p>Investing in government bonds (like Tesouro Direto) may yield more, depending on the interest rate.</p>"
+
+# M2 - licao_4 — Credit Card Interest
+msgid "lesson_2_4_text"
+msgstr "<h3>Credit Card Interest</h3><p><b>Concept:</b> Credit cards charge very high compound interest when the bill is not paid in full.</p><p><b>Example:</b></p><p>If you fail to pay R$ 1,000, in a few months the debt can more than double due to <b>interest on interest</b>.</p>"
+
+# M2 - licao_5 — Rates and Basic Calculations
+msgid "lesson_2_5_text"
+msgstr "<h3>Rates and Basic Calculations</h3><p><b>Concept:</b> A rate is a percentage applied to a value. It can be monthly, yearly, etc.</p><p><b>Example:</b></p><p>A loan of R$ 1,000 at 3% per month results in <b>R$ 30 of interest</b> per month.</p>"
+
+# M2 - lesson_1 — Simple Interest
+
+# Question 1
+msgid "lesson_2_1_q1"
+msgstr "What is simple interest?"
+
+msgid "lesson_2_1_q1_a1"
+msgstr "Interest that grows on the initial amount"
+
+msgid "lesson_2_1_q1_a2"
+msgstr "Interest that grows on previous interest"
+
+msgid "lesson_2_1_q1_a3"
+msgstr "Infinite interest"
+
+msgid "lesson_2_1_q1_a4"
+msgstr "Interest only on credit cards"
+
+
+# Question 2
+msgid "lesson_2_1_q2"
+msgstr "If you invest R$ 500 at 2% per month for 2 months, how much interest will you earn?"
+
+msgid "lesson_2_1_q2_a1"
+msgstr "R$ 10"
+
+msgid "lesson_2_1_q2_a2"
+msgstr "R$ 20"
+
+msgid "lesson_2_1_q2_a3"
+msgstr "R$ 50"
+
+msgid "lesson_2_1_q2_a4"
+msgstr "R$ 5"
+
+
+# Question 3
+msgid "lesson_2_1_q3"
+msgstr "What is the formula for simple interest?"
+
+msgid "lesson_2_1_q3_a1"
+msgstr "J = C + i + t"
+
+msgid "lesson_2_1_q3_a2"
+msgstr "J = C × i × t"
+
+msgid "lesson_2_1_q3_a3"
+msgstr "J = i ÷ C × t"
+
+msgid "lesson_2_1_q3_a4"
+msgstr "J = C ÷ i"
+
+
+# Question 4
+msgid "lesson_2_1_q4"
+msgstr "In simple interest, the calculation always considers:"
+
+msgid "lesson_2_1_q4_a1"
+msgstr "Only the initial amount"
+
+msgid "lesson_2_1_q4_a2"
+msgstr "The accumulated amount"
+
+msgid "lesson_2_1_q4_a3"
+msgstr "Only the rate"
+
+msgid "lesson_2_1_q4_a4"
+msgstr "Only the time"
+
+
+# Question 5
+msgid "lesson_2_1_q5"
+msgstr "If a loan of R$ 1000 charges R$ 200 in simple interest over 10 months, what is the monthly rate?"
+
+msgid "lesson_2_1_q5_a1"
+msgstr "1%"
+
+msgid "lesson_2_1_q5_a2"
+msgstr "2%"
+
+msgid "lesson_2_1_q5_a3"
+msgstr "10%"
+
+msgid "lesson_2_1_q5_a4"
+msgstr "20%"
+
+# M2 - lesson_2 - Credit and Loans
+msgid "lesson_2_2_text"
+msgstr "<h3>Credit and Loans</h3><p><b>Concept:</b> Credit means using borrowed money from a bank or lender that must be paid back with interest.</p><p><b>Example:</b> If you borrow R$ 1,000 with 5% monthly interest, you will pay R$ 50 in interest per month, plus the borrowed amount.</p>"
+
+msgid "lesson_2_2_q1"
+msgstr "What is credit?"
+
+msgid "lesson_2_2_q1_a1"
+msgstr "Money you give to the bank"
+
+msgid "lesson_2_2_q1_a2"
+msgstr "Borrowed money that must be repaid with interest"
+
+msgid "lesson_2_2_q1_a3"
+msgstr "Extra money with no cost"
+
+msgid "lesson_2_2_q1_a4"
+msgstr "Salary"
+
+
+msgid "lesson_2_2_q2"
+msgstr "What is the main disadvantage of taking loans?"
+
+msgid "lesson_2_2_q2_a1"
+msgstr "High interest rates"
+
+msgid "lesson_2_2_q2_a2"
+msgstr "Earning more"
+
+msgid "lesson_2_2_q2_a3"
+msgstr "Not having to pay"
+
+msgid "lesson_2_2_q2_a4"
+msgstr "Increasing salary"
+
+
+msgid "lesson_2_2_q3"
+msgstr "If you borrow R$ 200 at 10% interest, how much interest will you pay?"
+
+msgid "lesson_2_2_q3_a1"
+msgstr "R$ 2"
+
+msgid "lesson_2_2_q3_a2"
+msgstr "R$ 10"
+
+msgid "lesson_2_2_q3_a3"
+msgstr "R$ 20"
+
+msgid "lesson_2_2_q3_a4"
+msgstr "R$ 200"
+
+
+msgid "lesson_2_2_q4"
+msgstr "Using credit without planning can lead to:"
+
+msgid "lesson_2_2_q4_a1"
+msgstr "Wealth"
+
+msgid "lesson_2_2_q4_a2"
+msgstr "Debt"
+
+msgid "lesson_2_2_q4_a3"
+msgstr "More income"
+
+msgid "lesson_2_2_q4_a4"
+msgstr "Investments"
+
+
+msgid "lesson_2_2_q5"
+msgstr "A credit card is an example of:"
+
+msgid "lesson_2_2_q5_a1"
+msgstr "Income"
+
+msgid "lesson_2_2_q5_a2"
+msgstr "Expense"
+
+msgid "lesson_2_2_q5_a3"
+msgstr "Credit"
+
+msgid "lesson_2_2_q5_a4"
+msgstr "Investment"
+
+msgid "lesson_2_3_q1"
+msgstr "What is a savings account?"
+
+msgid "lesson_2_3_q1_a1"
+msgstr "A risky investment"
+
+msgid "lesson_2_3_q1_a2"
+msgstr "A simple way to store money"
+
+msgid "lesson_2_3_q1_a3"
+msgstr "Monthly expenses"
+
+msgid "lesson_2_3_q1_a4"
+msgstr "Loan"
+
+
+msgid "lesson_2_3_q2"
+msgstr "What is the main disadvantage of a savings account?"
+
+msgid "lesson_2_3_q2_a1"
+msgstr "High risk"
+
+msgid "lesson_2_3_q2_a2"
+msgstr "Low returns"
+
+msgid "lesson_2_3_q2_a3"
+msgstr "High inflation"
+
+msgid "lesson_2_3_q2_a4"
+msgstr "Compound interest"
+
+
+msgid "lesson_2_3_q3"
+msgstr "Investing in fixed income means:"
+
+msgid "lesson_2_3_q3_a1"
+msgstr "Predictable returns"
+
+msgid "lesson_2_3_q3_a2"
+msgstr "Random returns"
+
+msgid "lesson_2_3_q3_a3"
+msgstr "Always losing money"
+
+msgid "lesson_2_3_q3_a4"
+msgstr "No returns"
+
+
+msgid "lesson_2_3_q4"
+msgstr "Which of these is a low-risk investment?"
+
+msgid "lesson_2_3_q4_a1"
+msgstr "Tesouro Direto"
+
+msgid "lesson_2_3_q4_a2"
+msgstr "Stocks of new companies"
+
+msgid "lesson_2_3_q4_a3"
+msgstr "Cryptocurrencies"
+
+msgid "lesson_2_3_q4_a4"
+msgstr "Playing the lottery"
+
+
+msgid "lesson_2_3_q5"
+msgstr "Why is a savings account considered safer?"
+
+msgid "lesson_2_3_q5_a1"
+msgstr "It always yields a lot"
+
+msgid "lesson_2_3_q5_a2"
+msgstr "It is guaranteed by the government"
+
+msgid "lesson_2_3_q5_a3"
+msgstr "It never loses real value"
+
+msgid "lesson_2_3_q5_a4"
+msgstr "It gives prizes"
+
+# M2 - lesson_2_4 - Credit Card Interest
+msgid "lesson_2_4_text"
+msgstr "<h3>Credit Card Interest</h3><p>The credit card charges <b>very high compound interest</b> when the bill is not fully paid.</p><p><b>Compound interest:</b> interest on interest, which makes the debt grow quickly.</p><p><b>Example:</b> If you don’t pay R$ 1,000, in a few months the debt can more than double due to compound interest.</p>"
+
+msgid "lesson_2_4_q1"
+msgstr "What is the risk of not paying the credit card bill?"
+
+msgid "lesson_2_4_q1_a1"
+msgstr "Getting discounts"
+
+msgid "lesson_2_4_q1_a2"
+msgstr "Paying very high interest"
+
+msgid "lesson_2_4_q1_a3"
+msgstr "Canceling the debt"
+
+msgid "lesson_2_4_q1_a4"
+msgstr "Increasing the limit"
+
+
+msgid "lesson_2_4_q2"
+msgstr "Credit card interest is usually:"
+
+msgid "lesson_2_4_q2_a1"
+msgstr "Simple"
+
+msgid "lesson_2_4_q2_a2"
+msgstr "Compound"
+
+msgid "lesson_2_4_q2_a3"
+msgstr "Fixed"
+
+msgid "lesson_2_4_q2_a4"
+msgstr "Free"
+
+
+msgid "lesson_2_4_q3"
+msgstr "If a person owes R$ 1000 on a credit card and the interest is 10% per month, next month they will owe:"
+
+msgid "lesson_2_4_q3_a1"
+msgstr "R$ 1000"
+
+msgid "lesson_2_4_q3_a2"
+msgstr "R$ 1100"
+
+msgid "lesson_2_4_q3_a3"
+msgstr "R$ 1200"
+
+msgid "lesson_2_4_q3_a4"
+msgstr "R$ 900"
+
+
+msgid "lesson_2_4_q4"
+msgstr "Installing without interest is different from:"
+
+msgid "lesson_2_4_q4_a1"
+msgstr "Installing with interest"
+
+msgid "lesson_2_4_q4_a2"
+msgstr "Paying in full"
+
+msgid "lesson_2_4_q4_a3"
+msgstr "Getting a discount"
+
+msgid "lesson_2_4_q4_a4"
+msgstr "Not paying anything"
+
+
+msgid "lesson_2_4_q5"
+msgstr "Using a credit card responsibly means:"
+
+msgid "lesson_2_4_q5_a1"
+msgstr "Paying the full bill"
+
+msgid "lesson_2_4_q5_a2"
+msgstr "Paying only the minimum"
+
+msgid "lesson_2_4_q5_a3"
+msgstr "Never paying"
+
+msgid "lesson_2_4_q5_a4"
+msgstr "Spending beyond your income"
+
+msgid "lesson_2_5_q1"
+msgstr "A 5% rate on R$ 200 equals:"
+
+msgid "lesson_2_5_q1_a1"
+msgstr "R$ 5"
+
+msgid "lesson_2_5_q1_a2"
+msgstr "R$ 10"
+
+msgid "lesson_2_5_q1_a3"
+msgstr "R$ 20"
+
+msgid "lesson_2_5_q1_a4"
+msgstr "R$ 50"
+
+
+msgid "lesson_2_5_q2"
+msgstr "If the interest rate is 2% per month, what is the rate in one year (12 months), ignoring compound interest?"
+
+msgid "lesson_2_5_q2_a1"
+msgstr "12%"
+
+msgid "lesson_2_5_q2_a2"
+msgstr "24%"
+
+msgid "lesson_2_5_q2_a3"
+msgstr "2%"
+
+msgid "lesson_2_5_q2_a4"
+msgstr "200%"
+
+
+msgid "lesson_2_5_q3"
+msgstr "A rate is always calculated in:"
+
+msgid "lesson_2_5_q3_a1"
+msgstr "Percentage"
+
+msgid "lesson_2_5_q3_a2"
+msgstr "Fixed currency"
+
+msgid "lesson_2_5_q3_a3"
+msgstr "Years"
+
+msgid "lesson_2_5_q3_a4"
+msgstr "Installments"
+
+
+msgid "lesson_2_5_q4"
+msgstr "If a product costs R$ 1000 and has a 10% discount, the final value is:"
+
+msgid "lesson_2_5_q4_a1"
+msgstr "R$ 1000"
+
+msgid "lesson_2_5_q4_a2"
+msgstr "R$ 900"
+
+msgid "lesson_2_5_q4_a3"
+msgstr "R$ 950"
+
+msgid "lesson_2_5_q4_a4"
+msgstr "R$ 800"
+
+
+msgid "lesson_2_5_q5"
+msgstr "In a loan, the interest rate indicates:"
+
+msgid "lesson_2_5_q5_a1"
+msgstr "The total amount"
+
+msgid "lesson_2_5_q5_a2"
+msgstr "The percentage charged on the owed amount"
+
+msgid "lesson_2_5_q5_a3"
+msgstr "The discount"
+
+msgid "lesson_2_5_q5_a4"
+msgstr "Monthly income"
+
+msgid "Músicas"
+msgstr "Musics"
+
+# M2 - lesson_2_6 - Final Assessment
+msgid "lesson_2_6_q1"
+msgstr "Simple interest applies to:"
+
+msgid "lesson_2_6_q1_a1"
+msgstr "Initial amount"
+
+msgid "lesson_2_6_q1_a2"
+msgstr "Accumulated interest"
+
+msgid "lesson_2_6_q1_a3"
+msgstr "Inflation"
+
+msgid "lesson_2_6_q1_a4"
+msgstr "Income"
+
+
+msgid "lesson_2_6_q2"
+msgstr "If you lend R$ 500 at 2% per month for 4 months, the interest is:"
+
+msgid "lesson_2_6_q2_a1"
+msgstr "R$ 20"
+
+msgid "lesson_2_6_q2_a2"
+msgstr "R$ 40"
+
+msgid "lesson_2_6_q2_a3"
+msgstr "R$ 50"
+
+msgid "lesson_2_6_q2_a4"
+msgstr "R$ 10"
+
+
+msgid "lesson_2_6_q3"
+msgstr "The biggest disadvantage of credit cards is:"
+
+msgid "lesson_2_6_q3_a1"
+msgstr "Paying everything upfront"
+
+msgid "lesson_2_6_q3_a2"
+msgstr "High compound interest"
+
+msgid "lesson_2_6_q3_a3"
+msgstr "Cannot pay in installments"
+
+msgid "lesson_2_6_q3_a4"
+msgstr "Not earning points"
+
+
+msgid "lesson_2_6_q4"
+msgstr "The main disadvantage of savings is:"
+
+msgid "lesson_2_6_q4_a1"
+msgstr "High risk"
+
+msgid "lesson_2_6_q4_a2"
+msgstr "Low return"
+
+msgid "lesson_2_6_q4_a3"
+msgstr "Lack of security"
+
+msgid "lesson_2_6_q4_a4"
+msgstr "Not accepted in banks"
+
+
+msgid "lesson_2_6_q5"
+msgstr "Credit is:"
+
+msgid "lesson_2_6_q5_a1"
+msgstr "Money you receive for free"
+
+msgid "lesson_2_6_q5_a2"
+msgstr "Borrowed money that must be repaid"
+
+msgid "lesson_2_6_q5_a3"
+msgstr "Just a discount"
+
+msgid "lesson_2_6_q5_a4"
+msgstr "Extra salary"
+
+
+msgid "lesson_2_6_q6"
+msgstr "If a debt of R$ 1000 grows 10% per month, next month it will be:"
+
+msgid "lesson_2_6_q6_a1"
+msgstr "R$ 1000"
+
+msgid "lesson_2_6_q6_a2"
+msgstr "R$ 1100"
+
+msgid "lesson_2_6_q6_a3"
+msgstr "R$ 1200"
+
+msgid "lesson_2_6_q6_a4"
+msgstr "R$ 900"
+
+
+msgid "lesson_2_6_q7"
+msgstr "Which of these is a low-risk investment?"
+
+msgid "lesson_2_6_q7_a1"
+msgstr "New stocks"
+
+msgid "lesson_2_6_q7_a2"
+msgstr "Government bonds"
+
+msgid "lesson_2_6_q7_a3"
+msgstr "Cryptocurrencies"
+
+msgid "lesson_2_6_q7_a4"
+msgstr "Lottery"
+
+
+msgid "lesson_2_6_q8"
+msgstr "A 20% rate on R$ 200 represents:"
+
+msgid "lesson_2_6_q8_a1"
+msgstr "R$ 20"
+
+msgid "lesson_2_6_q8_a2"
+msgstr "R$ 40"
+
+msgid "lesson_2_6_q8_a3"
+msgstr "R$ 200"
+
+msgid "lesson_2_6_q8_a4"
+msgstr "R$ 220"
+
+
+msgid "lesson_2_6_q9"
+msgstr "If the income is R$ 2000 and the expense is R$ 2500, the person is:"
+
+msgid "lesson_2_6_q9_a1"
+msgstr "Balanced"
+
+msgid "lesson_2_6_q9_a2"
+msgstr "Indebted"
+
+msgid "lesson_2_6_q9_a3"
+msgstr "Saving"
+
+msgid "lesson_2_6_q9_a4"
+msgstr "Investing"
+
+
+msgid "lesson_2_6_q10"
+msgstr "The safest way to use a credit card is:"
+
+msgid "lesson_2_6_q10_a1"
+msgstr "Pay the full bill"
+
+msgid "lesson_2_6_q10_a2"
+msgstr "Pay only the minimum"
+
+msgid "lesson_2_6_q10_a3"
+msgstr "Never pay"
+
+msgid "lesson_2_6_q10_a4"
+msgstr "Spend beyond your income"

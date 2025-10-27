@@ -70,14 +70,14 @@
   {% for modulo in modulos %}
     {% if modulo.bloqueado %}
       <div class="modulo modulo{{modulo.id}}">
-        <h3>{{ _(modulo.nome) }}</h3>
-        <p>{{ _(modulo.descricao) }}</p>
+        <h3><strong>{{ _(modulo.nome) }}</strong></h3>
+        <p>{{ _(modulo.descricao) }}</p><br>
         <p class="aviso">{{ _('Conclua o módulo anterior para desbloquear este.') }}</p>
       </div>
     {% else %}
       <a href="/modulo_{{ modulo.id }}" class="modulo-link">
         <div class="modulo modulo{{modulo.id}} {% if modulo.concluido %}concluido{% endif %}">
-          <h3>{{ _(modulo.nome) }}</h3><br>
+          <h3><strong>{{ _(modulo.nome) }}</strong></h3><br>
           <p>{{ _(modulo.descricao) }}</p>
 
           <div class="progress-bartp">
