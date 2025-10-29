@@ -56,17 +56,6 @@
           </div>
         </a>
 
-        <a href="{{ url_for('ranking_amigos_page') }}">
-          <div class="menu-item">
-            <img 
-            src="{{ url_for('static', filename='img/friends.png') }}" 
-            class="icon" 
-            alt="Amigos" />
-            <span style="color: white;">{{ _('Amigos') }}</span>
-          </div>
-        </a>
-
-
         <a href="{{ url_for('perfil_page') }}">
           <div class="menu-item">
             <img
@@ -135,10 +124,13 @@
         </ul>
       </div>
 
-      <main class="main-content">
+      <main class="main-content" id="rankingGeral">
         <section class="ranking-box">
-          
-          <h1>{{ _('RANKING SEMANAL') }}</h1>
+          <div class="ranking-header">
+            <h1 class="active" id="btnGeralgrl">{{ _('RANKING SEMANAL') }}</h1>
+            <h1 id="btnAmigosgrl">{{ _('RANKING DE AMIGOS') }}</h1>
+          </div>
+
           <ul class="ranking-list">
             <span class="cabecalho">
               <span></span>
@@ -251,6 +243,86 @@
         </section>
       </main>
 
+      <main class="main-content oculto" id="rankingAmigos">
+        <section class="ranking-box">
+
+          <div class="ranking-header">
+            <h1 id="btnGeralamg">{{ _('RANKING SEMANAL') }}</h1>
+            <h1 id="btnAmigosamg" class="active">{{ _('RANKING DE AMIGOS') }}</h1>
+          </div>
+
+          <ul class="ranking-list">
+            <span class="cabecalho">
+              <span></span>
+              <span>{{ _('Apelido') }}</span>
+              <span>{{ _('Pontos') }}</span>
+              <span>{{ _('Tempo de Amizade') }}</span>
+            </span>
+
+            {% for usuario in rankingamigos %}
+              {% set classes = [] %}
+              {% if loop.index == 1 %}
+                {% set _ = classes.append('first') %}
+              {% elif loop.index == 2 %}
+                {% set _ = classes.append('second') %}
+              {% elif loop.index == 3 %}
+                {% set _ = classes.append('third') %}
+              {% endif %}
+
+              {% if usuario.id == current_user.id %}
+                {% set _ = classes.append('ownplayer') %}
+              {% endif %}
+
+              <li class="{{ ' '.join(classes) }}">
+                <span>#{{ loop.index }}</span>
+
+                <span class="icon">
+                  <div class="profile-hover-container" data-user-id="{{ usuario.id }}">
+                    
+        {% if "http" in usuario.profilepicture %}
+          <img src="{{ usuario.profilepicture }}" alt="Foto" class="profile-picture">
+        {% else %}
+          <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto" class="profile-picture">
+        {% endif %}
+
+                    {% if usuario.id != current_user.id %}
+                      {% set id1, id2 = (current_user.id, usuario.id) | sort %}
+                      {% set amizade = amizadesamigos.get((id1, id2)) %}
+                      <div class="friend-status">👥</div>
+                    {% endif %}
+
+                    <div class="profile-hover-box" role="dialog" aria-hidden="true">
+                    {% if "http" in usuario.profilepicture %}
+                      <img src="{{ usuario.profilepicture }}" alt="Foto" class="profile-picture">
+                    {% else %}
+                      <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto" class="hover-picture">
+                    {% endif %}
+                      <div class="hover-info">
+                        <span class="hover-name">{{ usuario.nome }}</span>
+                        {% if usuario.id != current_user.id %}
+                          <button class="friend-btn" disabled>
+                            👥 {{ gettext('Amigos') }}
+                          </button>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </span>
+
+                <span class="name">{{ usuario.nome }}</span>
+                <span>{{ usuario.pontos_semanais }}</span>
+
+                {% if usuario.id == current_user.id %}
+                  <span>-</span>
+                {% else %}
+                  <span>{{ tempos_amizade[usuario.id] }} {{ gettext('dias') }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      </main>
+
       <aside class="info-box">
         <div class="info">
           <span class="golden">{{ coins }}</span>
@@ -356,6 +428,24 @@
       });
 
       document.addEventListener("DOMContentLoaded", () => {
+        
+document.getElementById("btnGeralgrl").addEventListener("click", () => trocarRanking("geral"));
+document.getElementById("btnAmigosgrl").addEventListener("click", () => trocarRanking("amigos"));
+document.getElementById("btnGeralamg").addEventListener("click", () => trocarRanking("geral"));
+document.getElementById("btnAmigosamg").addEventListener("click", () => trocarRanking("amigos"));
+
+function trocarRanking(tipo) {
+  const geral = document.getElementById("rankingGeral");
+  const amigos = document.getElementById("rankingAmigos");
+
+  if (tipo == "geral") {
+    geral.classList.remove("oculto");
+    amigos.classList.add("oculto");
+  } else {
+    amigos.classList.remove("oculto");
+    geral.classList.add("oculto");
+  }
+}
         // --- Solicitar amizade ---
         document.querySelectorAll(".friend-request-btn").forEach((btn) => {
           btn.addEventListener("click", async () => {
