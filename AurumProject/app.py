@@ -420,76 +420,6 @@ def recusar_amizade():
     db.session.commit()
     return jsonify({"sucesso": "Solicitação recusada!"})
 
-# Ranking de Amigos
-
-# 🏆 Página de Ranking de Amigos
-@app.route("/amigos")
-@login_required
-def ranking_amigos_page():
-    # Pegar todas as amizades aceitas do usuário logado
-    amizades_aceitas = Amizade.query.filter(
-        ((Amizade.id_usuario1 == current_user.id) | (Amizade.id_usuario2 == current_user.id)) &
-        (Amizade.status == 'aceita')
-    ).all()
-
-    ids_amigos = set()
-    amizades_dict = {}  # Para guardar o objeto de amizade para cada amigo
-    for a in amizades_aceitas:
-        if a.id_usuario1 != current_user.id:
-            ids_amigos.add(a.id_usuario1)
-            amizades_dict[a.id_usuario1] = a
-        if a.id_usuario2 != current_user.id:
-            ids_amigos.add(a.id_usuario2)
-            amizades_dict[a.id_usuario2] = a
-
-    # Incluir o próprio usuário
-    ids_amigos.add(current_user.id)
-
-    # Ranking baseado nos pontos semanais
-    ranking = Usuario.query.filter(Usuario.id.in_(ids_amigos)) \
-                .order_by(Usuario.pontos_semanais.desc()) \
-                .all()
-
-    posicao_ranking = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
-
-    ofensiva = get_or_create_ofensiva(current_user.id)
-    dia_semana = datetime.now().weekday()
-
-    # Calcular tempo de amizade em dias
-    hoje = datetime.now().date()
-    tempos_amizade = {}
-    for u in ranking:
-        if u.id == current_user.id:
-            tempos_amizade[u.id] = None
-        else:
-            amizade = amizades_dict.get(u.id)
-            if amizade:
-                delta = hoje - amizade.data_criacao.date()
-                tempos_amizade[u.id] = delta.days
-            else:
-                tempos_amizade[u.id] = 0
-
-    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
-
-    return render_template(
-        "amigos.html",
-        amizades=amizades_dict,
-        usuario=current_user,
-        ranking=ranking,
-        posicao_ranking=posicao_ranking,
-        pontos=current_user.pontos,
-        pontos_semanais=current_user.pontos_semanais,
-        ofensiva=ofensiva,
-        dia_semana=dia_semana,
-        tempos_amizade=tempos_amizade,
-        semana_completa=sum(ofensiva.dias_semana) == 7,
-        coins=current_user.moedas,
-        tema = conf.tema,
-        sons_ativos=conf.sons,
-        musica_ativa = conf.musica,
-        musica_tocada=conf.musica_tocada,
-    )
-
 # 🏆 Página de Ranking
 @app.route("/ranking")
 @login_required
@@ -543,6 +473,48 @@ def ranking_page():
 
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
 
+    # Pegar todas as amizades aceitas do usuário logado
+    amizades_aceitas = Amizade.query.filter(
+        ((Amizade.id_usuario1 == current_user.id) | (Amizade.id_usuario2 == current_user.id)) &
+        (Amizade.status == 'aceita')
+    ).all()
+
+    ids_amigos = set()
+    amizades_dict = {}  # Para guardar o objeto de amizade para cada amigo
+    for a in amizades_aceitas:
+        if a.id_usuario1 != current_user.id:
+            ids_amigos.add(a.id_usuario1)
+            amizades_dict[a.id_usuario1] = a
+        if a.id_usuario2 != current_user.id:
+            ids_amigos.add(a.id_usuario2)
+            amizades_dict[a.id_usuario2] = a
+
+    # Incluir o próprio usuário
+    ids_amigos.add(current_user.id)
+
+    # Ranking baseado nos pontos semanais
+    rankingamigos = Usuario.query.filter(Usuario.id.in_(ids_amigos)) \
+                .order_by(Usuario.pontos_semanais.desc()) \
+                .all()
+
+    posicao_rankingamigos = next((i + 1 for i, u in enumerate(ranking) if u.id == current_user.id), None)
+    dia_semana = datetime.now().weekday()
+
+    # Calcular tempo de amizade em dias
+    hoje = datetime.now().date()
+    tempos_amizade = {}
+    for u in ranking:
+        if u.id == current_user.id:
+            tempos_amizade[u.id] = None
+        else:
+            amizade = amizades_dict.get(u.id)
+            if amizade:
+                delta = hoje - amizade.data_criacao.date()
+                tempos_amizade[u.id] = delta.days
+            else:
+                tempos_amizade[u.id] = 0
+
+    conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
     return render_template(
         "ranking.html",
         amizades=amizades,
@@ -561,6 +533,10 @@ def ranking_page():
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        tempos_amizade=tempos_amizade,        
+        amizadesamigos=amizades_dict,
+        rankingamigos=rankingamigos,
+        posicao_rankingamigos=posicao_rankingamigos,
     )
 # 🏆 Página de Ranking semanal
 @app.route("/inicial")
