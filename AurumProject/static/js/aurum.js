@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!nome || !email || !senha || !confirmarSenha) {
             texto.textContent = "Por favor, preencha todos os campos";
+            tocarSom("error");
             return;
         }
 
@@ -60,21 +61,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email)) {
             texto.textContent = "Por favor, insira um email válido (ex: nome@exemplo.com)";
+            tocarSom("error");
             return;
         }
 
         if(senha.length < 6 || senha.length > 16 || !temMaiuscula(senha) || !temMinuscula(senha) || !temNumero(senha) || !temCaractereEspecial(senha)) {
             texto.innerHTML = "Um dos seguintes requisitos não foi cumprido: <br>- A senha tem que ser maior que 6 dígitos e menor que 16 dígitos;<br>- A senha deve conter pelo menos uma letra maiúscula;<br>- A senha deve conter pelo menos uma letra minúscula;<br>- A senha deve conter pelo menos um número;<br>- A senha deve conter pelo menos um caractere especial.";
+            tocarSom("error");
             return;
         }
         
         if(confirmarSenha != senha){
             texto.textContent = "As senhas não condizem!";
+            tocarSom("error");
             return;
         }
 
         if (!validarIdade(12, dataNascimento)) {
             texto.textContent = "Você precisa ter pelo menos 12 anos para se cadastrar.";
+            tocarSom("error");
             return;
         }
 
@@ -92,10 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "/login"; // Redireciona após cadastro
             } else {
                 texto.textContent = "Opa, algo deu errado. Tente novamente mais tarde"
+                tocarSom("error");
             }
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
             texto.textContent = "Erro ao cadastrar. Verifique sua conexão.";
+            tocarSom("error");
         }
     });
 });
@@ -105,13 +112,27 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     const btnLogin = document.getElementById("login-btn");
 
-    btnLogin.addEventListener("click", async () => {
-        const emailOuNome = (document.querySelector('#login-screen input[placeholder="E-mail ou nome de usuário"]').value).toLowerCase();
-        const senha = document.querySelector('#login-screen input[placeholder="Senha"]').value;
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+       fazerLogin();
+      }
+    });
+
+    btnLogin.addEventListener("click", fazerLogin);
+
+    async function fazerLogin() {
+        const email = (document.getElementById('email').value).toLowerCase();
+        const senha = document.getElementById('senha').value;
         const textoerro = document.getElementById("textoerro");
 
-        if (!emailOuNome || !senha) {
+        if (!email || !senha) {
             textoerro.textContent = "Por favor, preencha todos os campos.";
+            if(!email){
+                document.getElementById("email").focus();
+            }else{
+                document.getElementById("senha").focus();
+            }
+            tocarSom("error");
             return;
         }
 
@@ -121,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ emailOuNome, senha })
+                body: JSON.stringify({ email, senha })
             });
 
             const data = await response.json();
@@ -130,11 +151,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "/introducao";  // Redireciona para a página de perguntas
             } else {
                 textoerro.textContent = "Usuário ou senha incorreta";
+                document.getElementById("email").focus();
+                tocarSom("error");
             }
 
         } catch (error) {
             console.error("Erro ao fazer login:", error);
             textoerro.textContent = "Usuário ou senha incorreta";
+            tocarSom("error");
         }
-    });
+    };
 });

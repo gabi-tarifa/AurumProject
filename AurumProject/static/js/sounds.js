@@ -7,7 +7,7 @@ const sons = {
 
 function tocarSom(tipo) {
   if (window.SONS_ATIVOS != true && window.SONS_ATIVOS != 'true') return;
-  const som = sons[tipo];
+  const som = sons[tipo]; 
   if (som) {
     som.currentTime = 0;
     som.play().catch(() => {}); // Evita erro se o navegador bloquear autoplay
@@ -19,7 +19,6 @@ function tocarSom(tipo) {
 function inicializarSons() {
   document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais")
     .forEach(el => {
-      // evita registrar o mesmo evento várias vezes
       el.removeEventListener("click", handleClick);
       el.removeEventListener("mouseenter", handleHover);
 

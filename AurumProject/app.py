@@ -1232,14 +1232,14 @@ def get_config():
 @app.route("/login", methods=["POST"])
 def efetuar_login():
     dados = request.get_json()
-    email_ou_nome = dados.get("emailOuNome")
+    email = dados.get("email")
     senha = dados.get("senha")
 
-    if not email_ou_nome or not senha:
+    if not email or not senha:
         return jsonify({"mensagem": "Preencha todos os campos."}), 400
     
     usuario = Usuario.query.filter(
-        (Usuario.email == email_ou_nome) | (Usuario.nome == email_ou_nome)
+        (Usuario.email == email)
     ).first()
 
     if usuario and check_password_hash(usuario.senha, senha):

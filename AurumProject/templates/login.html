@@ -12,8 +12,8 @@
 
 <div class="container" id="login-screen">
     <h2 style="color:#f4d160; margin-bottom: 20px;">{{ _('Entrar') }}</h2>
-  <input type="text" placeholder="{{ _('E-mail ou nome de usuário') }}" />
-  <input type="password" placeholder="{{ _('Senha') }}" />
+  <input type="text" placeholder="{{ _('E-mail') }}" id="email"/>
+  <input type="password" placeholder="{{ _('Senha') }}" id="senha"/>
   <div class="forgot" onclick="window.location.href = '/esqueci_senha'">{{ _('Não lembra a senha?') }}</div>
   <span id="textoerro" class="textoerro"></span><br>
   <button class="btn" id="login-btn">{{ _('Entrar') }}</button>
@@ -29,5 +29,7 @@
   <button type="button" class="btn" id="btnVoltar" onclick="window.location.href='/'" >{{ _('← Voltar ao início') }}</button>
 </div>
 <script src="{{ url_for('static', filename='js/aurum.js') }}"></script>
+<script> window.SONS_ATIVOS = localStorage.getItem('sons_ativos'); </script>
+<script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
 </body>
 </html>
