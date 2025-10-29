@@ -2,6 +2,8 @@ import ssl
 import certifi
 ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())
 
+#linha de teste da nova branch
+
 import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
