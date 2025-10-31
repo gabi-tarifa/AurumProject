@@ -390,7 +390,7 @@ def solicitar_amizade():
     if not id_destinatario:
         return jsonify({"erro": "ID do destinatário não fornecido"}), 400
     if id_destinatario == current_user.id:
-        return jsonify({"erro": "Não é possível adicionar a si mesmo"}), 400
+        return jsonify({"erro": "Não é possível adicionar a si mesmo"}), 400 
 
     id1, id2 = sorted([current_user.id, id_destinatario])
     amizade_existente = Amizade.query.filter_by(id_usuario1=id1, id_usuario2=id2).first()
