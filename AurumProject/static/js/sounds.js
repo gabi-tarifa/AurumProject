@@ -17,7 +17,7 @@ function tocarSom(tipo) {
 
 // 🔁 Função isolada para aplicar os eventos sonoros
 function inicializarSons() {
-  document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais")
+  document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1")
     .forEach(el => {
       el.removeEventListener("click", handleClick);
       el.removeEventListener("mouseenter", handleHover);

@@ -6,7 +6,7 @@ import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, Amizade, MusicasUsuario
-from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, ConteudoTarefa, Configuracoes
+from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, Configuracoes
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash
