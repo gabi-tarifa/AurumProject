@@ -189,12 +189,30 @@ def processar_premiacoes():
 
         db.session.commit()
 
+def limpar_blocos_antigos():
+    with app.app_context():
+        semana_atual = inicio_semana()
+
+        # 1️⃣ Apaga registros de UsuarioBloco ligados a blocos de semanas antigas
+        UsuarioBloco.query.filter(
+            UsuarioBloco.id_bloco.in_(
+                db.session.query(Bloco.id_bloco)
+                .filter(Bloco.semana != semana_atual)
+            )
+        ).delete(synchronize_session=False)
+
+        # 2️⃣ Apaga os blocos antigos
+        Bloco.query.filter(Bloco.semana != semana_atual).delete()
+
+        db.session.commit()
+
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
 scheduler.add_job(checar_ofensivas, 'cron', hour=23, minute=59)
+scheduler.add_job(limpar_blocos_antigos, 'cron', day_of_week='mon', hour=0, minute=1)
 scheduler.start()
 
 # 🔐 Página de Login
@@ -1418,6 +1436,7 @@ def inicio_semana():
     hoje = date.today()
     # Ajustar para segunda-feira
     return hoje - timedelta(days=hoje.weekday())
+
 
 @app.route("/concluir_tarefa/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>", methods=["POST"])
 @login_required
