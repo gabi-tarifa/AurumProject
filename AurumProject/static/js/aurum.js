@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
             console.error("Erro ao fazer login:", error);
-            textoerro.textContent = "Usuário ou senha incorreta";
+            textoerro.textContent = "Erro com o banco de dados... Verifique a conexão.";
             tocarSom("error");
         }
     };

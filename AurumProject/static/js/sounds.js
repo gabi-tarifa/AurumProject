@@ -1,8 +1,11 @@
 const sons = {
   click: new Audio("/static/sounds/ui/click.wav"),
   hover: new Audio("/static/sounds/ui/hover.ogg"),
-  //success: new Audio("/static/sounds/ui/success.mp3"),
   error: new Audio("/static/sounds/ui/error.wav"),
+  regular: new Audio("/static/sounds/ui/regular.mp3"),
+  rare: new Audio("/static/sounds/ui/rare.mp3"),
+  legendary: new Audio("/static/sounds/ui/legendary.mp3"),
+  
 };
 
 function tocarSom(tipo) {
@@ -17,7 +20,7 @@ function tocarSom(tipo) {
 
 // 🔁 Função isolada para aplicar os eventos sonoros
 function inicializarSons() {
-  document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1")
+  document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1, div.etapa.concluida, div.etapa.desbloquada")
     .forEach(el => {
       el.removeEventListener("click", handleClick);
       el.removeEventListener("mouseenter", handleHover);

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quizes</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
   <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
 </head>
 <body {%if tema == 'cla'%} class="claro" {%endif%}>
@@ -194,6 +195,25 @@
   const musicadasessao = {{ musica_tocada | tojson }};
 </script>
 <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popup.js') }}"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    {% if session.get('popup_conquistas') %}
+      const conquistas = {{ session.get('popup_conquistas') | tojson }};
+      let delayTotal = 0;
+      
+      // Espera o áudio carregar e o JS principal estar disponível
+      setTimeout(() => {
+        conquistas.forEach((c) => {
+          const duracao = c.raridade === "rara" ? 11000 : 5000;
+          exibirConquistaPopup(c, delayTotal);
+          delayTotal += duracao + 200; // adiciona pequena pausa entre popups
+        });
+        fetch("/limpar_popup_conquista");
+      }, 1000); // leve atraso pra garantir inicialização
+    {% endif %}
+  });
+</script>
 
 </body>
 </html>

@@ -31,7 +31,7 @@ function iniciarMusicaFundo(caminho) {
   // Cria o player de áudio
   musicaFundo = new Audio(caminho);
   musicaFundo.loop = true;
-  musicaFundo.volume = 0.3;
+  musicaFundo.volume = 0.7;
 
   // retoma o tempo salvo
   const tempoSalvo = parseFloat(localStorage.getItem("tempo_musica"));

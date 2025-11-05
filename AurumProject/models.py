@@ -162,6 +162,7 @@ class Conquistas(db.Model):
     descricao = db.Column(db.String(255), nullable=False)
     imagem = db.Column(db.String(255), nullable=False, default="img/gold-medal.png")
     cor = db.Column(db.String(10), nullable=False, default="azul")
+    raridade = db.Column(db.String(10), nullable=False, default="regular")
 
     def to_dict(self):
         return {
@@ -169,7 +170,8 @@ class Conquistas(db.Model):
             "nome": self.nome,
             "descricao": self.descricao,
             "imagem": self.imagem,
-            "cor": self.cor
+            "cor": self.cor,
+            "raridade": self.raridade
         }
 
 

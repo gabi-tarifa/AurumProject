@@ -448,7 +448,6 @@ msgstr "Introduction to Monetary World"
 
 msgid "modulo_intro_desc"
 msgstr "Learn how to differentiate income and expensess, register outlay, identify necessities and wishes and build a simple budget." 
-Aprenda a diferenciar receitas e despesas, registrar gastos, identificar necessidades e desejos e montar um orçamento simples
 
 msgid "Dia consecutivo"
 msgid_plural "Dias consecutivos"
@@ -494,7 +493,7 @@ msgid "conquista_og_nome"
 msgstr "I AM a OG"
 
 msgid "conquista_og_desc"
-msgstr "One of the first users of the platform."
+msgstr "Became one of Aurum's first users."
 
 msgid "conquista_vencedor_nome"
 msgstr "Winner"
@@ -506,67 +505,67 @@ msgid "conquista_veterano_nome"
 msgstr "Veteran"
 
 msgid "conquista_veterano_desc"
-msgstr "Played for 1 year."
+msgstr "Won a match 10 times."
 
 msgid "conquista_campeao_nome"
 msgstr "Champion"
 
 msgid "conquista_campeao_desc"
-msgstr "Reached the highest score in a season."
+msgstr "Won a match 100 times."
 
 msgid "conquista_invicto_nome"
-msgstr "Undefeated"
+msgstr "Undefeated Champion"
 
 msgid "conquista_invicto_desc"
-msgstr "Won 10 matches in a row."
+msgstr "Won 30 matches in a row."
 
 msgid "conquista_quizzer_nome"
 msgstr "Quizzer"
 
 msgid "conquista_quizzer_desc"
-msgstr "Played 50 quizzes."
+msgstr "Completed your first quiz."
 
 msgid "conquista_quizzeiro_nome"
 msgstr "Quiz Addict"
 
 msgid "conquista_quizzeiro_desc"
-msgstr "Played 200 quizzes."
+msgstr "Completed 10 quizes."
 
 msgid "conquista_maluco_quiz_nome"
 msgstr "Quiz Maniac"
 
 msgid "conquista_maluco_quiz_desc"
-msgstr "Played 500 quizzes."
+msgstr "Completed 50 quizes."
 
 msgid "conquista_fanatico_quiz_nome"
 msgstr "Quiz Fanatic"
 
 msgid "conquista_fanatico_quiz_desc"
-msgstr "Played 1000 quizzes."
+msgstr "Completed 100 quizes."
 
 msgid "conquista_em_crescimento_nome"
 msgstr "Growing"
 
 msgid "conquista_em_crescimento_desc"
-msgstr "Reached level 10."
+msgstr "Scored 100 points."
 
 msgid "conquista_experiente_nome"
 msgstr "Experienced"
 
 msgid "conquista_experiente_desc"
-msgstr "Reached level 50."
+msgstr "Scored 1k points"
 
 msgid "conquista_guru_nome"
 msgstr "Guru"
 
 msgid "conquista_guru_desc"
-msgstr "Reached level 100."
+msgstr "Scored 50k points"
 
 msgid "conquista_aurum_master_nome"
 msgstr "Aurum Master"
 
 msgid "conquista_aurum_master_desc"
-msgstr "Top 1 on the ranking."
+msgstr "Scored 99,999 points"
 
 msgid "conquista_primeira_ofensiva_nome"
 msgstr "First Offensive"
@@ -602,7 +601,7 @@ msgid "conquista_farinha_nome"
 msgstr "Flour from the same pack"
 
 msgid "conquista_farinha_desc"
-msgstr "Studied in the same Dev´s class and assisted him during its development ."
+msgstr "Studied in the same Dev´s class and assisted him during Aurum's development ."
 
 # MINI-LESSON 1 — Income and Expense
 msgid "lesson1_text"
@@ -1808,3 +1807,12 @@ msgstr "Never pay"
 
 msgid "lesson_2_6_q10_a4"
 msgstr "Spend beyond your income"
+
+msgid "Conquista desbloqueada!"
+msgstr "Achievement unlocked!"
+
+msgid "Conquista RARA desbloqueada!"
+msgstr "RARE achievement unlocked!"
+
+msgid "Conquista LENDÁRIA desbloqueada!!"
+msgstr "LEGENDARY achievement unlocked!!"

@@ -1480,3 +1480,12 @@ msgstr "Nunca pagar"
 
 msgid "lesson_2_6_q10_a4"
 msgstr "Gastar além da renda"
+
+msgid "Conquista desbloqueada!"
+msgstr ""
+
+msgid "Conquista RARA desbloqueada!"
+msgstr ""
+
+msgid "Conquista LENDÁRIA desbloqueada!!"
+msgstr ""

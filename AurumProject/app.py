@@ -9,7 +9,7 @@ from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, P
 from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, Configuracoes
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from flask import redirect, url_for, flash
+from flask import redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
 from flask_login import current_user, login_required
 from app import db
@@ -1278,21 +1278,18 @@ def efetuar_login():
             )
             db.session.add(novo_registro)
             db.session.commit()
+            
+        desbloquear_conquista(current_user.id, 1)
+
+        hoje = datetime.now()
+        limite = datetime(2025, 12, 4)
+
+        if hoje < limite:
+            desbloquear_conquista(current_user.id, "conquista_og_nome")
+
         return jsonify({"mensagem": "Login efetuado com sucesso!"}), 200
     else:
         return jsonify({"mensagem": "Email/nome ou senha incorretos."}), 401
-    
-@app.route("/eusouOG")
-@login_required
-def eusouOG():
-    conquistas_a_dar = ["conquista_og_nome"]
-    
-    for nome in conquistas_a_dar:
-        conquista = Conquistas.query.filter_by(nome=nome).first()
-        if conquista:
-            desbloquear_conquista(current_user.id, conquista.id_conquista)
-
-    return redirect(url_for("perfil_page"))
     
 @app.route("/ifsp413")
 @login_required
@@ -1304,7 +1301,7 @@ def ifiano413():
         if conquista:
             desbloquear_conquista(current_user.id, conquista.id_conquista)
 
-    return redirect(url_for("perfil_page"))
+    return "", 204
 
 @app.route("/logout")
 @login_required
@@ -1405,21 +1402,50 @@ def get_or_create_ofensiva(id_usuario):
     return ofensiva
 
 def desbloquear_conquista(id_usuario, conquista):
-        # Se for string, buscar o ID pelo nome
     if isinstance(conquista, str):
         conquista_obj = Conquistas.query.filter_by(nome=conquista).first()
         if not conquista_obj:
             print(f"Conquista '{conquista}' não encontrada.")
-            return
+            return None
         id_conquista = conquista_obj.id_conquista
     else:
-        id_conquista = conquista  # já é um número
+        conquista_obj = Conquistas.query.get(conquista)
+        id_conquista = conquista_obj.id_conquista if conquista_obj else None
+
+    if not conquista_obj:
+        print(f"Conquista com ID {conquista} não encontrada.")
+        return None
 
     ja_tem = UsuarioConquistas.query.filter_by(id_usuario=id_usuario, id_conquista=id_conquista).first()
-    if not ja_tem:
-        nova = UsuarioConquistas(id_usuario=id_usuario, id_conquista=id_conquista)
-        db.session.add(nova)
-        db.session.commit()
+    if ja_tem:
+        return None
+
+    # Cria o relacionamento
+    nova = UsuarioConquistas(id_usuario=id_usuario, id_conquista=id_conquista)
+    db.session.add(nova)
+    db.session.commit()
+
+    conquista_dict = conquista_obj.to_dict()
+    conquista_dict["nome"] = _(conquista_dict["nome"])
+    conquista_dict["descricao"] = _(conquista_dict["descricao"])
+    if conquista_dict["raridade"] == "regular":
+        conquista_dict["anuncio"] = _("Conquista desbloqueada!")
+    elif conquista_dict["raridade"] == "rara":
+        conquista_dict["anuncio"] = _("Conquista RARA desbloqueada!")
+    else:
+        conquista_dict["anuncio"] = _("Conquista LENDÁRIA desbloqueada!!")
+
+    # ✅ Empilha as conquistas no popup (mantém lista na sessão)
+    popup_list = session.get('popup_conquistas', [])
+    popup_list.append(conquista_dict)
+    session['popup_conquistas'] = popup_list
+
+    return conquista_dict
+
+@app.route('/limpar_popup_conquista')
+def limpar_popup_conquista():
+    session.pop('popup_conquistas', None)
+    return '', 204
 
 def salvar_usuario(nome):
     try:
@@ -1488,7 +1514,7 @@ def concluir_tarefa(id_modulo, numero_tarefa):
         desbloquear_conquista(current_user.id, "conquista_experiente_nome")
     if current_user.pontos >= 10000:
         desbloquear_conquista(current_user.id, "conquista_guru_nome")
-    if current_user.pontos >= 999999:
+    if current_user.pontos >= 99999:
         desbloquear_conquista(current_user.id, "conquista_aurum_master_nome")
 
     # manter lógica da ofensiva
