@@ -125,6 +125,7 @@
   if (window.MUSICA_ATIVA){ 
     const musicadasessao = {{ musica_tocada |  default([]) | tojson }};
 }
+  const volumeMusicaBanco = {{ volume_musica }}
 
 </script>
 <script src="{{ url_for('static', filename='js/musics.js') }}"></script>

@@ -6,7 +6,7 @@ import math
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from models import db, Usuario, Modulo, Tarefa, Conquistas, UsuarioConquistas, Poderes, Amizade, MusicasUsuario
-from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, Configuracoes
+from models import Ofensiva, PoderesUsuario, Bloco, UsuarioBloco, TarefaUsuario, Configuracoes, ConteudoTarefa
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask import redirect, url_for, flash, session
@@ -228,13 +228,11 @@ def load_user(user_id):
 @app.route("/questionario")
 @login_required
 def questionario_page():
-    musicas_usuario = MusicasUsuario.query.filter_by(id_usuario=current_user.id).first()
     conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
     return render_template("perguntasEntrada.html",
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
-        musica_tocada=conf.musica_tocada,
-        musicas_usuario=musicas_usuario)
+        musica_tocada=conf.musica_tocada,)
 
 #Pagina de Configuracoes
 @app.route("/config")
@@ -273,6 +271,7 @@ def configuracoes():
         musica_ativa = conf.musica,
         musicas_usuario=musicas_serializadas,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 
 @app.route("/api/idioma", methods=["POST"])
@@ -304,7 +303,8 @@ def api_tema():
 def ajuda():
     conf = Configuracoes.query.filter_by(id_usuario = current_user.id).first()
     return render_template("ajuda.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica,
-        musica_tocada=conf.musica_tocada,)
+        musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,)
 
 @app.route("/modulo_<int:id_modulo>/tarefa_<int:numero_tarefa>")
 @login_required
@@ -347,6 +347,7 @@ def licoes(numero_tarefa, id_modulo):
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 
 # 🆕 Página de Cadastro
@@ -368,6 +369,7 @@ def termos_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
         return render_template("termos.html", tema=conf.tema, sons_ativos=conf.sons,musica_ativa = conf.musica,
+        volume_musica=conf.volume_musica,
         musica_tocada=conf.musica_tocada,)
     return render_template("termos.html", musicas_usuario=musicas_usuario)
 
@@ -378,6 +380,7 @@ def privacidade_page():
     if current_user.is_authenticated:
         conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
         return render_template("privacidade.html", tema=conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
+        volume_musica=conf.volume_musica,
         musica_tocada=conf.musica_tocada,)
     return render_template("privacidade.html", musicas_usuario=musicas_usuario)
 
@@ -555,8 +558,9 @@ def ranking_page():
         amizadesamigos=amizades_dict,
         rankingamigos=rankingamigos,
         posicao_rankingamigos=posicao_rankingamigos,
+        volume_musica=conf.volume_musica,
     )
-# 🏆 Página de Ranking semanal
+# 🏆 Página Inicial
 @app.route("/inicial")
 @login_required
 def starting_page():
@@ -611,10 +615,65 @@ def starting_page():
     dias_completos = sum(1 for dia in ofen.dias_semana if dia)
     semana_completa = dias_completos == 7
 
-    # 🔹 Agora os módulos + progresso (com bloqueio sequencial)
+
+    
+    # 🔹 Agora os módulos + progresso (com bloqueio sequencial e moduloinicial)
     modulos = Modulo.query.order_by(Modulo.id).all()
     modulos_progresso = []
 
+# Pegamos o módulo inicial do usuário
+    modulo_inicial = current_user.moduloinicial
+
+    for i, modulo in enumerate(modulos):
+        # Total de tarefas do módulo
+        tarefas = Tarefa.query.filter_by(id_modulo=modulo.id).all()
+        tarefas_totais = len(tarefas)
+
+            # Tarefas concluídas pelo usuário
+        tarefas_feitas = (
+            db.session.query(TarefaUsuario)
+            .join(Tarefa, (TarefaUsuario.id_modulo == Tarefa.id_modulo) & (TarefaUsuario.numero_tarefa == Tarefa.numero_tarefa))
+            .filter(
+                TarefaUsuario.id_usuario == current_user.id,
+                TarefaUsuario.id_modulo == modulo.id,
+                TarefaUsuario.status == "concluida"
+            )
+            .count()
+        )
+
+        # Verifica se o módulo foi concluído
+        concluido = tarefas_totais > 0 and tarefas_feitas == tarefas_totais
+
+        # Bloqueio padrão
+        bloqueado = False
+
+        # 🔸 1. Se o módulo atual é maior que o módulo inicial, ele começa bloqueado
+        if modulo.id > modulo_inicial:
+            bloqueado = True
+
+        # 🔸 2. Mas ainda aplicamos o bloqueio sequencial normal
+        if i > 0:
+            modulo_anterior = modulos_progresso[i-1]
+            if modulo_anterior["concluido"]:
+                bloqueado = False
+
+        # 🔸 3. Caso o módulo tenha id menor ou igual ao módulo inicial, ele fica desbloqueado
+        if modulo.id <= modulo_inicial:
+            bloqueado = False
+
+        # Adiciona ao progresso
+        modulos_progresso.append({
+            "id": modulo.id,
+            "nome": modulo.nome,
+            "descricao": modulo.descricao,
+            "tarefas_feitas": tarefas_feitas,
+            "tarefas_totais": tarefas_totais,
+            "progresso": round((tarefas_feitas / tarefas_totais * 100),2) if tarefas_totais > 0 else 0,
+            "concluido": concluido,
+            "bloqueado": bloqueado
+        })
+            # 🔹 Agora os módulos + progresso (com bloqueio sequencial)
+    """
     for i, modulo in enumerate(modulos):
         # Total de tarefas do módulo
         tarefas = Tarefa.query.filter_by(id_modulo=modulo.id).all()
@@ -652,9 +711,7 @@ def starting_page():
             "progresso": round((tarefas_feitas / tarefas_totais * 100),2) if tarefas_totais > 0 else 0,
             "concluido": concluido,
             "bloqueado": bloqueado
-        })
-
-        
+        })"""
     
     # Pega o horário atual em UTC, com timezone explícito
     agora = datetime.now().weekday()
@@ -681,6 +738,7 @@ def starting_page():
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 
 # 🏆 Página de Quando Inicia o Sistema
@@ -691,14 +749,13 @@ def presentation_page():
 @app.route("/pre-entrada")
 @login_required
 def pre_entrada():
-    musicas_usuario = MusicasUsuario.query.filter_by(id_usuario=current_user.id).first()
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
     return render_template(
         "preentrada.html",
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
-        musicas_usuario=musicas_usuario)
+        volume_musica=conf.volume_musica,)
 
 @app.route("/perfil")
 @login_required
@@ -779,6 +836,7 @@ def perfil_page():
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 @app.route("/modulo_<int:id_modulo>")
 @login_required
@@ -884,12 +942,12 @@ def ver_modulo(id_modulo):
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 
 @app.route("/introducao")
 @login_required
 def intro_page():
-    musicas_usuario = MusicasUsuario.query.filter_by(id_usuario=current_user.id).first()
     if current_user.ja_passou_intro:
         return redirect(url_for("starting_page"))
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
@@ -897,7 +955,8 @@ def intro_page():
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
-        musicas_usuario=musicas_usuario)
+        volume_musica=conf.volume_musica,
+        )
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
@@ -1000,6 +1059,7 @@ def quiz_page():
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 
 @app.route("/loja")
@@ -1090,6 +1150,7 @@ def store_page():
         sons_ativos=conf.sons,
         musica_ativa = conf.musica,
         musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,
     )
 
 @app.route("/comprar_poder", methods=["POST"])
@@ -1205,6 +1266,8 @@ def salvar_config():
         conf.sons = bool(data["sons"])
     if "musica" in data:
         conf.musica = bool(data["musica"])
+    if "volume" in data:
+        conf.volume_musica = int(data["volume"])
 
     db.session.commit()
     return jsonify({"success": True})
@@ -1563,7 +1626,8 @@ def licao_falha(numero_tarefa, id_modulo):
     ).first_or_404()
 
     return render_template("falha.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
-        musica_tocada=conf.musica_tocada,)
+        musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,)
 
 @app.route("/licao_sucesso/<int:numero_tarefa>/<int:id_modulo>")
 @login_required
@@ -1576,7 +1640,8 @@ def licao_sucesso(numero_tarefa, id_modulo):
     ).first_or_404()
 
     return render_template("sucesso.html", tarefa=tarefa, id_modulo=id_modulo, tema = conf.tema, sons_ativos=conf.sons, musica_ativa = conf.musica,
-        musica_tocada=conf.musica_tocada,)
+        musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,)
 
 reset_codes = {}
 
@@ -1846,6 +1911,25 @@ def atualizar_musica_tocada():
     db.session.commit()
 
     return jsonify({"sucesso": True})
+
+@app.route("/salvar_modulo_inicial", methods=["POST"])
+@login_required
+def salvar_modulo_inicial():
+    data = request.get_json()
+    acertos = data.get("acertos", 0)
+
+    # Define o módulo inicial de acordo com o desempenho
+    if acertos <= 4:
+        modulo = 1
+    elif acertos <= 8:
+        modulo = 2
+    else:
+        modulo = 3
+
+    current_user.moduloinicial = modulo
+    db.session.commit()
+
+    return jsonify({"status": "ok", "moduloinicial": modulo})
     
     
 if __name__ == "__main__":

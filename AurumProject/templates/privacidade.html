@@ -127,6 +127,7 @@
     <script>
   // Valor dinâmico vindo do backend
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+  const volumeMusicaBanco = {{ volume_musica }}
   if (MUSICA_ATIVA){ const musicadasessao = {{ musica_tocada |  default([]) | tojson }};}
 </script>
 <script src="{{ url_for('static', filename='js/musics.js') }}"></script>

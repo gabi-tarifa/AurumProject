@@ -22,6 +22,7 @@ class Usuario(db.Model, UserMixin):
     entrada = db.Column(db.Date)
     vitorias = db.Column(db.Integer, nullable=False, default=0)
     vitorias_consecutivas = db.Column(db.Integer, nullable=False, default=0)
+    moduloinicial = db.Column(db.Integer, nullable=False, default=1)
 
     def to_dict(self):
         return {
@@ -37,7 +38,8 @@ class Usuario(db.Model, UserMixin):
             "idioma": self.idioma,
             "entrada": self.entrada,
             "vitorias": self.vitorias,
-            "vitorias_consecutivas": self.vitorias_consecutivas
+            "vitorias_consecutivas": self.vitorias_consecutivas,
+            "moduloinicial": self.moduloinicial
         }
 
 
@@ -287,6 +289,8 @@ class Configuracoes(db.Model):
     tema = db.Column(db.String(6), nullable=False, default="esc")
 
     musica_tocada = db.Column(db.Text, nullable=False, default="/static/sounds/music/taswell.mp3")
+
+    volume_musica = db.Column(db.Integer, nullable=False, default=70)
 
 class Amizade(db.Model):
     __tablename__ = "Amizade"

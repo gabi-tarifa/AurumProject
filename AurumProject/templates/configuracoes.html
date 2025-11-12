@@ -27,6 +27,16 @@
                 <label for="music">{{ _('Música de fundo') }}</label>
                 <input type="checkbox" id="music" {% if musica %} checked {% endif %}>
             </div>
+            <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}" id = "volume-musica">
+              <label for="volume-musica">Volume</label>
+              <input 
+                type="range" 
+                id="range_musica" 
+                min="0" 
+                max="100" 
+                value="{{ volume_musica }}" 
+              >
+            </div>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
     <label for="musica">{{ _('Músicas') }}</label>
     <select {%if tema_atual == 'cla'%} class="claro" {%endif%} id="musica">
@@ -172,6 +182,7 @@
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
   const musicasUsuario = {{ musicas_usuario | tojson | safe }};
   const musicadasessao = {{ musica_tocada | tojson }};
+  const volumeMusicaBanco = {{ volume_musica }}
   
 </script>
     <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>

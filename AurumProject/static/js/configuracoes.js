@@ -175,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sons = document.getElementById("sound");
     const musica = document.getElementById("music");
     const idioma = document.getElementById("idioma");
+    const volume = document.getElementById("range_musica")
 
     function salvarConfig() {
         fetch("/api/config", {
@@ -183,7 +184,8 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify({
                 sons: sons.checked,
                 musica: musica.checked,
-                idioma: idioma.value
+                idioma: idioma.value,
+                volume: volume.value
             })
         });
     }
@@ -191,7 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
     sons.addEventListener("change", salvarConfig);musica.addEventListener("change", (e) => {
     salvarConfig();
     alternarMusica(e.target.checked); // ativa/desativa instantaneamente
-});
+    // // Atualiza o volume ao mover o range
+    });
+    volume.addEventListener("input", () => {
+      salvarConfig();
+    });
     idioma.addEventListener("change", salvarConfig);
     document.getElementById("sound").addEventListener("change", (e) => {
     if (e.target.checked) {
@@ -328,3 +334,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   atualizarVisibilidadeBotao();
 });
+
+// Elemento do controle da música (ícone, nome, etc.)
+const volumeMusica = document.getElementById("volume-musica");
+
+// Checkbox de ativar/desativar música
+const checkboxMusica = document.getElementById("music");
+
+// Quando a página carregar, define o estado inicial
+window.addEventListener("DOMContentLoaded", () => {
+  if (window.MUSICA_ATIVA) {
+    volumeMusica.classList.remove("oculto");
+  } else {
+    volumeMusica.classList.add("oculto");
+  }
+});
+
+// Monitora o clique no checkbox para atualizar dinamicamente
+checkboxMusica.addEventListener("change", () => {
+  if (checkboxMusica.checked) {
+    volumeMusica.classList.remove("oculto");
+  } else {
+    volumeMusica.classList.add("oculto");
+  }
+});
+

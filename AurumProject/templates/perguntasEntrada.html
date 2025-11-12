@@ -214,9 +214,16 @@ respostasCorretas: [2,1,2,3,1,2,2,2,3,3,2,2],
                         }
                     });
                     sessionStorage.setItem('acertos', acertos);
-                    window.location.href = "/pre-entrada";
+                    fetch("/salvar_modulo_inicial", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ acertos })
+                    }).then(() => {
+                        window.location.href = "/pre-entrada";
+                    });
                 }
-                    document.getElementById("progessaoPerguntas").textContent = perguntasRespondidas + "/" + totalPerguntas + "respondidas"; 
+                    document.getElementById("progessaoPerguntas").textContent = perguntasRespondidas + "/" + totalPerguntas + "respondidas";
+                    inicializarSons(); 
                 },getOptionDescription(value) {
                     const perguntaIndex = this.i_pergunta_atual;
                     const respostas = this.respostas[perguntaIndex].desc_respostas;
@@ -239,11 +246,29 @@ respostasCorretas: [2,1,2,3,1,2,2,2,3,3,2,2],
   window.SONS_ATIVOS = localStorage.getItem('sons_ativos') == 'true';
   // Valor dinâmico vindo do backend
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
-  const musicasUsuario = {{ musicas_usuario | tojson | safe }};
   const musicadasessao = {{ musica_tocada | tojson }};
+  const volumeMusicaBanco = {{ volume_musica if volume_musica else 0  }}
   
 </script>
     <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
     <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+    <script>
+        // 🔁 Eventos globais — funcionam mesmo com DOM dinâmico (Vue, etc)
+document.addEventListener("click", (e) => {
+  if (window.SONS_ATIVOS != true && window.SONS_ATIVOS != 'true') return;
+  const target = e.target;
+  if (target.matches("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1, div.etapa.concluida, div.etapa.desbloquada")) {
+    tocarSom("click");
+  }
+});
+
+document.addEventListener("mouseenter", (e) => {
+  if (window.SONS_ATIVOS != true && window.SONS_ATIVOS != 'true') return;
+  const target = e.target;
+  if (target.matches("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1, div.etapa.concluida, div.etapa.desbloquada")) {
+    tocarSom("hover");
+  }
+}, true); // 'true' garante captura mesmo com bubbling interrompido
+    </script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 </head>
 <body {%if tema == 'cla'%} class="claro" {%endif%}>
   <div class="container">
-    <div class="card sucesso {%if tema == 'cla'%} claro {%endif%}>"
+    <div class="card sucesso {%if tema == 'cla'%} claro {%endif%}">
       <h1>{{ _('Parabéns! ') }}</h1>
       <p>{{ _('Você concluiu com sucesso a lição ') }}<strong>{{ tarefa.numero_tarefa if tarefa.numero_tarefa else "{{ _('atual') }}" }}</strong>.</p>
       <p>{{ _('Continue avançando para desbloquear mais conquistas!') }}</p>
@@ -41,6 +41,7 @@
   // Valor dinâmico vindo do backend
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
   const musicadasessao = {{ musica_tocada | tojson }};
+  const volumeMusicaBanco = {{ volume_musica }}
 </script>
 <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
 

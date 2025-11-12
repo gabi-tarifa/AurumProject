@@ -31,7 +31,7 @@ function iniciarMusicaFundo(caminho) {
   // Cria o player de áudio
   musicaFundo = new Audio(caminho);
   musicaFundo.loop = true;
-  musicaFundo.volume = 0.7;
+  musicaFundo.volume = volumeMusicaBanco/100;
 
   // retoma o tempo salvo
   const tempoSalvo = parseFloat(localStorage.getItem("tempo_musica"));
@@ -79,3 +79,15 @@ function alternarMusica(ativar) {
 function retomarMusica(){
   musicaFundo.play().catch(() => {});
 }
+
+const rangeVolume = document.getElementById("range_musica");
+
+// Define volume inicial baseado no banco (valor já embutido via Jinja)
+rangeVolume.value = volumeMusicaBanco; 
+
+// Atualiza o volume ao mover o range
+rangeVolume.addEventListener("input", () => {
+  if (musicaFundo) {
+    musicaFundo.volume = rangeVolume.value / 100;
+  }
+});

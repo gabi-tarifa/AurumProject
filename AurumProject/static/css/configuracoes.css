@@ -108,6 +108,13 @@ main {
     transform: scale(1.2);
 }
 
+.config-item input[type="range"]{
+  width: 10%;
+  cursor: pointer;
+  color: goldenrod
+  
+}
+
 .config-item button {
     padding: 8px 12px;
     border: none;
@@ -349,6 +356,10 @@ input[type="checkbox"] {
 }
 .btn-cancelar:hover {
   background-color: #666;
+}
+
+.oculto {
+  display: none;
 }
 
 @keyframes fadeIn {
