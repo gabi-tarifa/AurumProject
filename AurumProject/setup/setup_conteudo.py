@@ -79,7 +79,7 @@ def criar_conteudo():
 
             # M2 - Avaliação Final — Módulo 2"
             {"numero_tarefa": 6, "id_modulo": 2, "tipo": "quiz", "pergunta": "lesson_2_6_q1", "alternativas": "lesson_2_6_q1_a1||lesson_2_6_q1_a2||lesson_2_6_q1_a3||lesson_2_6_q1_a4", "correta": 1},
-            {"numero_tarefa": 6, "id_modulo": 2, "tipo": "quiz", "pergunta": "lesson_2_6_q2", "alternativas": "lesson_2_6_q2_a1||lesson_2_6_q2_a2||lesson_2_6_q2_a3||lesson_2_6_q2_a4", "correta": 1},
+            {"numero_tarefa": 6, "id_modulo": 2, "tipo": "quiz", "pergunta": "lesson_2_6_q2", "alternativas": "lesson_2_6_q2_a1||lesson_2_6_q2_a2||lesson_2_6_q2_a3||lesson_2_6_q2_a4", "correta": 2},
             {"numero_tarefa": 6, "id_modulo": 2, "tipo": "quiz", "pergunta": "lesson_2_6_q3", "alternativas": "lesson_2_6_q3_a1||lesson_2_6_q3_a2||lesson_2_6_q3_a3||lesson_2_6_q3_a4", "correta": 2},
             {"numero_tarefa": 6, "id_modulo": 2, "tipo": "quiz", "pergunta": "lesson_2_6_q4", "alternativas": "lesson_2_6_q4_a1||lesson_2_6_q4_a2||lesson_2_6_q4_a3||lesson_2_6_q4_a4", "correta": 2},
             {"numero_tarefa": 6, "id_modulo": 2, "tipo": "quiz", "pergunta": "lesson_2_6_q5", "alternativas": "lesson_2_6_q5_a1||lesson_2_6_q5_a2||lesson_2_6_q5_a3||lesson_2_6_q5_a4", "correta": 2},
@@ -101,7 +101,7 @@ def criar_conteudo():
             {"numero_tarefa": 2, "id_modulo": 3, "tipo": "texto", "conteudo": "lesson_3_2_text"},
             {"numero_tarefa": 2, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_2_q1", "alternativas": "lesson_3_2_q1_a1||lesson_3_2_q1_a2||lesson_3_2_q1_a3||lesson_3_2_q1_a4", "correta": 2},
             {"numero_tarefa": 2, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_2_q2", "alternativas": "lesson_3_2_q2_a1||lesson_3_2_q2_a2||lesson_3_2_q2_a3||lesson_3_2_q2_a4", "correta": 2},
-            {"numero_tarefa": 2, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_2_q3", "alternativas": "lesson_3_2_q3_a1||lesson_3_2_q3_a2||lesson_3_2_q3_a3||lesson_3_2_q3_a4", "correta": 1},
+            {"numero_tarefa": 2, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_2_q3", "alternativas": "lesson_3_2_q3_a1||lesson_3_2_q3_a2||lesson_3_2_q3_a3||lesson_3_2_q3_a4", "correta": 2},
             {"numero_tarefa": 2, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_2_q4", "alternativas": "lesson_3_2_q4_a1||lesson_3_2_q4_a2||lesson_3_2_q4_a3||lesson_3_2_q4_a4", "correta": 1},
             {"numero_tarefa": 2, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_2_q5", "alternativas": "lesson_3_2_q5_a1||lesson_3_2_q5_a2||lesson_3_2_q5_a3||lesson_3_2_q5_a4", "correta": 2},
 
@@ -125,7 +125,7 @@ def criar_conteudo():
             {"numero_tarefa": 5, "id_modulo": 3, "tipo": "texto", "conteudo": "lesson_3_5_text"},
             {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q1", "alternativas": "lesson_3_5_q1_a1||lesson_3_5_q1_a2||lesson_3_5_q1_a3||lesson_3_5_q1_a4", "correta": 2},
             {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q2", "alternativas": "lesson_3_5_q2_a1||lesson_3_5_q2_a2||lesson_3_5_q2_a3||lesson_3_5_q2_a4", "correta": 2},
-            {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q3", "alternativas": "lesson_3_5_q3_a1||lesson_3_5_q3_a2||lesson_3_5_q3_a3||lesson_3_5_q3_a4", "correta": 1},
+            {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q3", "alternativas": "lesson_3_5_q3_a1||lesson_3_5_q3_a2||lesson_3_5_q3_a3||lesson_3_5_q3_a4", "correta": 3},
             {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q4", "alternativas": "lesson_3_5_q4_a1||lesson_3_5_q4_a2||lesson_3_5_q4_a3||lesson_3_5_q4_a4", "correta": 2},
             {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q5", "alternativas": "lesson_3_5_q5_a1||lesson_3_5_q5_a2||lesson_3_5_q5_a3||lesson_3_5_q5_a4", "correta": 1},
 
@@ -136,7 +136,7 @@ def criar_conteudo():
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q3", "alternativas": "lesson_3_6_q3_a1||lesson_3_6_q3_a2||lesson_3_6_q3_a3||lesson_3_6_q3_a4", "correta": 3},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q4", "alternativas": "lesson_3_6_q4_a1||lesson_3_6_q4_a2||lesson_3_6_q4_a3||lesson_3_6_q4_a4", "correta": 2},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q5", "alternativas": "lesson_3_6_q5_a1||lesson_3_6_q5_a2||lesson_3_6_q5_a3||lesson_3_6_q5_a4", "correta": 3},
-            {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q6", "alternativas": "lesson_3_6_q6_a1||lesson_3_6_q6_a2||lesson_3_6_q6_a3||lesson_3_6_q6_a4", "correta": 3},
+            {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q6", "alternativas": "lesson_3_6_q6_a1||lesson_3_6_q6_a2||lesson_3_6_q6_a3||lesson_3_6_q6_a4", "correta": 2},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q7", "alternativas": "lesson_3_6_q7_a1||lesson_3_6_q7_a2||lesson_3_6_q7_a3||lesson_3_6_q7_a4", "correta": 3},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q8", "alternativas": "lesson_3_6_q8_a1||lesson_3_6_q8_a2||lesson_3_6_q8_a3||lesson_3_6_q8_a4", "correta": 1},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q9", "alternativas": "lesson_3_6_q9_a1||lesson_3_6_q9_a2||lesson_3_6_q9_a3||lesson_3_6_q9_a4", "correta": 2},
