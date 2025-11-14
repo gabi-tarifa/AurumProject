@@ -6,7 +6,8 @@ def criar_modulos():
 
         modulos_novos = [
             {"nome": "modulo_intro_nome", "descricao":"modulo_intro_desc"},
-            {"nome": "modulo_pri_passos_nome", "descricao":"modulo_pri_passos_desc"}
+            {"nome": "modulo_pri_passos_nome", "descricao":"modulo_pri_passos_desc"},
+            {"nome":"modulo_compreendendo_nome", "descricao":"modulo_compreendendo_desc"},
         ]
 
         for modulo in modulos_novos:

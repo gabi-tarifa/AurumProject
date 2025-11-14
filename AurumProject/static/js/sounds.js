@@ -20,7 +20,7 @@ function tocarSom(tipo) {
 
 // 🔁 Função isolada para aplicar os eventos sonoros
 function inicializarSons() {
-  document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1, div.etapa.concluida, div.etapa.desbloquada")
+  document.querySelectorAll("button, a, input[type='submit'], select, option, input[type='checkbox'], div#openMais, div.ranking-header h1, div.etapa.concluida, div.etapa.desbloquada, button#btn-avancar, button#btn-voltar")
     .forEach(el => {
       el.removeEventListener("click", handleClick);
       el.removeEventListener("mouseenter", handleHover);

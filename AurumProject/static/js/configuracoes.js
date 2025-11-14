@@ -218,6 +218,9 @@ document.addEventListener("DOMContentLoaded", () => {
     opt.value = caminho;
     opt.textContent = nome.charAt(0).toUpperCase() + nome.slice(1);
     opt.dataset.tipo = "sistema";
+    if (tema == "cla") {
+      opt.classList.add("claro");
+    }
     lista.appendChild(opt);
   }
 
@@ -228,6 +231,9 @@ document.addEventListener("DOMContentLoaded", () => {
       opt.value = musica.caminho;
       opt.textContent = `${musica.nome}`;
       opt.dataset.tipo = "usuario";
+    if (tema == "cla") {
+      opt.classList.add("claro");
+    }
       lista.appendChild(opt);
     }
   }
@@ -235,6 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const add = document.createElement("option");
   add.value = "adicionar";
   add.textContent = '+ Adicionar nova música:';
+  if (tema == "cla") {
+    add.classList.add("claro");
+  }
   lista.appendChild(add);
 
   const ultimaMusica = musicaSession;

@@ -34,7 +34,8 @@
                 id="range_musica" 
                 min="0" 
                 max="100" 
-                value="{{ volume_musica }}" 
+                value="{{ volume_musica }}"
+                class="range-dourado" 
               >
             </div>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
@@ -60,13 +61,13 @@
     <form action="{{ url_for('upload_musica') }}" enctype="multipart/form-data" method="post">
   <h3>Adicionar Música</h3>
   <label for="nomemusica">Nome:</label>
-  <input type="text" name="nomemusica" placeholder="Nome da música" required><br><br>
+  <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="text" name="nomemusica" placeholder="Nome da música" required><br><br>
   
   <label for="arquivo">Arquivo:</label>
-  <input type="file" name="arquivo" accept=".mp3, .wav" required><br><br>
+  <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="file" name="arquivo" accept=".mp3, .wav" required><br><br>
   <div class="botoes">
-  <button id="salvarMusicaUser" type="submit" class="selecionar">Adicionar</button>
-  <button id="cancelarMusicaUser" type="button" class="selecionar", onclick="fecharDiv('painel-musica')">Cancelar</button>
+  <button id="salvarMusicaUser" type="submit" class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}">Adicionar</button>
+  <button id="cancelarMusicaUser" type="button" class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}", onclick="fecharDiv('painel-musica')">Cancelar</button>
 </div>
 </form>
 </div>
@@ -95,11 +96,11 @@
         <form onsubmit="salvarApelido(); return false;">
             <h2>{{ _('Alterar Apelido') }}</h2>
             <label for="novo-apelido">{{ _('Novo Apelido:') }}</label>
-            <input type="text" id="novo-apelido" name="novo-apelido" placeholder="{{ _('Digite o novo apelido') }}" value="{{ usuario.nome }}" required>
+            <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="text" id="novo-apelido" name="novo-apelido" placeholder="{{ _('Digite o novo apelido') }}" value="{{ usuario.nome }}" required>
             
             <div class="botoes">
-                <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
-                <button class="selecionar" type="button" onclick="fecharDiv('painel-apelido')">{{ _('Cancelar') }}</button>
+                <button class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}" type="submit">{{ _('Salvar') }}</button>
+                <button class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}" type="button" onclick="fecharDiv('painel-apelido')">{{ _('Cancelar') }}</button>
             </div>
         </form>
     </div>
@@ -112,11 +113,11 @@
         <form onsubmit="salvarEmail(); return false;">
             <h2>{{ _('Alterar Email') }}</h2>
             <label for="novo-email">{{ _('Novo Email:') }}</label>
-            <input type="email" id="novo-email" name="novo-email" placeholder="{{ _('Digite o novo email') }}" value="{{ usuario.email }}" required>
+            <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="email" id="novo-email" name="novo-email" placeholder="{{ _('Digite o novo email') }}" value="{{ usuario.email }}" required>
             
             <div class="botoes">
-                <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
-                <button class="selecionar" type="button" onclick="fecharDiv('painel-email')">{{ _('Cancelar') }}</button>
+                <button class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}" type="submit">{{ _('Salvar') }}</button>
+                <button class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}" type="button" onclick="fecharDiv('painel-email')">{{ _('Cancelar') }}</button>
             </div>
         </form>
     </div>
@@ -129,19 +130,19 @@
         <form onsubmit="salvarSenha(); return false;">
             <h2>{{ _('Alterar Senha') }}</h2>
             <label for="senha-atual">{{ _('Senha Atual:') }}</label>
-            <input type="password" id="senha-atual" name="senha-atual" required><br>
+            <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="password" id="senha-atual" name="senha-atual" required><br>
 
             <label for="nova-senha">{{ _('Nova Senha:') }}</label>
-            <input type="password" id="nova-senha" name="nova-senha" required><br>
+            <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="password" id="nova-senha" name="nova-senha" required><br>
 
             <label for="confirmar-senha">{{ _('Confirmar Nova Senha:') }}</label>
-            <input type="password" id="confirmar-senha" name="confirmar-senha" required>
+            <input {%if tema_atual == 'cla'%} class="claro" {%endif%} type="password" id="confirmar-senha" name="confirmar-senha" required>
             
             <span id="textoerro" class="textoerro"></span><br>
             
             <div class="botoes">
-                <button class="selecionar" type="submit">{{ _('Salvar') }}</button>
-                <button class="selecionar" type="button" onclick="fecharDiv('painel-senha')">{{ _('Cancelar') }}</button>
+                <button class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}" type="submit">{{ _('Salvar') }}</button>
+                <button class="selecionar {%if tema_atual == 'cla'%} claro {%endif%}" type="button" onclick="fecharDiv('painel-senha')">{{ _('Cancelar') }}</button>
             </div>
         </form>
     </div>
@@ -151,7 +152,7 @@
             <h2>{{ _('Aplicativo') }}</h2>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label>{{ _('Versão do App') }}</label>
-                <span>0.3.3.1.1 Beta</span>
+                <span>0.5 Beta</span>
             </div>
             <div class="config-item {%if tema_atual == 'cla'%} claro {%endif%}">
                 <label>{{ _('Redefinir configurações') }}</label>
@@ -183,6 +184,7 @@
   const musicasUsuario = {{ musicas_usuario | tojson | safe }};
   const musicadasessao = {{ musica_tocada | tojson }};
   const volumeMusicaBanco = {{ volume_musica }}
+  const tema = "{{ tema_atual }}"
   
 </script>
     <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>

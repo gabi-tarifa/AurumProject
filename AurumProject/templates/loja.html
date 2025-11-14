@@ -16,31 +16,31 @@
       <a href="{{ url_for('starting_page') }}">
         <div class="menu-item">
           <img src="{{ url_for('static', filename='img/open-book.png') }}" class="icon" alt="Aprender" />
-          <span style="color: white;">{{ _('Aprender') }}</span>
+          <span>{{ _('Aprender') }}</span>
         </div>
       </a>
       <a href="{{ url_for('quiz_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//working-hours.png') }}" class="icon" alt="Quiz" />
-        <span style="color: white;">{{ _('Quiz') }}</span>
+        <span>{{ _('Quiz') }}</span>
       </div>
       </a>
       <a href="{{ url_for('ranking_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//trophy.png') }}" class="icon" alt="Ranking" />
-        <span style="color: white;">{{ _('Ranking') }}</span>
+        <span>{{ _('Ranking') }}</span>
       </div>
       </a>
       <a href="{{ url_for('perfil_page') }}">
       <div class="menu-item">
         <img src="{{ url_for('static', filename='img//profile.png') }}" class="icon" alt="Perfil" />
-        <span style="color: white;">{{ _('Perfil') }}</span>
+        <span>{{ _('Perfil') }}</span>
       </div>
       </a>
       <a href="{{ url_for('store_page') }}">
-      <div class="menu-item active">
+      <div class="menu-item active {%if tema == 'cla'%} claro {%endif%}">
         <img src="{{ url_for('static', filename='img//store.png') }}" class="icon" alt="Loja" />
-        <span style="color: white;">{{ _('Loja') }}</span>
+        <span>{{ _('Loja') }}</span>
       </div>
       </a>
       <div class="menu-item" id="openMais">
@@ -67,7 +67,7 @@
 <br>
 
   {% for poder in poderes %}
-    <div class="poder">
+    <div class="poder {%if tema == 'cla'%} claro {%endif%}">
       <img class="icon" src="{{ url_for('static', filename=poder.imagem) }}" alt="{{ poder.nome }}">
       <div class="poder-info">
         <h4>{{ _(poder.nome) }}</h4>
@@ -76,7 +76,7 @@
       </div>
       <form action="/comprar_poder" method="POST">
         <input type="hidden" name="id_poder" value="{{ poder.id_poder }}">
-        <button type="submit" class="poder-custo">
+        <button type="submit" class="poder-custo {%if tema == 'cla'%} claro {%endif%}">
           {{ poder.preco }}<img class="icon" src="{{ url_for('static', filename='img/stack-of-coins.png') }}" alt="{{ _('Aurum Points') }}">
         </button>
       </form>
@@ -89,12 +89,12 @@
      </main>
     <!-- PAINEL LATERAL DIREITO -->
     <aside class="info-box">
-      <div class="info">
+      <div class="info {%if tema == 'cla'%} claro {%endif%}">
         <span class="golden">{{ coins }}</span>
         <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
       </div>
 
-      <div class="info">
+      <div class="info {%if tema == 'cla'%} claro {%endif%}">
           <img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon">
           <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
           <span class="darkgolden">
@@ -103,7 +103,7 @@
       </div>
 
 
-      <div class="info">
+      <div class="info {%if tema == 'cla'%} claro {%endif%}">
         <img src="{{ url_for('static', filename='img//award.png') }}" alt="Trofeu" class="icon">
           <span class="golden">
             {{ ofensiva.recorde }}
@@ -111,18 +111,18 @@
         <span class="darkgolden">{{_('Recorde') }}</span>
       </div>
 
-      <div class="info">
+      <div class="info {%if tema == 'cla'%} claro {%endif%}">
         <span class="golden">{{ pontos }}</span> <br>
         <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
       </div>
 
-      <div class="info">
+      <div class="info {%if tema == 'cla'%} claro {%endif%}">
         <span class="golden">#{{ posicao_ranking }}</span> <br>
         <span class="darkgolden">{{ _('Posição no Ranking') }}</span>
       </div>
 
-      <div class="info">
-  <span style="color: goldenrod;">{{_('Registro Semanal')}}</span>
+      <div class="info {%if tema == 'cla'%} claro {%endif%}">
+  <span>{{_('Registro Semanal')}}</span>
   <div class="registro-semanal">
     {% for concluido in ofensiva.dias_semana %}
       {% set index = loop.index0 %}
@@ -147,7 +147,7 @@
   {% endif %}
 </div>
       
-<div class="info">
+<div class="info {%if tema == 'cla'%} claro {%endif%}">
         <span class="golden" style="font-size: large;">Top 5:</span>
         <ul class="top5-list">
           {% for usuario in top5_bloco %}
@@ -205,7 +205,6 @@
           exibirConquistaPopup(c, delayTotal);
           delayTotal += duracao + 200; // adiciona pequena pausa entre popups
         });
-        fetch("/limpar_popup_conquista");
       }, 1000); // leve atraso pra garantir inicialização
     {% endif %}
   });

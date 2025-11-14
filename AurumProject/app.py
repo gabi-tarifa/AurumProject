@@ -1505,9 +1505,20 @@ def desbloquear_conquista(id_usuario, conquista):
 
     return conquista_dict
 
-@app.route('/limpar_popup_conquista')
-def limpar_popup_conquista():
-    session.pop('popup_conquistas', None)
+@app.route('/limpar_popup_conquista_individual/<int:id_conquista>')
+def limpar_popup_conquista_individual(id_conquista):
+    conquistas = session.get('popup_conquistas')
+
+    if conquistas:
+        # Remove apenas a conquista correspondente
+        conquistas = [c for c in conquistas if c.get("id_conquista") != id_conquista]
+
+        # Atualiza a lista na sessão
+        if conquistas:
+            session['popup_conquistas'] = conquistas
+        else:
+            session.pop('popup_conquistas', None)
+
     return '', 204
 
 def salvar_usuario(nome):

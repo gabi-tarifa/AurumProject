@@ -7,8 +7,8 @@ body {
 body.claro {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #0038d3;
-    color: #fff;
+    background-color: #d8f7fc;
+    color: #2c2c2c;
 }
 
 header {
@@ -23,9 +23,14 @@ header.claro {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #3c55a0;
+    background-color: #68e8ff;
     padding: 10px 20px;
-    border-bottom: 2px solid #958944;
+    border-bottom: 2px solid #292929;
+}
+
+/* Chrome, Edge, Safari */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 a {
@@ -41,6 +46,11 @@ header h1 {
     margin: 0;
     color: #c7af28;
 }
+header.claro h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #393939;
+}
 
 header button, header a {
     background: none;
@@ -49,11 +59,11 @@ header button, header a {
     color: #c7af28;
     font-size: 1.2rem;
 }
-header.claro button {
+header.claro button, header.claro a  {
     background: none;
     border: none;
     cursor: pointer;
-    color: #8f854e;
+    color: #393939;
     font-size: 1.2rem;
 }
 
@@ -69,16 +79,21 @@ main {
     border: 1px solid #1a2647;
 }
 .config-section.claro {
-    background-color: #001e69;
+    background-color: #62d5e8;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-    border: 1px solid #304a93;
+    border: 1px solid #242424;
+    color: #393939;
 }
 
 .config-section h2 {
     margin-top: 0;
     color: #c7af28;
+}
+.config-section.claro h2 {
+    margin-top: 0;
+    color: #3a3a3a;
 }
 
 .config-item {
@@ -93,7 +108,7 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #001f73;
+    border-bottom: 1px solid #393939;
 }
 
 .config-item:last-child {
@@ -128,8 +143,8 @@ main {
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
-    background-color: #625e49;
-    color: #0c37ad;
+    background-color: #f9d834;
+    color: #292929;
     cursor: pointer;
     font-weight: bold;
 }
@@ -168,7 +183,8 @@ main {
   transform: translate(-50%, -50%);
 }
 .painel-edicao.claro form {
-  background: #37609d;
+  border: 1px solid #0f0f0f;
+  background-color: #62d5e8;
   border-radius: 12px;
   width: 45%;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
@@ -191,7 +207,7 @@ main {
   margin-top: 0;
 }
 
-input {
+input[type="password"], input[type="text"],input[type="email"] ,input[type="file"] {
   background-color: #273a64;
   color: whitesmoke;
   border: 1px solid #ccc;
@@ -208,9 +224,35 @@ input {
   cursor: pointer;
 }
 
-input:-webkit-autofill {
+input[type="password"]:-webkit-autofill,input[type="text"]:-webkit-autofill,
+input[type="email"]:-webkit-autofill,input[type="file"]:-webkit-autofill{
   -webkit-box-shadow: 0 0 0 1000px #273a64 inset !important; /* cor de fundo */
   -webkit-text-fill-color: whitesmoke !important; /* cor do texto */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="password"].claro, input[type="text"].claro,input[type="email"].claro,input[type="file"].claro {
+  background-color: #73eaff;
+  color: #282828;
+  border: 1px solid #393939;
+  padding: 8px;
+  border-radius: 25px;
+}
+
+.selecionar.claro{
+  background-color: #58bed0;
+  border-radius: 25px;
+  color: #393939;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #0f0f0f;
+}
+
+input[type="password"].claro:-webkit-autofill,input[type="text"].claro:-webkit-autofill,
+input[type="email"].claro:-webkit-autofill,input[type="file"].claro:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 1000px #73eaff inset !important; /* cor de fundo */
+  -webkit-text-fill-color: #282828 !important; /* cor do texto */
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -237,12 +279,12 @@ select.claro {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: #250755;
-    border: 1px solid #1a2647;
+  border: 1px solid #0f0f0f;
+  background-color: #66e8ff;
     border-radius: 8px;
     padding: 10px 40px 10px 15px;
     font-size: 1rem;
-    color: #c7af28;
+    color: #393939;
     cursor: pointer;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -265,6 +307,12 @@ select:focus {
     border-color: #c7af28;
     box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
 }
+/* Foco */
+select.claro:focus {
+    outline: none;
+    border-color: #232323;
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
 
 /* Opções */
 option {
@@ -272,8 +320,9 @@ option {
     color: #c7af28;
 }
 option.claro {
-    background-color: #263459;
-    color: #726d4f;
+    border: 1px solid #0f0f0f;
+    background-color: #68e8ff;
+    color: #393939;
 }
 
 input[type="checkbox"] {
@@ -316,8 +365,9 @@ input[type="checkbox"] {
 }
 
 .modal-conteudo.claro {
-  background: #01499b;
-  color: white;
+  border: 1px solid #0f0f0f;
+  background-color: #68e8ff;
+  color: #393939;
   border-radius: 12px;
   padding: 20px 30px;
   text-align: center;
@@ -358,13 +408,61 @@ input[type="checkbox"] {
   background-color: #666;
 }
 
-.oculto {
-  display: none;
-}
 
 @keyframes fadeIn {
   from { opacity: 0; } to { opacity: 1; }
 }
 @keyframes scaleIn {
   from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; }
+}
+
+.range-dourado {
+  -webkit-appearance: none; /* Remove o estilo padrão (Chrome/Safari) */
+  width: 100%;
+  height: 10px; /* altura da barra */
+  border-radius: 5px;
+}
+
+/* ====== BARRA (track) ====== */
+.range-dourado::-webkit-slider-runnable-track {
+  height: 10px;
+  background: linear-gradient(to right, #ffd700, #b8860b);
+  border-radius: 5px;
+}
+
+
+/* ====== BOTÃO (thumb) ====== */
+.range-dourado::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;  /* tamanho do botão */
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #d4af37; /* contorno dourado */
+  cursor: pointer;
+  margin-top: -5px; /* centraliza o botão na barra */
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.range-dourado::-webkit-slider-thumb:hover {
+  background: #ffd700;
+  transform: scale(1.1);
+}
+
+.range-dourado::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #d4af37;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.range-dourado::-moz-range-thumb:hover {
+  background: #ffd700;
+  transform: scale(1.1);
+}
+.oculto {
+  display: none !important;
 }

@@ -18,7 +18,7 @@ body {
     padding: 20px; /* respiro extra */
 }
 body.claro {
-    background: #b9d5ff;
+    background: #d8f7fc;
     color: white;
     display: flex;
     justify-content: center;
@@ -42,8 +42,8 @@ body.claro {
 #aula-container.claro {
     width: 600px;
     margin: auto;
-    background: #254190;
-    color: white;
+    background: #62d5e8;
+    color: rgb(39, 39, 39);
     padding: 20px;
     border-radius: 20px;
 
@@ -94,6 +94,17 @@ body.claro {
     cursor: pointer;
     transition: background-color 0.5s ease, border-color 0.5s ease;
 }
+#conteudo.claro button {
+    display: block;
+    margin: 8px 0;
+    padding: 10px;
+    background: #5dc7da;
+    color: rgb(39, 39, 39);
+    border: 2px solid #4baec0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
 #conteudo button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -107,7 +118,7 @@ body.claro {
     <div id="barra-progresso"></div>
   </div>
 
-  <div id="conteudo"></div>
+  <div id="conteudo" {%if tema == 'cla'%} class="claro" {%endif%}></div>
 
   <div id="navegacao">
     <button id="btn-voltar" disabled>{{ _('Voltar') }}</button>
@@ -261,7 +272,6 @@ renderizarBloco();
           exibirConquistaPopup(c, delayTotal);
           delayTotal += duracao + 200; // adiciona pequena pausa entre popups
         });
-        fetch("/limpar_popup_conquista");
       }, 1000); // leve atraso pra garantir inicialização
     {% endif %}
   });

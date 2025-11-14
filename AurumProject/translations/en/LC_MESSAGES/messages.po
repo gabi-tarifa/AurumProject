@@ -1396,10 +1396,10 @@ msgid "lesson_2_2_q5_a1"
 msgstr "Income"
 
 msgid "lesson_2_2_q5_a2"
-msgstr "Expense"
+msgstr "Savings"
 
 msgid "lesson_2_2_q5_a3"
-msgstr "Credit"
+msgstr "Expense"
 
 msgid "lesson_2_2_q5_a4"
 msgstr "Investment"
@@ -1816,3 +1816,472 @@ msgstr "RARE achievement unlocked!"
 
 msgid "Conquista LENDÁRIA desbloqueada!!"
 msgstr "LEGENDARY achievement unlocked!!"
+
+msgid "modulo_compreendendo_nome"
+msgstr "Understanding Monetary World"
+
+msgid "modulo_compreendendo_desc"
+msgstr "Learn how compound taxes makes money (or debt) grow, what is inflation and why does it reduce buying power, and also learn how to compare taxes and plan medium term goals."
+
+msgid "mini_lesson3_1"
+msgstr "Mini-aula 1 — Compound Taxes"
+
+msgid "mini_lesson3_2"
+msgstr "Mini-aula 2 — Inflation"
+
+msgid "mini_lesson3_3"
+msgstr "Mini-aula 3 — Monthly Taxes x Annual Taxes"
+
+msgid "mini_lesson3_4"
+msgstr "Mini-aula 4 — Comparing Investments"
+
+msgid "mini_lesson3_5"
+msgstr "Mini-aula 5 — Medium Term Plans"
+
+msgid "mini_lesson3_6"
+msgstr "Final Text - Module 3"
+
+msgid "lesson_3_1_text"
+msgstr "<h3>Compound Interest</h3><p><b>Concept:</b> Compound interest is the “interest on interest”.</p><p><b>Formula:</b> M = C × (1 + i)ᵗ</p><ul><li>M = final amount</li><li>C = principal</li><li>i = interest rate</li><li>t = time</li></ul><p><b>Example:</b> If you invest R$ 1,000 at 10% per year for 2 years: M = 1000 × (1 + 0.10)² = 1000 × 1.21 = R$ 1,210.</p>"
+
+msgid "lesson_3_2_text"
+msgstr "<h3>Inflation</h3><p><b>Concept:</b> Inflation is the general increase in prices, which reduces purchasing power.</p><p><b>Example:</b> If R$ 100 buys a basket of products today, with an inflation rate of 10% per year, next year you will need R$ 110 to buy the same basket.</p>"
+
+msgid "lesson_3_3_text"
+msgstr "<h3>Monthly Rate vs Annual Rate</h3><p><b>Concept:</b> The monthly rate is applied every month, while the annual rate is applied over a year.</p><p>In compound interest, you can’t simply multiply the monthly rate by 12 to get the annual rate, since the interest accumulates each period.</p><p><b>Example:</b> 12% per year is different from 1% per month under compound interest.</p>"
+
+msgid "lesson_3_4_text"
+msgstr "<h3>Comparing Investments</h3><p><b>Concept:</b> Each investment has risk, return, and liquidity (ease of withdrawal).</p><ul><li><b>Savings Account:</b> low profitability and high security</li><li><b>Government Bonds (Tesouro Direto):</b> low risk and better returns</li><li><b>Stocks:</b> higher risk and higher potential returns</li></ul><p><b>Example:</b> R$ 1,000 in savings may yield R$ 4/month. R$ 1,000 in bonds may yield R$ 10/month.</p>"
+
+msgid "lesson_3_5_text"
+msgstr "<h3>Medium-Term Planning</h3><p><b>Concept:</b> Planning for 1 to 5 years aimed at larger goals, such as buying a car, taking an international trip, or enrolling in courses.</p><p><b>Example:</b> Goal: a R$ 12,000 trip in 3 years. Save R$ 333 per month.</p>"
+
+msgid "lesson_3_1_q1"
+msgstr "What are compound interest?"
+
+msgid "lesson_3_1_q1_a1"
+msgstr "Interest that applies only to the initial amount"
+msgid "lesson_3_1_q1_a2"
+msgstr "Interest on interest"
+msgid "lesson_3_1_q1_a3"
+msgstr "Fixed interest"
+msgid "lesson_3_1_q1_a4"
+msgstr "Simple interest"
+
+
+msgid "lesson_3_1_q2"
+msgstr "If you invest R$ 1000 at 10% per year for 2 years, the total amount is:"
+msgid "lesson_3_1_q2_a1"
+msgstr "R$ 1100"
+msgid "lesson_3_1_q2_a2"
+msgstr "R$ 1200"
+msgid "lesson_3_1_q2_a3"
+msgstr "R$ 1210"
+msgid "lesson_3_1_q2_a4"
+msgstr "R$ 1000"
+
+
+msgid "lesson_3_1_q3"
+msgstr "In compound interest, the longer the time:"
+msgid "lesson_3_1_q3_a1"
+msgstr "The smaller the growth"
+msgid "lesson_3_1_q3_a2"
+msgstr "The greater the growth"
+msgid "lesson_3_1_q3_a3"
+msgstr "Always the same"
+msgid "lesson_3_1_q3_a4"
+msgstr "No difference"
+
+
+msgid "lesson_3_1_q4"
+msgstr "Which formula represents compound interest?"
+msgid "lesson_3_1_q4_a1"
+msgstr "M = C × i × t"
+msgid "lesson_3_1_q4_a2"
+msgstr "M = C × (1 + i)ᵗ"
+msgid "lesson_3_1_q4_a3"
+msgstr "J = C × i × t"
+msgid "lesson_3_1_q4_a4"
+msgstr "M = C + i"
+
+
+msgid "lesson_3_1_q5"
+msgstr "If a debt of R$ 200 grows 10% per month, after 2 months it will be:"
+msgid "lesson_3_1_q5_a1"
+msgstr "R$ 220"
+msgid "lesson_3_1_q5_a2"
+msgstr "R$ 240"
+msgid "lesson_3_1_q5_a3"
+msgstr "R$ 242"
+msgid "lesson_3_1_q5_a4"
+msgstr "R$ 260"
+
+msgid "lesson_3_2_q1"
+msgstr "What is inflation?"
+msgid "lesson_3_2_q1_a1"
+msgstr "Increase in wages"
+msgid "lesson_3_2_q1_a2"
+msgstr "General increase in prices"
+msgid "lesson_3_2_q1_a3"
+msgstr "Decrease in prices"
+msgid "lesson_3_2_q1_a4"
+msgstr "Bank interest rates"
+
+msgid "lesson_3_2_q2"
+msgstr "What is the effect of inflation?"
+msgid "lesson_3_2_q2_a1"
+msgstr "Money buys more"
+msgid "lesson_3_2_q2_a2"
+msgstr "Money buys less"
+msgid "lesson_3_2_q2_a3"
+msgstr "Money doesn’t change"
+msgid "lesson_3_2_q2_a4"
+msgstr "Interest rates disappear"
+
+msgid "lesson_3_2_q3"
+msgstr "If inflation is 5% and a product costs R$ 200, how much will it cost next year?"
+msgid "lesson_3_2_q3_a1"
+msgstr "R$ 205"
+msgid "lesson_3_2_q3_a2"
+msgstr "R$ 210"
+msgid "lesson_3_2_q3_a3"
+msgstr "R$ 250"
+msgid "lesson_3_2_q3_a4"
+msgstr "R$ 195"
+
+msgid "lesson_3_2_q4"
+msgstr "Which sector is most affected by inflation?"
+msgid "lesson_3_2_q4_a1"
+msgstr "Prices of goods and services"
+msgid "lesson_3_2_q4_a2"
+msgstr "Only wages"
+msgid "lesson_3_2_q4_a3"
+msgstr "Only real estate"
+msgid "lesson_3_2_q4_a4"
+msgstr "Only banks"
+
+msgid "lesson_3_2_q5"
+msgstr "Keeping money at home during inflation means:"
+msgid "lesson_3_2_q5_a1"
+msgstr "Gaining purchasing power"
+msgid "lesson_3_2_q5_a2"
+msgstr "Losing purchasing power"
+msgid "lesson_3_2_q5_a3"
+msgstr "Neutralizing inflation"
+msgid "lesson_3_2_q5_a4"
+msgstr "Investing in fixed income"
+
+msgid "lesson_3_3_q1"
+msgstr "What does a monthly rate mean?"
+
+msgid "lesson_3_3_q1_a1"
+msgstr "Fixed annual value"
+
+msgid "lesson_3_3_q1_a2"
+msgstr "Percentage applied each month"
+
+msgid "lesson_3_3_q1_a3"
+msgstr "Percentage per week"
+
+msgid "lesson_3_3_q1_a4"
+msgstr "Percentage per day"
+
+msgid "lesson_3_3_q2"
+msgstr "A rate of 2% per month is equivalent, in simple interest, to how many percent per year?"
+
+msgid "lesson_3_3_q2_a1"
+msgstr "12%"
+
+msgid "lesson_3_3_q2_a2"
+msgstr "24%"
+
+msgid "lesson_3_3_q2_a3"
+msgstr "2%"
+
+msgid "lesson_3_3_q2_a4"
+msgstr "200%"
+
+msgid "lesson_3_3_q3"
+msgstr "In compound interest, 1% per month is:"
+
+msgid "lesson_3_3_q3_a1"
+msgstr "Equal to 12% per year"
+
+msgid "lesson_3_3_q3_a2"
+msgstr "Slightly higher than 12% per year"
+
+msgid "lesson_3_3_q3_a3"
+msgstr "Lower than 12%"
+
+msgid "lesson_3_3_q3_a4"
+msgstr "Exactly 1%"
+
+msgid "lesson_3_3_q4"
+msgstr "An annual rate of 12% means:"
+
+msgid "lesson_3_3_q4_a1"
+msgstr "Growth of 1% per month in simple interest"
+
+msgid "lesson_3_3_q4_a2"
+msgstr "Growth of 12% per month"
+
+msgid "lesson_3_3_q4_a3"
+msgstr "Growth of 24% per year"
+
+msgid "lesson_3_3_q4_a4"
+msgstr "Undefined growth"
+
+msgid "lesson_3_3_q5"
+msgstr "To compare investments, it is important to:"
+
+msgid "lesson_3_3_q5_a1"
+msgstr "Convert all rates to the same period"
+
+msgid "lesson_3_3_q5_a2"
+msgstr "Ignore the rates"
+
+msgid "lesson_3_3_q5_a3"
+msgstr "Use only the initial value"
+
+msgid "lesson_3_3_q5_a4"
+msgstr "Use only inflation"
+
+msgid "lesson_3_4_q1"
+msgstr "Which investment is considered low risk?"
+
+msgid "lesson_3_4_q1_a1"
+msgstr "Stocks"
+
+msgid "lesson_3_4_q1_a2"
+msgstr "Tesouro Direto"
+
+msgid "lesson_3_4_q1_a3"
+msgstr "Cryptocurrencies"
+
+msgid "lesson_3_4_q1_a4"
+msgstr "Lottery"
+
+msgid "lesson_3_4_q2"
+msgstr "Which investment has the highest risk?"
+
+msgid "lesson_3_4_q2_a1"
+msgstr "Savings account"
+
+msgid "lesson_3_4_q2_a2"
+msgstr "Government Bonds"
+
+msgid "lesson_3_4_q2_a3"
+msgstr "Stocks"
+
+msgid "lesson_3_4_q2_a4"
+msgstr "CDI"
+
+msgid "lesson_3_4_q3"
+msgstr "Liquidity means:"
+
+msgid "lesson_3_4_q3_a1"
+msgstr "Investment risk"
+
+msgid "lesson_3_4_q3_a2"
+msgstr "Ease of converting into cash"
+
+msgid "lesson_3_4_q3_a3"
+msgstr "Interest paid"
+
+msgid "lesson_3_4_q3_a4"
+msgstr "Initial value"
+
+msgid "lesson_3_4_q4"
+msgstr "Which one has the highest liquidity?"
+
+msgid "lesson_3_4_q4_a1"
+msgstr "Savings account"
+
+msgid "lesson_3_4_q4_a2"
+msgstr "Real estate"
+
+msgid "lesson_3_4_q4_a3"
+msgstr "Long-term stocks"
+
+msgid "lesson_3_4_q4_a4"
+msgstr "Lottery"
+
+msgid "lesson_3_4_q5"
+msgstr "Investments with higher returns usually have:"
+
+msgid "lesson_3_4_q5_a1"
+msgstr "Lower risk"
+
+msgid "lesson_3_4_q5_a2"
+msgstr "Higher risk"
+
+msgid "lesson_3_4_q5_a3"
+msgstr "No risk"
+
+msgid "lesson_3_4_q5_a4"
+msgstr "Zero risk"
+
+msgid "lesson_3_5_q1"
+msgstr "Which is an example of a medium-term goal?"
+msgid "lesson_3_5_q1_a1"
+msgstr "Buy bread"
+msgid "lesson_3_5_q1_a2"
+msgstr "Travel in 3 years"
+msgid "lesson_3_5_q1_a3"
+msgstr "Retire in 30 years"
+msgid "lesson_3_5_q1_a4"
+msgstr "Pay monthly bills"
+
+msgid "lesson_3_5_q2"
+msgstr "Medium-term planning lasts for:"
+msgid "lesson_3_5_q2_a1"
+msgstr "Days"
+msgid "lesson_3_5_q2_a2"
+msgstr "Months to a few years"
+msgid "lesson_3_5_q2_a3"
+msgstr "Only 1 week"
+msgid "lesson_3_5_q2_a4"
+msgstr "More than 30 years"
+
+msgid "lesson_3_5_q3"
+msgstr "For a goal of R$ 6,000 in 2 years, how much should be saved per month?"
+msgid "lesson_3_5_q3_a1"
+msgstr "R$ 100"
+msgid "lesson_3_5_q3_a2"
+msgstr "R$ 200"
+msgid "lesson_3_5_q3_a3"
+msgstr "R$ 250"
+msgid "lesson_3_5_q3_a4"
+msgstr "R$ 500"
+
+msgid "lesson_3_5_q4"
+msgstr "Saving money for an international trip is:"
+msgid "lesson_3_5_q4_a1"
+msgstr "Fixed expense"
+msgid "lesson_3_5_q4_a2"
+msgstr "Financial goal"
+msgid "lesson_3_5_q4_a3"
+msgstr "Debt"
+msgid "lesson_3_5_q4_a4"
+msgstr "Inflation"
+
+msgid "lesson_3_5_q5"
+msgstr "What is the first step in planning a medium-term goal?"
+msgid "lesson_3_5_q5_a1"
+msgstr "Define the goal and amount"
+msgid "lesson_3_5_q5_a2"
+msgstr "Spend first"
+msgid "lesson_3_5_q5_a3"
+msgstr "Take a loan"
+msgid "lesson_3_5_q5_a4"
+msgstr "Ignore expenses"
+
+msgid "lesson_3_6_q1"
+msgstr "Compound interest is:"
+msgid "lesson_3_6_q1_a1"
+msgstr "Interest on interest"
+msgid "lesson_3_6_q1_a2"
+msgstr "Simple interest"
+msgid "lesson_3_6_q1_a3"
+msgstr "Fixed interest"
+msgid "lesson_3_6_q1_a4"
+msgstr "No growth"
+
+msgid "lesson_3_6_q2"
+msgstr "Inflation means:"
+msgid "lesson_3_6_q2_a1"
+msgstr "Prices falling"
+msgid "lesson_3_6_q2_a2"
+msgstr "Prices rising"
+msgid "lesson_3_6_q2_a3"
+msgstr "High interest rates"
+msgid "lesson_3_6_q2_a4"
+msgstr "Fixed income"
+
+msgid "lesson_3_6_q3"
+msgstr "If inflation was 10% and a product cost R$ 100, how much does it cost now?"
+msgid "lesson_3_6_q3_a1"
+msgstr "R$ 90"
+msgid "lesson_3_6_q3_a2"
+msgstr "R$ 100"
+msgid "lesson_3_6_q3_a3"
+msgstr "R$ 110"
+msgid "lesson_3_6_q3_a4"
+msgstr "R$ 120"
+
+msgid "lesson_3_6_q4"
+msgstr "2% per month is equivalent, in simple interest, to how many % per year?"
+msgid "lesson_3_6_q4_a1"
+msgstr "12%"
+msgid "lesson_3_6_q4_a2"
+msgstr "24%"
+msgid "lesson_3_6_q4_a3"
+msgstr "2%"
+msgid "lesson_3_6_q4_a4"
+msgstr "200%"
+
+msgid "lesson_3_6_q5"
+msgstr "Which investment has the highest risk?"
+msgid "lesson_3_6_q5_a1"
+msgstr "Government bonds"
+msgid "lesson_3_6_q5_a2"
+msgstr "Savings account"
+msgid "lesson_3_6_q5_a3"
+msgstr "Stocks"
+msgid "lesson_3_6_q5_a4"
+msgstr "CDI"
+
+msgid "lesson_3_6_q6"
+msgstr "What does liquidity mean?"
+msgid "lesson_3_6_q6_a1"
+msgstr "Interest received"
+msgid "lesson_3_6_q6_a2"
+msgstr "Ease of converting into cash"
+msgid "lesson_3_6_q6_a3"
+msgstr "Inflation"
+msgid "lesson_3_6_q6_a4"
+msgstr "Annual rate"
+
+msgid "lesson_3_6_q7"
+msgstr "If you invest R$ 1000 at 10% per year in compound interest for 3 years, the total amount is:"
+msgid "lesson_3_6_q7_a1"
+msgstr "R$ 1100"
+msgid "lesson_3_6_q7_a2"
+msgstr "R$ 1210"
+msgid "lesson_3_6_q7_a3"
+msgstr "R$ 1331"
+msgid "lesson_3_6_q7_a4"
+msgstr "R$ 1300"
+
+msgid "lesson_3_6_q8"
+msgstr "Which practice helps in medium-term planning?"
+msgid "lesson_3_6_q8_a1"
+msgstr "Set a goal and save monthly"
+msgid "lesson_3_6_q8_a2"
+msgstr "Spend first"
+msgid "lesson_3_6_q8_a3"
+msgstr "Always use credit"
+msgid "lesson_3_6_q8_a4"
+msgstr "Forget deadlines"
+
+msgid "lesson_3_6_q9"
+msgstr "Keeping money at home during inflation means:"
+msgid "lesson_3_6_q9_a1"
+msgstr "Gaining purchasing power"
+msgid "lesson_3_6_q9_a2"
+msgstr "Losing purchasing power"
+msgid "lesson_3_6_q9_a3"
+msgstr "Protecting money"
+msgid "lesson_3_6_q9_a4"
+msgstr "Investing in stocks"
+
+msgid "lesson_3_6_q10"
+msgstr "Medium-term planning is for:"
+msgid "lesson_3_6_q10_a1"
+msgstr "Goals from 1 to 5 years"
+msgid "lesson_3_6_q10_a2"
+msgstr "Daily expenses"
+msgid "lesson_3_6_q10_a3"
+msgstr "Retirement"
+msgid "lesson_3_6_q10_a4"
+msgstr "Immediate spending"
