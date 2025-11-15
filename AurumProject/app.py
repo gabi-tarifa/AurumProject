@@ -1941,7 +1941,7 @@ def salvar_modulo_inicial():
     db.session.commit()
 
     return jsonify({"status": "ok", "moduloinicial": modulo})
-    
+     
     
 if __name__ == "__main__":
     #app.run(debug=True)
