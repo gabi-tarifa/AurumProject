@@ -32,13 +32,17 @@ body {
   width: 100%;
   max-width: 400px;
   padding: 30px;
-  background-color: #264c8e;
+  border: 1px solid #0f0f0f;
+  background-color: #62d5e8;
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
   transition: all 0.5s ease-in-out;
 }
 
 .container.active {
+  display: flex;
+}
+.container.active.claro {
   display: flex;
 }
 
@@ -142,6 +146,12 @@ input::placeholder {
   margin-top: 15px;
   text-align: center;
   color: #ccc;
+}
+.terms.claro {
+  font-size: 0.75rem;
+  margin-top: 15px;
+  text-align: center;
+  color: #292929;
 }
 
 /* Animação flutuante */
@@ -1065,16 +1075,27 @@ label{
   padding: 20px;
 }
 
+#openMais {
+  position: relative;
+}
+
 .submenu-mais {
   position: absolute;
-  top: 70%; /* ajuste conforme a posição do botão "Mais" */
-  left: 80px; /* afasta do menu lateral */
   background-color: #1c1c2e;
   border-radius: 10px;
   padding: 10px 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   z-index: 1000;
   transition: opacity 0.3s ease;
+  width: 170px;
+  top: 100%; /* FICA EXATAMENTE ABAIXO DO BOTÃO */
+  left: 50%; /* CENTRALIZA */
+  transform: translateX(-10%);
+
+  z-index: 999;
+  
+  /* animação opcional */
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .submenu-mais ul {
@@ -1268,6 +1289,14 @@ label{
 .terms-link:hover {
   color: #ffd966;
 }
+.terms-link.claro {
+  color: #292929;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.terms-link.claro:hover {
+  color: #393939;
+}
 
 .header-with-back {
     position: relative;
@@ -1281,6 +1310,11 @@ label{
     font-size: 1.8rem;
     font-weight: bold;
     color: #f4d160;
+}
+.header-with-back.claro .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3d3d3d;
 }
 
 .header-with-back .back-btn {
@@ -1302,6 +1336,29 @@ label{
 
 .header-with-back .back-btn:hover {
     background-color: #3d528a;
+    transform: translateY(-50%) scale(1.02);
+}
+
+.header-with-back.claro .back-btn {
+    position: absolute;  
+    left: 0;            
+    top: 50%;           
+    transform: translateY(-50%);
+    margin-left: -310px; /* <-- compensa o padding do container */
+    border: 1px solid #0f0f0f;
+    background-color: #76eaff;
+    color: #393939;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.header-with-back.claro .back-btn:hover {
+    background-color: #a7f2ff;
     transform: translateY(-50%) scale(1.02);
 }
 
@@ -1522,4 +1579,8 @@ label{
 }
 .botao-voltar:hover {
   background-color: #e0b300;
+}
+
+#openMais {
+  position: relative; /* PARA SER A REFERÊNCIA */
 }

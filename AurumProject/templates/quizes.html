@@ -46,8 +46,6 @@
       <div class="menu-item" id="openMais">
         <img src="{{ url_for('static', filename='img//info.png') }}" class="icon" alt="Mais" />
         {{ _('Mais') }}
-      </div>
-    </nav>
      <!-- Submenu do botão "Mais" -->
     <div class="submenu-mais oculto" id="submenuMais">
       <ul>
@@ -55,6 +53,8 @@
         <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">{{ _('Configurações') }}</span></a></li>
         <li><a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="smallimage" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a></li>      </ul>
     </div>
+      </div>
+    </nav>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="quiz-content">

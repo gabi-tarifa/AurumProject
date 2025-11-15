@@ -16,6 +16,11 @@
             width: 80%;
             padding: 40px;
         }
+        .container.claro {
+            max-width: 800px;
+            width: 80%;
+            padding: 40px;
+        }
         .content-box {
             max-height: 75vh;
             overflow-y: auto;
@@ -33,11 +38,15 @@
             background-color: #d8f7fc;
             border-radius: 15px;
             margin-top: 20px;
-            color: #ccc;
+            color: #292929;
             line-height: 1.7;
         }
         .content-box h3 {
             color: #f4d160;
+            margin-top: 20px;
+        }
+        .content-box.claro h3 {
+            color: #393939;
             margin-top: 20px;
         }
         .content-box ul {
@@ -55,7 +64,7 @@
 <body {%if tema == 'cla'%} class="claro" {%endif%}>
 
     <div class="container active {%if tema == 'cla'%} claro {%endif%}">
-        <div class="header-with-back">
+        <div class="header-with-back active {%if tema == 'cla'%} claro {%endif%}">
             <button class="back-btn" onclick="history.back()">← {{ _('Voltar') }}</button>
             <div class="logo">Aurum</div>
         </div>
@@ -111,14 +120,14 @@
             </ul>
 
             <h3>8. {{ _('Contato') }}</h3>
-            <p>{{ _('Para dúvidas ou solicitações relacionadas à privacidade, entre em contato pelo e-mail: ') }}<span class="email">grupomoneto2025@gmail.com</span>.</p>
+            <p>{{ _('Para dúvidas ou solicitações relacionadas à privacidade, entre em contato pelo e-mail: ') }}<span class="email {%if tema == 'cla'%} claro {%endif%}">grupomoneto2025@gmail.com</span>.</p>
         </div>
 
-        <div class="terms">
+        <div class="terms {%if tema == 'cla'%} claro {%endif%}">
             {{ _('Ao entrar na Aurum, você concorda com os nossos') }}
-            <a href="/termos" class="terms-link">{{ _('Termos de Uso') }}</a>
+            <a href="/termos" class="terms-link {%if tema == 'cla'%} claro {%endif%}">{{ _('Termos de Uso') }}</a>
             {{ _('e') }}
-            <a href="/privacidade" class="terms-link">{{ _('Política de Privacidade') }}</a>.
+            <a href="/privacidade" class="terms-link {%if tema == 'cla'%} claro {%endif%}">{{ _('Política de Privacidade') }}</a>.
         </div>
     </div>
 

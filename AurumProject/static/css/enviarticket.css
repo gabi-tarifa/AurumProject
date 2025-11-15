@@ -15,7 +15,7 @@ body {
 }
 body.claro {
   background-color: #d8f7fc;
-  color: #fff;
+  color: #393939;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -36,8 +36,9 @@ body.claro {
   max-width: 600px;
   margin: 40px auto;
   padding: 25px;
-  background: #526fa1;
-  color: #fff;
+  background: #62d5e8;
+  border: 1px solid #0f0f0f;
+  color: #292929;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.4);
   font-family: 'Segoe UI', sans-serif;
@@ -56,6 +57,19 @@ body.claro {
   color: goldenrod;
 }
 
+.support-page.claro h1 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.support-page.claro .intro {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #393939;
+}
+
 .ticket-form {
   display: flex;
   flex-direction: column;
@@ -65,6 +79,11 @@ body.claro {
   margin-bottom: 6px;
   font-weight: bold;
   color: #f1c40f;
+}
+.ticket-form.claro label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #292929;
 }
 
 .ticket-form input,
@@ -87,8 +106,8 @@ body.claro {
   border: none;
   border-radius: 8px;
   font-size: 14px;
-  background-color: #a3bdf5;
-  color: #fff;
+  background-color: #84e7f9;
+  color: #292929;
   outline: none;
   transition: background 0.3s;
   resize: none;
@@ -100,7 +119,7 @@ body.claro {
 }
 .ticket-form.claro input:focus,
 .ticket-form.claro textarea:focus {
-  background: #5c6068;
+  background: #46bcd1;
 }
 
 .ticket-form input:-webkit-autofill,
@@ -111,8 +130,8 @@ body.claro {
 }
 .ticket-form.claro input:-webkit-autofill,
 .ticket-form.claro textarea:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px #a3bdf5 inset !important; /* cor de fundo */
-  -webkit-text-fill-color: whitesmoke !important; /* cor do texto */
+  -webkit-box-shadow: 0 0 0 1000px #46bcd1 inset !important; /* cor de fundo */
+  -webkit-text-fill-color: #292929 !important; /* cor do texto */
   transition: background-color 5000s ease-in-out 0s;
 }
 .btn-enviar {
@@ -131,8 +150,8 @@ body.claro {
   background: #3d528a;
 }
 .btn-enviar.claro {
-  background: #5681de;
-  color: #ffffff;
+  background: #84e7f9;
+  color: #292929;
   padding: 14px;
   border: none;
   border-radius: 8px;
@@ -143,5 +162,5 @@ body.claro {
 }
 
 .btn-enviar.claro:hover {
-  background: #c1d1ff;
+  background: #3cc1d8;
 }
