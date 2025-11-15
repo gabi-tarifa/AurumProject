@@ -1776,7 +1776,10 @@ def enviar_ticket():
         flash("Seu ticket foi enviado com sucesso! Verifique seu email.", "success")
         return redirect(url_for("starting_page"))
 
-    return render_template("enviarticket.html", tema = conf.tema, sons_ativos=conf.sons)
+    return render_template("enviarticket.html", tema = conf.tema, sons_ativos=conf.sons
+        musica_ativa = conf.musica,
+        musica_tocada=conf.musica_tocada,
+        volume_musica=conf.volume_musica,)
 
 def send_email_via_api(destinatario, assunto, conteudo):
     # Garante que o destinatário seja string e não tupla
