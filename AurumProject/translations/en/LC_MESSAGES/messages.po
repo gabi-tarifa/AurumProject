@@ -2285,3 +2285,18 @@ msgid "lesson_3_6_q10_a3"
 msgstr "Retirement"
 msgid "lesson_3_6_q10_a4"
 msgstr "Immediate spending"
+
+msgid "quiz_modo_treino_titulo"
+msgstr "Quiz"
+
+msgid "botao_iniciar_quiz"
+msgstr "Start"
+
+msgid "botao_finalizar_quiz"
+msgstr "Resume"
+
+msgid "quiz_modo_treino_instrucao"
+msgstr "Answer before time runs out"
+
+msgid "botao_refazer_quiz"
+msgstr "Try again"
