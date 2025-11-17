@@ -1,4 +1,5 @@
 %abtex2modeloartigo.tx,v-1.9.7laurocesr
+
 %% Copyright 2012-2018 by abnTeX2 group at http://www.abntex.net.br/ 
 %%
 %% This work may be distributed and/or modified under the
@@ -68,9 +69,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
+\usepackage{tabularx}   % para tabelas ajustáveis
 % outros pacotes...
 \usepackage[hidelinks]{hyperref} % carregue por último
-
+\usepackage{float}
 % Deixa o \subsubsection igual ao \subsection: negrito, tamanho igual, sem itálico, com espaçamento igual
 \titleformat{\subsubsection}[hang]{\normalfont\bfseries}{\thesubsubsection}{1em}{}
 
@@ -83,7 +85,10 @@
 % ---
 \usepackage{lipsum}				% para geração de dummy text
 % ---
-		
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{caption}    % para \caption* e controle de espaçamento
+\usepackage{titlesec} 
 % ---
 % Pacotes de citações
 % ---
@@ -115,7 +120,7 @@
 
 \title{Documento de arquitetura de software de Aurum}
 
-\author{Arthur Silva Vieira\inst{1}, Francine Midori Nakasuga Oda\inst{1}, Gabriel Tarifa de Oliveira\inst{1},\\ Gustavo Batista Ramos\inst{1}, Thomas Stephan Carmo\inst{1},   Rafael Oliveira Muñoz\inst{1} }
+\author{Arthur Silva Vieira\inst{1}, Francine Midori Nakasuga Oda\inst{1}, Gabriel Tarifa de Oliveira\inst{1},\\ Gustavo Batista Ramos\inst{1}, Rafael Oliveira Muñoz\inst{1}, Thomas Stephan Carmo\inst{1}   }
 
 \address{Instituto Federal de Educação, Ciência e Tecnologia de São Paulo - Câmpus São Paulo
 }
@@ -231,11 +236,11 @@
     
  A educação financeira é um direito fundamental do cidadão, desempenhando papel crucial no desenvolvimento social e pessoal. Contudo, apesar de sua importância, grande parte da população brasileira ainda enfrenta barreiras significativas para acessar informações adequadas sobre finanças. Esses obstáculos incluem a escassez de recursos para investir em cursos especializados, a falta de incentivo para aprofundar o tema desde o ensino fundamental e a dificuldade em compreender conceitos financeiros devido à linguagem técnica e complexa.
 
-Nesse cenário, segundo dados do Instituto Brasileiro de Geografia e Estatística (\citeonline{ibge2024}), embora a taxa de pobreza tenha diminuído significativamente, caindo de 67,7 milhões para 59 milhões de pessoas, ainda é preocupante o número de cidadãos que permanecem à margem da sociedade. Isto reforça a urgência de iniciativas que promovam a educação financeira como uma ferramenta de inclusão social e empoderamento.
+Nesse cenário, segundo dados do Instituto Brasileiro de Geografia e Estatística \cite{ibge2024}, embora a taxa de pobreza tenha diminuído significativamente, caindo de 67,7 milhões para 59 milhões de pessoas, ainda é preocupante o número de cidadãos que permanecem à margem da sociedade. Isto reforça a urgência de iniciativas que promovam a educação financeira como uma ferramenta de inclusão social e empoderamento.
 
-Como consequência da falta de conhecimento financeiro, algo que pode afetar a vida das pessoas é o uso do cartão de crédito. De acordo com \citeonline{pires2008planejamento}, muitos brasileiros perdem o controle dos gastos com o cartão devido à falta de educação sobre os custos reais envolvidos e a ausência de estratégias eficazes de gestão financeira. O uso excessivo do crédito e a escolha por parcelamentos com as menores parcelas possíveis frequentemente resultam em uma dívida muito maior do que o valor inicialmente contratado, agravando ainda mais a situação financeira do consumidor.
+Como consequência da falta de conhecimento financeiro, algo que pode afetar a vida das pessoas é o uso do cartão de crédito. De acordo com \cite{pires2008planejamento}, muitos brasileiros perdem o controle dos gastos com o cartão devido à falta de educação sobre os custos reais envolvidos e a ausência de estratégias eficazes de gestão financeira. O uso excessivo do crédito e a escolha por parcelamentos com as menores parcelas possíveis frequentemente resultam em uma dívida muito maior do que o valor inicialmente contratado, agravando ainda mais a situação financeira do consumidor.
 
-Neste contexto, mitos alunos da Educação para Jovens e Adultos (EJA) são trabalhadores que gerenciam diariamente suas finanças, e a educação financeira auxilia no desenvolvimento de uma cultura de prevenção e proteção, promovendo a cidadania e a melhoria da qualidade de vida, segundo \citeonline{hurtado2020importancia}. Portanto, a educação financeira desde a base deve ser prioridade.
+Neste contexto, muitos alunos da Educação para Jovens e Adultos (EJA) são trabalhadores que gerenciam diariamente suas finanças, e a educação financeira auxilia no desenvolvimento de uma cultura de prevenção e proteção, promovendo a cidadania e a melhoria da qualidade de vida, segundo \cite{hurtado2020importancia}. Portanto, a educação financeira desde a base deve ser prioridade.
 
 Assim, surge a necessidade de ferramentas educativas inovadoras e acessíveis. A proposta desta aplicação web é desenvolver uma plataforma de aprendizagem interativa e gamificada, que permita aos usuários aprender e praticar conceitos financeiros de forma progressiva e adaptativa, de acordo com seu nível de conhecimento e ritmo.
 
@@ -244,10 +249,6 @@ Dessa forma, por meio de módulos interativos e desafios diários, a plataforma 
 Em suma, a missão deste projeto é expandir o acesso à educação financeira, oferecendo uma ferramenta simples, envolvente e eficaz, capaz de transformar a realidade financeira de milhares de pessoas. Ao buscar isso, utilizamos uma linguagem acessível e evitamos jargões técnicos que costumam afastar o público geral. O objetivo final é empoderar os cidadãos, oferecendo-lhes as ferramentas necessárias para melhorar sua qualidade de vida, reduzir as desigualdades sociais e promover um crescimento econômico mais sustentável para todos.
 
 
-
-
-
-    
 
 \subsection{Objetivos}
     Levando em consideração a necessidade de detalhes da aplicação, os objetivos foram divididos em: geral e específico.
@@ -269,52 +270,39 @@ Em suma, a missão deste projeto é expandir o acesso à educação financeira, 
     
        
 \section{Justificativa}    
-    A educação financeira é um elemento essencial para a construção de uma sociedade mais equilibrada e justa. Entretanto, no Brasil, muitas pessoas ainda enfrentam dificuldades para lidar com o próprio dinheiro, seja por falta de conhecimento, seja por influências do consumo excessivo. De acordo com o Instituto Brasileiro de Geografia e Estatística (IBGE), mesmo com a redução do índice de pobreza nos últimos anos, milhões de brasileiros ainda vivem em situação de vulnerabilidade econômica, muitas vezes agravada pelo endividamento descontrolado.
+    A educação financeira é um elemento essencial para a construção de uma sociedade mais equilibrada e justa. No entanto, os resultados da pesquisa realizada, pelo Grupo Moneto, com 217 participantes mostram que grande parte da população ainda enfrenta dificuldades significativas para lidar com o próprio dinheiro, seja pela falta de conhecimento técnico, seja pela ausência de hábitos financeiros saudáveis.
 
-    Foi realizada uma pesquisa com 217 participantes, com o objetivo de compreender melhor o perfil e as dificuldades enfrentadas pelo público em relação à educação financeira. Os resultados do questionário aplicado reforçam a importância da criação de uma plataforma acessível, interativa e \textit{gamificada} sobre finanças.
+Os dados revelam que o público participante está majoritariamente concentrado na faixa etária entre 35 e 54 anos. Além disso, observa-se um nível educacional elevado: 32,7\% possuem Ensino Superior completo e 30,4\% possuem Pós-Graduação, totalizando 63,1\% com formação superior. Ainda assim, essa escolaridade não se traduz em domínio sobre finanças pessoais.
 
-    Um dos dados mais reveladores foi a resposta à pergunta "Como você descreveria seus conhecimentos em educação financeira?", em que 51,6\% dos participantes declarou possuir conhecimentos básicos e 12\% responderam que não possuem nenhum conhecimento. Isso demonstra que, embora o tema esteja ganhando mais espaço nos debates sociais, ainda há uma lacuna significativa na formação financeira da população.
+Em relação ao conhecimento em educação financeira, 51,6\% afirmam saber apenas o básico, enquanto 12\% dizem não possuir nenhum conhecimento. Apenas 8,8\% relatam conhecimento avançado. Embora 53,9\% tenham tido algum contato com educação financeira, esse contato é superficial e insuficiente para desenvolver competências práticas. Quanto às formas de aprendizado, 28,6\% tiveram contato pela internet, 22,6\% por instituições de ensino, 13,8\% pela família e 29\% nunca tiveram contato com o tema.
 
-    Outro aspecto relevante: "tenho dificulade de controlar meus gastos". O que revela um ponto crítico: muitas pessoas desconhecem métodos de organização financeira e tomada de decisão, que é o básico. Isso limita o potencial de crescimento financeiro pessoal e mostra a urgência de métodos que desmistifiquem e tornem acessível esse tipo de conteúdo. A proposta desta plataforma contempla esse aspecto ao oferecer módulos específicos sobre controle de gastos, com explicações simples e interativas.
+Os hábitos financeiros também demonstram fragilidades importantes. Apenas 26,7\% dos participantes afirmam sempre realizar planejamento financeiro. A maioria, 53,9\%, realiza esse planejamento apenas às vezes, enquanto 19,4\% nunca o fazem. O comportamento em relação à poupança segue padrão semelhante: 37,8\% conseguem poupar todos os meses, 32,7\% poupam apenas quando sobra dinheiro e 29,5\% não poupam nunca.
 
-    Em seguida, as seguintes maiores dificuldades relatadas foram não conseguir economizar, que está diretamente ligado com a primeira maior dificuldade, e não compreender sobre como funcionam investimentos, o que reforça a necessidade de ensinar estratégias práticas de educação financeira. Essa combinação entre desconhecimento técnico (com os investimentos), e dificuldade na gestão cotidiana evidencia o quanto a população precisa de uma solução completa, que ensine tanto o básico quanto o avançado.
+As principais dificuldades relatadas reforçam esse cenário. Entre os participantes, 39,46\% têm dificuldade em controlar seus gastos, 37,8\% afirmam não conseguir economizar e 37,3\% não compreendem como funcionam investimentos. Além disso, 24,9\% não sabem organizar o orçamento mensal e 19,4\% dizem se endividar com frequência. Esses dados evidenciam que os desafios vão desde a gestão cotidiana do dinheiro até a compreensão de conceitos mais técnicos.
 
-    Além disso, constatou-se que a concentração da faixa etária entre 35 e 54 anos. Esse público está em uma fase da vida onde já existe a preocupação com aposentadoria, mas muitas vezes sem ter recebido qualquer educação formal sobre finanças. Para esse grupo, uma plataforma online, moderna e compatível com os hábitos digitais representa uma alternativa prática e eficaz.
+Quando questionados sobre o formato de aprendizado mais atrativo, 87,1\% manifestaram interesse em simulações práticas com exemplos reais e acessíveis. Esse resultado valida o uso de métodos dinâmicos e interativos, especialmente a gamificação, que torna o aprendizado mais leve, envolvente e contínuo.
 
-    Bem como revelou que a maioria das pessoas raramente faz um planejamento financeiro, evidenciando uma falha estrutural no desenvolvimento de hábitos financeiros saudáveis. Por isso, a plataforma propõe desafios diários e objetivos de longo prazo, com o intuito de incentivar o planejamento constante e o acompanhamento do progresso do usuário.
+Neste contexto, a criação de uma plataforma interativa e gamificada de educação financeira se apresenta como uma solução necessária e alinhada às necessidades do público pesquisado. A proposta do Aurum aborda diretamente as principais dificuldades identificadas, oferecendo módulos acessíveis, exemplos práticos e trilhas personalizadas de aprendizado. Além de contemplar temas essenciais como controle de gastos, organização do orçamento e compreensão de investimentos, a plataforma utiliza desafios diários e acompanhamento de objetivos para incentivar a criação de hábitos financeiros saudáveis.
 
-    Quando questionados sobre o formato de aprendizado mais interessante, o público demonstrou forte preferência por formas dinâmicas e interativas, como simulações práticas e conteúdo visual. Isso valida o uso da gamificação como uma metodologia principal do projeto, com o objetivo de tornar o aprendizado mais leve, envolvente e contínuo.
-
-    Por fim, o dado que mais reforça a relevância do projeto: a grande maioria dos participantes declarou que se interessaria por uma plataforma interativa e \textit{gamificada} para aprender sobre finanças. Isso confirma que a proposta não só responde a uma necessidade real, como também desperta o interesse do público, aumentando o engajamento e o potencial de transformação individual e social.
-
-    Embora existam jogos que ensinem sobre educação financeira, o Aurum, além de possuir módulos interativos e desafios diários, apresenta uma abordagem inovadora que combina interatividade, \textit{gamificação} e aprendizado adaptativo. E demonstra seu diferencial por personalizar o conteúdo de acordo com as necessidades específicas de cada usuário, desde iniciantes até aqueles com conhecimento prévio, os usuários são capacitados a tomar decisões financeiras mais conscientes, como controlar gastos, compreender investimentos, negociar dívidas e planejar o futuro.
-    
-    Ao expandir o acesso à educação financeira, esse projeto tem o potencial de ajudar milhares de brasileiros a adquirirem mais autonomia sobre suas finanças, evitando armadilhas do consumo impulsivo e do crédito mal utilizado. Dessa maneira, além de beneficiar cada indivíduo, a iniciativa contribui para o desenvolvimento de uma sociedade mais consciente e preparada para enfrentar desafios econômicos.
-
-    Portanto, a implementação dessa plataforma se mostra uma solução inovadora e necessária, pois busca preencher uma lacuna existente no ensino tradicional e promover um futuro financeiro mais seguro para todos.
 
 \subsection{Pesquisas Realizadas}
 \label{subsec:pesquisas}
 
 
-Neste tópico, incluiremos os links do Apêndice A e do Anexo A, que apresentam os dados das pesquisas que realizamos sobre o tema de finanças e modos de aprendizado, informações relevantes para a criação do AURUM.
-
-\noindent\hyperref[chap:apendiceA]{Clique para acessar Apêndice A} \\ 
-\hyperref[chap:anexoA]{Clique para acessar Anexo A}
+Neste tópico, apresentam-se os dados das pesquisas realizadas sobre o tema de finanças e modos de aprendizado, informações relevantes para a criação do AURUM, que podem ser lidas também nos \noindent\hyperref[chap:apendiceA]{Apêndice A} e  \hyperref[chap:anexoA]{Anexo A}.
 
 
 
 \subsection{Empresa B3 e educação financeira}
 
 
-A B3 mantém um portal educacional com cursos, conteúdos e materiais gratuitos voltados a ensinar desde noções básicas de finanças pessoais até temas avançados sobre mercados e produtos financeiros
+A B3 mantém um portal educacional com cursos, conteúdos e materiais gratuitos voltados a ensinar desde noções básicas de finanças pessoais até temas avançados sobre mercados e produtos financeiros \cite{b3educacao}.
 
-Além dos cursos próprios, a B3 desenvolve iniciativas em parceria com instituições e formadores para ampliar o alcance da educação financeira, oferecendo conteúdos cocriados e programas de capacitação para estudantes, professores e o público em geral
+Além dos cursos próprios, a B3 desenvolve iniciativas em parceria com instituições e formadores para ampliar o alcance da educação financeira, oferecendo conteúdos cocriados e programas de capacitação para estudantes, professores e o público em geral \cite{b3parcerias}.
 
-Em 2025, a B3 lançou ações conjuntas com empresas como a Creditas para levar formatos mais acessíveis e dinâmicos ao público, por exemplo o programa “Papo de Grana”, com episódios e aulas focadas em organização financeira, saída do endividamento e primeiros investimentos, buscando desmistificar o mercado para quem está começando
+Em 2025, a B3 lançou ações conjuntas com empresas como a Creditas para levar formatos mais acessíveis e dinâmicos ao público, por exemplo o programa “Papo de Grana”, com episódios e aulas focadas em organização financeira, saída do endividamento e primeiros investimentos, buscando desmistificar o mercado para quem está começando \cite{b3creditas}.
 
-
-A estratégia da B3 também articula instrumentos institucionais, como parcerias com reguladores e programas de formação de professores, concursos e premiações acadêmicas, alinhando suas iniciativas à Estratégia Nacional de Educação Financeira e ao fortalecimento de competências financeiras na escola e na sociedade
+A estratégia da B3 também articula instrumentos institucionais, como parcerias com reguladores e programas de formação de professores, concursos e premiações acadêmicas, alinhando suas iniciativas à Estratégia Nacional de Educação Financeira e ao fortalecimento de competências financeiras na escola e na sociedade \cite{enef}.
 
 
 \subsection{Problema a ser solucionado}
@@ -329,39 +317,48 @@ Essa lacuna evidencia a necessidade de soluções digitais que combinem acessibi
 
 \section{Referencial Teórico}
 
-O referencial teórico desta pesquisa articula a evolução histórica e as políticas públicas da educação financeira no Brasil — da sua concentração nas elites até a expansão após o Plano Real e a institucionalização pela ENEF —, incorpora a influência de organismos internacionais (OCDE/INFE) e a inserção do tema na BNCC, problematiza críticas sobre a captura por uma lógica mercadológica e a fraca participação democrática na formulação das ações, e destaca abordagens pedagógicas e recursos tecnológicos (simuladores, planilhas, jogos, HQs e plataformas gamificadas) como estratégias para concretizar conceitos financeiros; orienta ainda o desenvolvimento de soluções digitais alinhadas ao currículo, contextualizadas, transparentes, participativas e capazes de promover personalização crítica e avaliação contínua, com vistas à formação de sujeitos autônomos e reflexivos diante do consumo, da dívida e das desigualdades.
+O referencial teórico desta pesquisa, através da análise de três artigos, articula a evolução histórica e as políticas públicas da educação financeira no Brasil — da sua concentração nas elites até a expansão após o Plano Real e a institucionalização pela ENEF —, incorpora a influência de organismos internacionais (OCDE/INFE) e a inserção do tema na BNCC, problematiza críticas sobre a captura por uma lógica mercadológica e a fraca participação democrática na formulação das ações, e destaca abordagens pedagógicas e recursos tecnológicos (simuladores, planilhas, jogos, HQs e plataformas gamificadas) como estratégias para concretizar conceitos financeiros; orienta ainda o desenvolvimento de soluções digitais alinhadas ao currículo, contextualizadas, transparentes, participativas e capazes de promover personalização crítica e avaliação contínua, com vistas à formação de sujeitos autônomos e reflexivos diante do consumo, da dívida e das desigualdades.
 
 \subsection{A Educação Financeira no Brasil e suas Implicações para o Desenvolvimento de Soluções Digitais}
-    A educação financeira é muito mais do que aprender a guardar dinheiro ou fazer contas. Ela é essencial para que as pessoas consigam organizar suas vidas, tomar decisões conscientes sobre o uso do dinheiro e melhorar sua qualidade de vida. No Brasil, ela tem se tornado cada vez mais importante, especialmente depois de mudanças na economia, como a queda da inflação e o aumento do acesso ao crédito.
+    A educação financeira é muito mais do que aprender a guardar dinheiro ou fazer contas. 
+Ela é essencial para que as pessoas consigam organizar suas vidas, tomar decisões conscientes 
+sobre o uso do dinheiro e melhorar sua qualidade de vida \cite{bcb2013}. 
+No Brasil, ela tem se tornado cada vez mais importante, especialmente depois de mudanças na economia, 
+como a queda da inflação e o aumento do acesso ao crédito \cite{senado2025, anbima2025}.
 
-Antigamente, a educação financeira era voltada só para quem tinha dinheiro para investir, ou seja, era algo restrito às pessoas mais ricas. A maioria da população enfrentava problemas como inflação alta, pouco acesso a bancos e crédito difícil. Até os anos 1990, quase não se falava sobre isso nas escolas, e os próprios Parâmetros Curriculares Nacionais (PCN) não mencionavam diretamente a educação financeira  \citeonline{giordano2019educaccao}.
+Antigamente, a educação financeira era voltada só para quem tinha dinheiro para investir, ou seja, era algo restrito às pessoas mais ricas. A maioria da população enfrentava problemas como inflação alta, pouco acesso a bancos e crédito difícil. Até os anos 1990, quase não se falava sobre isso nas escolas, e os próprios Parâmetros Curriculares Nacionais (PCN) não mencionavam diretamente a educação financeira  \cite{giordano2019educaccao}.
 
-Mas isso começou a mudar a partir dos anos 2000, principalmente com a criação do Plano Real, que controlou a inflação, e o surgimento da nova classe média. Mais gente passou a consumir, mas sem estar preparada financeiramente. Resultado: muita gente se endividou. Por isso, ficou claro que era preciso ensinar as pessoas a planejar melhor suas finanças. Em 2010, foi criada a Estratégia Nacional de Educação Financeira (ENEF), com o objetivo de tornar os brasileiros mais conscientes e preparados para lidar com o dinheiro.
+Mas isso começou a mudar a partir dos anos 2000, principalmente com a criação do Plano Real, 
+que controlou a inflação \cite{bcb1994, infomoney2024, fgv2019}. 
+O surgimento da nova classe média levou ao aumento do consumo, mas sem preparo financeiro, 
+resultando em endividamento \cite{miranda2013, tendencias2025, brasilcartoes2025}. 
+Por isso, ficou claro que era preciso ensinar as pessoas a planejar melhor suas finanças. 
+Em 2010, foi criada a Estratégia Nacional de Educação Financeira – ENEF \cite{enef2010}.
 
-Com o tempo, a educação financeira foi se popularizando. Livros como Pai Rico, Pai Pobre e Casais Inteligentes Enriquecem Juntos começaram a mostrar que qualquer pessoa pode aprender a cuidar do seu dinheiro. Essa ideia vai ao encontro do que dizem pesquisadores como Silva e Powell (2013), que defendem uma educação financeira crítica, que ajude o aluno a entender a realidade em que vive e a tomar decisões responsáveis.
+Com o tempo, a educação financeira foi se popularizando. Livros como Pai Rico, Pai Pobre e Casais Inteligentes Enriquecem Juntos começaram a mostrar que qualquer pessoa pode aprender a cuidar do seu dinheiro. Essa ideia vai ao encontro do que dizem pesquisadores como \cite{da2013programa}, que defendem uma educação financeira crítica, que ajude o aluno a entender a realidade em que vive e a tomar decisões responsáveis.
 
-Outro fator importante foi a entrada da educação financeira na Base Nacional Comum Curricular (BNCC). A BNCC trouxe a educação financeira para dentro das escolas, desde o ensino fundamental até o ensino médio. Ela propõe que o tema seja trabalhado em várias disciplinas, como Matemática, Geografia, Ciências e até Língua Portuguesa, e de forma conectada com o dia a dia dos alunos. Um exemplo é quando aprendemos sobre porcentagem e juros e usamos isso para entender as faturas do cartão de crédito, boletos e até o impacto das contas de energia no orçamento familiar  \citeonline{giordano2019educaccao}.
+Outro fator importante foi a entrada da educação financeira na Base Nacional Comum Curricular (BNCC). A BNCC trouxe a educação financeira para dentro das escolas, desde o ensino fundamental até o ensino médio. Ela propõe que o tema seja trabalhado em várias disciplinas, como Matemática, Geografia, Ciências e até Língua Portuguesa, e de forma conectada com o dia a dia dos alunos. Um exemplo é quando aprendemos sobre porcentagem e juros e usamos isso para entender as faturas do cartão de crédito, boletos e até o impacto das contas de energia no orçamento familiar  \cite{giordano2019educaccao}.
 
-A BNCC também valoriza o uso da tecnologia para ajudar nesse processo. Ela sugere o uso de planilhas, aplicativos, jogos digitais e simuladores de juros compostos para ajudar os alunos a entenderem melhor como o dinheiro funciona e como se organizar financeiramente  \citeonline{giordano2019educaccao}.
+A BNCC também valoriza o uso da tecnologia para ajudar nesse processo. Ela sugere o uso de planilhas, aplicativos, jogos digitais e simuladores de juros compostos para ajudar os alunos a entenderem melhor como o dinheiro funciona e como se organizar financeiramente  \cite{giordano2019educaccao}.
 
-Hoje, com o avanço da tecnologia e o fácil acesso à internet, surgiram novas formas de aprender sobre finanças: jogos educativos, plataformas gamificadas e até a inteligência artificial estão sendo usadas para ensinar de forma divertida e interativa. Segundo a OECD, ensinar educação financeira desde cedo é uma das formas mais justas e eficazes de alcançar toda uma geração \citeonline{giordano2019educaccao}.
+Hoje, com o avanço da tecnologia e o fácil acesso à internet, surgiram novas formas de aprender sobre finanças: jogos educativos, plataformas gamificadas e até a inteligência artificial estão sendo usadas para ensinar de forma divertida e interativa. Segundo a \cite{oecd2020}, ensinar educação financeira desde cedo é uma das formas mais justas e eficazes de alcançar toda uma geração \cite{giordano2019educaccao}.
 
-Quando as pessoas entendem melhor como lidar com o dinheiro, elas tomam decisões mais equilibradas, evitam dívidas e ajudam a construir uma sociedade mais justa. Como dizem os autores do artigo, a educação financeira deve ser crítica, contextualizada e ligada à realidade dos alunos. Mais do que saber fazer contas, ela ajuda a desenvolver o pensamento crítico e a preparar os jovens para os desafios da vida  \citeonline{giordano2019educaccao}.
+Quando as pessoas entendem melhor como lidar com o dinheiro, elas tomam decisões mais equilibradas, evitam dívidas e ajudam a construir uma sociedade mais justa. Como dizem os autores do artigo, a educação financeira deve ser crítica, contextualizada e ligada à realidade dos alunos. Mais do que saber fazer contas, ela ajuda a desenvolver o pensamento crítico e a preparar os jovens para os desafios da vida  \cite{giordano2019educaccao}.
 
-Por isso, investir em educação financeira nas escolas é investir no futuro de todos nós. Uma população mais consciente financeiramente significa menos inadimplência, mais bem-estar social e uma economia mais forte e equilibrada.
+Por isso, investir em educação financeira nas escolas é investir no futuro de todos. Uma população mais consciente financeiramente significa menos inadimplência, mais bem-estar social e uma economia mais forte e equilibrada.
     
 \subsection{Construção da Educação Financeira no Brasil: Fases, Aprendizados e Aplicações Tecnológicas}
-    A educação financeira tem se tornado um tema central nas políticas públicas brasileiras, especialmente no contexto escolar. Definida como o processo pelo qual indivíduos aprimoram sua compreensão sobre produtos financeiros para tomar decisões informadas e responsáveis, a educação financeira se fortaleceu como ferramenta para o bem-estar econômico e social.
+    A educação financeira tem se tornado um tema central nas políticas públicas brasileiras, especialmente no contexto escolar, segundo \cite{cunha2020mercado}. Definida como o processo pelo qual indivíduos aprimoram sua compreensão sobre produtos financeiros para tomar decisões informadas e responsáveis, a educação financeira se fortaleceu como ferramenta para o bem-estar econômico e social.
 
     No desenvolvimento de sistemas tecnológicos voltados à gestão financeira, compreender o cenário institucional e político da educação financeira no Brasil é essencial para que tais ferramentas se alinhem às diretrizes públicas e tenham maior eficácia.
 
-    A institucionalização da educação financeira no país está ligada a uma agenda internacional de inclusão financeira. Segundo \citeonline{cunha2020mercado}, organismos como a OCDE e a INFE influenciaram sua implementação, promovendo estratégias voltadas ao letramento financeiro desde o início dos anos 2000.
+    A institucionalização da educação financeira no país está ligada a uma agenda internacional de inclusão financeira. Segundo \cite{cunha2020mercado}, organismos como a OCDE e a INFE influenciaram sua implementação, promovendo estratégias voltadas ao letramento financeiro desde o início dos anos 2000.
 
-    No Brasil, a Estratégia Nacional de Educação Financeira (ENEF), formalizada pelo Decreto nº 7.397/2010, articula instituições públicas e privadas, consolidando uma simbiose entre o setor financeiro e políticas governamentais. A atuação da ENEF ocorre por meio de projetos nas escolas, sendo a Associação de Educação Financeira do Brasil (AEF) a principal responsável pela implementação.
+    No Brasil, a Estratégia Nacional de Educação Financeira (ENEF), formalizada pelo Decreto nº 7.397/2010 \cite{decreto7397}, articula instituições públicas e privadas, consolidando uma simbiose entre o setor financeiro e políticas governamentais.(AEF) a principal responsável pela implementação.
 
-    A OCDE desempenha um papel central na formulação das diretrizes globais de educação financeira. Segundo \citeonline{cunha2020mercado}, após a crise de 2008, a organização passou a incentivar a educação financeira como prioridade, principalmente entre crianças e jovens, motivando o Brasil a alinhar sua estratégia aos parâmetros internacionais.
+    A OCDE desempenha um papel central na formulação das diretrizes globais de educação financeira. Segundo \cite{cunha2020mercado}, após a crise de 2008, a organização passou a incentivar a educação financeira como prioridade, principalmente entre crianças e jovens, motivando o Brasil a alinhar sua estratégia aos parâmetros internacionais.
 
-    Embora a expansão da educação financeira pareça positiva, \citeonline{cunha2020mercado} faz uma análise crítica da política pública adotada no Brasil. Para a autora, esse modelo reflete um projeto de sociedade não discutido democraticamente, consolidando um ideal de sujeito consumidor adaptado ao sistema financeiro vigente.
+    Embora a expansão da educação financeira pareça positiva, \cite{cunha2020mercado} faz uma análise crítica da política pública adotada no Brasil. Para a autora, esse modelo reflete um projeto de sociedade não discutido democraticamente, consolidando um ideal de sujeito consumidor adaptado ao sistema financeiro vigente.
 
     A lógica pedagógica estaria sendo substituída por uma lógica mercadológica, esvaziando o potencial emancipador da educação. A pouca participação dos atores sociais interessados reforça essa crítica, levantando questionamentos sobre os impactos reais da educação financeira escolar.
 
@@ -369,26 +366,27 @@ Por isso, investir em educação financeira nas escolas é investir no futuro de
 
     Isso implica transformar as soluções tecnológicas em plataformas de conscientização, promovendo diálogos e personalização do ensino financeiro. A consolidação da educação financeira como política pública no Brasil reflete a expansão do mercado financeiro para novos públicos, especialmente os mais vulneráveis.
 
-    Segundo \citeonline{cunha2020mercado}, a política atual articula instituições nacionais e internacionais sem um diálogo significativo com a comunidade escolar, resultando na inserção de conteúdos técnicos sem participação democrática.
+    Segundo \cite{cunha2020mercado}, a política atual articula instituições nacionais e internacionais sem um diálogo significativo com a comunidade escolar, resultando na inserção de conteúdos técnicos sem participação democrática.
 
 \subsection{Abordagens, Evolução e Impacto no Ensino Escolar}
 
-    A educação financeira desempenha um papel essencial na formação de cidadãos conscientes e autônomos, sendo um tema cada vez mais presente no contexto escolar. De acordo com \citeonline{cordeiro2019uso}, sua relevância tem sido fortalecida por iniciativas como a Estratégia Nacional de Educação Financeira (ENEF), que busca estruturar e disseminar práticas de ensino voltadas à gestão financeira pessoal. No Brasil, esse movimento ganhou força com a inserção da temática na Base Nacional Comum Curricular (BNCC), promovendo habilidades financeiras desde o ciclo de alfabetização.
+    A educação financeira desempenha um papel essencial na formação de cidadãos conscientes e autônomos, sendo um tema cada vez mais presente no contexto escolar. De acordo com \cite{cordeiro2019uso}, sua relevância tem sido fortalecida por iniciativas como a Estratégia Nacional de Educação Financeira (ENEF), que busca estruturar e disseminar práticas de ensino voltadas à gestão financeira pessoal. No Brasil, esse movimento ganhou força com a inserção da temática na Base Nacional Comum Curricular (BNCC), promovendo habilidades financeiras desde o ciclo de alfabetização.
 
-    Considerando o impacto da tecnologia no ensino, softwares de educação financeira podem atuar como facilitadores na construção do conhecimento sobre planejamento econômico. Segundo \citeonline{cordeiro2019uso}, as crianças estão expostas ao consumo desde cedo, sendo influenciadas por propagandas e estímulos mercadológicos, o que reforça a necessidade de uma abordagem pedagógica direcionada. A integração de ferramentas tecnológicas nesse processo pode ampliar a compreensão de conceitos financeiros, permitindo que os alunos vivenciem práticas simuladas de gestão de recursos.
+    Considerando o impacto da tecnologia no ensino, softwares de educação financeira podem atuar como facilitadores na construção do conhecimento sobre planejamento econômico. Segundo \cite{cordeiro2019uso}, as crianças estão expostas ao consumo desde cedo, sendo influenciadas por propagandas e estímulos mercadológicos, o que reforça a necessidade de uma abordagem pedagógica direcionada. A integração de ferramentas tecnológicas nesse processo pode ampliar a compreensão de conceitos financeiros, permitindo que os alunos vivenciem práticas simuladas de gestão de recursos.
 
-    O uso de metodologias interativas tem sido uma tendência na educação financeira, e \citeonline{cordeiro2019uso} destaca as Histórias em Quadrinhos (HQs) como um recurso eficaz para engajar alunos no aprendizado. As HQs podem ser incorporadas a softwares educacionais para ilustrar situações cotidianas, como orçamento, consumo consciente e poupança, tornando a aprendizagem mais acessível e envolvente. Além disso, segundo os autores, a representação gráfica estimula o pensamento crítico e promove a contextualização do ensino financeiro dentro da realidade das crianças.
+    O uso de metodologias interativas tem sido uma tendência na educação financeira, e \cite{cordeiro2019uso} destaca as Histórias em Quadrinhos (HQs) como um recurso eficaz para engajar alunos no aprendizado. As HQs podem ser incorporadas a softwares educacionais para ilustrar situações cotidianas, como orçamento, consumo consciente e poupança, tornando a aprendizagem mais acessível e envolvente. Além disso, segundo os autores, a representação gráfica estimula o pensamento crítico e promove a contextualização do ensino financeiro dentro da realidade das crianças.
 
-    Outro aspecto relevante para o desenvolvimento de um software de educação financeira é sua adequação às diretrizes da BNCC. Conforme \citeonline{cordeiro2019uso}, essa estrutura curricular enfatiza temas como o sistema monetário brasileiro, o reconhecimento de cédulas e moedas e a equivalência de valores, fundamentais para a construção de uma base sólida no aprendizado financeiro. Um software pode potencializar esse aprendizado por meio de desafios interativos, simuladores de transações e ferramentas de acompanhamento do progresso do usuário.
+    Outro aspecto relevante para o desenvolvimento de um software de educação financeira é sua adequação às diretrizes da BNCC. Conforme \cite{cordeiro2019uso}, essa estrutura curricular enfatiza temas como o sistema monetário brasileiro, o reconhecimento de cédulas e moedas e a equivalência de valores, fundamentais para a construção de uma base sólida no aprendizado financeiro. Um software pode potencializar esse aprendizado por meio de desafios interativos, simuladores de transações e ferramentas de acompanhamento do progresso do usuário.
 
     Por fim, ressalta-se que a educação financeira não deve apenas instruir sobre consumo responsável, mas também incentivar a autonomia crítica dos estudantes em relação ao sistema econômico. Softwares educacionais podem ser projetados para estimular essa consciência, promovendo reflexões sobre decisões financeiras e incentivando o planejamento sustentável. Dessa forma, integrar conceitos teóricos a soluções digitais pode contribuir significativamente para a formação de indivíduos mais preparados para lidar com desafios financeiros ao longo da vida.
 
-    Além da abordagem tradicional, novas metodologias tecnológicas, como plataformas gamificadas, têm se mostrado eficientes na aprendizagem financeira. Segundo \citeonline{cordeiro2019uso}, a inclusão de elementos interativos e desafios práticos pode aumentar o engajamento dos estudantes, tornando a experiência de aprendizagem mais dinâmica e eficaz.
+    Além da abordagem tradicional, novas metodologias tecnológicas, como plataformas gamificadas, têm se mostrado eficientes na aprendizagem financeira. Segundo \cite{cordeiro2019uso}, a inclusão de elementos interativos e desafios práticos pode aumentar o engajamento dos estudantes, tornando a experiência de aprendizagem mais dinâmica e eficaz.
 
 \section{Materiais e Métodos}
 Para o desenvolvimento da plataforma Aurum, foram utilizadas ferramentas tecnológicas modernas, com o objetivo de garantir uma estrutura escalável e de fácil manutenção. Os materiais empregados abrangem desde linguagens de programação e banco de dados até ambientes de modelagem e controle de versões. No que diz respeito aos métodos, adotou-se uma abordagem com foco em prototipação rápida e validação contínua, permitindo ajustes ágeis durante todo o processo de construção do sistema.
 
 \subsection{Arquitetura de software}
+A arquitetura do projeto Aurum, elaborada pelo grupo Moneto, foi concebida para garantir escalabilidade, segurança e modularidade, estruturando o sistema em camadas que integram gestão de dados, APIs e interfaces responsivas. Baseada em princípios de microserviços, permite evolução contínua e manutenção simplificada, enquanto incorpora práticas de segurança e monitoramento, refletindo a visão do grupo em construir uma solução robusta e alinhada às demandas do mercado.
 \begin{figure}[H]  % força a posição exata
     \centering
     \begin{adjustbox}{width=0.70\paperwidth,center}
@@ -396,7 +394,7 @@ Para o desenvolvimento da plataforma Aurum, foram utilizadas ferramentas tecnol�
     \end{adjustbox}
     \fonte{overarqui.pgn}
     \label{gra_logo2}
-
+\textbf{Fonte:} Grupo Moneto (2025)
     \vspace{2mm}
     {\fontsize{13pt}{15pt}\selectfont
     
@@ -405,9 +403,10 @@ Para o desenvolvimento da plataforma Aurum, foram utilizadas ferramentas tecnol�
 
 
 
-
+\newpage
 \subsection{Equipe}
-
+Para facilitar a visualização das responsabilidades e garantir uma organização clara do trabalho, elaboramos a tabela de divisão da equipe, que apresenta de forma estruturada os integrantes do grupo, suas funções específicas e áreas de atuação dentro do projeto. Esse recurso permite compreender rapidamente como cada membro contribui para o desenvolvimento, assegurando eficiência, colaboração e alinhamento entre todas as etapas.
+    \begin{table}[h!]
     \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
         Papéis         & Arthur & Francine & Gabriel & Gustavo & Rafael & Thomas \\ \hline
@@ -419,8 +418,10 @@ Para o desenvolvimento da plataforma Aurum, foram utilizadas ferramentas tecnol�
         Design         &        &          &         &         &        & X      \\ \hline
         Gestão         &        & X        &         &         &        & X      \\ \hline
     \end{tabular}
-\fonte{Autores.}
-
+\\
+\textbf{Fonte:} Grupo Moneto (2025)
+\end{table}
+\\
 
     
 
@@ -476,62 +477,14 @@ Os protocolos utilizados no sistema incluem:
 
 
 
-\subsection{Requisitos}
-Serão apresentados os requisitos que dierecionam o desenvolvimento do sistema. Os requisitos foram divididos em duas categorias: funcionais, que descrevem os comportamentos e funcionalidades esperadas do sistema; e não funcionais, que estabelecem restrições e qualidades que o sistema deve possuir. Esses requisitos foram definidos com base nos objetivos do projeto e nas necessidades dos usuários finais.
+\subsection{Regras de Negócio e Requisitos  }
+Serão apresentados as regras de negóascio e os requisitos que direcionam o desenvolvimento do sistema. Os requisitos foram divididos em duas categorias: funcionais, que descrevem os comportamentos e funcionalidades esperadas do sistema; e não funcionais, que estabelecem restrições e qualidades que o sistema deve possuir. Esses requisitos foram definidos com base nos objetivos do projeto e nas necessidades dos usuários finais.
 
-
-\subsubsection{Requisitos Funcionais}
-
+\newpage
+\subsubsection{Regras de Negócio}
 \begin{center}
-\begin{tabular}{|c|l|p{6cm}|}
-\hline
-\textbf{Código} & \textbf{Requisito} & \textbf{Descrição} \\
-\hline
-RF01 & Cadastrar usuário & O usuário deve ser capaz de se cadastrar na plataforma.\\
-\hline
-RF02 & Teste de nível & O usuário deve fazer um teste de até 12 questões para recomendar as tarefas de acordo com o nível.\\
-\hline
-RF03 & Disponibilização de tarefa & As tarefas devem ser disponibilizadas para o usuário de acordo com sua aptidão. \\
-\hline
-RF04 & Sistema de pontuação & O sistema deve contabilizar os pontos do usuário em cada tarefa realizada de acordo com o desempenho. \\
-\hline
-RF05 & Premiações por mérito & O sistema deve distribuir premiações por dias de conclusão de tarefas consecutivos, tarefas feitas com perfeição, entre outros. \\
-\hline
-RF06 & Criação de grupos & O sistema deve disponibilizar a criação de grupos pelo usuário, adicionando amigos de sua lista ao grupo. \\
-\hline
-RF07 & Adição de amigos & O usuário deve ser capaz de enviar pedidos de amizade para outros usuários. \\
-\hline
-RF08 & Compras na loja & As compras devem ser realizadas utilizando as "Aurum Coins", moedas do sistema. As compras não são possíveis com dinheiro real. \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
 
-
-\subsubsection{Requisitos Não Funcionais}
-
-\begin{center}
-\vspace{-0.0cm}
-
-\begin{tabular}{|c|l|p{8cm}|}
-\hline
-\textbf{Código} & \textbf{Requisito} & \textbf{Descrição} \\
-\hline
-RNF01 & Disponibilidade & O servidor deve estar disponível 24 horas por dia, 7 dias por semana, com tolerância de 0,5\% de falhas. \\
-\hline
-RNF02 & Desempenho & O servidor deve responder em, no máximo, 0,5 segundos a todas as requisições recebidas. \\
-\hline
-RNF03 & Compatibilidade & Deve ser compatível com os principais sistemas operacionais (Windows, Linux). \\
-\hline
-RNF04 & Otimização & O tempo de resposta para atualização da contagem de pontos da aplicação deve ser de no máximo 3 segundos. \\
-\hline
-RNF05 & Acessibilidade & O sistema deve ser acessível para Usuários que utilizam dispositivos adaptados (Alto Contraste, Redução de Movimento e Daltonismo). \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Regras de Negócio}
-
-\begin{center}
 \vspace{-0.0cm}
 
 \begin{tabular}{|c|l|p{8cm}|}
@@ -540,7 +493,7 @@ RNF05 & Acessibilidade & O sistema deve ser acessível para Usuários que utiliz
 \hline
 RN01 & Senhas & A senha do usuário deverá conter de 6 a 16 dígitos, contendo pelo menos uma letra maiúscula, uma letra minúscula, um carácter especial e um número. \\
 \hline
-RM02 & Cadastro & Usuário só poderá acessar o sistema se ele possuir um cadastro; \\
+RN02 & Cadastro & Usuário só poderá acessar o sistema se ele possuir um cadastro; \\
 \hline
 RN03 & Módulos de Ensino & Os módulos são liberados de forma sequencial. Cada módulo inclui teoria simples, exemplos práticos e mini-testes. O usuário só avança de nível se obtiver um desempenho mínimo de 70\% nos testes. \\
 \hline
@@ -569,22 +522,75 @@ RN13 & Teste de nivelamento & O usuário executará um teste para medir seu conh
 RN14 & Idiomas & O usuário poderá selecionar em qual língua poderá ler o documento. \\
 \hline
 \end{tabular}
+\caption*{\small Fonte: Grupo Moneto (2025)}
+\end{table}
 \end{center}
 
+\subsubsection{Requisitos Funcionais}
 
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|p{6cm}|}
+\hline
+\textbf{Código} & \textbf{Requisito} & \textbf{Descrição} \\
+\hline
+RF01 & Cadastrar usuário & O usuário deve ser capaz de se cadastrar na plataforma.\\
+\hline
+RF02 & Teste de nível & O usuário deve fazer um teste de até 12 questões para recomendar as tarefas de acordo com o nível.\\
+\hline
+RF03 & Disponibilização de tarefa & As tarefas devem ser disponibilizadas para o usuário de acordo com sua aptidão. \\
+\hline
+RF04 & Sistema de pontuação & O sistema deve contabilizar os pontos do usuário em cada tarefa realizada de acordo com o desempenho. \\
+\hline
+RF05 & Premiações por mérito & O sistema deve distribuir premiações por dias de conclusão de tarefas consecutivos, tarefas feitas com perfeição, entre outros. \\
+\hline
+RF06 & Criação de grupos & O sistema deve disponibilizar a criação de grupos pelo usuário, adicionando amigos de sua lista ao grupo. \\
+\hline
+RF07 & Adição de amigos & O usuário deve ser capaz de enviar pedidos de amizade para outros usuários. \\
+\hline
+RF08 & Compras na loja & As compras devem ser realizadas utilizando as "Aurum Coins", moedas do sistema. As compras não são possíveis com dinheiro real. \\
+\hline
+\end{tabular}
+\caption*{\small Fonte: Grupo Moneto (2025)}
+\end{table}
+
+\newpage
+\subsubsection{Requisitos Não Funcionais}
+\vspace*{-6pt} % puxe o conteúdo para perto do título (ajuste fino)
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|p{8cm}|}
+\hline
+\textbf{Código} & \textbf{Requisito} & \textbf{Descrição} \\
+\hline
+RNF01 & Disponibilidade & O servidor deve estar disponível 24 horas por dia, 7 dias por semana, com tolerância de 0,5\% de falhas. \\
+\hline
+RNF02 & Desempenho & O servidor deve responder em, no máximo, 0,5 segundos a todas as requisições recebidas. \\
+\hline
+RNF03 & Compatibilidade & Deve ser compatível com os principais sistemas operacionais (Windows, Linux). \\
+\hline
+RNF04 & Otimização & O tempo de resposta para atualização da contagem de pontos da aplicação deve ser de no máximo 3 segundos. \\
+\hline
+RNF05 & Acessibilidade & O sistema deve ser acessível para usuários que utilizam dispositivos adaptados (Alto Contraste, Redução de Movimento e Daltonismo). \\
+\hline
+\end{tabular}
+\caption*{\small Fonte: Grupo Moneto (2025)}
+\end{table}
+
+
+\newpage
 \subsection{Modelagem}
+A modelagem do sistema Aurum foi estruturada a partir da definição clara de requisitos funcionais e não funcionais, representados em diagramas e tabelas que descrevem as principais interações entre usuários e funcionalidades. Foram utilizados modelos conceituais e lógicos para organizar dados e processos, garantindo consistência na arquitetura e suporte às funcionalidades propostas. Essa abordagem permitiu visualizar de forma objetiva o fluxo de informações e validar a viabilidade técnica antes da implementação.
 \hypertarget{sec:modelagem}{}  % cria destino para o link de volta
 \begin{figure}[H]  % força a posição exata
     \centering
     \begin{adjustbox}{width=0.70\paperwidth,center}
         \includegraphics{graficos/overleafbdd.jpg}
     \end{adjustbox}
-    \fonte{overleafbdd}
+    \caption*{\small Fonte: Grupo Moneto (2025) }
     \label{gra_logo}
-
     \vspace{2mm}
-    {\fontsize{13pt}{15pt}\selectfont
-    OBS: Mais informações Clique em \hyperlink{apendiceB}{Apêndice B}}
 \end{figure}
 
 \hypertarget{sec:prot}{} % cria o alvo do link
@@ -592,18 +598,13 @@ RN14 & Idiomas & O usuário poderá selecionar em qual língua poderá ler o doc
 A prototipagem do design da aplicação foi feita pelo aplicativo Canva. Em
 anexo, há as telas feitas na plataforma, no \hyperlink{apendiceC}{Apêndice C}, além da tela de início a seguir.
 
-\begin{figure}[H]  % força a posição exata
+\begin{figure}[H]
     \centering
-    \begin{adjustbox}{width=0.70\paperwidth,center}
-        \includegraphics{AURUM.png}
-    \end{adjustbox}
-    \fonte{AURUM.png}
+    \includegraphics[width=0.7\paperwidth]{AURUM.png}
+    \captionof{figure}{Logo do Projeto Aurum}
     \label{gra_logo2}
-
-    \vspace{2mm}
-    {\fontsize{13pt}{15pt}\selectfont ...}
+    {\small Autor: Grupo Moneto (2025) — Fonte: AURUM.png}
 \end{figure}
-
 
 
 
@@ -644,20 +645,17 @@ Quiz & Ao ser completado com sucesso, permite avanço imediato para o próximo m
 \vspace{1cm} 
 
 \section{Links Úteis}
-\subsection{Vídeo Gource}
-
-https://youtu.be/spYiAlmVfAo?si=OsCPnC6-O-OKxRZQ
-
-\subsection{Aplicação Online}
-
-https://aurumproject-production-a18f.up.railway.app
-
-
-\subsection{Repositório Github}
-
-https://github.com/gabi-tarifa/AurumProject/blob/main/Documentacao/main.tex
-
-
+\begin{table}[h!]
+\centering
+\caption{Links Úteis do Projeto Aurum}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Recurso} & \textbf{Link} \\ \hline
+Vídeo Gource & \url{https://youtu.be/spYiAlmVfAo?si=OsCPnC6-O-OKxRZQ} \\ \hline
+Aplicação Online & \url{https://aurumproject-production-a18f.up.railway.app} \\ \hline
+Repositório GitHub & \url{https://github.com/gabi-tarifa/AurumProject/blob/main/Documentacao/main.tex} \\ \hline
+\end{tabularx}
+\end{table}
 
 
 \section{Problemas Enfrentados}
@@ -672,6 +670,8 @@ Durante os testes do sistema, foram identificados problemas funcionais e estrutu
 Todos os problemas acima foram solucionados nas versões finais do sistema.
 
 \section{Resultados e Discussão}
+
+Os testes realizados demonstraram que todas as funcionalidades previstas foram implementadas com sucesso e operam de forma estável, incluindo cadastro com critérios de segurança, jogabilidade com quizzes e módulos interativos, configurações completas, rankings e loja funcional. A abordagem iterativa de desenvolvimento possibilitou correções rápidas e eficazes, garantindo uma experiência fluida e confiável para o usuário. Dessa forma, o sistema atingiu um estágio consolidado, pronto para uso em ambiente real e capaz de oferecer suporte efetivo ao ensino de educação financeira por meio de recursos gamificados e acessíveis.
 
 \subsection{Contexto dos Testes}
 
@@ -688,31 +688,15 @@ As funcionalidades previstas estão operando corretamente:
 
 \subsection{Discussão}
 
-O sistema alcançou maturidade funcional completa, com todas as funcionalidades operando de forma estável e intuitiva. A abordagem iterativa permitiu ajustes rápidos e eficazes, e as melhorias implementadas proporcionam uma experiência imersiva e confiável. O Aurum está pronto para uso em ambiente real, oferecendo suporte efetivo ao ensino de educação financeira.
+O sistema atingiu estabilidade plena, com todas as funcionalidades operando de forma consistente e intuitiva. A abordagem iterativa possibilitou ajustes rápidos e eficazes, e as melhorias implementadas proporcionam uma experiência imersiva e confiável. O Aurum encontra-se pronto para uso em ambiente real, oferecendo suporte efetivo ao ensino de educação financeira.
 
 \section{Considerações Finais}
 
+A plataforma Aurum apresenta uma solução digital gamificada para suprir lacunas em educação financeira no Brasil, voltada a públicos com baixa formação financeira e adultos a partir dos 14 anos. A proposta integra objetivos pedagógicos em micro-módulos e utiliza metodologias ágeis de desenvolvimento (Scrum, prototipação rápida) e uma arquitetura técnica viável (MySQL, Flask/Python, front-end em HTML5/CSS3/JavaScript), priorizando acessibilidade, personalização e impacto comportamental.
 
+O projeto alcançou estágio funcional consolidado, com todas as funcionalidades previstas implementadas e testadas com sucesso. A plataforma garante navegação fluida, quizzes funcionais, recompensas integradas, edição completa de perfil e recursos adicionais como loja, rankings, sistema de som e login via redes sociais.
 
-A plataforma Aurum propõe uma solução digital gamificada para suprir lacunas significativas em educação financeira no Brasil, direcionada especialmente a públicos com baixa formação financeira e adultos da faixa a partir dos 14 anos. A proposta integra objetivos pedagógicos micro-módulos. Utilizamos metodologias de desenvolvimento ágeis (Scrum, prototipação rápida) e uma arquitetura técnica viável (MySQL, Flask/Python, front-end em HTML5/CSS3/JavaScript), buscando acessibilidade, personalização e impacto comportamental.
-
-Recapitulação dos principais pontos
-
-    Problema: déficit de acesso e compreensão em educação financeira, com consequente uso inadequado do crédito e baixa prática de planejamento.
-
-    Objetivo: desenvolver uma plataforma web que ensine finanças de forma simples, prática e avaliativa, com testes e desafios.
-
-    Metodologia e materiais: Scrum com sprints curtos; MER modelado em Draw.io; stack MySQL, Flask/Python, HTML5/CSS3/JavaScript; versionamento em GitHub.
-
-    Público e validação: pesquisa com 217 participantes indicou forte demanda por formato interativo e preferência por aprendizados visuais e práticos.
-
-    Recursos pedagógicos: aprendizagem adaptativa, gamificação, HQs e simuladores para contextualizar conceitos e promover mudança de hábitos.
-
-O projeto Aurum atingiu um estágio funcional consolidado, com todas as funcionalidades previstas implementadas e testadas com sucesso. A plataforma garante navegação fluida, quizzes funcionais, recompensas integradas, edição completa de perfil e recursos adicionais como loja, rankings, sistema de som e login via redes sociais.  
-
-A abordagem iterativa adotada pela equipe permitiu ajustes rápidos, garantindo que o sistema atendesse às expectativas técnicas e pedagógicas. Com isso, o Aurum oferece uma solução gamificada, acessível e personalizada para promover autonomia e planejamento financeiro entre os usuários.
-
-
+A abordagem iterativa permitiu ajustes rápidos, assegurando que o sistema atendesse às expectativas técnicas e pedagógicas. Dessa forma, o Aurum oferece uma solução gamificada, acessível e personalizada para promover autonomia e planejamento financeiro entre os usuários.
 
 
 
@@ -742,11 +726,7 @@ A abordagem iterativa adotada pela equipe permitiu ajustes rápidos, garantindo 
 % ---
 \newpage
 \begin{apendicesenv}
- {\Large
-\begin{center}
-    \bigskip
-\noindent\hyperref[subsec:pesquisas]{Clique aqui para voltar à Seção 2.1 Pesquisas Realizadas}
-\end{center}
+
 }
 % ----------------------------------------------------------
 \chapter{Pesquisa realizada}
