@@ -1,228 +1,294 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quizes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ _('quiz_modo_treino_titulo') }} - Aurum</title>
+
+  <!-- seu CSS principal (onde já está todo o CSS que você mandou) -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
-  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
 </head>
-<body {%if tema == 'cla'%} class="claro" {%endif%}>
-  <div class="containerTP">
-    <!-- MENU LATERAL -->
-    
-    <nav class="sidebar {%if tema == 'cla'%} claro {%endif%}">
-      {% set sufixo = '-claro' if tema != 'cla' else '' %}
+<body {% if tema == 'cla' %} class="claro" {% endif %}>
+  <div id="quiz-container" {% if tema == 'cla' %} class="claro" {% endif %}>
 
-      <a href="{{ url_for('starting_page') }}">
-        <div class="menu-item">
-          <img src="{{ url_for('static', filename='img/open-book' ~ sufixo ~ '.png') }}" class="icon" alt="Aprender" />
-          <span>{{ _('Aprender') }}</span>
-        </div>
-      </a>
+    <div class="header header-with-back {% if tema == 'cla' %}claro{% endif %}">
+      <button class="back-btn header-with-back__back" onclick="history.back()">← {{ _('Voltar') }}</button>
 
-      <a href="{{ url_for('quiz_page') }}">
-        <div class="menu-item active {% if tema == 'cla' %}claro{% endif %}">
-          <img src="{{ url_for('static', filename='img/working-hours' ~ sufixo ~ '.png') }}" class="icon" alt="Quiz" />
-          <span>{{ _('Quiz') }}</span>
-        </div>
-      </a>
+      <div style="text-align:center">
+        <div class="title">{{ _('quiz_modo_treino_titulo') }}</div>
+        <div class="meta">{{ _('quiz_modo_treino_instrucao') }}</div>
+      </div>
 
-      <a href="{{ url_for('ranking_page') }}">
-        <div class="menu-item">
-          <img src="{{ url_for('static', filename='img/trophy' ~ sufixo ~ '.png') }}" class="icon" alt="Ranking" />
-          <span>{{ _('Ranking') }}</span>
-        </div>
-      </a>
-
-      <a href="{{ url_for('perfil_page') }}">
-        <div class="menu-item">
-          <img src="{{ url_for('static', filename='img/profile' ~ sufixo ~ '.png') }}" class="icon" alt="Perfil" />
-          <span>{{ _('Perfil') }}</span>
-        </div>
-      </a>
-
-      <a href="{{ url_for('store_page') }}">
-        <div class="menu-item">
-          <img src="{{ url_for('static', filename='img/store' ~ sufixo ~ '.png') }}" class="icon" alt="Loja" />
-          <span>{{ _('Loja') }}</span>
-        </div>
-      </a>
-      <div class="menu-item" id="openMais">
-        <img src="{{ url_for('static', filename='img/info' ~ sufixo ~ '.png') }}" class="icon" alt="Mais">
-        {{ _('Mais') }}
-     <!-- Submenu do botão "Mais" -->
-    <div class="submenu-mais oculto" id="submenuMais">
-      <ul>
-        <li><a href="/ajuda"><img src="{{ url_for('static', filename='img//help.png') }}" class="smallimage" alt="Ajuda"><span class="ajuda">{{ _('Ajuda') }}</span></a></li>
-        <li><a href="/config"><img src="{{ url_for('static', filename='img//gear.png') }}" class="smallimage" alt="Configurações"><span class="config">{{ _('Configurações') }}</span></a></li>
-      </ul>
+      <div id="meta-right">
+        <div id="timer">{{ _('Tempo') }}: --:--</div>
+      </div>
     </div>
-      </div>
-      <div class="menu-item">
-        <a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="icon" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a>
-      </div>
-    </nav>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="quiz-content">
-      <div class="modulo modulo1">
-        <h2>Quiz 1</h2>
-        <p>{{ _('Concluído') }}</p>
-      </div>
-
-      <div class="modulo modulo4">
-        <h2>Quiz 2</h2>
-        <div class="progress-bartp" style="width: 50%;">
-          <div class="progresstp" style="width: 21%;">21%</div>
-        </div>
-      </div>
-
-      <div class="modulo modulo5">
-        <h2>Quiz 3</h2>
-        <p style="font-size: 15px;"><br> {{ _('Encerre o quiz 2 para prosseguir') }}</p>
-        <button hidden="true"></button>
-      </div>
-
-      <div class="modulo modulo6">
-        <h2>Quiz 4</h2>
-        <p style="font-size: 15px;"><br> {{ _('Encerre o quiz 3 para prosseguir') }}</p>
-        <button hidden="true"></button>
-      </div>
-    
-      </main>
-
-
-    <!-- PAINEL LATERAL DIREITO -->
-    <aside class="info-box">
-      <div class="info {%if tema == 'cla'%} claro {%endif%}">
-        <span class="golden">{{ coins }}</span>
-        <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="icon">
-      </div>
-
-      <div class="info {%if tema == 'cla'%} claro {%endif%}">
-          <img src="{{ url_for('static', filename='img/calendar.png') }}" class="icon">
-          <span class="golden">{{ ofensiva.sequencia_atual }}</span> <br>        
-          <span class="darkgolden">
-              {{ ngettext('Dia consecutivo', 'Dias consecutivos', ofensiva.sequencia_atual) }}
-          </span>
-      </div>
-
-
-      <div class="info {%if tema == 'cla'%} claro {%endif%}">
-        <img src="{{ url_for('static', filename='img//award.png') }}" alt="Trofeu" class="icon">
-          <span class="golden">
-            {{ ofensiva.recorde }}
-          </span><br>
-        <span class="darkgolden">{{_('Recorde') }}</span>
-      </div>
-
-      <div class="info {%if tema == 'cla'%} claro {%endif%}">
-        <span class="golden">{{ pontos }}</span> <br>
-        <span class="darkgolden">{{ _('Total de Aurum Points') }}</span>
-      </div>
-
-      <div class="info {%if tema == 'cla'%} claro {%endif%}">
-        <span class="golden">#{{ posicao_ranking }}</span> <br>
-        <span class="darkgolden">{{ _('Posição no Ranking') }}</span>
-      </div>
-
-      <div class="info {%if tema == 'cla'%} claro {%endif%}">
-  <span>{{_('Registro Semanal')}}</span>
-  <div class="registro-semanal">
-    {% for concluido in ofensiva.dias_semana %}
-      {% set index = loop.index0 %}
-      {% if concluido %}
-        <!-- Dia concluído -->
-        <div class="dia concluido"></div>
-      {% elif index == dia_semana %}
-        <!-- Dia atual ainda não concluído -->
-        <div class="dia atual"></div>
-      {% else %}
-        <!-- Futuro da semana -->
-        <div class="dia futuro"></div>
-      {% endif %}
-    {% endfor %}
-  </div>
-  <span class="darkgolden">{{_('Recompensa: 50')}} </span>
-  <img src="{{ url_for('static', filename='img//stack-of-coins.png') }}" class="smallimage" alt="moedas">
-          {% if semana_completa %}
-    <div class="bonus-confirmado">
-      ✅ {{_('Semana concluída! Você receberá sua recompensa.')}}'
+    <!-- Intro / botão iniciar -->
+    <div id="intro" class="intro">
+      <button id="btnStart" class="btn">{{ _('botao_iniciar_quiz') }}</button>
     </div>
-  {% endif %}
-</div>
-      
-<div class="info {%if tema == 'cla'%} claro {%endif%}">
-        <span class="golden" style="font-size: large;">Top 5:</span>
-        <ul class="top5-list">
-          {% for usuario in top5_bloco %}
-            {% set classes = [] %}
-            {% if loop.index == 1 %}
-              {% set _ = classes.append('minifirst') %}
-            {% elif loop.index == 2 %}
-              {% set _ = classes.append('minisecond') %}
-            {% elif loop.index == 3 %}
-              {% set _ = classes.append('minithird') %}
-            {% endif %}
-            {% if usuario.id == current_user.id %}
-              {% set _ = classes.append('miniownplayer') %}
-            {% endif %}
 
-            <li class="{{ ' '.join(classes) }}">
-              <span>#{{ loop.index }}</span>
-              <span>{{ usuario.nome }}</span>
-            </li>
-          {% endfor %}
-        </ul>
+    <!-- AREA DO QUIZ (invisível até iniciar) -->
+    <div id="quizArea" class="hidden">
+      <div class="questions" id="questionsContainer">
+        <!-- perguntas geradas via JS -->
       </div>
 
-    </aside>
+      <!-- controles (mantive o wrapper caso queira botões extras no futuro) -->
+      <div class="controls" aria-hidden="true">
+        <!-- botão finalizar removido por opção do fluxo automático -->
+      </div>
+    </div>
+
+
+
   </div>
-    <script> window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }}; </script>
-    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
-<script>
-  const maisBtn = document.getElementById('openMais');
-  const submenuMais = document.getElementById('submenuMais');
 
-  // Alternar visibilidade ao clicar
-  maisBtn.addEventListener('click', () => {
-    submenuMais.classList.toggle('oculto');
-  });
+  <!-- ===== MODAL PREMIUM DE RESULTADO (M3) ===== -->
+  <div id="resultModalOverlay" aria-hidden="true">
+    <div id="resultModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div id="modalTitle"></div>
+        <div id="modalPercent" aria-live="polite"></div>
 
-  // Ocultar submenu ao clicar fora
-  document.addEventListener('click', (event) => {
-    if (!submenuMais.contains(event.target) && !maisBtn.contains(event.target)) {
-      submenuMais.classList.add('oculto');
-    }
-  });
-</script>
-<script>
-  // Valor dinâmico vindo do backend
-  window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
-  const musicadasessao = {{ musica_tocada | tojson }};
-  const volumeMusicaBanco = {{ volume_musica }}
-</script>
-<script src="{{ url_for('static', filename='js/musics.js') }}"></script>
-<script src="{{ url_for('static', filename='js/popup.js') }}"></script>
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    {% if session.get('popup_conquistas') %}
-      const conquistas = {{ session.get('popup_conquistas') | tojson }};
-      let delayTotal = 0;
-      
-      // Espera o áudio carregar e o JS principal estar disponível
-      setTimeout(() => {
-        conquistas.forEach((c) => {
-          const duracao = c.raridade === "rara" ? 11000 : 5000;
-          exibirConquistaPopup(c, delayTotal);
-          delayTotal += duracao + 200; // adiciona pequena pausa entre popups
-        });
-      }, 1000); // leve atraso pra garantir inicialização
-    {% endif %}
-  });
-</script>
+        <div class="modal-badges">
+            <div id="modalPoints" class="modal-badge" aria-hidden="true"></div>
+            <div id="modalCoins" class="modal-badge" aria-hidden="true"></div>
+        </div>
 
+        <div id="modalButtons">
+            <button id="modalBackBtn" onclick="history.back()">
+                {{ _('Voltar') }}
+            </button>
+        </div>
+    </div>
+  </div>
+
+  <!-- scripts (cole o JS abaixo no lugar do script do quiz) -->
+  <!-- o JS completo está no bloco 2 -->
 </body>
 </html>
+
+  <script>
+window.SONS_ATIVOS = {{ 'true' if sons_ativos else 'false' }};
+</script>
+<script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+
+<script>
+/* ------------ LÓGICA DO QUIZ ------------- */
+
+// elementos
+const btnStart = document.getElementById('btnStart');
+const quizArea = document.getElementById('quizArea');
+const intro = document.getElementById('intro');
+const questionsContainer = document.getElementById('questionsContainer');
+const timerEl = document.getElementById('timer');
+
+const modalOverlay = document.getElementById('resultModalOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalPercent = document.getElementById('modalPercent');
+const modalPoints = document.getElementById('modalPoints');
+const modalCoins = document.getElementById('modalCoins');
+const modalBackBtn = document.getElementById('modalBackBtn');
+
+let QUESTIONS = [];   // array recebido do backend
+let ANSWERS = {};     // id_conteudo -> escolha (índice)
+let REMAINING = 0;
+let TIMER = null;
+
+// helper time formatter
+function formatTime(s){
+  const m = Math.floor(s/60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2,'0')}`;
+}
+
+// iniciar quiz
+btnStart.addEventListener('click', async () => {
+  intro.style.display = 'none';
+  quizArea.classList.remove('hidden');
+  hideModal();
+
+  try {
+    const resp = await fetch('/api/quiz/start');
+    if (!resp.ok) {
+      const err = await resp.json().catch(()=>({error:'Erro'}));
+      alert(err.error || "{{ _('Erro ao carregar perguntas.') }}");
+      intro.style.display = '';
+      quizArea.classList.add('hidden');
+      return;
+    }
+
+    const data = await resp.json();
+    QUESTIONS = data.perguntas || [];
+    REMAINING = data.tempo || {{ QUIZ_TIME_SECONDS if QUIZ_TIME_SECONDS is defined else 120 }};
+
+    renderQuestions();
+    startTimer();
+
+  } catch (e) {
+    alert("{{ _('Erro ao carregar perguntas.') }}");
+    intro.style.display = '';
+    quizArea.classList.add('hidden');
+  }
+});
+
+// render das perguntas (usa alternativas já traduzidas vindas do backend)
+function renderQuestions(){
+  questionsContainer.innerHTML = '';
+  ANSWERS = {};
+
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.dataset.id = q.id_conteudo;
+
+    const title = document.createElement('div');
+    title.className = 'question-title';
+    title.textContent = `${qi + 1}. ${q.pergunta}`;
+    card.appendChild(title);
+
+    // alternativas: backend envia array de objetos {texto, indice}
+    q.alternativas.forEach((alt, ai) => {
+      const opt = document.createElement('button');
+      opt.className = 'option';
+      opt.type = 'button';
+      opt.textContent = alt.texto ?? alt; // compatibilidade (caso backend envie string)
+      opt.dataset.choice = ai;
+      opt.onclick = () => handleChoice(q.id_conteudo, ai, opt, card);
+      card.appendChild(opt);
+    });
+
+    questionsContainer.appendChild(card);
+  });
+}
+
+// quando usuário escolhe alternativa
+async function handleChoice(id_conteudo, choiceIndex, clickedBtn, card){
+  if (typeof ANSWERS[id_conteudo] !== 'undefined') return; // já respondeu
+
+  try {
+    const resp = await fetch('/api/quiz/check_single', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_conteudo: id_conteudo, choice: choiceIndex })
+    });
+
+    if (!resp.ok) {
+      alert("{{ _('Erro ao verificar resposta.') }}");
+      return;
+    }
+
+    const data = await resp.json();
+    const acertou = !!data.acertou;
+
+    // marca localmente
+    ANSWERS[id_conteudo] = choiceIndex;
+
+    // desabilita opções e aplica classes
+    const opts = Array.from(card.querySelectorAll('.option'));
+    opts.forEach((b, idx) => {
+      b.disabled = true;
+      b.classList.add('disabled');
+      if (idx === choiceIndex) {
+        b.classList.add(acertou ? 'correct' : 'wrong');
+      }
+    });
+
+    // se todas respondidas -> finalizar automaticamente
+    if (Object.keys(ANSWERS).length === QUESTIONS.length) {
+      setTimeout(() => finalizeQuiz(), 600);
+    }
+
+  } catch (e) {
+    alert("{{ _('Erro ao verificar resposta.') }}");
+  }
+}
+
+// timer principal
+function startTimer(){
+  timerEl.textContent = '{{ _("Tempo") }}: ' + formatTime(REMAINING);
+  if (TIMER) clearInterval(TIMER);
+
+  TIMER = setInterval(() => {
+    REMAINING--;
+    timerEl.textContent = '{{ _("Tempo") }}: ' + formatTime(REMAINING);
+
+    if (REMAINING <= 0) {
+      clearInterval(TIMER);
+      finalizeQuiz();
+    }
+  }, 1000);
+}
+
+// mostra modal
+function showModal(){
+  modalOverlay.style.display = 'flex';
+  modalOverlay.setAttribute('aria-hidden', 'false');
+}
+
+// esconde modal
+function hideModal(){
+  modalOverlay.style.display = 'none';
+  modalOverlay.setAttribute('aria-hidden', 'true');
+}
+
+// finalizar quiz: envia payload para /api/quiz/submit e abre modal
+async function finalizeQuiz(){
+  if (TIMER) { clearInterval(TIMER); TIMER = null; }
+
+  const payload = { answers: [] };
+  QUESTIONS.forEach(q => {
+    payload.answers.push({
+      id_conteudo: q.id_conteudo,
+      choice: (typeof ANSWERS[q.id_conteudo] !== 'undefined') ? ANSWERS[q.id_conteudo] : null
+    });
+  });
+
+  try {
+    const resp = await fetch('/api/quiz/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!resp.ok) {
+      alert("{{ _('Erro ao enviar respostas.') }}");
+      return;
+    }
+
+    const data = await resp.json();
+
+    // calcular percent (backend original não devolve percent)
+    const total = data.total ?? payload.answers.length;
+    const correct = data.correct ?? 0;
+    const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+    modalTitle.textContent = `{{ _('quiz_resultado') }}: ${correct} / ${total}`;
+    modalPercent.textContent = `${percent}%`;
+    modalPoints.textContent = `+${data.pontos_ganhos ?? 0} {{ _('pontos') }}`;
+    modalCoins.textContent = `+${data.moedas_ganhas ?? 0} {{ _('moedas') }}`;
+
+    showModal();
+
+  } catch (e) {
+    alert("{{ _('Erro ao enviar respostas.') }}");
+  }
+}
+
+// inicial: esconder modal
+hideModal();
+
+// acessibilidade: tecla ESC fecha modal (não fecha a tela, apenas esconde)
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && modalOverlay.style.display === 'flex') {
+    hideModal();
+  }
+});
+</script>
+
+<!-- Mantive seus scripts de música abaixo -->
+<script>
+  window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
+</script>
+<script src="{{ url_for('static', filename='js/musics.js') }}"></script>
