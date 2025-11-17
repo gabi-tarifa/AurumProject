@@ -1918,3 +1918,18 @@ msgid "lesson_3_6_q10_a3"
 msgstr "Aposentadoria"
 msgid "lesson_3_6_q10_a4"
 msgstr "Gastos imediatos"
+
+msgid "quiz_modo_treino_titulo"
+msgstr "Quiz"
+
+msgid "botao_iniciar_quiz"
+msgstr "Iniciar"
+
+msgid "botao_finalizar_quiz"
+msgstr "Finalizar"
+
+msgid "quiz_modo_treino_instrucao"
+msgstr "Responda antes do tempo acabar!"
+
+msgid "botao_refazer_quiz"
+msgstr "Refazer"
