@@ -24,68 +24,45 @@
     <div class="containerTP" id="rank-screen">
       <!-- MENU LATERAL -->
       <nav class="sidebar {%if tema == 'cla'%} claro {%endif%}">
-        <a href="{{ url_for('starting_page') }}">
-          <div class="menu-item">
-            <img
-              src="{{ url_for('static', filename='img/open-book.png') }}"
-              class="icon"
-              alt="Aprender"
-            />
-            <span>{{ _('Aprender') }}</span>
-          </div>
-        </a>
+      {% set sufixo = '-claro' if tema != 'cla' else '' %}
 
-        <a href="{{ url_for('quiz_page') }}">
-          <div class="menu-item">
-            <img
-              src="{{ url_for('static', filename='img//working-hours.png') }}"
-              class="icon"
-              alt="Quiz"
-            />
-            <span>{{ _('Quiz') }}</span>
-          </div>
-        </a>
+      <a href="{{ url_for('starting_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/open-book' ~ sufixo ~ '.png') }}" class="icon" alt="Aprender" />
+          <span>{{ _('Aprender') }}</span>
+        </div>
+      </a>
 
-        <a href="{{ url_for('ranking_page') }}">
-          <div class="menu-item active {%if tema == 'cla'%} claro {%endif%}">
-            <img
-              src="{{ url_for('static', filename='img//trophy.png') }}"
-              class="icon"
-              alt="Ranking"
-            />
-            <span>{{ _('Ranking') }}</span>
-          </div>
-        </a>
+      <a href="{{ url_for('quiz_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/working-hours' ~ sufixo ~ '.png') }}" class="icon" alt="Quiz" />
+          <span>{{ _('Quiz') }}</span>
+        </div>
+      </a>
 
-        <a href="{{ url_for('perfil_page') }}">
-          <div class="menu-item">
-            <img
-              src="{{ url_for('static', filename='img//profile.png') }}"
-              class="icon"
-              alt="Perfil"
-            />
-            <span>{{ _('Perfil') }}</span>
-          </div>
-        </a>
+      <a href="{{ url_for('ranking_page') }}">
+        <div class="menu-item active {% if tema == 'cla' %}claro{% endif %}">
+          <img src="{{ url_for('static', filename='img/trophy' ~ sufixo ~ '.png') }}" class="icon" alt="Ranking" />
+          <span>{{ _('Ranking') }}</span>
+        </div>
+      </a>
 
-        <a href="{{ url_for('store_page') }}">
-          <div class="menu-item">
-            <img
-              src="{{ url_for('static', filename='img//store.png') }}"
-              class="icon"
-              alt="Loja"
-            />
-            <span>{{ _('Loja') }}</span>
-          </div>
-        </a>
+      <a href="{{ url_for('perfil_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/profile' ~ sufixo ~ '.png') }}" class="icon" alt="Perfil" />
+          <span>{{ _('Perfil') }}</span>
+        </div>
+      </a>
 
-        <div class="menu-item" id="openMais">
-          <img
-            src="{{ url_for('static', filename='img//info.png') }}"
-            class="icon"
-            alt="Mais"
-          />
-          {{ _('Mais') }}
+      <a href="{{ url_for('store_page') }}">
+        <div class="menu-item">
+          <img src="{{ url_for('static', filename='img/store' ~ sufixo ~ '.png') }}" class="icon" alt="Loja" />
+          <span>{{ _('Loja') }}</span>
+        </div>
+      </a>
+      <div class="menu-item" id="openMais">
+        <img src="{{ url_for('static', filename='img/info' ~ sufixo ~ '.png') }}" class="icon" alt="Mais">
+        {{ _('Mais') }}
       <!-- Submenu do botão "Mais" -->
       <div class="submenu-mais oculto" id="submenuMais">
         <ul>
@@ -109,19 +86,13 @@
               <span class="config">{{ _('Configurações') }}</span>
             </a>
           </li>
-          <li>
-            <a href="/logout">
-              <img
-                src="{{ url_for('static', filename='img//exit.png') }}"
-                class="smallimage"
-                alt="Sair"
-              />
-              <span class="sair">{{ _('Sair') }}</span>
-            </a>
-          </li>
         </ul>
       </div>
         </div>
+        
+      <div class="menu-item">
+        <a href="/logout"><img src="{{ url_for('static', filename='img//exit.png') }}" class="icon" alt="Sair"><span class="sair">{{ _('Sair') }}</span></a>
+      </div>
       </nav>
 
 
@@ -181,14 +152,14 @@
                       </div>
                     {% endif %}
 
-                    <div class="profile-hover-box" role="dialog" aria-hidden="true">
+                    <div class="profile-hover-box {%if tema == 'cla'%} claro {%endif%}" role="dialog" aria-hidden="true">
                     {% if "http" in usuario.profilepicture %}
                       <img src="{{ usuario.profilepicture }}" alt="Foto" class="profile-picture">
                     {% else %}
                       <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto" class="hover-picture">
                     {% endif %}
                       <div class="hover-info">
-                        <span class="hover-name">{{ usuario.nome }}</span>
+                        <span class="hover-name {%if tema == 'cla'%} claro {%endif%}">{{ usuario.nome }}</span>
 
                         {% if usuario.id != current_user.id %}
                           {% if not amizade %}
@@ -299,14 +270,14 @@
                       <div class="friend-status">👥</div>
                     {% endif %}
 
-                    <div class="profile-hover-box" role="dialog" aria-hidden="true">
+                    <div class="profile-hover-box {%if tema == 'cla'%} claro {%endif%}" role="dialog" aria-hidden="true">
                     {% if "http" in usuario.profilepicture %}
                       <img src="{{ usuario.profilepicture }}" alt="Foto" class="profile-picture">
                     {% else %}
                       <img src="{{ url_for('static', filename=usuario.profilepicture) }}" alt="Foto" class="hover-picture">
                     {% endif %}
                       <div class="hover-info">
-                        <span class="hover-name">{{ usuario.nome }}</span>
+                        <span class="hover-name {%if tema == 'cla'%} claro {%endif%}">{{ usuario.nome }}</span>
                         {% if usuario.id != current_user.id %}
                           <button class="friend-btn" disabled>
                             👥 {{ gettext('Amigos') }}
