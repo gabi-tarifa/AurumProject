@@ -44,10 +44,10 @@ login_manager.login_message_category = "info"
 
 #Quem for pegar o projeto, poe em comentario e faz a sua rota do bdd, e so troca quem fica comentado ou nao
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -1926,6 +1926,154 @@ def atualizar_musica_tocada():
 
     return jsonify({"sucesso": True})
 
+# ------------------------------------------- #
+# 🔹 Configurações do Quiz
+# ------------------------------------------- #
+QUIZ_DEFAULT_COUNT = 10  # número de perguntas por quiz
+QUIZ_TIME_SECONDS = 120  # tempo total por quiz (segundos)
+POINTS_PER_CORRECT = 10  # pontos por acerto
+COINS_PER_CORRECT = 2    # moedas por acerto
+
+# ------------------------------------------- #
+# 🔹 Iniciar Quiz (gera N perguntas)
+# ------------------------------------------- #
+@app.route("/api/quiz/start", methods=["GET"])
+@login_required
+def api_quiz_start():
+    try:
+        qtd = int(request.args.get("qtd", QUIZ_DEFAULT_COUNT))
+    except Exception:
+        qtd = QUIZ_DEFAULT_COUNT
+
+    # ---------------------------------------
+    # 🔹 1. Descobre até onde o usuário chegou
+    # ---------------------------------------
+    ultimo = (
+        TarefaUsuario.query
+            .filter_by(id_usuario=current_user.id)
+            .order_by(
+                TarefaUsuario.id_modulo.desc(),
+                TarefaUsuario.numero_tarefa.desc()
+            )
+            .first()
+    )
+
+    if not ultimo:
+        modulo_limite = current_user.moduloinicial
+        tarefa_limite = 1
+    else:
+        modulo_limite = ultimo.id_modulo
+        tarefa_limite = ultimo.numero_tarefa
+
+    # -----------------------------------------------------------
+    # 🔹 2. Filtra as questões até o módulo/tarefa atingidos
+    #     Mantendo exatamente o mesmo formato de antes
+    # -----------------------------------------------------------
+    from sqlalchemy import or_, and_
+
+    questoes = ConteudoTarefa.query.filter(
+        ConteudoTarefa.tipo == "quiz",
+        or_(
+            ConteudoTarefa.id_modulo < modulo_limite,
+            and_(
+                ConteudoTarefa.id_modulo == modulo_limite,
+                ConteudoTarefa.numero_tarefa <= tarefa_limite
+            )
+        )
+    ).all()
+
+    if not questoes:
+        return jsonify({"error": _("Não há perguntas de quiz disponíveis.")}), 404
+
+    # ---------------------------------------
+    # 🔹 3. Mantém sua mesma lógica de sorteio
+    # ---------------------------------------
+    if len(questoes) <= qtd:
+        selecionadas = questoes
+    else:
+        selecionadas = random.sample(questoes, qtd)
+
+    # ---------------------------------------
+    # 🔹 4. Mantém sua estrutura original do JSON
+    # ---------------------------------------
+    perguntas = []
+    for c in selecionadas:
+        alternativas = []
+        if c.alternativas:
+            for idx, texto in enumerate(c.alternativas.split("||")):
+                alternativas.append({
+                    "texto": _(texto.strip()),
+                    "indice": idx
+                })
+
+        perguntas.append({
+            "id_conteudo": c.id_conteudo,
+            "pergunta": _(c.pergunta),
+            "alternativas": alternativas
+        })
+
+    # ---------------------------------------
+    # 🔹 5. Retorna exatamente como antes
+    # ---------------------------------------
+    return jsonify({
+        "tempo": QUIZ_TIME_SECONDS,
+        "perguntas": perguntas,
+        "count": len(perguntas)
+    })
+
+
+# ------------------------------------------- #
+# 🔹 Verificação instantânea (1 pergunta)
+# ------------------------------------------- #
+@app.route("/api/quiz/check_single", methods=["POST"])
+@login_required
+def api_quiz_check_single():
+    data = request.get_json()
+
+    id_conteudo = data.get("id_conteudo")
+    escolha = data.get("choice")
+
+    questao = ConteudoTarefa.query.get(id_conteudo)
+    if not questao:
+        return jsonify({"error": "Questão não encontrada."}), 404
+
+    acertou = (questao.correta-1 == escolha)
+
+    return jsonify({"acertou": acertou})
+
+# ------------------------------------------- #
+# 🔹 Finalizar quiz (calcula pontos / moedas)
+# ------------------------------------------- #
+@app.route("/api/quiz/submit", methods=["POST"])
+@login_required
+def api_quiz_submit():
+    data = request.get_json()
+    respostas = data.get("answers", [])
+
+    total = len(respostas)
+    acertos = 0
+
+    for r in respostas:
+        questao = ConteudoTarefa.query.get(r["id_conteudo"])
+        if questao and questao.correta-1 == r.get("choice"):
+            acertos += 1
+
+    pontos = acertos * POINTS_PER_CORRECT
+    moedas = acertos * COINS_PER_CORRECT
+
+    current_user.pontos += pontos
+    current_user.pontos_semanais += pontos
+    current_user.moedas += moedas
+    db.session.commit()
+
+    return jsonify({
+        "correct": acertos,
+        "total": total,
+        "pontos_ganhos": pontos,
+        "moedas_ganhas": moedas
+    })
+
+
 @app.route("/salvar_modulo_inicial", methods=["POST"])
 @login_required
 def salvar_modulo_inicial():
@@ -1944,7 +2092,6 @@ def salvar_modulo_inicial():
     db.session.commit()
 
     return jsonify({"status": "ok", "moduloinicial": modulo})
-     
     
 if __name__ == "__main__":
     #app.run(debug=True)
