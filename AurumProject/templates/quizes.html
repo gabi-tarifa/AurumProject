@@ -6,7 +6,7 @@
   <title>{{ _('quiz_modo_treino_titulo') }} - Aurum</title>
 
   <!-- seu CSS principal (onde já está todo o CSS que você mandou) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/aurum.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
 </head>
 <body {% if tema == 'cla' %} class="claro" {% endif %}>
   <div id="quiz-container" {% if tema == 'cla' %} class="claro" {% endif %}>
@@ -292,3 +292,4 @@ document.addEventListener('keydown', (ev) => {
   window.MUSICA_ATIVA = {{ 'true' if musica_ativa else 'false' }};
 </script>
 <script src="{{ url_for('static', filename='js/musics.js') }}"></script>
+
