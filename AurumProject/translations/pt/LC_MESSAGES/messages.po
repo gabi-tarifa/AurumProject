@@ -1933,3 +1933,6 @@ msgstr "Responda antes do tempo acabar!"
 
 msgid "botao_refazer_quiz"
 msgstr "Refazer"
+
+msgid "quiz_resultado"
+msgstr "Resultado"

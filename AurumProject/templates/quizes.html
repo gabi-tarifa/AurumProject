@@ -4,25 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{ _('quiz_modo_treino_titulo') }} - Aurum</title>
-
-  <!-- seu CSS principal (onde já está todo o CSS que você mandou) -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
 </head>
 <body {% if tema == 'cla' %} class="claro" {% endif %}>
   <div id="quiz-container" {% if tema == 'cla' %} class="claro" {% endif %}>
 
-    <div class="header header-with-back {% if tema == 'cla' %}claro{% endif %}">
-      <button class="back-btn header-with-back__back" onclick="history.back()">← {{ _('Voltar') }}</button>
+    <header class="header header-with-back {% if tema == 'cla' %}claro{% endif %}">
+      <button class="back-btn header-with-back__back {% if tema == 'cla' %}claro{% endif %}" onclick="history.back()">← {{ _('Voltar') }}</button>
 
-      <div style="text-align:center">
+      <div>
         <div class="title">{{ _('quiz_modo_treino_titulo') }}</div>
         <div class="meta">{{ _('quiz_modo_treino_instrucao') }}</div>
       </div>
 
       <div id="meta-right">
-        <div id="timer">{{ _('Tempo') }}: --:--</div>
+        <div id="timer" {% if tema == 'cla' %} class="claro" {% endif %}>{{ _('Tempo') }}: --:--</div>
       </div>
-    </div>
+    </header>
 
     <!-- Intro / botão iniciar -->
     <div id="intro" class="intro">
@@ -31,7 +29,7 @@
 
     <!-- AREA DO QUIZ (invisível até iniciar) -->
     <div id="quizArea" class="hidden">
-      <div class="questions" id="questionsContainer">
+      <div class="questions {% if tema == 'cla' %}claro{% endif %}" id="questionsContainer">
         <!-- perguntas geradas via JS -->
       </div>
 
@@ -47,17 +45,17 @@
 
   <!-- ===== MODAL PREMIUM DE RESULTADO (M3) ===== -->
   <div id="resultModalOverlay" aria-hidden="true">
-    <div id="resultModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div id="modalTitle"></div>
-        <div id="modalPercent" aria-live="polite"></div>
+    <div id="resultModal" {% if tema == 'cla' %} class="claro" {% endif %} role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div id="modalTitle" {% if tema == 'cla' %} class="claro" {% endif %}></div>
+        <div id="modalPercent" aria-live="polite" {% if tema == 'cla' %} class="claro" {% endif %}></div>
 
         <div class="modal-badges">
-            <div id="modalPoints" class="modal-badge" aria-hidden="true"></div>
-            <div id="modalCoins" class="modal-badge" aria-hidden="true"></div>
+            <div id="modalPoints" class="modal-badge" aria-hidden="true" {% if tema == 'cla' %} class="claro" {% endif %}></div>
+            <div id="modalCoins" class="modal-badge" aria-hidden="true" {% if tema == 'cla' %} class="claro" {% endif %}></div>
         </div>
 
         <div id="modalButtons">
-            <button id="modalBackBtn" onclick="history.back()">
+            <button id="modalBackBtn" onclick="history.back()" {% if tema == 'cla' %} class="claro" {% endif %}>
                 {{ _('Voltar') }}
             </button>
         </div>
@@ -90,6 +88,8 @@ const modalPercent = document.getElementById('modalPercent');
 const modalPoints = document.getElementById('modalPoints');
 const modalCoins = document.getElementById('modalCoins');
 const modalBackBtn = document.getElementById('modalBackBtn');
+
+const tema_atual = "{{ tema }}";
 
 let QUESTIONS = [];   // array recebido do backend
 let ANSWERS = {};     // id_conteudo -> escolha (índice)
@@ -143,6 +143,10 @@ function renderQuestions(){
     card.className = 'question-card';
     card.dataset.id = q.id_conteudo;
 
+    if (tema_atual === 'cla'){
+      card.classList.add("claro")
+    }
+
     const title = document.createElement('div');
     title.className = 'question-title';
     title.textContent = `${qi + 1}. ${q.pergunta}`;
@@ -152,6 +156,11 @@ function renderQuestions(){
     q.alternativas.forEach((alt, ai) => {
       const opt = document.createElement('button');
       opt.className = 'option';
+
+      if (tema_atual === 'cla'){
+        opt.classList.add("claro")
+      }
+
       opt.type = 'button';
       opt.textContent = alt.texto ?? alt; // compatibilidade (caso backend envie string)
       opt.dataset.choice = ai;

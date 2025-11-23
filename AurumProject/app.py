@@ -46,8 +46,8 @@ login_manager.login_message_category = "info"
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Rayquaza%201@localhost:3306/Aurum' #Local Banco Silva
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://estudante1:senhaaalterar@localhost:3306/Aurum' #Local IFSP
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass123@localhost:3306/Aurum' #Banco Local Tarifa
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") #Banco Deploy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #print("Conectando ao banco em:", os.environ.get("DATABASE_URL"))
@@ -1931,8 +1931,8 @@ def atualizar_musica_tocada():
 # ------------------------------------------- #
 QUIZ_DEFAULT_COUNT = 10  # número de perguntas por quiz
 QUIZ_TIME_SECONDS = 120  # tempo total por quiz (segundos)
-POINTS_PER_CORRECT = 10  # pontos por acerto
-COINS_PER_CORRECT = 2    # moedas por acerto
+POINTS_PER_CORRECT = 9  # pontos por acerto
+COINS_PER_CORRECT = POINTS_PER_CORRECT//4    # moedas por acerto
 
 # ------------------------------------------- #
 # 🔹 Iniciar Quiz (gera N perguntas)
@@ -2061,10 +2061,23 @@ def api_quiz_submit():
     pontos = acertos * POINTS_PER_CORRECT
     moedas = acertos * COINS_PER_CORRECT
 
+    if acertos >= QUIZ_DEFAULT_COUNT:
+        desbloquear_conquista(current_user.id, "conquista_quiz_pensador_nome")
+
     current_user.pontos += pontos
     current_user.pontos_semanais += pontos
     current_user.moedas += moedas
+    current_user.quizes_feitos += 1
     db.session.commit()
+
+    if current_user.quizes_feitos >= 1:
+        desbloquear_conquista(current_user.id, "conquista_quizzer_nome")
+    if current_user.quizes_feitos >= 10:
+        desbloquear_conquista(current_user.id, "conquista_quizzeiro_nome")
+    if current_user.quizes_feitos >= 50:
+        desbloquear_conquista(current_user.id, "conquista_maluco_quiz_nome")
+    if current_user.quizes_feitos >= 100:
+        desbloquear_conquista(current_user.id, "conquista_fanatico_quiz_nome")
 
     return jsonify({
         "correct": acertos,
@@ -2094,6 +2107,6 @@ def salvar_modulo_inicial():
     return jsonify({"status": "ok", "moduloinicial": modulo})
     
 if __name__ == "__main__":
-    #app.run(debug=True)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)

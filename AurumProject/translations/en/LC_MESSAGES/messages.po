@@ -2300,3 +2300,6 @@ msgstr "Answer before time runs out"
 
 msgid "botao_refazer_quiz"
 msgstr "Try again"
+
+msgid "quiz_resultado"
+msgstr "Results"

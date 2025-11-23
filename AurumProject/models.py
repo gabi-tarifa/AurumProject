@@ -23,6 +23,7 @@ class Usuario(db.Model, UserMixin):
     vitorias = db.Column(db.Integer, nullable=False, default=0)
     vitorias_consecutivas = db.Column(db.Integer, nullable=False, default=0)
     moduloinicial = db.Column(db.Integer, nullable=False, default=1)
+    quizes_feitos = db.Column(db.Integer, nullable=False, default=0)
 
     def to_dict(self):
         return {
@@ -39,7 +40,8 @@ class Usuario(db.Model, UserMixin):
             "entrada": self.entrada,
             "vitorias": self.vitorias,
             "vitorias_consecutivas": self.vitorias_consecutivas,
-            "moduloinicial": self.moduloinicial
+            "moduloinicial": self.moduloinicial,
+            "quizes_feitos": self.quizes_feitos,
         }
 
 

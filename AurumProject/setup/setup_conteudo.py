@@ -130,7 +130,6 @@ def criar_conteudo():
             {"numero_tarefa": 5, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_5_q5", "alternativas": "lesson_3_5_q5_a1||lesson_3_5_q5_a2||lesson_3_5_q5_a3||lesson_3_5_q5_a4", "correta": 1},
 
             #M3 - Avaliação Final - Módulo 3
-            {"numero_tarefa": 6, "id_modulo": 3, "tipo": "texto", "conteudo": "lesson_3_6_text"},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q1", "alternativas": "lesson_3_6_q1_a1||lesson_3_6_q1_a2||lesson_3_6_q1_a3||lesson_3_6_q1_a4", "correta": 1},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q2", "alternativas": "lesson_3_6_q2_a1||lesson_3_6_q2_a2||lesson_3_6_q2_a3||lesson_3_6_q2_a4", "correta": 2},
             {"numero_tarefa": 6, "id_modulo": 3, "tipo": "quiz", "pergunta": "lesson_3_6_q3", "alternativas": "lesson_3_6_q3_a1||lesson_3_6_q3_a2||lesson_3_6_q3_a3||lesson_3_6_q3_a4", "correta": 3},
