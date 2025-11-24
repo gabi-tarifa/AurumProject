@@ -6,6 +6,7 @@
   <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3975/3975233.png" type="image/x-icon">
   <title>{{ _('quiz_modo_treino_titulo') }} - Aurum</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/recompensa.css') }}">
 </head>
 <body {% if tema == 'cla' %} class="claro" {% endif %}>
   <div id="quiz-container" {% if tema == 'cla' %} class="claro" {% endif %}>
@@ -310,5 +311,4 @@ document.addEventListener('keydown', (ev) => {
 </script>
 {% endif %}
 <script src="{{ url_for('static', filename='js/recompensa.js') }}"></script>
-<script src="{{ url_for('static', filename='css/recompensa.css') }}"></script>
 
