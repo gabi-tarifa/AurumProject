@@ -10,8 +10,19 @@
 }
 
 .modal-ranking {
-  background: #162447;
-  color: white;
+  background: #0f1e34;
+  color: whitesmoke;
+  padding: 25px;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  animation: fadeIn 0.4s;
+  text-align: center;
+}
+.modal-ranking.claro {
+  background: #62d5e8;
+  color: #393939;
+  border: 2px solid #292929;
   padding: 25px;
   width: 350px;
   border-radius: 12px;
@@ -31,12 +42,23 @@
 
 .modal-ranking button {
   margin-top: 20px;
-  background: #00c853;
-  border: none;
+  background: #132949;
+  border: 2px solid darkgoldenrod;
   padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
   color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.modal-ranking.claro button {
+  margin-top: 20px;
+  background: #80d4e3;
+  border: 2px solid #292929;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #393939;
   font-weight: bold;
   font-size: 1rem;
 }

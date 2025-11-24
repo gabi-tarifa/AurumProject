@@ -14,7 +14,10 @@ function abrirModalRanking(info) {
         <button id="receber-btn">Receber recompensa</button>
       </div>
     `;
-
+    if (tema_atual === "cla"){
+      modal = document.getElementById("modal-ranking");
+      modal.classList.add("claro")
+    }
     document.body.appendChild(overlay);
 
     document.getElementById("receber-btn").onclick = () => {
