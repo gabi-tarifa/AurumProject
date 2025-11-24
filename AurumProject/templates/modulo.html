@@ -237,5 +237,13 @@
     {% endif %}
   });
 </script>
+{% if session.get("popup_ranking") %}
+<script>
+    const popupRanking = {{ session.get("popup_ranking") | tojson }};
+    document.addEventListener("DOMContentLoaded", () => {
+        abrirModalRanking(popupRanking);
+    });
+</script>
+{% endif %}
 </body>
 </html>

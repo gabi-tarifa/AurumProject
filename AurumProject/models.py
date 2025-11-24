@@ -24,6 +24,7 @@ class Usuario(db.Model, UserMixin):
     vitorias_consecutivas = db.Column(db.Integer, nullable=False, default=0)
     moduloinicial = db.Column(db.Integer, nullable=False, default=1)
     quizes_feitos = db.Column(db.Integer, nullable=False, default=0)
+    popup_ranking = db.Column(db.JSON)
 
     def to_dict(self):
         return {
@@ -42,6 +43,7 @@ class Usuario(db.Model, UserMixin):
             "vitorias_consecutivas": self.vitorias_consecutivas,
             "moduloinicial": self.moduloinicial,
             "quizes_feitos": self.quizes_feitos,
+            "popup_ranking": self.popup_ranking,
         }
 
 

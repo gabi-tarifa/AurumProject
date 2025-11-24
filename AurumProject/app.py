@@ -148,6 +148,13 @@ def distribuir_recompensas(usuarios):
         for i, usuario in enumerate(usuarios[:len(recompensas)]):
             usuario.moedas += recompensas[i]
 
+            usuario.popup_ranking = {
+                "posicao": i + 1,
+                "recompensa": recompensas[i],
+                "vitorias": usuario.vitorias,
+                "streak": usuario.vitorias_consecutivas
+            }
+
            # Campeão (só o primeiro de cada bloco)
             if i == 0:
                 usuario.vitorias += 1
@@ -188,6 +195,7 @@ def processar_premiacoes():
                 distribuir_recompensas(usuarios)
 
         db.session.commit()
+        print("Sucesso")
 
 def limpar_blocos_antigos():
     with app.app_context():
@@ -206,11 +214,20 @@ def limpar_blocos_antigos():
 
         db.session.commit()
 
+        
+def enviar_popup_ranking():
+    with app.app_context():
+        if current_user.is_authenticated:
+            if current_user.popup_ranking:
+                session["popup_ranking"] = current_user.popup_ranking
+            else:
+                session.pop("popup_ranking", None)
+
 scheduler = BackgroundScheduler()
 # Executa toda segunda-feira às 00:00
 scheduler.add_job(zerar_pontos_semanais, 'cron', day_of_week='mon', hour=0, minute=0)
 scheduler.add_job(verificar_bonus_semana, 'cron', day_of_week='mon', hour=0, minute=0)
-scheduler.add_job(processar_premiacoes, 'cron', day_of_week='sun', hour=23, minute=59)
+scheduler.add_job(processar_premiacoes, 'cron', day_of_week='mon', hour=0, minute=13)
 scheduler.add_job(checar_ofensivas, 'cron', hour=23, minute=59)
 scheduler.add_job(limpar_blocos_antigos, 'cron', day_of_week='mon', hour=0, minute=1)
 scheduler.start()
@@ -445,6 +462,8 @@ def recusar_amizade():
 @app.route("/ranking")
 @login_required
 def ranking_page():
+    enviar_popup_ranking()
+
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
     semana_atual = inicio_semana()
@@ -564,6 +583,8 @@ def ranking_page():
 @app.route("/inicial")
 @login_required
 def starting_page():
+    enviar_popup_ranking()
+
     current_user.ja_passou_intro = True
     db.session.commit()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
@@ -760,6 +781,8 @@ def pre_entrada():
 @app.route("/perfil")
 @login_required
 def perfil_page():
+    enviar_popup_ranking()
+
     conquistas_usuario = db.session.query(Conquistas).join(UsuarioConquistas).filter(UsuarioConquistas.id_usuario == current_user.id).all()
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
 
@@ -841,6 +864,7 @@ def perfil_page():
 @app.route("/modulo_<int:id_modulo>")
 @login_required
 def ver_modulo(id_modulo):
+    enviar_popup_ranking()
 
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
 
@@ -984,6 +1008,8 @@ def cadastro():
 @app.route("/quiz")
 @login_required
 def quiz_page():
+    enviar_popup_ranking()
+
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
 
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
@@ -1065,6 +1091,8 @@ def quiz_page():
 @app.route("/loja")
 @login_required
 def store_page():
+    enviar_popup_ranking()
+
     conf = Configuracoes.query.filter_by(id_usuario=current_user.id).first()
 
     usuarios = Usuario.query.order_by(Usuario.pontos_semanais.desc()).all()
@@ -2105,6 +2133,14 @@ def salvar_modulo_inicial():
     db.session.commit()
 
     return jsonify({"status": "ok", "moduloinicial": modulo})
+
+@app.route("/limpar_popup_ranking")
+@login_required
+def limpar_popup_ranking():
+    current_user.popup_ranking = None
+    db.session.commit()
+    session.pop("popup_ranking", None)
+    return ("", 204)
     
 if __name__ == "__main__":
     #app.run(debug=True)
