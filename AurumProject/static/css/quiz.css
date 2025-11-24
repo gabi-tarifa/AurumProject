@@ -5,6 +5,7 @@
 /* Área geral */
 body {
     background: #0f1e34;
+    color: #0f0f0f;
     display: flex;
     justify-content: center;
     align-items: center;
