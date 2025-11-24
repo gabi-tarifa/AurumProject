@@ -228,7 +228,7 @@
     {% endif %}
   });
 </script>
-<script> const tema_atual = {{ tema }};</script>
+<script> const tema_atual = "{{ tema }}";</script>
 {% if session.get("popup_ranking") %}
 <script>
     const popupRanking = {{ session.get("popup_ranking") | tojson }};

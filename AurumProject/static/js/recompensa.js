@@ -15,7 +15,7 @@ function abrirModalRanking(info) {
       </div>
     `;
     if (tema_atual === "cla"){
-      const modal = document.getElementsByClassName("modal-ranking");
+      const modal = overlay.querySelector(".modal-ranking");
       modal.classList.add("claro")
     }
     document.body.appendChild(overlay);
